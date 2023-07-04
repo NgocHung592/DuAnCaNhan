@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ma</th>
+            <th scope="col">ten</th>
+            <th scope="col">mo ta</th>
+            <th scope="col">trang thai</th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="sanPham in listSanPham">
+        <tr>
+            <th scope="row">{{$index}}</th>
+            <th scope="row">{{sanPham.id}}</th>
+            <th scope="row">{{sanPham.ma}}</th>
+            <th scope="row">{{sanPham.ten}}</th>
+            <th scope="row">{{sanPham.mo_ta}}</th>
+            <th scope="row">{{sanPham.trang_thai}}</th>
+        </tr>
+    </tbody>
+</table>
