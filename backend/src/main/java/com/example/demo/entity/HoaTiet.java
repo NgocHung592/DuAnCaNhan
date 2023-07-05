@@ -15,7 +15,7 @@ import lombok.ToString;
 
 import java.util.UUID;
 
-@Table(name = "kich_thuoc")
+@Table(name = "hoa_tiet")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +23,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-public class KichThuoc {
+public class HoaTiet {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
