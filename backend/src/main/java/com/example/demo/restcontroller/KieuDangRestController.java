@@ -1,7 +1,9 @@
 package com.example.demo.restcontroller;
 
 import com.example.demo.entity.ChatLieu;
+import com.example.demo.entity.KieuDang;
 import com.example.demo.service.ChatLieuService;
+import com.example.demo.service.KieuDangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,35 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
-@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+@RequestMapping("/kieu-dang/")
+@CrossOrigin(origins = "*",maxAge = 4800,allowCredentials = "false")
+public class KieuDangRestController {
 
     @Autowired
-    private ChatLieuService chatLieuService;
+    private KieuDangService kieuDangService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<KieuDang> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return kieuDangService.getAll(pageNo);
     }
 
     @GetMapping("detail/{id}")
-    public ChatLieu detail(@PathVariable("id") String id) {
-        return chatLieuService.detail(UUID.fromString(id));
+    public KieuDang detail(@PathVariable("id") String id) {
+        return kieuDangService.detail(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public ChatLieu add(@RequestBody ChatLieu chatLieu) {
-        return chatLieuService.add(chatLieu);
+    public KieuDang add(@RequestBody KieuDang kieuDang) {
+        return kieuDangService.add(kieuDang);
     }
 
     @PutMapping("update/{id}")
-    public ChatLieu update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return chatLieuService.update(chatLieu, UUID.fromString(id));
+    public KieuDang update(@RequestBody KieuDang kieuDang, @PathVariable("id") String id) {
+        return kieuDangService.update(kieuDang, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        kieuDangService.delete(UUID.fromString(id));
     }
 }

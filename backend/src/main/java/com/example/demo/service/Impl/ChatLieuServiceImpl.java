@@ -24,25 +24,15 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu add(ChatLieu chatLieu) {
-        ChatLieu chatLieu1 = ChatLieu.builder()
-                .ma(chatLieu.getMa())
-                .ten(chatLieu.getTen())
-                .moTa(chatLieu.getMoTa())
-                .trangThai(Integer.valueOf(chatLieu.getTrangThai()))
-                .build();
-        return chatLieu1;
+        return chatLieuRepository.save(chatLieu);
     }
 
     @Override
     public ChatLieu update(ChatLieu chatLieu, UUID id) {
-        ChatLieu chatLieu1 = ChatLieu.builder()
-                .id(chatLieu.getId())
-                .ma(chatLieu.getMa())
-                .ten(chatLieu.getTen())
-                .moTa(chatLieu.getMoTa())
-                .trangThai(Integer.valueOf(chatLieu.getTrangThai()))
-                .build();
-        return chatLieu1;
+        if (chatLieuRepository.existsById(id)){
+            return chatLieuRepository.save(chatLieu);
+        }
+        return null;
     }
 
     @Override

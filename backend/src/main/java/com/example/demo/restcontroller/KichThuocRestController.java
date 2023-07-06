@@ -1,7 +1,8 @@
 package com.example.demo.restcontroller;
 
 import com.example.demo.entity.ChatLieu;
-import com.example.demo.service.ChatLieuService;
+import com.example.demo.entity.KichThuoc;
+import com.example.demo.service.KichThuocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,35 +19,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
+@RequestMapping("/hoa-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+public class KichThuocRestController {
 
     @Autowired
-    private ChatLieuService chatLieuService;
+    private KichThuocService kichThuocService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<KichThuoc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return kichThuocService.getAll(pageNo);
     }
 
     @GetMapping("detail/{id}")
-    public ChatLieu detail(@PathVariable("id") String id) {
-        return chatLieuService.detail(UUID.fromString(id));
+    public KichThuoc detail(@PathVariable("id") String id) {
+        return kichThuocService.detail(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public ChatLieu add(@RequestBody ChatLieu chatLieu) {
-        return chatLieuService.add(chatLieu);
+    public KichThuoc add(@RequestBody KichThuoc kichThuoc) {
+        return kichThuocService.add(kichThuoc);
     }
 
     @PutMapping("update/{id}")
-    public ChatLieu update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return chatLieuService.update(chatLieu, UUID.fromString(id));
+    public KichThuoc update(@RequestBody KichThuoc kichThuoc, @PathVariable("id") String id) {
+        return kichThuocService.update(kichThuoc, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        kichThuocService.delete(UUID.fromString(id));
     }
 }

@@ -1,7 +1,8 @@
 package com.example.demo.restcontroller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.service.ChatLieuService;
+import com.example.demo.entity.MauSac;
+import com.example.demo.entity.SanPham;
+import com.example.demo.service.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,35 +19,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
-@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+@RequestMapping("/mau-sac/")
+@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false")
+public class MauSacRestController {
 
     @Autowired
-    private ChatLieuService chatLieuService;
+    private MauSacService mauSacService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<MauSac> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return mauSacService.getAll(pageNo);
     }
 
     @GetMapping("detail/{id}")
-    public ChatLieu detail(@PathVariable("id") String id) {
-        return chatLieuService.detail(UUID.fromString(id));
+    public MauSac detail(@PathVariable("id") String id) {
+        return mauSacService.getOne(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public ChatLieu add(@RequestBody ChatLieu chatLieu) {
-        return chatLieuService.add(chatLieu);
+    public MauSac add(@RequestBody MauSac mauSac) {
+        return mauSacService.add(mauSac);
     }
 
     @PutMapping("update/{id}")
-    public ChatLieu update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return chatLieuService.update(chatLieu, UUID.fromString(id));
+    public MauSac update(@RequestBody MauSac mauSac, @PathVariable("id") String id) {
+        return mauSacService.update(mauSac, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        mauSacService.delete(UUID.fromString(id));
     }
 }

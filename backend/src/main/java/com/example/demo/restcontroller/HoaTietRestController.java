@@ -1,7 +1,9 @@
 package com.example.demo.restcontroller;
 
 import com.example.demo.entity.ChatLieu;
+import com.example.demo.entity.HoaTiet;
 import com.example.demo.service.ChatLieuService;
+import com.example.demo.service.HoaTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,35 +20,34 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
+@RequestMapping("/hoat-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
-
+public class HoaTietRestController {
     @Autowired
-    private ChatLieuService chatLieuService;
+    private HoaTietService hoaTietService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<HoaTiet> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return hoaTietService.getAll(pageNo);
     }
 
     @GetMapping("detail/{id}")
-    public ChatLieu detail(@PathVariable("id") String id) {
-        return chatLieuService.detail(UUID.fromString(id));
+    public HoaTiet detail(@PathVariable("id") String id) {
+        return hoaTietService.detail(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public ChatLieu add(@RequestBody ChatLieu chatLieu) {
-        return chatLieuService.add(chatLieu);
+    public HoaTiet add(@RequestBody HoaTiet hoaTiet) {
+        return hoaTietService.add(hoaTiet);
     }
 
     @PutMapping("update/{id}")
-    public ChatLieu update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return chatLieuService.update(chatLieu, UUID.fromString(id));
+    public HoaTiet update(@RequestBody HoaTiet hoaTiet, @PathVariable("id") String id) {
+        return hoaTietService.update(hoaTiet, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        hoaTietService.delete(UUID.fromString(id));
     }
 }

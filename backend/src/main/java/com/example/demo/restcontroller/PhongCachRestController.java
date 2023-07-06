@@ -1,7 +1,9 @@
 package com.example.demo.restcontroller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.service.ChatLieuService;
+import com.example.demo.entity.MauSac;
+import com.example.demo.entity.PhongCach;
+import com.example.demo.service.MauSacService;
+import com.example.demo.service.PhongCachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,35 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
-@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+@RequestMapping("/phong-cach/")
+@CrossOrigin(origins = "*",maxAge = 4800,allowCredentials = "false")
+public class PhongCachRestController {
 
     @Autowired
-    private ChatLieuService chatLieuService;
+    private PhongCachService phongCachService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<PhongCach> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return phongCachService.getAll(pageNo);
     }
 
     @GetMapping("detail/{id}")
-    public ChatLieu detail(@PathVariable("id") String id) {
-        return chatLieuService.detail(UUID.fromString(id));
+    public PhongCach detail(@PathVariable("id") String id) {
+        return phongCachService.getOne(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public ChatLieu add(@RequestBody ChatLieu chatLieu) {
-        return chatLieuService.add(chatLieu);
+    public PhongCach add(@RequestBody PhongCach phongCach) {
+        return phongCachService.add(phongCach);
     }
 
     @PutMapping("update/{id}")
-    public ChatLieu update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return chatLieuService.update(chatLieu, UUID.fromString(id));
+    public PhongCach update(@RequestBody PhongCach phongCach, @PathVariable("id") String id) {
+        return phongCachService.update(phongCach, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        phongCachService.delete(UUID.fromString(id));
     }
 }

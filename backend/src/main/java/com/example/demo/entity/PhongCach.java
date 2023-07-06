@@ -35,9 +35,6 @@ public class PhongCach {
     @Column(name = "ten")
     private String ten;
 
-    @Column(name = "mo_ta")
-    private String moTa;
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 }
