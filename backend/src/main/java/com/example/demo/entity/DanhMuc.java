@@ -44,7 +44,5 @@ public class DanhMuc {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "danh_muc_id",referencedColumnName = "id")
-    private KieuDang kieuDang;
+
 }
