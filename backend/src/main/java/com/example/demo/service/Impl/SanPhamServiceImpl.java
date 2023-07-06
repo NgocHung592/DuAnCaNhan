@@ -26,25 +26,15 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham add(SanPham sanPham) {
-        SanPham sanPham1 = SanPham.builder()
-                .ma(sanPham.getMa())
-                .ten(sanPham.getTen())
-                .moTa(sanPham.getMoTa())
-                .trangThai(Integer.valueOf(sanPham.getTrangThai()))
-                .build();
-        return sanPham1;
+        return sanPhamRepository.save(sanPham);
     }
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-        SanPham sanPham1 = SanPham.builder()
-                .id(sanPham.getId())
-                .ma(sanPham.getMa())
-                .ten(sanPham.getTen())
-                .moTa(sanPham.getMoTa())
-                .trangThai(Integer.valueOf(sanPham.getTrangThai()))
-                .build();
-        return sanPham1;
+       if (sanPhamRepository.existsById(id)){
+           return sanPhamRepository.save(sanPham);
+       }
+        return null;
     }
 
     @Override

@@ -20,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/chat-lieu/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuController {
+public class ChatLieuRestController {
     @Autowired
     private ChatLieuService chatLieuService;
 
