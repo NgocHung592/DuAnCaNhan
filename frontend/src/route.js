@@ -36,10 +36,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-kieu-dang.html",
       controller: SanPhamController,
     })
-    // .when("/hoa-don/hien-thi", {
-    //   templateUrl: "hien-thi-hoa-don.html",
-    //   controller: HoaDonController,
-    // })
+    .when("/hoa-don/hien-thi", {
+      templateUrl: "hien-thi-hoa-don.html",
+      controller: HoaDonController,
+    })
     // .when("/admin", {
     //   templateUrl: "admin.html",
     // })
