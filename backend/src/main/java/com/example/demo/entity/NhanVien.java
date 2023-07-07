@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,28 +13,22 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="hang_khach_hang")
-public class KhachHang {
+@Table(name="phan_quyen")
+public class NhanVien {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(name="ma")
-    private String ma;
-    @Column(name="ten")
-    private String ten;
-    @Column(name="so_hoa_don_toi_thieu")
-    private Integer sohoadoitoithieu;
-    @Column(name="so_tien_toi_thieu")
-    private BigDecimal sotientoithieu;
-    @Column(name="mo_ta")
-    private String mota;
-    @Column(name="trang_thai")
-    private Integer trangthai;
-    @Column(name="ngay_tao)")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
-    private Date ngaytaoo;
+    @Column(name="ngay_tao")
+    private Date ngaytao;
+    @Column(name="ten")
+    private String ten;
+    @Column(name="ma")
+    private String ma;
+    @Column(name="trang_thai")
+    private Integer trangthai;
     @Column(name="ngay_sua")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
