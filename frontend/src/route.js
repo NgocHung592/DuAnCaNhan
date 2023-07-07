@@ -10,7 +10,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/danh-muc/hien-thi", {
       templateUrl: "hien-thi-danh-muc.html",
-      controller: SanPhamController,
+      controller: DanhMucController,
     })
     .when("/mau-sac/hien-thi", {
       templateUrl: "hien-thi-mau-sac.html",
@@ -40,18 +40,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
     })
-    // .when("/admin", {
-    //   templateUrl: "admin.html",
-    // })
     .otherwise({
       redirectTo: "/admin",
     });
-  // $routeProvider
-  //   .when("/hoa-don/hien-thi", {
-  //     templateUrl: "hoa-don-hien-thi.html",
-  //     controller: HoaDonController,
-  //   })
-  //   .otherwise({
-  //     redirectTo: "/admin",
-  //   });
 });

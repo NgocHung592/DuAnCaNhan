@@ -6,7 +6,7 @@ window.ChatLieuController = function ($http, $scope, $location) {
     ten: "",
     trangThai: Number,
   };
-  //get all
+  //hien thi
   $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
     $scope.listChatLieu = response.data;
   });
@@ -22,7 +22,7 @@ window.ChatLieuController = function ($http, $scope, $location) {
   $scope.delete = function (id) {
     $http.delete(chatLieuAPI + "/delete/" + id).then(function (response) {
       $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
-        $scope.listSanPham = response.data;
+        $scope.listChatLieu = response.data;
       });
     });
   };
@@ -40,10 +40,10 @@ window.ChatLieuController = function ($http, $scope, $location) {
   //update san pham
   $scope.update = function (id) {
     $http
-      .put(sanPhamAPI + "/update/" + id, $scope.formProduct)
+      .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
       .then(function (response) {
-        $http.get(sanPhamAPI + "/hien-thi").then(function (response) {
-          $scope.listSanPham = response.data;
+        $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
+          $scope.listChatLieu = response.data;
         });
       });
   };

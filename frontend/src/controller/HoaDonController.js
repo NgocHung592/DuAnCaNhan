@@ -26,7 +26,6 @@ window.HoaDonController = function ($http, $scope, $location) {
   //get all
   $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
     $scope.listHoaDon = response.data;
-    console.log($scope.listHoaDon);
   });
   //detai hoa don
   $scope.detail = function (id) {
