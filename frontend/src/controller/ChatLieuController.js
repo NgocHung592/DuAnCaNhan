@@ -1,28 +1,27 @@
-window.SanPhamController = function ($http, $scope, $location) {
-  $scope.listSanPham = [];
-  $scope.formProduct = {
+window.ChatLieuController = function ($http, $scope, $location) {
+  $scope.listChatLieu = [];
+  $scope.formChatLieu = {
     id: "",
     ma: "",
     ten: "",
-    moTa: "",
     trangThai: Number,
   };
   //get all
-  $http.get(sanPhamAPI + "/hien-thi").then(function (response) {
-    $scope.listSanPham = response.data;
+  $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
+    $scope.listChatLieu = response.data;
   });
   //detai san pham
   $scope.detail = function (id) {
-    $http.get(sanPhamAPI + "/detail/" + id).then(function (response) {
+    $http.get(chatLieuAPI + "/detail/" + id).then(function (response) {
       if (response.status == 200) {
-        $scope.formProduct = response.data;
+        $scope.formChatLieu = response.data;
       }
     });
   };
   //delete san pham
   $scope.delete = function (id) {
-    $http.delete(sanPhamAPI + "/delete/" + id).then(function (response) {
-      $http.get(sanPhamAPI + "/hien-thi").then(function (response) {
+    $http.delete(chatLieuAPI + "/delete/" + id).then(function (response) {
+      $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
         $scope.listSanPham = response.data;
       });
     });
@@ -30,10 +29,10 @@ window.SanPhamController = function ($http, $scope, $location) {
   //add san pham
   $scope.add = function () {
     $http
-      .post(sanPhamAPI + "/add", $scope.formProduct)
+      .post(chatLieuAPI + "/add", $scope.formChatLieu)
       .then(function (response) {
-        $http.get(sanPhamAPI + "/hien-thi").then(function (response) {
-          $scope.listSanPham = response.data;
+        $http.get(chatLieuAPI + "/hien-thi").then(function (response) {
+          $scope.listChatLieu = response.data;
         });
       });
   };

@@ -22,7 +22,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "hien-thi-chat-lieu.html",
-      controller: SanPhamController,
+      controller: ChatLieuController,
     })
     .when("/hoa-tiet/hien-thi", {
       templateUrl: "hien-thi-hoa-tiet.html",

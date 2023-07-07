@@ -9,29 +9,24 @@
                     <div class="align-self-center w-100">
                         <form>
                             <div class="mb-3">
-                                <label class="form-label">Mã sản phẩm</label>
+                                <label class="form-label">Mã chất liệu</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.ma">
+                                    ng-model="formChatLieu.ma">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tên sản phẩm</label>
+                                <label class="form-label">Tên chất liệu</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.ten">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.moTa">
+                                    ng-model="formChatLieu.ten">
                             </div>
                             <div class="mb-3" class="form-check">
                                 <label class="form-label">Trạng thái</label><br>
                                 <input type="radio" value="1" ng-model="formProduct.trangThai"
-                                    ng-checked="formProduct.trangThai==1" class="form-check-input">
+                                    ng-checked="formChatLieu.trangThai==1" class="form-check-input">
                                 <label class="form-check-label">
                                     Kích hoạt
                                 </label>
                                 <input type="radio" value="0" ng-model="formProduct.trangThai"
-                                    ng-checked="formProduct.trangThai==0" class="form-check-input">
+                                    ng-checked="formChatLieu.trangThai==0" class="form-check-input">
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
@@ -49,19 +44,17 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Mã</th>
                                     <th scope="col">Tên</th>
-                                    <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Action</th>
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPham in listSanPham.content">
+                            <tbody ng-repeat="chatLieu in listChatLieu.content">
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{sanPham.ma}}</th>
-                                    <th scope="row">{{sanPham.ten}}</th>
-                                    <th scope="row">{{sanPham.moTa}}</th>
-                                    <th scope="row">{{sanPham.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                    <th scope="row">{{chatLieu.ma}}</th>
+                                    <th scope="row">{{chatLieu.ten}}</th>
+                                    <th scope="row">{{chatLieu.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning "
