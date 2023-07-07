@@ -38,7 +38,6 @@ public class DanhMuc {
     @Column(name = "ten")
     private String ten;
 
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 

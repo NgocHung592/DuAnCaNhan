@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "hoa_don_chhi_tiet")
+@Table(name = "hoa_don_chi_tiet")
 public class HoaDonChiTiet {
     @EmbeddedId
     private HoaDonChiTietId id;

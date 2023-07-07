@@ -8,10 +8,10 @@ import java.io.Serializable;
 
 @Embeddable
 public class HoaDonChiTietId implements Serializable {
+
     @ManyToOne
     @JoinColumn(name = "hoa_don_id")
     private HoaDon hoaDon;
-
 
     @ManyToOne
     @JoinColumn(name = "san_pham_chi_tiet_id")
