@@ -16,9 +16,17 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-mau-sac.html",
       controller: MauSacController,
     })
+    .when("/khachhang/hienthi", {
+      templateUrl: "hien-thi-khach-hang.html",
+      controller: KhachHangController,
+    })
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "hien-thi-kich-thuoc.html",
       controller: KichThuocController,
+    })
+    .when("/nhanvien/hienthi", {
+      templateUrl: "hien-thi-nhan-vien.html",
+      controller: NhanVienController,
     })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "hien-thi-chat-lieu.html",
@@ -40,24 +48,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
     })
-<<<<<<< HEAD
-    .when("/nhanvien/hienthi", {
-      templateUrl: "hien-thi-nhan-vien.html",
-      controller: nhanvienController,
-    })
-    .when("/khachhang/hienthi", {
-      templateUrl: "hien-thi-khach-hang.html",
-      controller: khachhangController,
-    })
-    // .when("/admin", {
-    //   templateUrl: "admin.html",
-    // })
-=======
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "hien-thi-san-pham-chi-tiet.html",
       controller: HoaDonController,
     })
->>>>>>> 740c6f7f17f432ec50837343645613861cdc5706
     .otherwise({
       redirectTo: "/admin",
     });

@@ -1,4 +1,4 @@
-window.nhanvienController = function ($http, $scope, $location) {
+window.NhanVienController = function ($http, $scope, $location) {
   $scope.list = [];
   $scope.listnv = [];
   $scope.form_nv = {

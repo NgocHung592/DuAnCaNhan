@@ -1,4 +1,4 @@
-window.khachhangController = function ($http, $scope, $location) {
+window.KhachHangController = function ($http, $scope, $location) {
   $scope.listkh = [];
   $scope.form_kh = {
     ma: "",
