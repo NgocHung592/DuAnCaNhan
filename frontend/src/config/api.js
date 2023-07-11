@@ -6,12 +6,14 @@ window.chatLieuAPI = url + "/chat-lieu";
 
 window.danhMucAPI = url + "/danh-muc";
 
-window.danhMucAPI = url + "/mau-sac";
+window.mauSacAPI = url + "/mau-sac";
 
-window.danhMucAPI = url + "/kich-thuoc";
+window.kichThuocAPI = url + "/kich-thuoc";
 
-window.danhMucAPI = url + "/kieu-dang";
+window.kieuDangAPI = url + "/kieu-dang";
 
-window.danhMucAPI = url + "/phong-cach";
+window.phongCachAPI = url + "/phong-cach";
+
+window.hoaTietAPI = url + "/hoa-tiet";
 
 window.hoaDonAPI = url + "/hoa-don";

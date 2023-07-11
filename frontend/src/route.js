@@ -14,11 +14,11 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/mau-sac/hien-thi", {
       templateUrl: "hien-thi-mau-sac.html",
-      controller: SanPhamController,
+      controller: MauSacController,
     })
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "hien-thi-kich-thuoc.html",
-      controller: SanPhamController,
+      controller: KichThuocController,
     })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "hien-thi-chat-lieu.html",
@@ -26,15 +26,15 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/hoa-tiet/hien-thi", {
       templateUrl: "hien-thi-hoa-tiet.html",
-      controller: SanPhamController,
+      controller: HoaTietController,
     })
     .when("/phong-cach/hien-thi", {
       templateUrl: "hien-thi-phong-cach.html",
-      controller: SanPhamController,
+      controller: PhongCachController,
     })
     .when("/kieu-dang/hien-thi", {
       templateUrl: "hien-thi-kieu-dang.html",
-      controller: SanPhamController,
+      controller: KieuDangController,
     })
     .when("/hoa-don/hien-thi", {
       templateUrl: "hien-thi-hoa-don.html",

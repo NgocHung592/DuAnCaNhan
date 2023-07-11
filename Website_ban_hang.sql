@@ -5,6 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 Create table [danh_muc]
 (
 	id UNIQUEIDENTIFIER 
@@ -16,7 +17,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
 )
  
  Create table [mau_sac](
@@ -29,7 +30,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [kich_thuoc](
@@ -42,7 +43,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [chat_lieu](
@@ -55,7 +56,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [phong_cach](
@@ -68,7 +69,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [kieu_dang](
@@ -81,7 +82,8 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit,
+	danh_muc_id UNIQUEIDENTIFIER REFERENCES danh_muc(id)
  )
 
   Create table [hoa_tiet](
@@ -94,7 +96,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
   Create table [san_pham](
@@ -108,7 +110,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
   Create table [san_pham_chi_tiet](
@@ -121,14 +123,13 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime,
+	da_xoa bit,
 	san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham(id),
 	danh_muc_id UNIQUEIDENTIFIER REFERENCES danh_muc(id),
 	mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
 	kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id),
 	chat_lieu_id UNIQUEIDENTIFIER REFERENCES chat_lieu(id),
 	hoa_tiet_id UNIQUEIDENTIFIER REFERENCES hoa_tiet(id),
-	kieu_dang_id UNIQUEIDENTIFIER REFERENCES kieu_dang(id),
 	phong_cach_id UNIQUEIDENTIFIER REFERENCES phong_cach(id)
 
  )
@@ -145,7 +146,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime,
+	da_xoa bit,
 	chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id)
  )
  
@@ -165,7 +166,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [khuyen_mai_chi_tiet](
@@ -179,7 +180,7 @@ Create table [danh_muc]
 	san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
  )
 
- Create table [phan_quyen](
+ Create table [vai_tro](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) not null,
@@ -189,7 +190,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [hang_khach_hang](
@@ -205,7 +206,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [tai_khoan](
@@ -222,7 +223,7 @@ Create table [danh_muc]
 	ghi_chu nvarchar(max),
 	trang_thai int,
 	hang_khach_hang UNIQUEIDENTIFIER REFERENCES hang_khach_hang(id),
-	phan_quyen_id UNIQUEIDENTIFIER REFERENCES phan_quyen(id)
+	vai_tro_id UNIQUEIDENTIFIER REFERENCES vai_tro(id)
 
  )
 
@@ -287,7 +288,7 @@ Create table [danh_muc]
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
-	da_xoa datetime
+	da_xoa bit
  )
 
  Create table [hoa_don_chi_tiet](
@@ -300,11 +301,10 @@ Create table [danh_muc]
 	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id)
  )
 
- Create table [thoi_gian_dat_hang](
+ Create table [lich_su_hoa_don](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
 	ngay_cap_nhap datetime,
-	ngay_tao datetime,
 	mo_ta nvarchar(50),
 	loai_hoa_don nvarchar(50),
 	trang_thai int,
@@ -333,7 +333,6 @@ Create table [danh_muc]
 	tinh_thanh_pho nvarchar(20),
 	quan_huyen nvarchar(20),
 	phuong_xa nvarchar(20),
-	duong_pho nvarchar(25),
 	tai_khoan_id UNIQUEIDENTIFIER REFERENCES tai_khoan(id)
  )
 
@@ -342,11 +341,13 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20),
 	thoi_gian_dat_lai datetime,
-	mo_ta nvarchar(max),
 	trang_thai int
  )
 
  Create table [lich_su_thay_doi](
 	tai_khoan_id UNIQUEIDENTIFIER REFERENCES tai_khoan(id),
-	dat_lai_hang_id UNIQUEIDENTIFIER REFERENCES dat_lai_hang(id)
+	dat_lai_hang_id UNIQUEIDENTIFIER REFERENCES dat_lai_hang(id),
+	mo_ta nvarchar(max),
+	thoi_gian_cap_nhap datetime
  )
+
