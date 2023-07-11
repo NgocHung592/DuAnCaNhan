@@ -52,6 +52,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-san-pham-chi-tiet.html",
       controller: HoaDonController,
     })
+      .when("/khuyen-mai/hienthi", {
+        templateUrl: "hien-thi-khuyen-mai.html",
+        controller: KhuyenMaiController,
+      })
     .otherwise({
       redirectTo: "/admin",
     });
