@@ -1,5 +1,6 @@
-window.hienThiSanPhamController = function ($http, $scope) {
+window.hienThiSanPhamController = function ($http, $scope, $rootScope) {
   $scope.listSanPham = [];
+  $scope.listSanPham1 = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.getData = function () {

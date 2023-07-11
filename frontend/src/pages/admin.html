@@ -59,10 +59,10 @@
             </a>
             <ul id="taiKhoan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
               <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-settings.html">Khách Hàng</a>
+                <a class="sidebar-link" href="#khachhang/hienthi">Khách Hàng</a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-projects.html">Nhân Viên
+                <a class="sidebar-link" href="#nhanvien/hienthi">Nhân Viên
                 </a>
               </li>
             </ul>
@@ -74,6 +74,9 @@
               <span class="align-middle">Quản Lý Sản Phẩm</span>
             </a>
             <ul id="sanPham" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#/san-pham-chi-tiet/hien-thi">Sản phẩm chi tiết</a>
+              </li>
               <li class="sidebar-item">
                 <a class="sidebar-link" href="#/san-pham/hien-thi">Sản phẩm</a>
               </li>
@@ -112,7 +115,7 @@
             </a>
             <ul id="khuyenMai" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
               <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-sign-in.html">Khuyến Mãi</a>
+                <a class="sidebar-link" href="#khuyen-mai/hienthi">Khuyến Mãi</a>
               </li>
               <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-sign-up.html">Hạng Khách Hàng</a>
@@ -245,7 +248,9 @@
   <script src="../../js/plugin/bootstrap.min.js"></script>
   <script src="../../lib/angular.js"></script>
   <script src="../../lib/angular-route.js"></script>
-  <script src="../controller/SanPhamController.js"></script>
+  <script src="../controller/san-pham/addSanPhamController.js"></script>
+  <script src="../controller/san-pham/updateSanPhamController.js"></script>
+  <script src="../controller/san-pham/hienThiSanPhamController.js"></script>
   <script src="../controller/ChatLieuController.js"></script>
   <script src="../controller/HoaDonController.js"></script>
   <script src="../controller/DanhMucController.js"></script>
@@ -254,6 +259,9 @@
   <script src="../controller/HoaTietController.js"></script>
   <script src="../controller/PhongCachController.js"></script>
   <script src="../controller/KieuDangController.js"></script>
+  <script src="../controller/KhachHangController.js"></script>
+  <script src="../controller/NhanVienController.js"></script>
+  <script src="../controller/KhuyenMaiController.js"></script>
   <script src="../config/api.js"></script>
   <script src="../route.js"></script>
 </body>
