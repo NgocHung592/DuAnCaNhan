@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/hoa-don/")
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class HoaDonRestController {
     @Autowired
     private HoaDonService hoaDonService;

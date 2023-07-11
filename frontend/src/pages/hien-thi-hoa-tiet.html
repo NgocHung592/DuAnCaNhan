@@ -2,36 +2,27 @@
     <div class="container-fluid p-0">
         <div class="row">
             <div class="card flex-fill">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Họa Tiết</h5>
-                </div>
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <form>
                             <div class="mb-3">
-                                <label class="form-label">Mã sản phẩm</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.ma">
+                                <label class="form-label">Mã hoạ tiết</label>
+                                <input type="text" class="form-control" ng-model="formHoaTiet.ma">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tên sản phẩm</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.ten">
+                                <label class="form-label">Tên họa tiết</label>
+                                <input type="text" class="form-control" ng-model="formHoaTiet.ten">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formProduct.moTa">
-                            </div>
+
                             <div class="mb-3" class="form-check">
                                 <label class="form-label">Trạng thái</label><br>
-                                <input type="radio" value="1" ng-model="formProduct.trangThai"
-                                    ng-checked="formProduct.trangThai==1" class="form-check-input">
+                                <input type="radio" value="1" ng-model="formHoaTiet.trangThai"
+                                    ng-checked="formHoaTiet.trangThai==1" class="form-check-input">
                                 <label class="form-check-label">
                                     Kích hoạt
                                 </label>
-                                <input type="radio" value="0" ng-model="formProduct.trangThai"
-                                    ng-checked="formProduct.trangThai==0" class="form-check-input">
+                                <input type="radio" value="0" ng-model="formHoaTiet.trangThai"
+                                    ng-checked="formHoaTiet.trangThai==0" class="form-check-input">
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
@@ -41,7 +32,7 @@
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-                            <a type="button" class="btn btn-primary" ng-click="update(formProduct.id)">Update</a>
+                            <a type="button" class="btn btn-primary" ng-click="update(formHoaTiet.id)">Update</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -49,24 +40,22 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Mã</th>
                                     <th scope="col">Tên</th>
-                                    <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Action</th>
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPham in listSanPham.content">
+                            <tbody ng-repeat="hoaTiet in listHoaTiet.content">
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{sanPham.ma}}</th>
-                                    <th scope="row">{{sanPham.ten}}</th>
-                                    <th scope="row">{{sanPham.moTa}}</th>
-                                    <th scope="row">{{sanPham.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                    <th scope="row">{{hoaTiet.ma}}</th>
+                                    <th scope="row">{{hoaTiet.ten}}</th>
+                                    <th scope="row">{{hoaTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning "
-                                            ng-click="detail(sanPham.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Delete</a>
+                                            ng-click="detail(hoaTiet.id)">Detail</a>
+                                        <a type="button" class="btn btn-danger" ng-click="delete(hoaTiet.id)">Delete</a>
                                     </th>
                                 </tr>
                             </tbody>

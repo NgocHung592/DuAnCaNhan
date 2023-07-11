@@ -1,5 +1,7 @@
-window.SanPhamController = function ($http, $scope, $location) {
+window.SanPhamController = function ($http, $scope) {
   $scope.listSanPham = [];
+  $scope.page = 0;
+  $scope.pages = [];
   $scope.formProduct = {
     id: "",
     ma: "",
@@ -8,10 +10,22 @@ window.SanPhamController = function ($http, $scope, $location) {
     trangThai: Number,
   };
   //get all
-  $http.get(sanPhamAPI + "/hien-thi").then(function (response) {
-    $scope.listSanPham = response.data;
-    console.log($scope.listSanPham);
-  });
+  $http
+    .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.page)
+    .then(function (response) {
+      $scope.listSanPham = response.data;
+      $scope.pages = new Array(response.data.totalPages);
+    });
+  $scope.setPage = function (page, event) {
+    event.preventDefault();
+    $scope.page = page;
+    $http
+      .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.page)
+      .then(function (response) {
+        $scope.listSanPham = response.data;
+        $scope.pages = new Array(response.data.totalPages);
+      });
+  };
   //detai san pham
   $scope.detail = function (id) {
     $http.get(sanPhamAPI + "/detail/" + id).then(function (response) {

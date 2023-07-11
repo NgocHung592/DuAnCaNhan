@@ -10,57 +10,27 @@
             <form>
               <div class="mb-3">
                 <label class="form-label">Mã hóa đơn</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="formHoaDon.ma"
-                />
+                <input type="text" class="form-control" aria-describedby="emailHelp" ng-model="formHoaDon.ma" />
               </div>
               <div class="mb-3" class="form-check">
                 <label class="form-label">Trạng thái</label><br />
-                <input
-                  type="radio"
-                  value="1"
-                  ng-model="formHoaDon.trangThai"
-                  ng-checked="formHoaDon.trangThai==0"
-                  class="form-check-input"
-                />
+                <input type="radio" value="1" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==0"
+                  class="form-check-input" />
                 <label class="form-check-label"> Xác nhận đơn </label>
-                <input
-                  type="radio"
-                  value="0"
-                  ng-model="formHoaDon.trangThai"
-                  ng-checked="formHoaDon.trangThai==1"
-                  class="form-check-input"
-                />
+                <input type="radio" value="0" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==1"
+                  class="form-check-input" />
                 <label class="form-check-label"> Chuẩn bị hàng </label>
-                <input
-                  type="radio"
-                  value="2"
-                  ng-model="formHoaDon.trangThai"
-                  ng-checked="formHoaDon.trangThai==2"
-                  class="form-check-input"
-                />
+                <input type="radio" value="2" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==2"
+                  class="form-check-input" />
                 <label class="form-check-label"> Đang giao </label>
-                <input
-                  type="radio"
-                  value="3"
-                  ng-model="formHoaDon.trangThai"
-                  ng-checked="formHoaDon.trangThai==3"
-                  class="form-check-input"
-                />
+                <input type="radio" value="3" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==3"
+                  class="form-check-input" />
                 <label class="form-check-label"> Đã giao </label>
               </div>
             </form>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-              <a
-                type="button"
-                class="btn btn-primary"
-                ng-click="update(formHoaDon.id)"
-                >Update</a
-              >
+              <a type="button" class="btn btn-primary" ng-click="update(formHoaDon.id)">Update</a>
             </div>
             <table class="table">
               <thead>
@@ -76,22 +46,11 @@
                   <th scope="row">{{$index+1}}</th>
                   <th scope="row">{{hoaDon.ma}}</th>
                   <th scope="row">
-                    {{hoaDon.trangThai==0?"Xác nhận đơn":1?"Chuẩn bị
-                    hàng":2?""Đang giao":3?"Đã giao"}}
+                    {{hoaDon.trangThai==0?"Xác nhận đơn":1?"Chuẩn bị hàng":2?"Đang giao":"Đã giao"}}
                   </th>
                   <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning"
-                      ng-click="detail(hoaDon.id)"
-                      >Detail</a
-                    >
-                    <a
-                      type="button"
-                      class="btn btn-danger"
-                      ng-click="delete(hoaDon.id)"
-                      >Delete</a
-                    >
+                    <a type="button" class="btn btn-warning" ng-click="detail(hoaDon.id)">Detail</a>
+                    <a type="button" class="btn btn-danger" ng-click="delete(hoaDon.id)">Delete</a>
                   </th>
                 </tr>
               </tbody>

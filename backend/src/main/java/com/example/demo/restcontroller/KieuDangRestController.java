@@ -2,6 +2,7 @@ package com.example.demo.restcontroller;
 
 import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.KieuDang;
+import com.example.demo.model.request.KieuDangRequest;
 import com.example.demo.service.ChatLieuService;
 import com.example.demo.service.KieuDangService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,12 @@ public class KieuDangRestController {
     }
 
     @PostMapping("add")
-    public KieuDang add(@RequestBody KieuDang kieuDang) {
+    public KieuDang add(@RequestBody KieuDangRequest kieuDang) {
         return kieuDangService.add(kieuDang);
     }
 
     @PutMapping("update/{id}")
-    public KieuDang update(@RequestBody KieuDang kieuDang, @PathVariable("id") String id) {
+    public KieuDang update(@RequestBody KieuDangRequest kieuDang, @PathVariable("id") String id) {
         return kieuDangService.update(kieuDang, UUID.fromString(id));
     }
 

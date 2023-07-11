@@ -10,36 +10,37 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/danh-muc/hien-thi", {
       templateUrl: "hien-thi-danh-muc.html",
-      controller: SanPhamController,
+      controller: DanhMucController,
     })
     .when("/mau-sac/hien-thi", {
       templateUrl: "hien-thi-mau-sac.html",
-      controller: SanPhamController,
+      controller: MauSacController,
     })
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "hien-thi-kich-thuoc.html",
-      controller: SanPhamController,
+      controller: KichThuocController,
     })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "hien-thi-chat-lieu.html",
-      controller: SanPhamController,
+      controller: ChatLieuController,
     })
     .when("/hoa-tiet/hien-thi", {
       templateUrl: "hien-thi-hoa-tiet.html",
-      controller: SanPhamController,
+      controller: HoaTietController,
     })
     .when("/phong-cach/hien-thi", {
       templateUrl: "hien-thi-phong-cach.html",
-      controller: SanPhamController,
+      controller: PhongCachController,
     })
     .when("/kieu-dang/hien-thi", {
       templateUrl: "hien-thi-kieu-dang.html",
-      controller: SanPhamController,
+      controller: KieuDangController,
     })
     .when("/hoa-don/hien-thi", {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
     })
+<<<<<<< HEAD
     .when("/nhanvien/hienthi", {
       templateUrl: "hien-thi-nhan-vien.html",
       controller: nhanvienController,
@@ -51,15 +52,13 @@ myApp.config(function ($routeProvider, $locationProvider) {
     // .when("/admin", {
     //   templateUrl: "admin.html",
     // })
+=======
+    .when("/san-pham-chi-tiet/hien-thi", {
+      templateUrl: "hien-thi-san-pham-chi-tiet.html",
+      controller: HoaDonController,
+    })
+>>>>>>> 740c6f7f17f432ec50837343645613861cdc5706
     .otherwise({
       redirectTo: "/admin",
     });
-  // $routeProvider
-  //   .when("/hoa-don/hien-thi", {
-  //     templateUrl: "hoa-don-hien-thi.html",
-  //     controller: HoaDonController,
-  //   })
-  //   .otherwise({
-  //     redirectTo: "/admin",
-  //   });
 });
