@@ -16,4 +16,6 @@ window.phongCachAPI = url + "/phong-cach";
 
 window.hoaTietAPI = url + "/hoa-tiet";
 
+window.sanPhamChiTietAPI = url + "/san-pham-chi-tiet";
+
 window.hoaDonAPI = url + "/hoa-don";

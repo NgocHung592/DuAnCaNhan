@@ -68,6 +68,15 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" ng-repeat="page in pages track by $index"
+                                        ng-click="setPage($index,$event)">{{$index +1}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
