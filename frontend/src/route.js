@@ -40,6 +40,14 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
     })
+    .when("/nhanvien/hienthi", {
+      templateUrl: "hien-thi-nhan-vien.html",
+      controller: nhanvienController,
+    })
+    .when("/khachhang/hienthi", {
+      templateUrl: "hien-thi-khach-hang.html",
+      controller: khachhangController,
+    })
     // .when("/admin", {
     //   templateUrl: "admin.html",
     // })
