@@ -42,7 +42,7 @@ public class KieuDang {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "danh_muc_id",referencedColumnName = "id")
     private DanhMuc danhMuc;
 }

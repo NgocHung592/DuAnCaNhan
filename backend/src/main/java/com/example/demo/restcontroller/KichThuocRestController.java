@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/hoa-tiet/")
+@RequestMapping("/kich-thuoc/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class KichThuocRestController {
 

@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.KieuDang;
+import com.example.demo.model.request.KieuDangRequest;
 import com.example.demo.repository.DanhMucRepository;
 import com.example.demo.repository.KieuDangRepository;
 import com.example.demo.service.KieuDangService;
@@ -28,22 +29,26 @@ public class KieuDangServiceImpl implements KieuDangService {
     }
 
     @Override
-    public KieuDang add(KieuDang kieuDang) {
+    public KieuDang add(KieuDangRequest kieuDangRequest) {
         KieuDang kieuDangSave= KieuDang.builder()
-                .ma(kieuDang.getMa())
-                .ten(kieuDang.getTen())
-                .danhMuc(danhMucRepository.findById(kieuDang.getDanhMuc().getId()).orElse(null))
-                .trangThai(kieuDang.getTrangThai())
+                .ma(kieuDangRequest.getMa())
+                .ten(kieuDangRequest.getTen())
+                .danhMuc(danhMucRepository.findById(kieuDangRequest.getIdDanhMuc()).get())
+                .trangThai(Integer.valueOf(kieuDangRequest.getTrangThai()))
                 .build();
         return kieuDangRepository.save(kieuDangSave);
     }
 
     @Override
-    public KieuDang update(KieuDang kieuDang, UUID id) {
-        if (kieuDangRepository.existsById(id)) {
-            return kieuDangRepository.save(kieuDang);
-        }
-        return null;
+    public KieuDang update(KieuDangRequest kieuDangRequest, UUID id) {
+        KieuDang kieuDangUpdate= KieuDang.builder()
+                .id(id)
+                .ma(kieuDangRequest.getMa())
+                .ten(kieuDangRequest.getTen())
+                .danhMuc(danhMucRepository.findById(kieuDangRequest.getIdDanhMuc()).get())
+                .trangThai(Integer.valueOf(kieuDangRequest.getTrangThai()))
+                .build();
+        return kieuDangRepository.save(kieuDangUpdate);
     }
 
     @Override
