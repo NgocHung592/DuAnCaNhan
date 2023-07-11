@@ -1,0 +1,46 @@
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="card flex-fill">
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Mã sản phẩm</label>
+                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                    ng-model="detailProduct.ma">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tên sản phẩm</label>
+                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                    ng-model="detailProduct.ten">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mô tả</label>
+                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                    ng-model="detailProduct.moTa">
+                            </div>
+                            <div class="mb-3" class="form-check">
+                                <label class="form-label">Trạng thái</label><br>
+                                <input type="radio" value="1" ng-model="detailProduct.trangThai"
+                                    ng-checked="detailProduct.trangThai==1" class="form-check-input">
+                                <label class="form-check-label">
+                                    Kích hoạt
+                                </label>
+                                <input type="radio" value="0" ng-model="detailProduct.trangThai"
+                                    ng-checked="detailProduct.trangThai==0" class="form-check-input">
+                                <label class="form-check-label">
+                                    Hủy kích hoạt
+                                </label>
+                            </div>
+                        </form>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a type="button" class="btn btn-primary" ng-click="update(detailProduct.id)">Cập nhật</a>
+                            <a type="button" class="btn btn-primary" href="#san-pham/hien-thi">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

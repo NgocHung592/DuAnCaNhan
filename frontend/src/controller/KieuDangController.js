@@ -1,6 +1,5 @@
-window.KieuDangController = function ($http, $scope) {
+window.KieuDangController = function ($http, $scope, $rootScope) {
   $scope.listKieuDang = [];
-  $scope.listDanhMuc = [];
   $scope.formKieuDang = {
     id: "",
     ma: "",
@@ -8,14 +7,12 @@ window.KieuDangController = function ($http, $scope) {
     idDanhMuc: "",
     trangThai: Number,
   };
-  //hien thi
   $http.get(kieuDangAPI + "/hien-thi").then(function (response) {
     $scope.listKieuDang = response.data;
   });
   $http.get(danhMucAPI + "/hien-thi").then(function (response) {
     $scope.listDanhMuc = response.data;
   });
-  //detai san pham
   $scope.detail = function (id) {
     $http.get(kieuDangAPI + "/detail/" + id).then(function (response) {
       if (response.status == 200) {

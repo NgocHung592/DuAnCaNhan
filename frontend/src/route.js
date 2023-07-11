@@ -5,13 +5,22 @@ myApp.config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
     .when("/san-pham/hien-thi", {
-      templateUrl: "hien-thi-san-pham.html",
-      controller: SanPhamController,
+      templateUrl: "san-pham/hien-thi-san-pham.html",
+      controller: hienThiSanPhamController,
+    })
+    .when("/san-pham/add", {
+      templateUrl: "san-pham/add-san-pham.html",
+      controller: addSanPhamController,
+    })
+    .when("/san-pham/view-update/:id", {
+      templateUrl: "san-pham/update-san-pham.html",
+      controller: updateSanPhamController,
     })
     .when("/danh-muc/hien-thi", {
       templateUrl: "hien-thi-danh-muc.html",
       controller: DanhMucController,
     })
+
     .when("/mau-sac/hien-thi", {
       templateUrl: "hien-thi-mau-sac.html",
       controller: MauSacController,
@@ -42,7 +51,6 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "hien-thi-san-pham-chi-tiet.html",
-      controller: HoaDonController,
     })
     .otherwise({
       redirectTo: "/admin",
