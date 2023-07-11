@@ -1,19 +1,22 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.MauSac;
+import com.example.demo.entity.SanPhamChiTiet;
+import com.example.demo.model.request.SanPhamChiTietRequest;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface SanPhamChiTietService {
 
-    Page<MauSac> getAll(Integer pageNo);
+    Page<SanPhamChiTiet> getAll(Integer pageNo);
 
-    MauSac getOne(UUID id);
+    SanPhamChiTiet getOne(UUID id);
 
-    MauSac add(MauSac mauSac);
+    List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);
 
-    MauSac update(MauSac mauSac, UUID id);
+    SanPhamChiTiet update(MauSac mauSac, UUID id);
 
     void delete(UUID id);
 }

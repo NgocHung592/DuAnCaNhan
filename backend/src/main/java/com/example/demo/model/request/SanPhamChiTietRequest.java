@@ -1,2 +1,4 @@
-package com.example.demo.model.request;public class SanPhamChiTietRequest {
+package com.example.demo.model.request;
+
+public class SanPhamChiTietRequest {
 }

@@ -1,2 +1,4 @@
-package com.example.demo.restcontroller;public class SanPhamChiTietRestController {
+package com.example.demo.restcontroller;
+
+public class SanPhamChiTietRestController {
 }
