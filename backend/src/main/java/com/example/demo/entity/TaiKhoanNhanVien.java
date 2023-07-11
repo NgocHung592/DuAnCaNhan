@@ -44,6 +44,7 @@ public class TaiKhoanNhanVien {
     private  Integer trangthai;
 
     @ManyToOne
-    @JoinColumn(name="hang_khach_hang")
-    private KhachHang kh;
+    @JoinColumn(name="phan_quyen_id")
+    private NhanVien nv;
+
 }

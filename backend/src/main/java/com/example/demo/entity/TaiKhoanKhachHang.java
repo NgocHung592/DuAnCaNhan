@@ -43,7 +43,8 @@ public class TaiKhoanKhachHang {
     @Column(name="trang_thai")
     private  Integer trangthai;
 
-    @ManyToOne
-    @JoinColumn(name="phan_quyen_id")
-    private NhanVien nv;
+//    @ManyToOne
+//    @JoinColumn(name="hang_khach_hang")
+//    private KhachHang kh;
+
 }

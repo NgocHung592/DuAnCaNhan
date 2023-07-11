@@ -1,0 +1,38 @@
+<br />
+<div>
+  <a type="button" class="btn btn-success" href="#/khachhang/add">Tạo mới</a>
+</div>
+<br />
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Mã</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Email</th>
+      <th scope="col">Trạng thái</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="n in listkh">
+      <th scope="row">{{$index+1}}</th>
+      <th scope="row">{{n.ma}}</th>
+      <th scope="row">{{n.hoten}}</th>
+      <th scope="row">{{n.email}}</th>
+      <th scope="row">{{n.trangthai==1?"Kích hoạt":"Hủy kích hoạt"}}</th>
+      <th>
+        <a
+          type="button"
+          class="btn btn-warning"
+          href="#khachhang/hienthi"
+          ng-click="detail(n.id)"
+          >Detail</a
+        >
+        <a type="button" class="btn btn-danger" ng-click="delete(n.id)"
+          >Delete</a
+        >
+      </th>
+    </tr>
+  </tbody>
+</table>

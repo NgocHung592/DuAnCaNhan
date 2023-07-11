@@ -25,9 +25,17 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hien-thi-mau-sac.html",
       controller: MauSacController,
     })
+    .when("/khachhang/hienthi", {
+      templateUrl: "hien-thi-khach-hang.html",
+      controller: KhachHangController,
+    })
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "hien-thi-kich-thuoc.html",
       controller: KichThuocController,
+    })
+    .when("/nhanvien/hienthi", {
+      templateUrl: "hien-thi-nhan-vien.html",
+      controller: NhanVienController,
     })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "hien-thi-chat-lieu.html",
@@ -52,6 +60,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "hien-thi-san-pham-chi-tiet.html",
     })
+      .when("/khuyen-mai/hienthi", {
+        templateUrl: "hien-thi-khuyen-mai.html",
+        controller: KhuyenMaiController,
+      })
     .otherwise({
       redirectTo: "/admin",
     });
