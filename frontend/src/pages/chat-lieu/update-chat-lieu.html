@@ -27,41 +27,12 @@
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
-
                             </div>
-
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-                            <a type="button" class="btn btn-primary" ng-click="update(formChatLieu.id)">Update</a>
+                            <a type="button" class="btn btn-primary" ng-click="update(formChatLieu.id)">Cập nhật</a>
+                            <a type="button" class="btn btn-primary" href="#chat-lieu/hien-thi">Back</a>
                         </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="chatLieu in listChatLieu.content">
-                                <tr>
-                                    <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{chatLieu.ma}}</th>
-                                    <th scope="row">{{chatLieu.ten}}</th>
-                                    <th scope="row">{{chatLieu.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
-                                    </th>
-                                    <th>
-                                        <a type="button" class="btn btn-warning "
-                                            ng-click="detail(chatLieu.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger"
-                                            ng-click="delete(chatLieu.id)">Delete</a>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

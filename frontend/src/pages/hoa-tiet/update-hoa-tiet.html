@@ -26,40 +26,12 @@
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
-
                             </div>
-
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-                            <a type="button" class="btn btn-primary" ng-click="update(formHoaTiet.id)">Update</a>
+                            <a type="button" class="btn btn-primary" ng-click="update(formHoaTiet.id)">Cập nhật</a>
+                            <a type="button" class="btn btn-primary" href="#hoa-tiet/hien-thi">Back</a>
                         </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="hoaTiet in listHoaTiet.content">
-                                <tr>
-                                    <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{hoaTiet.ma}}</th>
-                                    <th scope="row">{{hoaTiet.ten}}</th>
-                                    <th scope="row">{{hoaTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
-                                    </th>
-                                    <th>
-                                        <a type="button" class="btn btn-warning "
-                                            ng-click="detail(hoaTiet.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(hoaTiet.id)">Delete</a>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

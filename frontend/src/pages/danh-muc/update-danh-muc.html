@@ -6,12 +6,12 @@
                     <div class="align-self-center w-100">
                         <form>
                             <div class="mb-3">
-                                <label class="form-label">Mã danh mục</label>
+                                <label class="form-label">Mã sản phẩm</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
                                     ng-model="formDanhMuc.ma">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tên danh mục</label>
+                                <label class="form-label">Tên sản phẩm</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
                                     ng-model="formDanhMuc.ten">
                             </div>
@@ -27,40 +27,12 @@
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
-
                             </div>
-
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-                            <a type="button" class="btn btn-primary" ng-click="update(formDanhMuc.id)">Update</a>
+                            <a type="button" class="btn btn-primary" ng-click="update(formDanhMuc.id)">Cập nhật</a>
+                            <a type="button" class="btn btn-primary" href="#danh-muc/hien-thi">Back</a>
                         </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="danhMuc in listDanhMuc.content">
-                                <tr>
-                                    <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{danhMuc.ma}}</th>
-                                    <th scope="row">{{danhMuc.ten}}</th>
-                                    <th scope="row">{{danhMuc.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
-                                    </th>
-                                    <th>
-                                        <a type="button" class="btn btn-warning "
-                                            ng-click="detail(danhMuc.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(danhMuc.id)">Delete</a>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

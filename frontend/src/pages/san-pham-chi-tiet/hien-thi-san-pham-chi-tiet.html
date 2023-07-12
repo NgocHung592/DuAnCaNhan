@@ -13,7 +13,7 @@
                             </div>
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
+                            <a type="button" class="btn btn-primary" ng-click="add($event);">Thêm</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -37,9 +37,9 @@
                                     <th scope="row">{{sanPham.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning "
-                                            ng-click="detail(sanPham.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Delete</a>
+                                        <a type="button" class="btn btn-warning " ng-click="detail(sanPham.id)">Chi
+                                            tiết</a>
+                                        <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
                                     </th>
                                 </tr>
                             </tbody>

@@ -17,42 +17,65 @@ myApp.config(function ($routeProvider, $locationProvider) {
       controller: updateSanPhamController,
     })
     .when("/danh-muc/hien-thi", {
-      templateUrl: "hien-thi-danh-muc.html",
-      controller: DanhMucController,
+      templateUrl: "danh-muc/hien-thi-danh-muc.html",
+      controller: hienThiDanhMucController,
     })
-
-    .when("/mau-sac/hien-thi", {
-      templateUrl: "hien-thi-mau-sac.html",
-      controller: MauSacController,
+    .when("/danh-muc/add", {
+      templateUrl: "danh-muc/add-danh-muc.html",
+      controller: addDanhMucController,
     })
-    .when("/khachhang/hienthi", {
-      templateUrl: "hien-thi-khach-hang.html",
-      controller: KhachHangController,
+    .when("/danh-muc/update/:id", {
+      templateUrl: "danh-muc/update-danh-muc.html",
+      controller: updateDanhMucController,
     })
-    .when("/kich-thuoc/hien-thi", {
-      templateUrl: "hien-thi-kich-thuoc.html",
-      controller: KichThuocController,
-    })
+    // .when("/mau-sac/hien-thi", {
+    //   templateUrl: "hien-thi-mau-sac.html",
+    //   controller: MauSacController,
+    // })
+    // .when("/khachhang/hienthi", {
+    //   templateUrl: "hien-thi-khach-hang.html",
+    //   controller: KhachHangController,
+    // })
+    // .when("/kich-thuoc/hien-thi", {
+    //   templateUrl: "hien-thi-kich-thuoc.html",
+    //   controller: KichThuocController,
+    // })
     .when("/nhanvien/hienthi", {
       templateUrl: "hien-thi-nhan-vien.html",
       controller: NhanVienController,
     })
     .when("/chat-lieu/hien-thi", {
-      templateUrl: "hien-thi-chat-lieu.html",
-      controller: ChatLieuController,
+      templateUrl: "chat-lieu/hien-thi-chat-lieu.html",
+      controller: hienThiChatLieuController,
+    })
+    .when("/chat-lieu/add", {
+      templateUrl: "chat-lieu/add-chat-lieu.html",
+      controller: addChatLieuController,
+    })
+    .when("/chat-lieu/update/:id", {
+      templateUrl: "chat-lieu/update-chat-lieu.html",
+      controller: updateChatLieuController,
     })
     .when("/hoa-tiet/hien-thi", {
-      templateUrl: "hien-thi-hoa-tiet.html",
-      controller: HoaTietController,
+      templateUrl: "hoa-tiet/hien-thi-hoa-tiet.html",
+      controller: hienThiHoaTietController,
     })
-    .when("/phong-cach/hien-thi", {
-      templateUrl: "hien-thi-phong-cach.html",
-      controller: PhongCachController,
+    .when("/hoa-tiet/add", {
+      templateUrl: "hoa-tiet/add-hoa-tiet.html",
+      controller: addHoaTietController,
     })
-    .when("/kieu-dang/hien-thi", {
-      templateUrl: "hien-thi-kieu-dang.html",
-      controller: KieuDangController,
+    .when("/hoa-tiet/update/:id", {
+      templateUrl: "hoa-tiet/update-hoa-tiet.html",
+      controller: updateHoaTietController,
     })
+    // .when("/phong-cach/hien-thi", {
+    //   templateUrl: "hien-thi-phong-cach.html",
+    //   controller: PhongCachController,
+    // })
+    // .when("/kieu-dang/hien-thi", {
+    //   templateUrl: "hien-thi-kieu-dang.html",
+    //   controller: KieuDangController,
+    // })
     .when("/hoa-don/hien-thi", {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
