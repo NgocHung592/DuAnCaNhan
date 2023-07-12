@@ -115,6 +115,12 @@ myApp.config(function ($routeProvider, $locationProvider) {
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "san-pham-chi-tiet/hien-thi-san-pham-chi-tiet.html",
     })
+    .when("/san-pham-chi-tiet/add", {
+      templateUrl: "san-pham-chi-tiet/add-san-pham-chi-tiet.html",
+    })
+    .when("/san-pham-chi-tiet/update/:id", {
+      templateUrl: "san-pham-chi-tiet/update-san-pham-chi-tiet.html",
+    })
     .when("/khuyen-mai/hienthi", {
       templateUrl: "hien-thi-khuyen-mai.html",
       controller: KhuyenMaiController,
