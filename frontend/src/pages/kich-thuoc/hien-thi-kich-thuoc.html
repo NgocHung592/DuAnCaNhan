@@ -4,36 +4,8 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label">Mã kích thước</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formKichThuoc.ma">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Tên kích thước</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="formKichThuoc.ten">
-                            </div>
-                            <div class="mb-3" class="form-check">
-                                <label class="form-label">Trạng thái</label><br>
-                                <input type="radio" value="1" ng-model="formKichThuoc.trangThai"
-                                    ng-checked="formKichThuoc.trangThai==1" class="form-check-input">
-                                <label class="form-check-label">
-                                    Kích hoạt
-                                </label>
-                                <input type="radio" value="0" ng-model="formKichThuoc.trangThai"
-                                    ng-checked="formKichThuoc.trangThai==0" class="form-check-input">
-                                <label class="form-check-label">
-                                    Hủy kích hoạt
-                                </label>
-
-                            </div>
-
-                        </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-                            <a type="button" class="btn btn-primary" ng-click="update(formKichThuoc.id)">Update</a>
+                            <a type="button" class="btn btn-primary" href="#kich-thuoc/add">Thêm</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -55,13 +27,19 @@
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning "
-                                            ng-click="detail(kichThuoc.id)">Detail</a>
-                                        <a type="button" class="btn btn-danger"
-                                            ng-click="delete(kichThuoc.id)">Delete</a>
+                                            href="#kich-thuoc/update/{{kichThuoc.id}}">Chi tiết</a>
+                                        <a type="button" class="btn btn-danger" ng-click="delete(kichThuoc.id)">Xóa</a>
                                     </th>
                                 </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item" ng-repeat="page in totalPages track by $index"
+                                    ng-click="changePage($index);"><a class="page-link">{{$index+1}}</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

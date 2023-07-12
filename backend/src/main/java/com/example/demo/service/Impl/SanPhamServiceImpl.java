@@ -26,6 +26,9 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham add(SanPham sanPham) {
+        if(sanPham.getMa().isBlank() ||sanPham.getTen().isBlank()|| sanPham.getMoTa().isBlank()) {
+            return null;
+        }
         return sanPhamRepository.save(sanPham);
     }
 

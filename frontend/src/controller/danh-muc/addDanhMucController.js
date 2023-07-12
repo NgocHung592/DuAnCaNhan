@@ -1,7 +1,8 @@
-window.addDanhMucController = function ($http, $scope, $rootScope) {
+window.addDanhMucController = function ($http, $scope) {
+  $scope.randoom = "DM" + Math.floor(Math.random() * 10000) + 1;
   $scope.formDanhMuc = {
     id: "",
-    ma: "",
+    ma: $scope.randoom,
     ten: "",
     trangThai: 1,
   };

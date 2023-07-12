@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,11 @@ public class KieuDangServiceImpl implements KieuDangService {
     public Page<KieuDang> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return kieuDangRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<KieuDang> getListStatus() {
+        return kieuDangRepository.getListStatus();
     }
 
     @Override

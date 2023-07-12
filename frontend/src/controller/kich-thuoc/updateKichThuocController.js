@@ -1,5 +1,5 @@
-window.updateChatLieuController = function ($http, $scope, $routeParams) {
-  $scope.formChatLieu = {
+window.updateKichThuocController = function ($http, $scope, $routeParams) {
+  $scope.formKichThuoc = {
     id: "",
     ma: "",
     ten: "",
@@ -7,16 +7,16 @@ window.updateChatLieuController = function ($http, $scope, $routeParams) {
   };
 
   $http
-    .get(chatLieuAPI + "/detail/" + $routeParams.id)
+    .get(kichThuocAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       if (response.status == 200) {
-        $scope.formChatLieu = response.data;
+        $scope.formKichThuoc = response.data;
       }
     });
 
   $scope.update = function (id) {
     $http
-      .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
+      .put(kichThuocAPI + "/update/" + id, $scope.formKichThuoc)
       .then(function () {
         alert("Cập nhật thành công");
       });

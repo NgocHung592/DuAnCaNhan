@@ -6,24 +6,28 @@
                     <div class="align-self-center w-100">
                         <form>
                             <div class="mb-3">
-                                <label class="form-label">Mã sản phẩm</label>
+                                <label class="form-label">Mã kiểu dáng</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="detailProduct.ma">
+                                    ng-model="formKieuDang.ma">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tên sản phẩm</label>
+                                <label class="form-label">Tên kiểu dáng</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="detailProduct.ten">
+                                    ng-model="formKieuDang.ten">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="detailProduct.moTa">
+                                <label class="form-label">Tên danh mục</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    ng-model="formKieuDang.idDanhMuc">
+                                    <option ng-repeat="danhMuc in listDanhMucTheoTrangThai" value="{{danhMuc.id}}">
+                                        {{danhMuc.ten}}
+                                    </option>
+                                </select>
                             </div>
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" ng-click="add($event)">Thêm</a>
-                            <a type="button" class="btn btn-primary" href="#san-pham/hien-thi">Back</a>
+                            <a type="button" class="btn btn-primary" href="#kieu-dang/hien-thi">Back</a>
                         </div>
                     </div>
                 </div>

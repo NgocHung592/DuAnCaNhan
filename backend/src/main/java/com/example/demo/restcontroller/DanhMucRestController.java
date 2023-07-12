@@ -2,6 +2,7 @@ package com.example.demo.restcontroller;
 
 import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.DanhMuc;
+import com.example.demo.entity.KieuDang;
 import com.example.demo.service.ChatLieuService;
 import com.example.demo.service.DanhMucService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 @RestController
 @RequestMapping("/danh-muc/")
@@ -29,7 +31,10 @@ public class DanhMucRestController {
     public Page<DanhMuc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return danhMucService.getAll(pageNo);
     }
-
+    @GetMapping("trang-thai")
+    public List<DanhMuc> hienThiTrangThai() {
+        return danhMucService.getListStatus();
+    }
     @GetMapping("detail/{id}")
     public DanhMuc detail(@PathVariable("id") String id) {
         return danhMucService.getOne(UUID.fromString(id));

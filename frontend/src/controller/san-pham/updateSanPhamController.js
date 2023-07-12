@@ -20,8 +20,7 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
     $http
       .put(sanPhamAPI + "/update/" + id, $scope.detailProduct)
       .then(function () {
-        alert("update thanh cong");
-        console.log($scope.detailProduct);
+        alert("Cập nhật thành công");
       });
   };
 };

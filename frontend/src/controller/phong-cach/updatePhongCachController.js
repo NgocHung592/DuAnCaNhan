@@ -1,5 +1,5 @@
-window.updateChatLieuController = function ($http, $scope, $routeParams) {
-  $scope.formChatLieu = {
+window.updatePhongCachController = function ($http, $scope, $routeParams) {
+  $scope.formPhongCach = {
     id: "",
     ma: "",
     ten: "",
@@ -7,16 +7,16 @@ window.updateChatLieuController = function ($http, $scope, $routeParams) {
   };
 
   $http
-    .get(chatLieuAPI + "/detail/" + $routeParams.id)
+    .get(phongCachAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       if (response.status == 200) {
-        $scope.formChatLieu = response.data;
+        $scope.formPhongCach = response.data;
       }
     });
 
   $scope.update = function (id) {
     $http
-      .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
+      .put(phongCachAPI + "/update/" + id, $scope.formPhongCach)
       .then(function () {
         alert("Cập nhật thành công");
       });

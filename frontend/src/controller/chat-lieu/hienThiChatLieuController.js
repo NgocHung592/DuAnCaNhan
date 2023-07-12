@@ -1,4 +1,4 @@
-window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
+window.hienThiChatLieuController = function ($http, $scope) {
   $scope.listChatLieu = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
@@ -8,7 +8,7 @@ window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
     ten: "",
     trangThai: Number,
   };
-  $rootScope.getData = function () {
+  $scope.getData = function () {
     $http
       .get(chatLieuAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {

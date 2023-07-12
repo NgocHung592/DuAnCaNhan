@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +33,10 @@ public class KieuDangRestController {
     public Page<KieuDang> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return kieuDangService.getAll(pageNo);
     }
-
+    @GetMapping("trang- thai")
+    public List<KieuDang> hienThiTrangThai() {
+        return kieuDangService.getListStatus();
+    }
     @GetMapping("detail/{id}")
     public KieuDang detail(@PathVariable("id") String id) {
         return kieuDangService.detail(UUID.fromString(id));
