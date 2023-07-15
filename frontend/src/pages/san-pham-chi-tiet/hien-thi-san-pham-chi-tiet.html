@@ -89,6 +89,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Ảnh</th>
                                     <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Số lượng</th>
                                     <th scope="col">Giá</th>
                                     <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
@@ -96,13 +97,16 @@
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPham in listSanPham.content">
+                            <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content">
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{sanPham.ma}}</th>
-                                    <th scope="row">{{sanPham.ten}}</th>
-                                    <th scope="row">{{sanPham.moTa}}</th>
-                                    <th scope="row">{{sanPham.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                    <th scope="row"><img class="table_img"
+                                            src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"></th>
+                                    <th scope="row">{{sanPhamChiTiet.ten}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.gia}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.moTa}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning " ng-click="detail(sanPham.id)">Chi

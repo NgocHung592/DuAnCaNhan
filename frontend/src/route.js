@@ -114,6 +114,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "san-pham-chi-tiet/hien-thi-san-pham-chi-tiet.html",
+      controller: hienThiSanPhamChiTietController,
     })
     .when("/san-pham-chi-tiet/add", {
       templateUrl: "san-pham-chi-tiet/add-san-pham-chi-tiet.html",
