@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -31,7 +32,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
-public class SanPhamChiTiet {
+public class SanPhamChiTiet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

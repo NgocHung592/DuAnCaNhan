@@ -12,7 +12,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Nationalized;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Table(name = "san_pham")
@@ -23,7 +25,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-public class SanPham {
+public class SanPham implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -33,6 +35,7 @@ public class SanPham {
     private String ma;
 
     @Column(name = "ten")
+    @Nationalized
     private String ten;
 
     @Column(name = "mo_ta")
