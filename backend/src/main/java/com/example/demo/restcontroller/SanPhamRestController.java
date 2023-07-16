@@ -1,5 +1,6 @@
 package com.example.demo.restcontroller;
 
+import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.SanPham;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class SanPhamRestController {
     @GetMapping("hien-thi")
     public Page<SanPham> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return sanPhamService.getAll(pageNo);
+    }
+
+    @GetMapping("trang-thai")
+    public List<SanPham> hienThiTheoTrangThai() {
+        return sanPhamService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")

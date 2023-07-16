@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,11 @@ public class SanPhamServiceImpl implements SanPhamService {
     public Page<SanPham> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return sanPhamRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<SanPham> getAllByStatus() {
+        return sanPhamRepository.getAllByStatus();
     }
 
     @Override

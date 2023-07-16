@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +30,11 @@ public class KichThuocRestController {
     @GetMapping("hien-thi")
     public Page<KichThuoc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return kichThuocService.getAll(pageNo);
+    }
+
+    @GetMapping("trang-thai")
+    public List<KichThuoc> hienThiTheoTrangThai() {
+        return kichThuocService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")

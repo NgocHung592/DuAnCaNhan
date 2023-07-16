@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface DanhMucRepository extends JpaRepository<DanhMuc, UUID> {
+
     @Query("select dm from DanhMuc  dm where dm.trangThai=1")
     List<DanhMuc> getListStatus();
 }

@@ -22,64 +22,78 @@
                                 <label class="form-label">Sản Phẩm</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
+                                        {{sanPham.ten}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Danh Mục</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
+                                        {{danhMuc.ten}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Màu Sắc</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
+                                        {{mauSac.ten}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Kích Thước</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{kichThuoc.id}}" ng-repeat="kichThuoc in listKichThuocTrangThai">
+                                        {{kichThuoc.ten}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Phong Cách</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
+                                        {{phongCach.ten}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Chất Liệu</label>
                                 <select name="" id="">
                                     <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="{{chatLieu.id}}" ng-repeat="chatLieu in listChatLieuTrangThai">
+                                        {{chatLieu.ten}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Họa Tiết</label>
+                                <select name="" id="">
+                                    <option value="">Tất Cả</option>
+                                    <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
+                                        {{hoaTiet.ten}}
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Trạng Thái</label>
                                 <select name="" id="">
-                                    <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="">Tất Cả</option>
+                                    <option value="">Kích Hoạt</option>
+                                    <option value="">Hủy Kích Hoạt</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Sắp Xếp</label>
                                 <select name="" id="">
-                                    <option value="">Tất cả</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="">Mặc Định</option>
+                                    <option value="">Hàng mới nhất</option>
+                                    <option value="">Giá tăng dần</option>
+                                    <option value="">Giá giảm dần</option>
+                                    <option value="">A -> Z</option>
+                                    <option value="">Z -> A</option>
+
                                 </select>
                             </div>
                         </form>
@@ -109,7 +123,8 @@
                                     <th scope="row">{{sanPhamChiTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning " ng-click="detail(sanPham.id)">Chi
+                                        <a type="button" class="btn btn-warning "
+                                            href="#san-pham-chi-tiet/detail/{{sanPhamChiTiet.idsanPham}}">Chi
                                             tiết</a>
                                         <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
                                     </th>

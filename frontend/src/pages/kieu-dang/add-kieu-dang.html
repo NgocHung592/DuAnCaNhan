@@ -4,7 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <form>
+                        <form class="row">
                             <div class="mb-3">
                                 <label class="form-label">Mã kiểu dáng</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
@@ -16,12 +16,10 @@
                                     ng-model="formKieuDang.ten">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tên danh mục</label>
-                                <select class="form-select" aria-label="Default select example"
-                                    ng-model="formKieuDang.idDanhMuc">
-                                    <option ng-repeat="danhMuc in listDanhMucTheoTrangThai" value="{{danhMuc.id}}">
-                                        {{danhMuc.ten}}
-                                    </option>
+                                <label class="form-label">Danh Mục</label>
+                                <select ng-model="formKieuDang.idDanhMuc">
+                                    <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTheoTrangThai">
+                                        {{danhMuc.ten}}</option>
                                 </select>
                             </div>
                         </form>

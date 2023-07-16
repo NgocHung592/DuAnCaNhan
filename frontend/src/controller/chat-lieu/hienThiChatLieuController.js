@@ -1,13 +1,10 @@
-window.hienThiChatLieuController = function ($http, $scope) {
+window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
   $scope.listChatLieu = [];
+  $scope.listChatLieuTrangThai = [];
+
   $scope.currentPage = 0;
   $scope.totalPages = [];
-  $scope.formChatLieu = {
-    id: "",
-    ma: "",
-    ten: "",
-    trangThai: Number,
-  };
+
   $scope.getData = function () {
     $http
       .get(chatLieuAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -18,7 +15,11 @@ window.hienThiChatLieuController = function ($http, $scope) {
   };
 
   $scope.getData();
-
+  $rootScope.getChatLieuTrangThai = function () {
+    $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
+      $scope.listChatLieuTrangThai = response.data;
+    });
+  };
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;

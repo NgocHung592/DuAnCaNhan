@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 @Service
 public class ChatLieuServiceImpl implements ChatLieuService {
@@ -20,6 +21,11 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     public Page<ChatLieu> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return chatLieuRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<ChatLieu> getAllByStatus() {
+        return chatLieuRepository.getAllByStatus();
     }
 
     @Override

@@ -37,6 +37,7 @@ public class KieuDangRestController {
     public List<KieuDang> hienThiTrangThai() {
         return kieuDangService.getListStatus();
     }
+
     @GetMapping("detail/{id}")
     public KieuDang detail(@PathVariable("id") String id) {
         return kieuDangService.detail(UUID.fromString(id));

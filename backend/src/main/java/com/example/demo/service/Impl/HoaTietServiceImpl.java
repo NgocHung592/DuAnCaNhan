@@ -9,10 +9,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class HoaTietServiceImpl implements HoaTietService {
+
     @Autowired
     private HoaTietRepository hoaTietRepository;
 
@@ -20,6 +22,11 @@ public class HoaTietServiceImpl implements HoaTietService {
     public Page<HoaTiet> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return hoaTietRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<HoaTiet> getAllByStatus() {
+        return hoaTietRepository.getAllByStatus();
     }
 
     @Override

@@ -35,6 +35,7 @@ public class DanhMucRestController {
     public List<DanhMuc> hienThiTrangThai() {
         return danhMucService.getListStatus();
     }
+
     @GetMapping("detail/{id}")
     public DanhMuc detail(@PathVariable("id") String id) {
         return danhMucService.getOne(UUID.fromString(id));

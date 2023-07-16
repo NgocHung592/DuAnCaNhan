@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.KichThuoc;
 import com.example.demo.entity.SanPham;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface KichThuocService {
 
     Page<KichThuoc> getAll(Integer pageNo);
+
+    List<KichThuoc> getAllByStatus();
 
     KichThuoc add(KichThuoc kichThuoc);
 

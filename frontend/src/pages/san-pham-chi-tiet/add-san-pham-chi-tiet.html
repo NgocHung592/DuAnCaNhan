@@ -3,10 +3,66 @@
         <div class="card flex-fill">
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
-
+                    <form class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Sản Phẩm</label>
+                            <select name="" id="">
+                                <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
+                                    {{sanPham.ten}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Danh Mục</label>
+                            <select name="" id="">
+                                <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
+                                    {{danhMuc.ten}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Màu Sắc</label>
+                            <select name="" id="">
+                                <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
+                                    {{mauSac.ten}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Phong Cách</label>
+                            <select name="" id="">
+                                <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
+                                    {{phongCach.ten}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Chất Liệu</label>
+                            <select name="" id="">
+                                <option value="{{chatLieu.id}}" ng-repeat="chatLieu in listChatLieuTrangThai">
+                                    {{chatLieu.ten}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Họa Tiết</label>
+                            <select name="" id="">
+                                <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
+                                    {{hoaTiet.ten}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Giá</label>
+                            <input type="text" name="" id="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Trạng Thái</label>
+                            <select name="" id="">
+                                <option value="">Kích Hoạt</option>
+                                <option value="">Hủy Kích Hoạt</option>
+                            </select>
+                        </div>
+                    </form>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a type="button" class="btn btn-primary" ng-click="add($event)">Thêm</a>
-                        <a type="button" class="btn btn-primary" href="#san-pham/hien-thi">Back</a>
+                        <a type="button" class="btn btn-primary" href="#san-pham-chi-tiet/hien-thi">Back</a>
                     </div>
                 </div>
             </div>
@@ -20,7 +76,7 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
-                            Launch demo modal
+                            Thêm kích thước và số lượng
                         </button>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">

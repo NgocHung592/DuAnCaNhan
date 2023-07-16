@@ -1,4 +1,4 @@
-window.hienThiSanPhamChiTietController = function ($http, $scope) {
+window.updateSanPhamChiTietController = function ($http, $scope) {
   $scope.listSanPhamChiTiet = [];
   $scope.listDanhMucTrangThai = [];
   $scope.listChatLieuTrangThai = [];

@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 
 public interface SanPhamChiTietResponse {
 
+    @Value("#{target.id_san_pham}")
+    String getIDSanPham();
+
     @Value("#{target.ten}")
     String getTen();
 

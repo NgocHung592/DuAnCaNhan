@@ -14,7 +14,6 @@ public interface DanhMucService {
 
     List<DanhMuc> getListStatus();
 
-
     DanhMuc getOne(UUID id);
 
     DanhMuc add(DanhMuc danhMuc);

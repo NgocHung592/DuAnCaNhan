@@ -1,5 +1,6 @@
 package com.example.demo.restcontroller;
 
+import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.MauSac;
 import com.example.demo.entity.SanPham;
 import com.example.demo.service.MauSacService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +31,11 @@ public class MauSacRestController {
     @GetMapping("hien-thi")
     public Page<MauSac> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return mauSacService.getAll(pageNo);
+    }
+
+    @GetMapping("trang-thai")
+    public List<MauSac> hienThiTheoTrangThai() {
+        return mauSacService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")
