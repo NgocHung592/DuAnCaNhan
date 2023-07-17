@@ -56,10 +56,6 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "kich-thuoc/update-kich-thuoc.html",
       controller: updateKichThuocController,
     })
-    .when("/nhanvien/hienthi", {
-      templateUrl: "hien-thi-nhan-vien.html",
-      controller: NhanVienController,
-    })
     .when("/chat-lieu/hien-thi", {
       templateUrl: "chat-lieu/hien-thi-chat-lieu.html",
       controller: hienThiChatLieuController,
