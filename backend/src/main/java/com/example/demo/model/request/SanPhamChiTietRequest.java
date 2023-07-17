@@ -15,10 +15,26 @@ public class SanPhamChiTietRequest {
 
     private String soLuong;
 
-    private String gia;
+    private Double gia;
 
     private String trangThai;
 
+    private UUID idSanPham;
+
     private UUID idDanhMuc;
+
+    private UUID idChatLieu;
+
+    private UUID idHoaTiet;
+
+    private UUID idKichThuoc;
+
+    private UUID idKieuDang;
+
+    private UUID idMauSac;
+
+    private UUID idPhongCach;
+
+
 
 }
