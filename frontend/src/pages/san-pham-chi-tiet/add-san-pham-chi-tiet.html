@@ -4,65 +4,75 @@
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
                     <form class="row">
+
                         <div class="col-md-4">
                             <label class="form-label">Sản Phẩm</label>
-                            <select name="" id="">
+                            <select ng-model="product.idSanPham">
                                 <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
                                     {{sanPham.ten}}</option>
                             </select>
+                            <a href="#san-pham/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i>
+                            </a>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Danh Mục</label>
-                            <select name="" id="">
+                            <select ng-model="product.idDanhMuc">
                                 <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
                                     {{danhMuc.ten}}</option>
                             </select>
+                            <a href="#danh-muc/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Màu Sắc</label>
-                            <select name="" id="">
+                            <select ng-model="product.idMauSac">
                                 <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
                                     {{mauSac.ten}}</option>
                             </select>
+                            <a href="#mau-sac/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Phong Cách</label>
-                            <select name="" id="">
+                            <select ng-model="product.idPhongCach">
                                 <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
                                     {{phongCach.ten}}</option>
                             </select>
+                            <a href="#phong-cach/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Chất Liệu</label>
-                            <select name="" id="">
+                            <select ng-model="product.idChatLieu">
                                 <option value="{{chatLieu.id}}" ng-repeat="chatLieu in listChatLieuTrangThai">
                                     {{chatLieu.ten}}
                                 </option>
                             </select>
+                            <a href="#chat-lieu/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Họa Tiết</label>
-                            <select name="" id="">
+                            <select ng-model="product.idHoaTiet">
                                 <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
                                     {{hoaTiet.ten}}
                                 </option>
                             </select>
+                            <a href="#hoa-tiet/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Giá</label>
-                            <input type="text" name="" id="">
+                            <input type="number" ng-model="product.gia">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Trạng Thái</label>
-                            <select name="" id="">
-                                <option value="">Kích Hoạt</option>
-                                <option value="">Hủy Kích Hoạt</option>
+                            <select ng-model="product.trangThai">
+                                <option value="1">Kích Hoạt</option>
+                                <option value="0">Hủy Kích Hoạt</option>
                             </select>
                         </div>
                     </form>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a type="button" class="btn btn-primary" ng-click="add($event)">Thêm</a>
-                        <a type="button" class="btn btn-primary" href="#san-pham-chi-tiet/hien-thi">Back</a>
+                        <a type="button" class="btn btn-primary" ng-click="addProduct()">Thêm</a>
                     </div>
                 </div>
             </div>
@@ -72,11 +82,11 @@
         <div class="card flex-fill">
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
-                    <h2>Kich thuoc va so Luong</h2>
+                    <h2>Kích Thước Và Số Lượng</h2>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
-                            Thêm kích thước và số lượng
+                            Thêm
                         </button>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
@@ -85,43 +95,13 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="col-md-4">Kích Cỡ</div>
+                                                <div class="col-md-4">Kích Thước</div>
                                                 <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    a
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    a
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    a
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    a
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    a
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-md-2"
+                                                            ng-repeat="kichThuoc in listKichThuocTrangThai">
+                                                            <a href="" ng-model="product.idKichThuoc"
+                                                                value="{{kichThuoc.id}}">{{kichThuoc.ten}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,14 +110,15 @@
                                             <div class="row">
                                                 <div class="col-md-4">Số Lượng</div>
                                                 <div class="col-md-8">
-                                                    <input type="number">
+                                                    <input type="number" ng-model="product.soLuong">
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Xác Nhận</button>
+                                        <button type="button" class="btn btn-primary" ng-click="addProduct();">Xác
+                                            Nhận</button>
                                     </div>
                                 </div>
                             </div>
@@ -154,6 +135,49 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a type="button" class="btn btn-primary" ng-click="add($event)">Thêm ảnh</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-0">
+        <div class="card flex-fill">
+            <div class="card-body d-flex">
+                <div class="align-self-center w-100">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sản Phẩm</th>
+                                <th scope="col">Danh Mục</th>
+                                <th scope="col">Màu Sắc</th>
+                                <th scope="col">Phong Cách</th>
+                                <th scope="col">Chất Liệu</th>
+                                <th scope="col">Họa Tiết</th>
+                                <th scope="col">Giá</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Thao tác</th>
+
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="product in products">
+                            <tr>
+                                <th scope="row">{{product.idSanPham}}</th>
+                                <th scope="row">{{product.idDanhMuc}}</th>
+                                <th scope="row">{{product.idMauSac}}</th>
+                                <th scope="row">{{product.idPhongCach}}</th>
+                                <th scope="row">{{product.idChatLieu}}</th>
+                                <th scope="row">{{product.idHoaTiet}}</th>
+                                <th scope="row">{{product.gia}}</th>
+                                <th scope="row">{{product.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                </th>
+                                <th>
+                                    <a type="button" class="btn btn-warning "
+                                        href="#san-pham-chi-tiet/update/{{sanPhamChiTiet.idsanPham}}">Chi
+                                        tiết</a>
+                                    <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

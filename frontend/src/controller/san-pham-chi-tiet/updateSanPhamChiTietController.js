@@ -1,4 +1,4 @@
-window.updateSanPhamChiTietController = function ($http, $scope) {
+window.updateSanPhamChiTietController = function ($http, $scope, $routeParams) {
   $scope.listSanPhamChiTiet = [];
   $scope.listDanhMucTrangThai = [];
   $scope.listChatLieuTrangThai = [];
@@ -16,10 +16,10 @@ window.updateSanPhamChiTietController = function ($http, $scope) {
 
   $scope.getSanPhamChiTiet = function () {
     $http
-      .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .get(sanPhamChiTietAPI + "/detail-san-pham/" + $routeParams.id)
       .then(function (response) {
         $scope.listSanPhamChiTiet = response.data;
-        $scope.totalPages = new Array(response.data.totalPages);
+        console.log($scope.listSanPhamChiTiet);
       });
   };
   $scope.getSanPhamChiTiet();

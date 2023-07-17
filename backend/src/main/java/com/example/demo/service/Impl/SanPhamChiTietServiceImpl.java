@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
@@ -21,6 +23,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return sanPhamChiTietRepository.getPage(pageable);
     }
+
+    @Override
+    public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id,pageable);
+    }
+
+
 
 //    @Override
 //    public SanPhamChiTiet getOne(UUID id) {

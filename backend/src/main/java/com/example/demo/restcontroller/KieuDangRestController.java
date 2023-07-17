@@ -33,7 +33,7 @@ public class KieuDangRestController {
     public Page<KieuDang> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return kieuDangService.getAll(pageNo);
     }
-    @GetMapping("trang- thai")
+    @GetMapping("trang-thai")
     public List<KieuDang> hienThiTrangThai() {
         return kieuDangService.getListStatus();
     }

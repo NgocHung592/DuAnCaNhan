@@ -14,6 +14,23 @@ window.addSanPhamChiTietController = function ($http, $scope) {
   $scope.currentPage = 0;
   $scope.totalPages = [];
 
+  $scope.products = [];
+  $scope.product = {
+    idSanPham: "",
+    idDanhMuc: "",
+    idMauSac: "",
+    idPhongCach: "",
+    idChatLieu: "",
+    idHoaTiet: "",
+    idKichThuoc: "",
+    gia: Number,
+    trangThai: Number,
+    soLuong: Number,
+  };
+  $scope.addProduct = function (  ) {
+    $scope.products.push($scope.product);
+    console.log($scope.products);
+  };
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)

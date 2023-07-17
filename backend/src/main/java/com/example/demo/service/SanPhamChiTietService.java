@@ -13,6 +13,9 @@ public interface SanPhamChiTietService {
 
     Page<SanPhamChiTietResponse> getAll(Integer pageNo);
 
+    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Integer pageNo);
+
+
 //    SanPhamChiTiet getOne(UUID id);
 //
 //    List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);

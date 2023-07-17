@@ -12,7 +12,6 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
     .then(function (response) {
       if (response.status == 200) {
         $scope.detailProduct = response.data;
-        console.log($scope.detailProduct);
       }
     });
 
