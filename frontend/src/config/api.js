@@ -23,3 +23,5 @@ window.hoaDonAPI = url + "/hoa-don";
 window.khachhangAPI = url + "/khachhang";
 
 window.khuyenmaiAPI = url + "/khuyen-mai";
+
+window.nhanVienAPI = url + "/nhan-vien";

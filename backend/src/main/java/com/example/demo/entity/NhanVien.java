@@ -13,32 +13,37 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="phan_quyen")
+@Table(name="tai_khoan")
 public class NhanVien {
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name="id")
     private UUID id;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name="ngay_tao")
-    private Date ngaytao;
-    @Column(name="ten")
-    private String ten;
     @Column(name="ma")
-    private String ma;
+    private  String ma;
+    @Column(name="ho_ten")
+    private  String hoten;
+    @Column(name="so_dien_thoai")
+    private  String sodienthoai;
+    @Column(name="email")
+    private  String email;
+    @Column(name="gioi_tinh")
+    private  Boolean gioitinh;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    @Column(name="ngay_sinh")
+    private Date ngaysinh;
+    @Column(name="anh_dai_dien")
+    private  String anhdaidien;
+    @Column(name="mat_khau")
+    private  String matkhau;
+    @Column(name="ghi_chu")
+    private  String ghichu;
     @Column(name="trang_thai")
-    private Integer trangthai;
-    @Column(name="ngay_sua")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
-    private Date ngaysua;
-    @Column(name="nguoi_tao")
-    private String nguoitao;
-    @Column(name="nguoi_sua")
-    private String nguoisua;
-    @Column(name="da_xoa")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
-    private Date daxoa;
+    private  Integer trangthai;
+
+//    @ManyToOne
+//    @JoinColumn(name="phan_quyen_id")
+//    private NhanVien nv;
+
 }

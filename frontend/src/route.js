@@ -80,6 +80,19 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "hoa-tiet/update-hoa-tiet.html",
       controller: updateHoaTietController,
     })
+    .when("/nhan-vien/hien-thi", {
+      templateUrl: "nhan-vien/hien-thi-nhan-vien.html",
+      controller: hienThiNhanVienController,
+    })
+    .when("/nhan-vien/add", {
+      templateUrl: "nhan-vien/add-nhan-vien.html",
+      controller: addNhanVienController,
+    })
+    .when("/nhan-vien/update/:id", {
+      templateUrl: "nhan-vien/update-nhan-vien.html",
+      controller: updateNhanVienController,
+    })
+
     .when("/phong-cach/hien-thi", {
       templateUrl: "phong-cach/hien-thi-phong-cach.html",
       controller: hienThiPhongCachController,
