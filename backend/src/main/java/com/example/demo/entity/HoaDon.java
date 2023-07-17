@@ -80,5 +80,5 @@ public class HoaDon {
     private String nguoiSua;
 
     @Column(name = "da_xoa")
-    private Timestamp daXoa;
+    private Boolean daXoa;
 }
