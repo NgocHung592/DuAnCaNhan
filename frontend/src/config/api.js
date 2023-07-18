@@ -25,3 +25,4 @@ window.khachhangAPI = url + "/khachhang";
 window.khuyenmaiAPI = url + "/khuyen-mai";
 
 window.nhanVienAPI = url + "/nhan-vien";
+window.thuChiAPI = url + "/thu-chi";
