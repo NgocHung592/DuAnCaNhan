@@ -11,10 +11,32 @@
             <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
         </div>
         <div class="col-md-4">
-            <a type="button" class="btn btn-primary" href="#/khuyen-mai/add">Tạo mã giảm giá</a>
+            <a type="button" class="btn btn-primary" href="#/khuyen-mai/add">Tạo mã khuyến mãi</a>
         </div>
     </div>
-
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+        <label class="col-sm-4 col-form-label">Trạng thái khuyến mãi:</label>
+        <div class="col-sm-8">
+            <select >
+                <option value="0">Sắp diễn ra</option>
+                <option value="0">Đang diễn ra</option>
+                <option value="0">Đã hết hạn</option>
+            </select>
+        </div>
+    </div>
+        <div class="col-md-6">
+        <label class="col-sm-4 col-form-label">Hình thức khuyến mãi:</label>
+        <div class="col-sm-8">
+            <select >
+                <option value="0">Tiền mặt</option>
+                <option value="1">Phần trăm</option>
+            </select>
+        </div>
+    </div>
+    </div>
     <br>
     <br />
     <table class="table">
@@ -43,7 +65,12 @@
             <th>{{khuyenMai.ngayBatDau}}</th>
             <th>{{khuyenMai.ngayKetThuc}}</th>
             <th>{{khuyenMai.trangThai}}</th>
-            <th></th>
+            <th>
+                <a type="button" class="btn btn-primary" href="#/khuyen-mai/update">Sửa</a>
+            </th>
+            <th>
+                <a type="button" class="btn btn-warning" href="#/khuyen-mai/xem-chi-tiet">Xem</a>
+            </th>
         </tr>
 
         </tbody>

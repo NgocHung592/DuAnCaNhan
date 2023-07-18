@@ -139,7 +139,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
       .when("/khuyen-mai/add", {
         templateUrl: "khuyen-mai/add-khuyen-mai.html",
-        controller: KhuyenMaiController,
+        controller: addKhuyenMaiController,
       })
     .otherwise({
       redirectTo: "/admin",
