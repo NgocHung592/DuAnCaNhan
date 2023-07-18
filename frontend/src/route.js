@@ -134,9 +134,13 @@ myApp.config(function ($routeProvider, $locationProvider) {
       controller: updateSanPhamChiTietController,
     })
     .when("/khuyen-mai/hienthi", {
-      templateUrl: "hien-thi-khuyen-mai.html",
+      templateUrl: "khuyen-mai/hien-thi-khuyen-mai.html",
       controller: KhuyenMaiController,
     })
+      .when("/khuyen-mai/add", {
+        templateUrl: "khuyen-mai/add-khuyen-mai.html",
+        controller: KhuyenMaiController,
+      })
     .otherwise({
       redirectTo: "/admin",
     });
