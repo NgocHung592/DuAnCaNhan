@@ -141,6 +141,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
         templateUrl: "khuyen-mai/add-khuyen-mai.html",
         controller: addKhuyenMaiController,
       })
+      .when("/khuyen-mai/update/:id", {
+        templateUrl: "khuyen-mai/update-khuyen-mai.html",
+        controller: updateKhuyenMaiController,
+      })
     .otherwise({
       redirectTo: "/admin",
     });
