@@ -141,10 +141,21 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "khuyen-mai/hien-thi-khuyen-mai.html",
       controller: KhuyenMaiController,
     })
+<<<<<<< HEAD
     .when("/khuyen-mai/add", {
       templateUrl: "khuyen-mai/add-khuyen-mai.html",
       controller: addKhuyenMaiController,
     })
+=======
+      .when("/khuyen-mai/add", {
+        templateUrl: "khuyen-mai/add-khuyen-mai.html",
+        controller: addKhuyenMaiController,
+      })
+      .when("/khuyen-mai/update/:id", {
+        templateUrl: "khuyen-mai/update-khuyen-mai.html",
+        controller: updateKhuyenMaiController,
+      })
+>>>>>>> ae5de08cc1a203934abf97eb0ffbba6a11b3f6d6
     .otherwise({
       redirectTo: "/admin",
     });
