@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,6 +34,10 @@ public class NhanVien {
     @Temporal(TemporalType.DATE)
     @Column(name="ngay_sinh")
     private Date ngaysinh;
+    @Column(name="ngay_tao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    private Date ngaytao;
     @Column(name="anh_dai_dien")
     private  String anhdaidien;
     @Column(name="mat_khau")

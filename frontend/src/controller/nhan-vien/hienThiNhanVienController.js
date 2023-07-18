@@ -21,7 +21,7 @@ window.hienThiNhanVienController = function ($http, $scope) {
   };
 
   $scope.delete = function (id) {
-    $http.delete(NhanVienAPI + "/delete/" + id).then(function () {
+    $http.delete(nhanVienAPI + "/delete/" + id).then(function () {
       $scope.getNhanVien();
     });
   };

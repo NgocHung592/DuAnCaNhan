@@ -6,7 +6,7 @@
           <div class="align-self-center w-100">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a type="button" class="btn btn-primary" href="#nhan-vien/add"
-                >Thêm</a
+                >+ Thêm Mới</a
               >
             </div>
             <table class="table">
@@ -48,17 +48,19 @@
                 </tr>
               </tbody>
             </table>
-            <nav class="align-center" aria-label="Page navigation example">
-              <ul class="pagination">
-                <li
-                  class="page-item"
-                  ng-repeat="page in totalPages track by $index"
-                  ng-click="changePage($index);"
-                >
-                  <a class="page-link">{{$index+1}}</a>
-                </li>
-              </ul>
-            </nav>
+            <div class="align-center">
+              <nav aria-label="">
+                <ul class="pagination">
+                  <li
+                    class="page-item"
+                    ng-repeat="page in totalPages track by $index"
+                    ng-click="changePage($index);"
+                  >
+                    <a class="page-link">{{$index+1}}</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
