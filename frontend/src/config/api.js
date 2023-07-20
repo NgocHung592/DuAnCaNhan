@@ -20,9 +20,12 @@ window.sanPhamChiTietAPI = url + "/san-pham-chi-tiet";
 
 window.hoaDonAPI = url + "/hoa-don";
 
-window.khachhangAPI = url + "/khachhang";
+window.khachHangAPI = url + "/khach-hang";
 
 window.khuyenmaiAPI = url + "/khuyen-mai";
 
 window.nhanVienAPI = url + "/nhan-vien";
+
 window.thuChiAPI = url + "/thu-chi";
+
+window.hangKhachHangAPI = url + "/hang-khach-hang";

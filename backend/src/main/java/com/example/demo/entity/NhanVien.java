@@ -47,8 +47,5 @@ public class NhanVien {
     @Column(name="trang_thai")
     private  Integer trangthai;
 
-//    @ManyToOne
-//    @JoinColumn(name="phan_quyen_id")
-//    private NhanVien nv;
 
 }

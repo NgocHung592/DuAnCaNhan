@@ -1,10 +1,13 @@
 package com.example.demo.restcontroller;
 
 
-import com.example.demo.entity.TaiKhoanKhachHang;
+import com.example.demo.entity.KhachHang;
+import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.repository.KhachHangRepository;
-import com.example.demo.repository.TaiKhoanKhachHangRepository;
+import com.example.demo.repository.HangKhachHangRepository;
+import com.example.demo.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,36 +15,36 @@ import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin("*")
-@RequestMapping("/khachhang/")
+@RequestMapping("/khach-hang/")
 @RestController
 public class KhachHangRestController {
     @Autowired
-    private TaiKhoanKhachHangRepository khachHangRepository;
-    @GetMapping("hienthi")
-    public List<TaiKhoanKhachHang> getAll(Model model){
-        return khachHangRepository.findAll();
+    private KhachHangService khachHangService;
+    @GetMapping("hien-thi")
+    public Page<KhachHang> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return khachHangService.getAll(pageNo);
     }
 
-
-    @GetMapping("hienthi/{id}")
-    public TaiKhoanKhachHang getOne(@PathVariable("id") UUID id){
-
-        return khachHangRepository.findById(id).get();
+    @GetMapping("trang-thai")
+    public List<KhachHang> hienThiTrangThai() {
+        return khachHangService.getListStatus();
+    }
+    @GetMapping("detail/{id}")
+    public KhachHang getOne(@PathVariable("id") String id) {
+        return khachHangService.detail(UUID.fromString(id));
     }
     @PutMapping("update/{id}")
-    public TaiKhoanKhachHang put(@PathVariable("id") UUID id,@RequestBody TaiKhoanKhachHang taiKhoan){
-        khachHangRepository.save(taiKhoan);
-        return taiKhoan;
+    public KhachHang put(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id") String id) {
+        return khachHangService.update(khachHangRequest, UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public TaiKhoanKhachHang post(@RequestBody TaiKhoanKhachHang taiKhoan){
-        khachHangRepository.save(taiKhoan);
-        return taiKhoan;
+    public KhachHang post(@RequestBody KhachHangRequest taiKhoan){
+        return khachHangService.add(taiKhoan);
     }
     @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") UUID id){
-        khachHangRepository.deleteById(id);
+    public void delete(@PathVariable("id") String id){
+        khachHangService.delete(UUID.fromString(id));
     }
 
 

@@ -1,0 +1,70 @@
+<main class="content">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="card flex-fill">
+        <div class="card-body d-flex">
+          <div class="align-self-center w-100">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a type="button" class="btn btn-primary" href="#khach-hang/add"
+                >Thêm</a
+              >
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Mã</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Hạng</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Ngày Tạo</th>
+                  <th scope="col">Trạng Thái</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="kh in list_kh.content">
+                <tr>
+                  <th scope="row">{{$index+1}}</th>
+                  <th scope="row">{{kh.ma}}</th>
+                  <th scope="row">{{kh.hoten}}</th>
+
+                  <th scope="row">{{kh.hangKhachHang.ten}}</th>
+                  <th scope="row">{{kh.email}}</th>
+                  <th scope="row">{{kh.ngaytao}}</th>
+                  <th scope="row">
+                    {{kh.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                  </th>
+                  <th>
+                    <a
+                      type="button"
+                      class="btn btn-warning"
+                      href="#khach-hang/update/{{kh.id}}"
+                      >Chi tiết</a
+                    >
+                    <a
+                      type="button"
+                      class="btn btn-danger"
+                      ng-click="delete(kh.id)"
+                      >Xóa</a
+                    >
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li
+                  class="page-item"
+                  ng-repeat="page in totalPages track by $index"
+                  ng-click="changePage($index);"
+                >
+                  <a class="page-link">{{$index+1}}</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
