@@ -222,6 +222,10 @@ Create table [danh_muc]
 	mat_khau varchar(20),
 	ghi_chu nvarchar(max),
 	trang_thai int,
+    ngay_tao datetime,
+    ngay_sua datetime,
+    nguoi_tao nvarchar(50),
+    nguoi_sua  nvarchar(50),
 	hang_khach_hang UNIQUEIDENTIFIER REFERENCES hang_khach_hang(id),
 	vai_tro_id UNIQUEIDENTIFIER REFERENCES vai_tro(id)
 

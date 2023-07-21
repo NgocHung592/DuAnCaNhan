@@ -40,10 +40,6 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "mau-sac/update-mau-sac.html",
       controller: updateMauSacController,
     })
-    .when("/khachhang/hienthi", {
-      templateUrl: "hien-thi-khach-hang.html",
-      controller: KhachHangController,
-    })
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "kich-thuoc/hien-thi-kich-thuoc.html",
       controller: hienThiKichThuocController,
@@ -109,17 +105,33 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "kieu-dang/hien-thi-kieu-dang.html",
       controller: hienThiKieuDangController,
     })
+    .when("/khach-hang/hien-thi", {
+      templateUrl: "khach-hang/hien-thi-khach-hang.html",
+      controller: hienThiKhachHangController,
+    })
     .when("/kieu-dang/add", {
       templateUrl: "kieu-dang/add-kieu-dang.html",
       controller: addKieuDangController,
+    })
+    .when("/khach-hang/add", {
+      templateUrl: "khach-hang/add-khach-hang.html",
+      controller: addKhachHangController,
     })
     .when("/kieu-dang/update/:id", {
       templateUrl: "kieu-dang/update-kieu-dang.html",
       controller: updateKieuDangController,
     })
+    .when("/khach-hang/update/:id", {
+      templateUrl: "khach-hang/update-khach-hang.html",
+      controller: updateKhachHangController,
+    })
     .when("/hoa-don/hien-thi", {
       templateUrl: "hien-thi-hoa-don.html",
       controller: HoaDonController,
+    })
+    .when("/thu-chi/hien-thi", {
+      templateUrl: "quan-ly-thu-chi.html",
+      controller: ThuChiController,
     })
     .when("/san-pham-chi-tiet/hien-thi", {
       templateUrl: "san-pham-chi-tiet/hien-thi-san-pham-chi-tiet.html",
@@ -134,8 +146,20 @@ myApp.config(function ($routeProvider, $locationProvider) {
       controller: updateSanPhamChiTietController,
     })
     .when("/khuyen-mai/hienthi", {
-      templateUrl: "hien-thi-khuyen-mai.html",
+      templateUrl: "khuyen-mai/hien-thi-khuyen-mai.html",
       controller: KhuyenMaiController,
+    })
+    .when("/khuyen-mai/add", {
+      templateUrl: "khuyen-mai/add-khuyen-mai.html",
+      controller: addKhuyenMaiController,
+    })
+    .when("/khuyen-mai/add", {
+      templateUrl: "khuyen-mai/add-khuyen-mai.html",
+      controller: addKhuyenMaiController,
+    })
+    .when("/khuyen-mai/update/:id", {
+      templateUrl: "khuyen-mai/update-khuyen-mai.html",
+      controller: updateKhuyenMaiController,
     })
     .otherwise({
       redirectTo: "/admin",

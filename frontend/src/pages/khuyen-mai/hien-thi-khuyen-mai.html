@@ -1,0 +1,78 @@
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="exampleFormControlInput1"
+                   placeholder="Tìm tên khuyến mãi">
+        </div>
+        <div class="col-md-4">
+            <a type="button" class="btn btn-primary" href="#/khuyenmai/tim-kiem">Tìm kiếm</a>
+            <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
+        </div>
+        <div class="col-md-4">
+            <a type="button" class="btn btn-primary" href="#/khuyen-mai/add">Tạo mã khuyến mãi</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+        <label class="col-sm-4 col-form-label">Trạng thái khuyến mãi:</label>
+        <div class="col-sm-8">
+            <select >
+                <option value="0">Sắp diễn ra</option>
+                <option value="0">Đang diễn ra</option>
+                <option value="0">Đã hết hạn</option>
+            </select>
+        </div>
+    </div>
+        <div class="col-md-6">
+        <label class="col-sm-4 col-form-label">Hình thức khuyến mãi:</label>
+        <div class="col-sm-8">
+            <select >
+                <option value="0">Tiền mặt</option>
+                <option value="1">Phần trăm</option>
+            </select>
+        </div>
+    </div>
+    </div>
+    <br>
+    <br />
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Hình thức </th>
+            <th scope="col">Giá trị giảm</th>
+            <th scope="col">Giá trị giảm tối thiểu</th>
+            <th scope="col">Giá trị giảm tối đa</th>
+            <th scope="col">Ngày bắt đầu</th>
+            <th scope="col">Ngày kết thúc</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="khuyenMai in listKhuyenMai.content">
+        <tr>
+            <th>{{khuyenMai.ma}}</th>
+            <th>{{khuyenMai.tenKM}}</th>
+            <th>{{khuyenMai.hinhThucGiam}}</th>
+            <th>{{khuyenMai.giaTriGiam}}</th>
+            <th>{{khuyenMai.giaTriToiThieu}}</th>
+            <th>{{khuyenMai.giaTriToiDa}}</th>
+            <th>{{khuyenMai.ngayBatDau}}</th>
+            <th>{{khuyenMai.ngayKetThuc}}</th>
+            <th>{{khuyenMai.trangThai}}</th>
+            <th>
+                <a type="button" class="btn btn-primary" href="#/khuyen-mai/update/{{khuyenMai.id}}">Sửa</a>
+            </th>
+            <th>
+                <a type="button" class="btn btn-warning" href="#/khuyen-mai/xem-chi-tiet">Xem</a>
+            </th>
+        </tr>
+
+        </tbody>
+    </table>
+</div>

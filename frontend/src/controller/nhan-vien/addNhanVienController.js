@@ -1,12 +1,12 @@
 window.addNhanVienController = function ($http, $scope) {
   $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
-
+  var date = new Date();
   $scope.formNhanVien = {
     id: "",
     ma: $scope.randoom,
     hoten: "",
     email: "",
-    ngaytao: Date,
+    ngaytao: date,
     trangthai: 1,
   };
 
