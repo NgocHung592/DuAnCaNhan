@@ -5,9 +5,7 @@
         <div class="card-body d-flex">
           <div class="align-self-center w-100">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <a type="button" class="btn btn-primary" href="#nhan-vien/add"
-                >Thêm</a
-              >
+              <a type="button" class="btn btn-primary" href="#nhan-vien/add">Thêm</a>
             </div>
             <table class="table">
               <thead>
@@ -29,32 +27,20 @@
                   <th scope="row">{{nv.hoten}}</th>
                   <th scope="row">{{nv.ngaytao}}</th>
                   <th scope="row">
-                    {{nv.trangthai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                    <a href="" class="btn btn-primary" one-click="udpateTrangThai({{nv.trangThai}})">
+                      {{nv.trangthai==1?"Kích hoạt":"Hủy kích
+                      hoạt"}}</a>
                   </th>
                   <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning"
-                      href="#nhan-vien/update/{{nv.id}}"
-                      >Chi tiết</a
-                    >
-                    <a
-                      type="button"
-                      class="btn btn-danger"
-                      ng-click="delete(nv.id)"
-                      >Xóa</a
-                    >
+                    <a type="button" class="btn btn-warning" href="#nhan-vien/update/{{nv.id}}">Chi tiết</a>
+                    <a type="button" class="btn btn-danger" ng-click="delete(nv.id)">Xóa</a>
                   </th>
                 </tr>
               </tbody>
             </table>
             <nav class="align-center" aria-label="Page navigation example">
               <ul class="pagination">
-                <li
-                  class="page-item"
-                  ng-repeat="page in totalPages track by $index"
-                  ng-click="changePage($index);"
-                >
+                <li class="page-item" ng-repeat="page in totalPages track by $index" ng-click="changePage($index);">
                   <a class="page-link">{{$index+1}}</a>
                 </li>
               </ul>

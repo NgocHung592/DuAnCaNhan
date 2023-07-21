@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name="tai_khoan")
+@Builder
 public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

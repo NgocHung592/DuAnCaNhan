@@ -4,14 +4,13 @@
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
                     <form class="row">
-
                         <div class="col-md-4">
                             <label class="form-label">Sản Phẩm</label>
                             <select ng-model="product.idSanPham">
                                 <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
                                     {{sanPham.ten}}</option>
                             </select>
-                            <a href="#san-pham/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i>
+                            <a href="#san-pham/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i>
                             </a>
                         </div>
                         <div class="col-md-4">
@@ -20,7 +19,7 @@
                                 <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
                                     {{danhMuc.ten}}</option>
                             </select>
-                            <a href="#danh-muc/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+                            <a href="#danh-muc/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
@@ -29,7 +28,7 @@
                                 <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
                                     {{mauSac.ten}}</option>
                             </select>
-                            <a href="#mau-sac/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+                            <a href="#mau-sac/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
@@ -38,7 +37,7 @@
                                 <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
                                     {{phongCach.ten}}</option>
                             </select>
-                            <a href="#phong-cach/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+                            <a href="#phong-cach/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
@@ -48,7 +47,7 @@
                                     {{chatLieu.ten}}
                                 </option>
                             </select>
-                            <a href="#chat-lieu/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+                            <a href="#chat-lieu/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Họa Tiết</label>
@@ -57,31 +56,13 @@
                                     {{hoaTiet.ten}}
                                 </option>
                             </select>
-                            <a href="#hoa-tiet/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
+                            <a href="#hoa-tiet/hien-thi"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Giá</label>
                             <input type="number" ng-model="product.gia">
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Trạng Thái</label>
-                            <select ng-model="product.trangThai">
-                                <option value="1">Kích Hoạt</option>
-                                <option value="0">Hủy Kích Hoạt</option>
-                            </select>
-                        </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a type="button" class="btn btn-primary" ng-click="addProduct()">Thêm</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid p-0">
-        <div class="card flex-fill">
-            <div class="card-body d-flex">
-                <div class="align-self-center w-100">
                     <h2>Kích Thước Và Số Lượng</h2>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -98,10 +79,12 @@
                                                 <div class="col-md-4">Kích Thước</div>
                                                 <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-2"
-                                                            ng-repeat="kichThuoc in listKichThuocTrangThai">
-                                                            <a href="" ng-model="product.idKichThuoc"
-                                                                value="{{kichThuoc.id}}">{{kichThuoc.ten}}</a>
+                                                        <div class="col-md-2">
+                                                            <select ng-model="product.idKichThuoc">
+                                                                <option ng-repeat="kichThuoc in listKichThuocTrangThai"
+                                                                    value="{{kichThuoc.id}}">{{kichThuoc.ten}}</option>
+                                                            </select>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,6 +126,9 @@
         <div class="card flex-fill">
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a type="button" class="btn btn-primary" ng-click="saveProduct($event)">Save</a>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -152,13 +138,14 @@
                                 <th scope="col">Phong Cách</th>
                                 <th scope="col">Chất Liệu</th>
                                 <th scope="col">Họa Tiết</th>
+                                <th scope="col">Kích thước</th>
                                 <th scope="col">Giá</th>
-                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Số Lượng</th>
                                 <th scope="col">Thao tác</th>
 
                             </tr>
                         </thead>
-                        <tbody ng-repeat="product in products">
+                        <tbody ng-repeat="product in products track by $index ">
                             <tr>
                                 <th scope="row">{{product.idSanPham}}</th>
                                 <th scope="row">{{product.idDanhMuc}}</th>
@@ -166,9 +153,9 @@
                                 <th scope="row">{{product.idPhongCach}}</th>
                                 <th scope="row">{{product.idChatLieu}}</th>
                                 <th scope="row">{{product.idHoaTiet}}</th>
+                                <th scope="row">{{product.idKichThuoc}}</th>
                                 <th scope="row">{{product.gia}}</th>
-                                <th scope="row">{{product.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
-                                </th>
+                                <th scope="row">{{product.soLuong}}</th>
                                 <th>
                                     <a type="button" class="btn btn-warning "
                                         href="#san-pham-chi-tiet/update/{{sanPhamChiTiet.idsanPham}}">Chi

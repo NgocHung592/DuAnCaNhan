@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +37,9 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien add(NhanVien nhanVien) {
+//        NhanVien nhanVienSave=NhanVien.builder()
+//                .ngaysinh(new Date())
+//                .build();
         return nhanVienRepository.save(nhanVien);
     }
 
