@@ -27,9 +27,8 @@ window.addSanPhamChiTietController = function ($http, $scope) {
     trangThai: 1,
     soLuong: "",
   };
-  $scope.addProduct = function () {
-    $scope.products.push($scope.product);
-    console.log($scope.products);
+  $scope.addSizeAndQuanlity = function () {
+    $scope.products.post($scope.product);
   };
   $scope.saveProduct = function (event) {
     event.preventDefault();

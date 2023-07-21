@@ -2,18 +2,14 @@
 <html lang="en" ng-app="myApp">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5" />
-  <meta name="author" content="AdminKit" />
-  <meta name="keywords"
-    content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin</title>
-
   <link class="js-stylesheet" href="../../css/custom/light.css" rel="stylesheet" />
   <link class="js-stylesheet" href="../../css/custom/css.css" rel="stylesheet" />
-  <script src=" https://kit.fontawesome.com/6d12ee419f.js" crossorigin="anonymous"></script>
+  <link class="js-stylesheet" href="../../css/plugin/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
@@ -42,11 +38,6 @@
               <i class="align-middle" data-feather="credit-card"></i>
               <span class="align-middle">Quản Lý Đơn Hàng</span>
             </a>
-            <!-- <ul id="pages2" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a class="sidebar-link" href="#/hoa-don/hien-thi">Hóa đơn</a>
-                            </li>
-                        </ul> -->
           </li>
           <li class="sidebar-item">
             <a class="sidebar-link" href="pages-profile.html">
@@ -55,7 +46,7 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="pages-profile.html">
+            <a class="sidebar-link" href="#thu-chi/hien-thi">
               <i class="align-middle" data-feather="user"></i>
               <span class="align-middle">Quản Lý Thu Chi</span>
             </a>
@@ -67,7 +58,7 @@
             </a>
             <ul id="taiKhoan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
               <li class="sidebar-item">
-                <a class="sidebar-link" href="#khachhang/hienthi">Khách Hàng</a>
+                <a class="sidebar-link" href="#khach-hang/hien-thi">Khách Hàng</a>
               </li>
               <li class="sidebar-item">
                 <a class="sidebar-link" href="#nhan-vien/hien-thi">Nhân Viên
@@ -227,7 +218,7 @@
                 </div>
               </a>
             </li>
-            <<<<<<< HEAD <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded" alt="Charles Hall" />
               </a>
@@ -245,95 +236,20 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Log out</a>
               </div>
-              =======
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="#/thu-chi/hien-thi">
-                  <i class="align-middle" data-feather="user"></i>
-                  <span class="align-middle">Quản Lý Thu Chi</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a data-bs-target="#taiKhoan" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                  <i class="align-middle" data-feather="layout"></i>
-                  <span class="align-middle">Quản Lý Tài Khoản</span>
-                </a>
-                <ul id="taiKhoan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#khach-hang/hien-thi">Khách Hàng</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#nhan-vien/hien-thi">Nhân Viên
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="sidebar-item">
-                <a data-bs-target="#sanPham" href="#/san-pham-chi-tiet/hien-thi" data-bs-toggle="collapse"
-                  class="sidebar-link collapsed">
-                  <i class="align-middle" data-feather="layout"></i>
-                  <span class="align-middle">Quản Lý Sản Phẩm</span>
-                </a>
-                <ul id="sanPham" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/san-pham-chi-tiet/hien-thi">Sản phẩm chi tiết</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/san-pham/hien-thi">Sản phẩm</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/danh-muc/hien-thi">Danh Mục</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/mau-sac/hien-thi">Màu Sắc </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/kich-thuoc/hien-thi">Kích Thước
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/chat-lieu/hien-thi">Chất Liệu
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/phong-cach/hien-thi">Phong Cách
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/hoa-tiet/hien-thi">Họa Tiết
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#/kieu-dang/hien-thi">Kiểu Dáng
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="sidebar-item">
-                <a href="#khuyenMai" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                  <i class="align-middle" data-feather="users"></i>
-                  <span class="align-middle">Quản Lý Khuyến Mãi</span>
-                </a>
-                <ul id="khuyenMai" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="#khuyen-mai/hienthi">Khuyến Mãi</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-sign-up.html">Hạng Khách Hàng</a>
-                  </li>
-                </ul>
-                >>>>>>> f8dbcb08c3ab6e69bb1f271b33a3aeeaf9a0c7c9
-              </li>
           </ul>
         </div>
       </nav>
       <section ng-view></section>
     </div>
   </div>
+
+  <script src="../../js/custom/main.js" type="text/javascript"></script>
   <script src="../../js/custom/app.js"></script>
-  <script src="../../js/custom/main.js"></script>
-  <script src="../../js/plugin/bootstrap.min.js"></script>
+  <script src="../../js/plugin/bootstrap.bundle.min.js"></script>
   <script src="../../lib/angular.js"></script>
   <script src="../../lib/angular-route.js"></script>
+  <script src="../route.js"></script>
+  <script src="../config/api.js"></script>
 
   <script src="../controller/san-pham/addSanPhamController.js"></script>
   <script src="../controller/san-pham/updateSanPhamController.js"></script>
@@ -386,5 +302,6 @@
   <script src="../controller/khuyen-mai/KhuyenMaiController.js"></script>
   <script src="../controller/khuyen-mai/addKhuyenMaiController.js"></script>
   <script src="../controller/khuyen-mai/updateKhuyenMaiController.js"></script>
+</body>
 
 </html>
