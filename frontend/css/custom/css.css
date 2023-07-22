@@ -14,3 +14,21 @@ h4 {
 .page-item {
     text-align: center
 }
+
+#myProgress {
+    width: 100%;
+    background-color: #ddd;
+}
+
+#myBar {
+    width: 0%;
+    height: 10px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}

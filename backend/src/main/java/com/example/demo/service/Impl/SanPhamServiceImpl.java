@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,23 +33,42 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham add(SanPham sanPham) {
-        if(sanPham.getMa().isBlank() ||sanPham.getTen().isBlank()|| sanPham.getMoTa().isBlank()) {
+        long currentTimestampMillis = System.currentTimeMillis();
+        if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
             return null;
         }
-        return sanPhamRepository.save(sanPham);
+        SanPham sanPhamSave = SanPham.builder()
+                .ma(sanPham.getMa())
+                .ten(sanPham.getTen())
+                .moTa(sanPham.getMoTa())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .daXoa(sanPham.getDaXoa())
+                .build();
+        return sanPhamRepository.save(sanPhamSave);
     }
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-       if (sanPhamRepository.existsById(id)){
-           return sanPhamRepository.save(sanPham);
-       }
-        return null;
+        long currentTimestampMillis = System.currentTimeMillis();
+        if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
+            return null;
+        }
+        SanPham sanPhamUpdate = SanPham.builder()
+                .id(id)
+                .ma(sanPham.getMa())
+                .ten(sanPham.getTen())
+                .moTa(sanPham.getMoTa())
+                .ngaySua(new Timestamp(currentTimestampMillis))
+                .ngaySua(null)
+                .daXoa(sanPham.getDaXoa())
+                .build();
+        return sanPhamRepository.save(sanPhamUpdate);
     }
 
     @Override
     public SanPham detail(UUID id) {
-        return sanPhamRepository.findById(id).orElse(null);
+        return sanPhamRepository.findById(id).get();
     }
 
     @Override

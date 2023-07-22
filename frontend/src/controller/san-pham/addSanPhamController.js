@@ -7,7 +7,6 @@ window.addSanPhamController = function ($http, $scope) {
       bootstrap.Toast.getOrCreateInstance(toastLiveExample);
     toastTrigger.addEventListener("click", () => {
       toastBootstrap.show();
-      $scope.add();
     });
   }
   $scope.randoom = "SP" + Math.floor(Math.random() * 10000) + 1;
@@ -19,6 +18,17 @@ window.addSanPhamController = function ($http, $scope) {
     daXoa: false,
   };
   $scope.add = function () {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
     if (
       $scope.detailProduct.ma != "" &&
       $scope.detailProduct.ten != "" &&
@@ -26,10 +36,13 @@ window.addSanPhamController = function ($http, $scope) {
     ) {
       $http.post(sanPhamAPI + "/add", $scope.detailProduct).then(function () {
         $scope.message = "Thêm thành công";
-        $scope.show = false;
+        $scope.show = true;
+        return true;
       });
+    } else {
+      $scope.message = "Thêm thất bại";
+      $scope.show = false;
+      return false;
     }
-    $scope.message = "Thêm thất bại";
-    $scope.show = false;
   };
 };

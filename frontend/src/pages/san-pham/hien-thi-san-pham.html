@@ -8,6 +8,7 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="#/san-pham/add" type="button" class="btn btn-primary">Thêm</a>
                         </div>
+
                         <table class="table">
                             <thead>
                                 <tr>
@@ -29,9 +30,11 @@
                                         {{sanPham.daXoa==0?"Kích hoạt":"Hủy kích hoạt"}}
                                     </th>
                                     <th>
-                                        <a href="#/san-pham/view-update/{{sanPham.id}}" type="button"
-                                            class="btn btn-warning">Chi tiết</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
+                                        <a href="#/san-pham/view-update/{{sanPham.id}}" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom right"
+                                            data-bs-title="This top tooltip is themed via CSS variables."><i
+                                                class="align-middle far fa-fw fa-edit w-50"></i></a>
+
                                     </th>
                                 </tr>
                             </tbody>
@@ -47,7 +50,7 @@
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">Next</a>
+                                    <a class="page-link" ng-click="nextPage($index)">Next</a>
                                 </li>
                             </ul>
                         </nav>

@@ -1,4 +1,11 @@
-window.hienThiSanPhamController = function ($http, $scope, $rootScope) {
+window.hienThiSanPhamController = function ($http, $scope) {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
+
   $scope.listSanPham = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
@@ -18,8 +25,8 @@ window.hienThiSanPhamController = function ($http, $scope, $rootScope) {
       $scope.getSanPham();
     }
   };
-  $scope.nextPage = function () {
-    $scope.currentPage++;
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
   };
 
   $scope.previousPage = function () {

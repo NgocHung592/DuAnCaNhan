@@ -5,6 +5,8 @@ import com.example.demo.entity.SanPham;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,8 +50,8 @@ public class SanPhamRestController {
     }
 
     @PutMapping("update/{id}")
-    public SanPham update(@RequestBody SanPham sanPham, @PathVariable("id") String id) {
-        return sanPhamService.update(sanPham,UUID.fromString(id));
+    public ResponseEntity update(@RequestBody SanPham sanPham, @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamService.update(sanPham,UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

@@ -10,21 +10,24 @@
                                 <label class="form-label">Mã sản phẩm</label>
                                 <input type="text" class="form-control" name="maSanPham" required
                                     ng-model="detailProduct.ma">
-                                <span ng-show="formUpdate.maSanPham.$invalid" class="has-error">Mã không được
+                                <span ng-show="formUpdate.maSanPham.$invalid" ng-hide="show?true:false"
+                                    class="has-error">Mã không được
                                     trống</span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tên sản phẩm</label>
                                 <input type="text" class="form-control" name="tenSanPham" required
                                     ng-model="detailProduct.ten">
-                                <span ng-show="formUpdate.tenSanPham.$invalid" class="has-error">Tên không được
+                                <span ng-show="formUpdate.tenSanPham.$invalid" ng-hide="show?true:false"
+                                    class="has-error">Tên không được
                                     trống</span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Mô tả</label>
                                 <input type="text" class="form-control" name="moTa" required
                                     ng-model="detailProduct.moTa">
-                                <span ng-show="formUpdate.moTa.$invalid" class="has-error">Mô tả không được
+                                <span ng-show="formUpdate.moTa.$invalid" ng-hide="show?true:false" class="has-error">Mô
+                                    tả không được
                                     trống</span>
                             </div>
                             <div class="mb-3" class="form-check">
@@ -48,9 +51,13 @@
                         </form>
 
                         <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                data-bs-delay="1500">
                                 <div class="toast-body">
                                     {{message}}
+                                    <div id="myProgress">
+                                        <div id="myBar"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
