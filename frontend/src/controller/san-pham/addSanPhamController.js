@@ -1,25 +1,35 @@
 window.addSanPhamController = function ($http, $scope) {
+  $scope.show = Boolean;
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
     const toastBootstrap =
       bootstrap.Toast.getOrCreateInstance(toastLiveExample);
     toastTrigger.addEventListener("click", () => {
-      $scope.message = "Thêm thành công";
       toastBootstrap.show();
+      $scope.add();
     });
   }
-
   $scope.randoom = "SP" + Math.floor(Math.random() * 10000) + 1;
   $scope.detailProduct = {
     id: "",
     ma: $scope.randoom,
     ten: "",
     moTa: "",
-    trangThai: 1,
+    daXoa: false,
   };
-  $scope.add = function (event) {
-    event.preventDefault();
-    $http.post(sanPhamAPI + "/add", $scope.detailProduct).then(function () {});
+  $scope.add = function () {
+    if (
+      $scope.detailProduct.ma != "" &&
+      $scope.detailProduct.ten != "" &&
+      $scope.detailProduct.moTa != ""
+    ) {
+      $http.post(sanPhamAPI + "/add", $scope.detailProduct).then(function () {
+        $scope.message = "Thêm thành công";
+        $scope.show = false;
+      });
+    }
+    $scope.message = "Thêm thất bại";
+    $scope.show = false;
   };
 };

@@ -1,10 +1,19 @@
 window.updateSanPhamController = function ($http, $scope, $routeParams) {
+  const toastTrigger = document.getElementById("liveToastBtn");
+  const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
   $scope.detailProduct = {
     id: "",
     ma: "",
     ten: "",
     moTa: "",
-    trangThai: Number,
+    daXoa: Boolean,
   };
 
   $http
@@ -12,6 +21,7 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
     .then(function (response) {
       if (response.status == 200) {
         $scope.detailProduct = response.data;
+        console.log($scope.detailProduct);
       }
     });
 
@@ -19,7 +29,7 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
     $http
       .put(sanPhamAPI + "/update/" + id, $scope.detailProduct)
       .then(function () {
-        alert("Cập nhật thành công");
+        $scope.message = "Cập nhật thành công";
       });
   };
 };

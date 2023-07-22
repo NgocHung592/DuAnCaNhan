@@ -33,7 +33,9 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     @Override
     public ChatLieu add(ChatLieu chatLieu) {
         long currentTimestampMillis = System.currentTimeMillis();
-
+        if(chatLieu.getMa().isBlank() || chatLieu.getTen().isBlank() ){
+            return null;
+        }
         ChatLieu chatLieuSave= ChatLieu.builder()
                 .ma(chatLieu.getMa())
                 .ten(chatLieu.getTen())
