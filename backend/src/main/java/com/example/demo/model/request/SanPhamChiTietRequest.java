@@ -17,7 +17,7 @@ public class SanPhamChiTietRequest {
 
     private Double gia;
 
-    private String trangThai;
+    private String daXoa;
 
     private UUID idSanPham;
 

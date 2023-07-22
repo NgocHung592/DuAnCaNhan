@@ -13,7 +13,7 @@ import java.util.UUID;
 @Transactional
 public interface KieuDangRepository extends JpaRepository<KieuDang, UUID> {
 
-    @Query("select kd from KieuDang  kd where kd.trangThai=1")
+    @Query("select kd from KieuDang  kd where kd.daXoa=false")
     List<KieuDang> getListStatus();
 
 }

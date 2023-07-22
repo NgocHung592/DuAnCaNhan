@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 @Service
@@ -30,7 +32,16 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu add(ChatLieu chatLieu) {
-        return chatLieuRepository.save(chatLieu);
+        long currentTimestampMillis = System.currentTimeMillis();
+
+        ChatLieu chatLieuSave= ChatLieu.builder()
+                .ma(chatLieu.getMa())
+                .ten(chatLieu.getTen())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .daXoa(chatLieu.getDaXoa())
+                .build();
+        return chatLieuRepository.save(chatLieuSave);
     }
 
     @Override

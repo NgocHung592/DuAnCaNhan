@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface PhongCachRepository extends JpaRepository<PhongCach, UUID> {
 
-    @Query("select pc from PhongCach  pc where pc.trangThai=1")
+    @Query("select pc from PhongCach  pc where pc.daXoa=false")
     List<PhongCach> getAllByStatus();
 }

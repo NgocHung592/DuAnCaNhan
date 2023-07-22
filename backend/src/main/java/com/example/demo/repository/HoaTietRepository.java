@@ -11,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface HoaTietRepository extends JpaRepository<HoaTiet, UUID> {
 
-    @Query("select ht from HoaTiet  ht where ht.trangThai=1")
+    @Query("select ht from HoaTiet  ht where ht.daXoa=false")
     List<HoaTiet> getAllByStatus();
 }

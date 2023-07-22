@@ -15,6 +15,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Nationalized;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Table(name = "san_pham")
@@ -41,6 +42,18 @@ public class SanPham implements Serializable {
     @Column(name = "mo_ta")
     private String moTa;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
+
+    @Column(name = "ngay_sua")
+    private Timestamp ngaySua;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
+
+    @Column(name = "nguoi_sua")
+    private String nguoiSua;
+
+    @Column(name = "da_xoa")
+    private Boolean daXoa;
 }

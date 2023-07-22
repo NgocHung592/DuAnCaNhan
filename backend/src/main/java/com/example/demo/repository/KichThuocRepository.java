@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface KichThuocRepository extends JpaRepository<KichThuoc, UUID> {
 
-    @Query("select kt from KichThuoc  kt where kt.trangThai=1")
+    @Query("select kt from KichThuoc  kt where kt.daXoa=false")
     List<KichThuoc> getAllByStatus();
 }

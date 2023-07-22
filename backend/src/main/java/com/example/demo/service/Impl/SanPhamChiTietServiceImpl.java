@@ -69,7 +69,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                     .builder()
                     .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
                     .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                    .trangThai(Integer.valueOf(sanPhamChiTietRequest.getTrangThai()))
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                     .sanPham(sanPhamRepository.findById(sanPhamChiTietRequest.getIdSanPham()).get())
                     .danhMuc(danhMucRepository.findById(sanPhamChiTietRequest.getIdDanhMuc()).get())
                     .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
