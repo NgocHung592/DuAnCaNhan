@@ -2,6 +2,8 @@ package com.example.demo.restcontroller;
 
 
 import com.example.demo.entity.NhanVien;
+import com.example.demo.model.request.KhachHangRequest;
+import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,21 +27,21 @@ public class NhanVienRestController {
 
     @GetMapping("trang-thai")
     public List<NhanVien> hienThiTheoTrangThai() {
-        return nhanVienService.getAllByStatus();
+        return nhanVienService.getListStatus();
     }
 
     @GetMapping("detail/{id}")
     public NhanVien detail(@PathVariable("id") String id) {
-        return nhanVienService.getOne(UUID.fromString(id));
+        return nhanVienService.detail(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public NhanVien add(@RequestBody NhanVien nhanVien) {
+    public NhanVien add(@RequestBody NhanVienRequest nhanVien) {
         return nhanVienService.add(nhanVien);
     }
 
     @PutMapping("update/{id}")
-    public NhanVien update(@RequestBody NhanVien nhanVien, @PathVariable("id") String id) {
+    public NhanVien update(@RequestBody NhanVienRequest nhanVien, @PathVariable("id") String id) {
         return nhanVienService.update(nhanVien, UUID.fromString(id));
     }
 

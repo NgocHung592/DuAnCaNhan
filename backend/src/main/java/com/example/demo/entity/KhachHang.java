@@ -37,7 +37,7 @@ public class KhachHang {
 //    private Date ngaysinh;
     @Column(name="ngay_tao")
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaytao;
 //    @Column(name="anh_dai_dien")
 //    private  String anhdaidien;

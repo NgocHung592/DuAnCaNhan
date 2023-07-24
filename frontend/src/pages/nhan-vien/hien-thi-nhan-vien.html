@@ -40,35 +40,46 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Mã</th>
-                  <th scope="col">Email</th>
                   <th scope="col">Họ Và Tên</th>
-                  <th scope="col">Ngày Tạo</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Ngày sinh</th>
+                  <th scope="col">Số điện thoại</th>
+                  <th scope="col">Số thẻ căn cước</th>
+                  <th scope="col">Chức Vụ</th>
+                  <th scope="col">Ngày tạo</th>
                   <th scope="col">Trạng thái</th>
                   <th scope="col">Thao Tác</th>
                 </tr>
               </thead>
-              <tbody ng-repeat="nv in listNhanVien.content">
+              <tbody ng-repeat="nv in list_nv.content">
                 <tr>
                   <th scope="row">{{$index+1}}</th>
                   <th scope="row">{{nv.ma}}</th>
-                  <th scope="row">{{nv.email}}</th>
                   <th scope="row">{{nv.hoten}}</th>
-                  <th scope="row">{{nv.ngaytao}}</th>
+                  <th scope="row">{{nv.email}}</th>
+                  <th scope="row">{{nv.ngaysinh}}</th>
+                  <th scope="row">{{nv.sodienthoai}}</th>
+                  <th scope="row">{{nv.cmt}}</th>
+                  <th scope="row">{{nv.vaiTro.ten}}</th>
+                  <th scope="row">
+                    {{nv.ngaytao | date: 'dd/MM/yyyy hh:mm a'}}
+                  </th>
                   <th class="text-success" scope="row">
                     {{nv.trangthai==1?"Kích hoạt":"Hủy kích hoạt"}}
                   </th>
                   <th>
-                    <a
+                    <i
                       type="button"
-                      class="btn btn-warning"
-                      href="#nhan-vien/update/{{nv.id}}"
-                      >Chi tiết</a
-                    >
-                    <a
-                      type="button"
-                      class="btn btn-danger"
+                      class="material-icons"
+                      style="font-size: 23px; color: red"
                       ng-click="delete(nv.id)"
-                      >Xóa</a
+                      >delete</i
+                    >
+                    <i
+                      type="button"
+                      class="material-icons"
+                      style="font-size: 23px; color: red"
+                      >delete</i
                     >
                   </th>
                 </tr>

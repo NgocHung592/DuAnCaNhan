@@ -220,6 +220,7 @@ Create table [danh_muc]
 	ngay_sinh date,
 	anh_dai_dien varchar(max),
 	mat_khau varchar(20),
+    so_can_cuoc varchar(20),
 	ghi_chu nvarchar(max),
 	trang_thai int,
     ngay_tao datetime,
