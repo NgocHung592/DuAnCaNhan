@@ -29,8 +29,6 @@ public class SanPhamChiTietRequest {
 
     private UUID idKichThuoc;
 
-    private UUID idKieuDang;
-
     private UUID idMauSac;
 
     private UUID idPhongCach;

@@ -5,63 +5,63 @@
                 <div class="align-self-center w-100">
                     <form class="row">
                         <div class="col-md-4">
-                            <select ng-model="product.idSanPham">
+                            <select ng-model="product.tenSanPham">
                                 <option value="">Sản Phẩm</option>
-                                <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
+                                <option value="{{sanPham.ten}}" ng-repeat="sanPham in listSanPhamTrangThai">
                                     {{sanPham.ten}}</option>
                             </select>
                             <a href="#san-pham/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i>
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <select ng-model="product.idDanhMuc">
+                            <select ng-model="product.tenDanhMuc">
                                 <option value="">Danh Mục</option>
-                                <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
+                                <option value="{{danhMuc.ten}}" ng-repeat="danhMuc in listDanhMucTrangThai">
                                     {{danhMuc.ten}}</option>
                             </select>
                             <a href="#danh-muc/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
-                            <select ng-model="product.idMauSac">
+                            <select ng-model="product.tenMauSac">
                                 <option value="">Màu Sắc</option>
-                                <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
+                                <option value="{{mauSac.ten}}" ng-repeat="mauSac in listMauSacTrangThai">
                                     {{mauSac.ten}}</option>
                             </select>
                             <a href="#mau-sac/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
-                            <select ng-model="product.idPhongCach">
+                            <select ng-model="product.tenPhongCach">
                                 <option value="">Phong Cách</option>
 
-                                <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
+                                <option value="{{phongCach.ten}}" ng-repeat="phongCach in listPhongCachTrangThai">
                                     {{phongCach.ten}}</option>
                             </select>
                             <a href="#phong-cach/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
 
                         </div>
                         <div class="col-md-4">
-                            <select ng-model="product.idChatLieu">
+                            <select ng-model="product.tenChatLieu">
                                 <option value="">Chất Liệu</option>
-                                <option value="{{chatLieu.id}}" ng-repeat="chatLieu in listChatLieuTrangThai">
+                                <option value="{{chatLieu.ten}}" ng-repeat="chatLieu in listChatLieuTrangThai">
                                     {{chatLieu.ten}}
                                 </option>
                             </select>
                             <a href="#chat-lieu/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-4">
-                            <select ng-model="product.idHoaTiet">
+                            <select ng-model="product.tenHoaTiet">
                                 <option value="">Họa Tiết</option>
-                                <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
+                                <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
                                     {{hoaTiet.ten}}
                                 </option>
                             </select>
                             <a href="#hoa-tiet/add"> <i class="fa-sharp fa-solid fa-circle-plus"></i></a>
                         </div>
                         <div class="col-md-4">
-                            <label for="">Đơn Giá</label>
-                            <input type="number">
+                            <label>Đơn Giá</label>
+                            <input type="number" ng-model="product.gia">
                         </div>
                     </form>
                 </div>
@@ -73,40 +73,6 @@
                     <div class="align-self-center w-100">
                         <h3>Kích Thước Và Số Lượng</h3>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <!-- <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Sản Phẩm</th>
-                                        <th scope="col">Danh Mục</th>
-                                        <th scope="col">Màu Sắc</th>
-                                        <th scope="col">Phong Cách</th>
-                                        <th scope="col">Chất Liệu</th>
-                                        <th scope="col">Họa Tiết</th>
-                                        <th scope="col">Kích thước</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Số Lượng</th>
-                                        <th scope="col">Thao tác</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody ng-repeat="product in products track by $index ">
-                                    <tr>
-                                        <th scope="row">{{product.idSanPham}}</th>
-                                        <th scope="row">{{product.idDanhMuc}}</th>
-                                        <th scope="row">{{product.idMauSac}}</th>
-                                        <th scope="row">{{product.idPhongCach}}</th>
-                                        <th scope="row">{{product.idChatLieu}}</th>
-                                        <th scope="row">{{product.idHoaTiet}}</th>
-                                        <th scope="row">{{product.idKichThuoc}}</th>
-                                        <th scope="row">{{product.gia}}</th>
-                                        <th scope="row">{{product.soLuong}}</th>
-                                        <th>
-                                            <a type="button" class="btn btn-danger"
-                                                ng-click="delete(sanPham.id)">Xóa</a>
-                                        </th>
-                                    </tr>
-                                </tbody>
-                            </table> -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Thêm
@@ -115,24 +81,24 @@
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
-
                                         <div class="modal-body">
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-md-4">Kích Thước</div>
                                                     <div class="col-md-8">
                                                         <div class="row">
-                                                            <a class="col-md-3 btn btn-danger border" href=""
-                                                                role="button"
-                                                                ng-repeat="kichThuoc in listKichThuocTrangThai"
-                                                                ng-click="addSizeAndQuanlity();">{{kichThuoc.ten}}</a>
-                                                            <a href="#/kich-thuoc/add"> <i
-                                                                    class="fa-sharp fa-solid fa-circle-plus"></i></a>
-
+                                                            <select ng-model="size.tenKichThuoc">
+                                                                <option value="">--Chọn--</option>
+                                                                <option value="{{kichThuoc.ten}}"
+                                                                    ng-repeat="kichThuoc in listKichThuocTrangThai">
+                                                                    {{kichThuoc.ten}}
+                                                                </option>
+                                                            </select>
+                                                            <button ng-click="addSize();">+</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class=" row">
                                                     <div class="col-md-4">Số Lượng</div>
                                                     <div class="col-md-8">
                                                         <input type="number" ng-model="product.soLuong">
@@ -141,8 +107,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary"
-                                                ng-click="addSizeAndQuanlity();">Xác
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                ng-click="generateSanPham();">Xác
                                                 Nhận</button>
                                         </div>
                                     </div>
@@ -175,30 +141,30 @@
                             <tr>
                                 <th scope="col">Sản Phẩm</th>
                                 <th scope="col">Danh Mục</th>
-                                <th scope="col">Màu Sắc</th>
                                 <th scope="col">Phong Cách</th>
                                 <th scope="col">Chất Liệu</th>
                                 <th scope="col">Họa Tiết</th>
-                                <th scope="col">Kích thước</th>
                                 <th scope="col">Giá</th>
                                 <th scope="col">Số Lượng</th>
                                 <th scope="col">Thao tác</th>
 
                             </tr>
                         </thead>
-                        <tbody ng-repeat="product in products track by $index ">
+                        <tbody ng-repeat="product in prductDetails track by $index ">
                             <tr>
-                                <th scope="row">{{product.idSanPham}}</th>
-                                <th scope="row">{{product.idDanhMuc}}</th>
-                                <th scope="row">{{product.idMauSac}}</th>
-                                <th scope="row">{{product.idPhongCach}}</th>
-                                <th scope="row">{{product.idChatLieu}}</th>
-                                <th scope="row">{{product.idHoaTiet}}</th>
-                                <th scope="row">{{product.idKichThuoc}}</th>
-                                <th scope="row">{{product.gia}}</th>
-                                <th scope="row">{{product.soLuong}}</th>
+                                </th>
+                                <th scope="row">{{product.tenSanPham}} [ {{product.tenMauSac}} -
+                                    {{product.tenKichThuoc}} ]
+                                </th>
+                                <th scope="row">{{product.tenDanhMuc}}</th>
+                                <th scope="row">{{product.tenPhongCach}}</th>
+                                <th scope="row">{{product.tenChatLieu}}</th>
+                                <th scope="row">{{product.tenHoaTiet}}</th>
+                                <th scope="row"><input type="" value="{{product.gia}}"></th>
+                                <th scope="row"><input type="text" value="{{product.soLuong}}"></th>
                                 <th>
-                                    <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
+                                    <a type="button" class="btn btn-danger"
+                                        ng-click="delete(product.index)">Xóa</a>
                                 </th>
                             </tr>
                         </tbody>

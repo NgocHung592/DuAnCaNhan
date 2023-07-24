@@ -10,26 +10,56 @@ window.addSanPhamChiTietController = function ($http, $scope) {
   $scope.listHoaTietTrangThai = [];
   $scope.listHoaTietTrangThai = [];
   $scope.listKieuDangTrangThai = [];
-
   $scope.currentPage = 0;
   $scope.totalPages = [];
 
   $scope.products = [];
+
+  $scope.prductDetails = [];
+
   $scope.product = {
-    idSanPham: "",
-    idDanhMuc: "",
-    idMauSac: "",
-    idPhongCach: "",
-    idChatLieu: "",
-    idHoaTiet: "",
-    idKichThuoc: "",
+    tenSanPham: "",
+    tenDanhMuc: "",
+    tenMauSac: "",
+    tenPhongCach: "",
+    tenChatLieu: "",
+    tenHoaTiet: "",
     gia: "",
     daXoa: false,
-    soLuong: "",
   };
-  $scope.addSizeAndQuanlity = function () {
-    $scope.products.post($scope.product);
+
+  $scope.sizes = [];
+  $scope.size = {
+    tenKichThuoc: "",
   };
+  $scope.addSize = function () {
+    var newSize = angular.copy($scope.size);
+    $scope.sizes.push(newSize);
+    console.log($scope.sizes);
+  };
+
+  $scope.generateSanPham = function () {
+    $scope.products.push($scope.product);
+    $scope.products.forEach((product) => {
+      $scope.sizes.forEach((size) => {
+        $scope.prductDetail = {
+          tenSanPham: product.tenSanPham,
+          tenDanhMuc: product.tenDanhMuc,
+          tenMauSac: product.tenMauSac,
+          tenPhongCach: product.tenPhongCach,
+          tenChatLieu: product.tenChatLieu,
+          tenHoaTiet: product.tenHoaTiet,
+          tenKichThuoc: size.tenKichThuoc,
+          gia: product.gia,
+          soLuong: product.soLuong,
+          daXoa: false,
+        };
+        $scope.prductDetails.push($scope.prductDetail);
+        console.log($scope.prductDetails);
+      });
+    });
+  };
+
   $scope.saveProduct = function (event) {
     event.preventDefault();
     $http
