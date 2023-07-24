@@ -7,7 +7,7 @@ window.addNhanVienController = function ($http, $scope) {
     hoten: "",
     email: "",
     ngaytao: date,
-    trangthai: 1,
+    trangthai: false,
   };
 
   $scope.add = function () {

@@ -4,20 +4,20 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
+                        <h4>KIỂU DÁNG</h4>
                         <form>
                             <div class="mb-3">
                                 <label class="form-label">Mã kiểu dáng</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="detailKieuDang.ma">
+                                <input type="text" class="form-control" ng-model="detailKieuDang.ma">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tên kiểu dáng</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    ng-model="detailKieuDang.ten">
+                                <input type="text" class="form-control" ng-model="detailKieuDang.ten">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tên danh mục</label>
                                 <select class="form-select" ng-model="detailKieuDang.danhMuc.id">
+                                    <option value="">--chọn--</option>
                                     <option ng-repeat="danhMuc in listDanhMucTheoTrangThai" value="{{danhMuc.id}}"
                                         ng-selected="detailKieuDang.danhMuc.id">
                                         {{danhMuc.ten}}
@@ -26,13 +26,13 @@
                             </div>
                             <div class="mb-3" class="form-check">
                                 <label class="form-label">Trạng thái</label><br>
-                                <input type="radio" value="1" ng-model="detailKieuDang.trangThai"
-                                    ng-checked="detailKieuDang.trangThai==1" class="form-check-input">
+                                <input type="radio" value="false" ng-model="detailKieuDang.daXoa"
+                                    ng-checked="detailKieuDang.daXoa==false" class="form-check-input">
                                 <label class="form-check-label">
                                     Kích hoạt
                                 </label>
-                                <input type="radio" value="0" ng-model="detailKieuDang.trangThai"
-                                    ng-checked="detailKieuDang.trangThai==0" class="form-check-input">
+                                <input type="radio" value="true" ng-model="detailKieuDang.daXoa"
+                                    ng-checked="detailKieuDang.daXoa==true" class="form-check-input">
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>

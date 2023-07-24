@@ -26,10 +26,13 @@ window.hienThiDanhMucController = function ($http, $scope, $rootScope) {
       $scope.getDanhMuc();
     }
   };
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
 
-  $scope.delete = function (id) {
-    $http.delete(danhMucAPI + "/delete/" + id).then(function (response) {
-      $scope.getDanhMuc();
-    });
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

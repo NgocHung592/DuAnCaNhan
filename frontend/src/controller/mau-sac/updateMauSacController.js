@@ -3,7 +3,7 @@ window.updateMauSacController = function ($http, $scope, $routeParams) {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Number,
+    trangThai: Boolean,
   };
 
   $http.get(mauSacAPI + "/detail/" + $routeParams.id).then(function (response) {

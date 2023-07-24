@@ -18,9 +18,13 @@ window.hienThiKichThuocController = function ($http, $scope) {
       $scope.getKichThuoc();
     }
   };
-  $scope.delete = function (id) {
-    $http.delete(kichThuocAPI + "/delete/" + id).then(function () {
-      $scope.getKichThuoc();
-    });
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

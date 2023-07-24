@@ -19,10 +19,13 @@ window.hienThiMauSacController = function ($http, $scope) {
       $scope.getMauSac();
     }
   };
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
 
-  $scope.delete = function (id) {
-    $http.delete(mauSacAPI + "/delete/" + id).then(function () {
-      $scope.getMauSac();
-    });
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

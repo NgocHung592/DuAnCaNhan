@@ -27,9 +27,13 @@ window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
     }
   };
 
-  $scope.delete = function (id) {
-    $http.delete(chatLieuAPI + "/delete/" + id).then(function () {
-      $scope.getData();
-    });
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

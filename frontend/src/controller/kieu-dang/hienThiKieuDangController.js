@@ -17,9 +17,13 @@ window.hienThiKieuDangController = function ($http, $scope) {
       $scope.getKieuDang();
     }
   };
-  $scope.delete = function (id) {
-    $http.delete(kieuDangAPI + "/delete/" + id).then(function () {
-      $scope.getKieuDang();
-    });
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

@@ -24,7 +24,7 @@ window.addSanPhamChiTietController = function ($http, $scope) {
     idHoaTiet: "",
     idKichThuoc: "",
     gia: "",
-    trangThai: 1,
+    daXoa: false,
     soLuong: "",
   };
   $scope.addSizeAndQuanlity = function () {

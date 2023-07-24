@@ -22,4 +22,13 @@ window.hienThiHoaTietController = function ($http, $scope, $location) {
       $scope.getHoaTiet();
     });
   };
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
+  };
 };
