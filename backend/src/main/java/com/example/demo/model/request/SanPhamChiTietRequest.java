@@ -19,18 +19,18 @@ public class SanPhamChiTietRequest {
 
     private String daXoa;
 
-    private UUID idSanPham;
+    private String tenSanPham;
 
-    private UUID idDanhMuc;
+    private String tenDanhMuc;
 
-    private UUID idChatLieu;
+    private String tenChatLieu;
 
-    private UUID idHoaTiet;
+    private String tenHoaTiet;
 
-    private UUID idKichThuoc;
+    private String tenKichThuoc;
 
-    private UUID idMauSac;
+    private String tenMauSac;
 
-    private UUID idPhongCach;
+    private String tenPhongCach;
 
 }

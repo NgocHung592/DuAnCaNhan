@@ -166,10 +166,13 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Danh Mục</th>
+                                <th scope="col">Phong Cách</th>
+                                <th scope="col">Chất Liệu</th>
+                                <th scope="col">Họa Tiết</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Giá</th>
-                                <th scope="col">Mô tả</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Thao tác</th>
 
@@ -178,17 +181,20 @@
                         <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content">
                             <tr>
                                 <th scope="row">{{$index+1}}</th>
-                                <th scope="row">{{sanPhamChiTiet.sanPham.ten}}</th>
+                                <th scope="row">{{sanPhamChiTiet.sanPham.ten}} [ {{sanPhamChiTiet.mauSac.ten}} -
+                                    {{sanPhamChiTiet.kichThuoc.ten}}]</th>
+                                <th scope="row">{{sanPhamChiTiet.danhMuc.ten}}</th>
+                                <th scope="row">{{sanPhamChiTiet.phongCach.ten}}</th>
+                                <th scope="row">{{sanPhamChiTiet.chatLieu.ten}}</th>
+                                <th scope="row">{{sanPhamChiTiet.hoaTiet.ten}}</th>
                                 <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                <th scope="row">{{sanPhamChiTiet.gia}}</th>
-                                <th scope="row">{{sanPhamChiTiet.sanPham.moTa}}</th>
-                                <th scope="row">{{sanPhamChiTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                <th scope="row">{{sanPhamChiTiet.gia | number}} đ</th>
+                                <th scope="row">{{sanPhamChiTiet.trangThai?"Hủy kích hoạt":"Kích hoạt"}}
                                 </th>
                                 <th>
                                     <a type="button" class="btn btn-warning "
                                         href="#san-pham-chi-tiet/update/{{sanPhamChiTiet.id}}">Chi
                                         tiết</a>
-                                    <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
                                 </th>
                             </tr>
                         </tbody>

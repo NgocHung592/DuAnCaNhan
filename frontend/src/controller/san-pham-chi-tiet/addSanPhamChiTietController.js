@@ -24,7 +24,7 @@ window.addSanPhamChiTietController = function ($http, $scope) {
     tenPhongCach: "",
     tenChatLieu: "",
     tenHoaTiet: "",
-    gia: "",
+    gia: Number,
     daXoa: false,
   };
 
@@ -63,7 +63,7 @@ window.addSanPhamChiTietController = function ($http, $scope) {
   $scope.saveProduct = function (event) {
     event.preventDefault();
     $http
-      .post(sanPhamChiTietAPI + "/add", $scope.products)
+      .post(sanPhamChiTietAPI + "/add", $scope.prductDetails)
       .then(function (response) {
         alert("Them thanh cong");
       });

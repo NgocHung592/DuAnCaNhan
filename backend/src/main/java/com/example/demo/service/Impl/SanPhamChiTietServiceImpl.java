@@ -1,5 +1,12 @@
 package com.example.demo.service.Impl;
 
+import com.example.demo.entity.ChatLieu;
+import com.example.demo.entity.DanhMuc;
+import com.example.demo.entity.HoaTiet;
+import com.example.demo.entity.KichThuoc;
+import com.example.demo.entity.MauSac;
+import com.example.demo.entity.PhongCach;
+import com.example.demo.entity.SanPham;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
@@ -19,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +51,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Autowired
     private PhongCachRepository phongCachRepository;
 
+    long currentTimestampMillis = System.currentTimeMillis();
+
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
@@ -55,12 +65,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.getAllSanPhamChiTietById(id, pageable);
     }
 
-
-//    @Override
-//    public SanPhamChiTiet getOne(UUID id) {
-//        return sanPhamChiTietRepository.findById(id).orElse(null);
-//    }
-
     @Override
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
         List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
@@ -70,18 +74,82 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                     .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
                     .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
                     .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .sanPham(sanPhamRepository.findById(sanPhamChiTietRequest.getIdSanPham()).get())
-                    .danhMuc(danhMucRepository.findById(sanPhamChiTietRequest.getIdDanhMuc()).get())
-                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
-                    .kichThuoc(kichThuocRepository.findById(sanPhamChiTietRequest.getIdKichThuoc()).get())
-                    .mauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get())
-                    .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
-                    .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
+                    .ngayTao(new Timestamp(currentTimestampMillis))
+                    .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
+                    .danhMuc(danhMucRepository.findById(getIdDanhMuc(sanPhamChiTietRequest.getTenDanhMuc())).get())
+                    .hoaTiet(hoaTietRepository.findById(getIdHoaTiet(sanPhamChiTietRequest.getTenHoaTiet())).get())
+                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
+                    .mauSac(mauSacRepository.findById(getIdSMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
+                    .phongCach(phongCachRepository.findById(getIdPhongCach(sanPhamChiTietRequest.getTenPhongCach())).get())
+                    .chatLieu(chatLieuRepository.findById(getIdChatLieu(sanPhamChiTietRequest.getTenChatLieu())).get())
                     .build();
             sanPhamChiTiets.add(sanPhamChiTietSave);
         });
 
         return sanPhamChiTietRepository.saveAll(sanPhamChiTiets);
+    }
+
+    public UUID getIdSanPham(String ten) {
+        for (SanPham sanPham : sanPhamRepository.findAll()) {
+            if (ten.equals(sanPham.getTen())) {
+                return sanPham.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdDanhMuc(String ten) {
+        for (DanhMuc danhMuc : danhMucRepository.findAll()) {
+            if (ten.equals(danhMuc.getTen())) {
+                return danhMuc.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdHoaTiet(String ten) {
+        for (HoaTiet hoaTiet : hoaTietRepository.findAll()) {
+            if (ten.equals(hoaTiet.getTen())) {
+                return hoaTiet.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdKichThuoc(String ten) {
+        for (KichThuoc kichThuoc : kichThuocRepository.findAll()) {
+            if (ten.equals(kichThuoc.getTen())) {
+                return kichThuoc.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdSMauSac(String ten) {
+        for (MauSac mauSac : mauSacRepository.findAll()) {
+            if (ten.equals(mauSac.getTen())) {
+                return mauSac.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdPhongCach(String ten) {
+        for (PhongCach phongCach : phongCachRepository.findAll()) {
+            if (ten.equals(phongCach.getTen())) {
+                return phongCach.getId();
+            }
+        }
+        return null;
+    }
+
+    public UUID getIdChatLieu(String ten) {
+        for (ChatLieu chatLieu : chatLieuRepository.findAll()) {
+            if (ten.equals(chatLieu.getTen())) {
+                return chatLieu.getId();
+            }
+        }
+        return null;
     }
 //
 //    @Override

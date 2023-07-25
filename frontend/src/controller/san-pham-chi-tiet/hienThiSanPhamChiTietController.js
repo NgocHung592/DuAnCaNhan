@@ -32,6 +32,7 @@ window.hienThiSanPhamChiTietController = function ($http, $scope) {
       $scope.currentPage--;
     }
   };
+
   $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
     $scope.listChatLieuTrangThai = response.data;
   });

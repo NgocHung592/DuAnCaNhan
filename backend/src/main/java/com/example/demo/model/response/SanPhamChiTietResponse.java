@@ -9,7 +9,7 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.id_san_pham}")
     String getIDSanPham();
 
-    @Value("#{target.ten}")
+    @Value("#{target.ten_san_pham}")
     String getTen();
 
     @Value("#{target.anh_noi_bat}")
@@ -28,5 +28,5 @@ public interface SanPhamChiTietResponse {
     String getMoTa();
 
     @Value("#{target.trang_thai}")
-    Integer getTrangThai();
+    Boolean getTrangThai();
 }
