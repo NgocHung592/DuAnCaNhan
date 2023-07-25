@@ -18,9 +18,13 @@ window.hienThiPhongCachController = function ($http, $scope) {
       $scope.getPhongCach();
     }
   };
-  $scope.delete = function (id) {
-    $http.delete(phongCachAPI + "/delete/" + id).then(function (response) {
-      $scope.getPhongCach();
-    });
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
   };
 };

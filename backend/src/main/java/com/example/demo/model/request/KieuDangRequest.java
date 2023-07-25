@@ -12,7 +12,7 @@ public class KieuDangRequest {
 
     private String ten;
 
-    private String trangThai;
+    private String daXoa;
 
     private UUID idDanhMuc;
 }

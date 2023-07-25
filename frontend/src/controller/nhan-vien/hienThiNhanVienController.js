@@ -22,4 +22,10 @@ window.hienThiNhanVienController = function ($http, $scope) {
       $scope.getNhanVien();
     });
   };
+
+  $scope.updateTrangThai = function (id) {
+    $http
+      .put(NhanVienAPI + "/updateTrangThai" + id)
+      .then(function (response) {});
+  };
 };

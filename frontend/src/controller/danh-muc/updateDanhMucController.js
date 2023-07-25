@@ -3,7 +3,7 @@ window.updateDanhMucController = function ($http, $scope, $routeParams) {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Number,
+    daXoa: Boolean,
   };
 
   $http
@@ -11,6 +11,7 @@ window.updateDanhMucController = function ($http, $scope, $routeParams) {
     .then(function (response) {
       if (response.status == 200) {
         $scope.formDanhMuc = response.data;
+        console.log($scope.formDanhMuc);
       }
     });
 

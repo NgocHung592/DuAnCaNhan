@@ -5,7 +5,7 @@ window.addHoaTietController = function ($http, $scope) {
     id: "",
     ma: $scope.randoom,
     ten: "",
-    trangThai: 1,
+    daXoa: false,
   };
 
   $scope.add = function () {

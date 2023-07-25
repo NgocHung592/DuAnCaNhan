@@ -5,7 +5,7 @@ window.addKieuDangController = function ($http, $scope, $rootScope) {
     ma: $scope.randoom,
     ten: "",
     idDanhMuc: "",
-    trangThai: 1,
+    daXoa: false,
   };
 
   $rootScope.listDanhMucTheoTrangThai = function () {

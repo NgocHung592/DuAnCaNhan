@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
+
 @Repository
 public interface ChatLieuRepository extends JpaRepository<ChatLieu, UUID> {
 
-    @Query("select cl from ChatLieu cl where cl.trangThai=1")
+    @Query("select cl from ChatLieu cl where cl.daXoa=false ")
     List<ChatLieu> getAllByStatus();
 }

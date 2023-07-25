@@ -4,6 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
+                        <h4>MÀU SẮC</h4>
                         <form>
                             <div class="mb-3">
                                 <label class="form-label">Mã màu sắc</label>
@@ -15,13 +16,13 @@
                             </div>
                             <div class="mb-3" class="form-check">
                                 <label class="form-label">Trạng thái</label><br>
-                                <input type="radio" value="1" ng-model="formMauSac.trangThai"
-                                    ng-checked="formMauSac.trangThai==1" class="form-check-input">
+                                <input type="radio" value="false" ng-model="formMauSac.daXoa"
+                                    ng-checked="formMauSac.daXoa==false" class="form-check-input">
                                 <label class="form-check-label">
                                     Kích hoạt
                                 </label>
-                                <input type="radio" value="0" ng-model="formMauSac.trangThai"
-                                    ng-checked="formMauSac.trangThai==0" class="form-check-input">
+                                <input type="radio" value="true" ng-model="formMauSac.daXoa"
+                                    ng-checked="formMauSac.daXoa==true" class="form-check-input">
                                 <label class="form-check-label">
                                     Hủy kích hoạt
                                 </label>
@@ -31,7 +32,6 @@
                         </form>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" ng-click="update(formMauSac.id)">Cập nhật</a>
-                            <a type="button" class="btn btn-primary" href="#mau-sac/hien-thi">Back</a>
                         </div>
                     </div>
                 </div>

@@ -18,8 +18,11 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.so_luong}")
     Integer getSoLuong();
 
-    @Value("#{target.gia}")
-    BigDecimal getGia();
+    @Value("#{target.gia_min}")
+    BigDecimal getGiaMin();
+
+    @Value("#{target.gia_max}")
+    BigDecimal getGiaMax();
 
     @Value("#{target.mo_ta}")
     String getMoTa();

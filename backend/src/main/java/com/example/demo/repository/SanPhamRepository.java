@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
+
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
-    @Query("select sp from SanPham  sp where sp.trangThai=1")
+    @Query("select sp from SanPham  sp where sp.daXoa=false")
     List<SanPham> getAllByStatus();
 }

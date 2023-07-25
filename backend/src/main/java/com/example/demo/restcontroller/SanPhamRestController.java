@@ -5,6 +5,8 @@ import com.example.demo.entity.SanPham;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,28 +30,28 @@ public class SanPhamRestController {
     private SanPhamService sanPhamService;
 
     @GetMapping("hien-thi")
-    public Page<SanPham> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return sanPhamService.getAll(pageNo);
+    public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return new ResponseEntity(sanPhamService.getAll(pageNo), HttpStatus.OK);
     }
 
     @GetMapping("trang-thai")
-    public List<SanPham> hienThiTheoTrangThai() {
-        return sanPhamService.getAllByStatus();
+    public ResponseEntity hienThiTheoTrangThai() {
+        return new ResponseEntity(sanPhamService.getAllByStatus(), HttpStatus.OK);
     }
 
     @GetMapping("detail/{id}")
-    public SanPham detail(@PathVariable("id") String id) {
-        return sanPhamService.detail(UUID.fromString(id));
+    public ResponseEntity detail(@PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PostMapping("add")
-    public SanPham add(@RequestBody SanPham sanPham) {
-        return sanPhamService.add(sanPham);
+    public ResponseEntity add(@RequestBody SanPham sanPham) {
+        return new ResponseEntity(sanPhamService.add(sanPham), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public SanPham update(@RequestBody SanPham sanPham, @PathVariable("id") String id) {
-        return sanPhamService.update(sanPham,UUID.fromString(id));
+    public ResponseEntity update(@RequestBody SanPham sanPham, @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
@@ -57,3 +59,4 @@ public class SanPhamRestController {
         sanPhamService.delete(UUID.fromString(id));
     }
 }
+

@@ -23,7 +23,15 @@ window.hienThiSanPhamChiTietController = function ($http, $scope) {
       });
   };
   $scope.getSanPhamChiTiet();
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
 
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
+  };
   $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
     $scope.listChatLieuTrangThai = response.data;
   });

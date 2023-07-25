@@ -20,7 +20,7 @@
                         <form class="row">
                             <div class="col-md-3">
                                 <label class="form-label">Sản Phẩm</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{sanPham.id}}" ng-repeat="sanPham in listSanPhamTrangThai">
                                         {{sanPham.ten}}</option>
@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Danh Mục</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{danhMuc.id}}" ng-repeat="danhMuc in listDanhMucTrangThai">
                                         {{danhMuc.ten}}</option>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Màu Sắc</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
                                         {{mauSac.ten}}</option>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Kích Thước</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{kichThuoc.id}}" ng-repeat="kichThuoc in listKichThuocTrangThai">
                                         {{kichThuoc.ten}}</option>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Phong Cách</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{phongCach.id}}" ng-repeat="phongCach in listPhongCachTrangThai">
                                         {{phongCach.ten}}</option>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Chất Liệu</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất cả</option>
                                     <option value="{{chatLieu.id}}" ng-repeat="chatLieu in listChatLieuTrangThai">
                                         {{chatLieu.ten}}
@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Họa Tiết</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất Cả</option>
                                     <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
                                         {{hoaTiet.ten}}
@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Trạng Thái</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Tất Cả</option>
                                     <option value="">Kích Hoạt</option>
                                     <option value="">Hủy Kích Hoạt</option>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Sắp Xếp</label>
-                                <select name="" id="">
+                                <select class="select">
                                     <option value="">Mặc Định</option>
                                     <option value="">Hàng mới nhất</option>
                                     <option value="">Giá tăng dần</option>
@@ -104,7 +104,8 @@
                                     <th scope="col">Ảnh</th>
                                     <th scope="col">Tên sản phẩm</th>
                                     <th scope="col">Số lượng</th>
-                                    <th scope="col">Giá</th>
+                                    <th scope="col">Giá min</th>
+                                    <th scope="col">Giá max</th>
                                     <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Thao tác</th>
@@ -118,9 +119,10 @@
                                             src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"></th>
                                     <th scope="row">{{sanPhamChiTiet.ten}}</th>
                                     <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.gia}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.giaMin}}</th>
+                                    <th scope="row">{{sanPhamChiTiet.giaMax}}</th>
                                     <th scope="row">{{sanPhamChiTiet.moTa}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                                    <th scope="row">{{sanPhamChiTiet.trangThai==1?"Kinh Doanh":"Ngừng Kinh Doanh"}}
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning "

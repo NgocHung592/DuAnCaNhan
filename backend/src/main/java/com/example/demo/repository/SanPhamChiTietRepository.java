@@ -15,11 +15,11 @@ import java.util.UUID;
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, UUID> {
 
     @Query(value = """
-             SELECT a.id, a.ten as ten,c.anh_noi_bat as anh_noi_bat,sum(b.so_luong) as so_luong,min (b.gia) as gia_min,max (b.gia) as max,a.mo_ta as mo_ta,a.trang_thai as trang_thai FROM san_pham a
-                                                                                        			inner join san_pham_chi_tiet b on a.id=b.san_pham_id
-                                                                                        			inner join hinh_anh c on c.chi_tiet_san_pham_id=b.id
-                                                                            						where b.trang_thai=1
-                                                                                                    group by a.ten, a.mo_ta, a.trang_thai,c.anh_noi_bat,a.id
+             SELECT a.id as id_san_pham, a.ten as ten,c.anh_noi_bat as anh_noi_bat,sum(b.so_luong) as so_luong,min (b.gia) as gia_min,max (b.gia) as gia_max,a.mo_ta as mo_ta,a.trang_thai as trang_thai FROM san_pham a
+             inner join san_pham_chi_tiet b on a.id=b.san_pham_id
+             inner join hinh_anh c on c.chi_tiet_san_pham_id=b.id
+             where b.da_xoa=false
+             group by a.ten, a.mo_ta, a.trang_thai,c.anh_noi_bat,a.id
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getPage(Pageable pageable);
 

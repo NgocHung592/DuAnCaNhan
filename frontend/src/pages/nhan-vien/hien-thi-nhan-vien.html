@@ -64,7 +64,8 @@
                   <th scope="row">
                     {{nv.ngaytao | date: 'dd/MM/yyyy hh:mm a'}}
                   </th>
-                  <th class="text-success" scope="row">
+
+                  <th scope="row">
                     {{nv.trangthai==1?"Kích hoạt":"Hủy kích hoạt"}}
                   </th>
                   <th>
@@ -79,25 +80,24 @@
                       type="button"
                       class="material-icons"
                       style="font-size: 23px; color: red"
+                      href="#nhan-vien/update/{{nv.id}}"
                       >delete</i
                     >
                   </th>
                 </tr>
               </tbody>
             </table>
-            <div class="align-center">
-              <nav aria-label="">
-                <ul class="pagination">
-                  <li
-                    class="page-item"
-                    ng-repeat="page in totalPages track by $index"
-                    ng-click="changePage($index);"
-                  >
-                    <a class="page-link">{{$index+1}}</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+            <nav class="align-center" aria-label="Page navigation example">
+              <ul class="pagination">
+                <li
+                  class="page-item"
+                  ng-repeat="page in totalPages track by $index"
+                  ng-click="changePage($index);"
+                >
+                  <a class="page-link">{{$index+1}}</a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>

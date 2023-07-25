@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Table(name = "danh_muc")
@@ -38,8 +39,19 @@ public class DanhMuc {
     @Column(name = "ten")
     private String ten;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
 
+    @Column(name = "ngay_sua")
+    private Timestamp ngaySua;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
+
+    @Column(name = "nguoi_sua")
+    private String nguoiSua;
+
+    @Column(name = "da_xoa")
+    private Boolean daXoa;
 
 }

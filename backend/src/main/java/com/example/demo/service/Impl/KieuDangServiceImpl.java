@@ -40,7 +40,7 @@ public class KieuDangServiceImpl implements KieuDangService {
                 .ma(kieuDangRequest.getMa())
                 .ten(kieuDangRequest.getTen())
                 .danhMuc(danhMucRepository.findById(kieuDangRequest.getIdDanhMuc()).get())
-                .trangThai(Integer.valueOf(kieuDangRequest.getTrangThai()))
+                .daXoa(Boolean.valueOf(kieuDangRequest.getDaXoa()))
                 .build();
         return kieuDangRepository.save(kieuDangSave);
     }
@@ -52,7 +52,7 @@ public class KieuDangServiceImpl implements KieuDangService {
                 .ma(kieuDangRequest.getMa())
                 .ten(kieuDangRequest.getTen())
                 .danhMuc(danhMucRepository.findById(kieuDangRequest.getIdDanhMuc()).get())
-                .trangThai(Integer.valueOf(kieuDangRequest.getTrangThai()))
+                .daXoa(Boolean.valueOf(kieuDangRequest.getDaXoa()))
                 .build();
         return kieuDangRepository.save(kieuDangUpdate);
     }

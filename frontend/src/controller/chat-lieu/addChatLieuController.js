@@ -1,12 +1,11 @@
 window.addChatLieuController = function ($http, $scope) {
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
 
-  $scope.randoom;
   $scope.formChatLieu = {
     id: "",
     ma: $scope.randoom,
     ten: "",
-    trangThai: 1,
+    daXoa: false,
   };
 
   $scope.add = function (event) {

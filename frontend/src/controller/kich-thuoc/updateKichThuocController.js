@@ -3,7 +3,7 @@ window.updateKichThuocController = function ($http, $scope, $routeParams) {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Number,
+    trangThai: Boolean,
   };
 
   $http

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface MauSacRepository extends JpaRepository<MauSac, UUID> {
-    @Query("select ms from MauSac  ms where ms.trangThai=1")
+
+    @Query("select ms from MauSac  ms where ms.daXoa=false")
     List<MauSac> getAllByStatus();
 }

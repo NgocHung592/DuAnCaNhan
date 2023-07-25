@@ -3,6 +3,12 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
+import com.example.demo.repository.ChatLieuRepository;
+import com.example.demo.repository.DanhMucRepository;
+import com.example.demo.repository.HoaTietRepository;
+import com.example.demo.repository.KichThuocRepository;
+import com.example.demo.repository.MauSacRepository;
+import com.example.demo.repository.PhongCachRepository;
 import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.repository.SanPhamRepository;
 import com.example.demo.service.SanPhamChiTietService;
@@ -24,6 +30,18 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private SanPhamChiTietRepository sanPhamChiTietRepository;
     @Autowired
     private SanPhamRepository sanPhamRepository;
+    @Autowired
+    private DanhMucRepository danhMucRepository;
+    @Autowired
+    private KichThuocRepository kichThuocRepository;
+    @Autowired
+    private ChatLieuRepository chatLieuRepository;
+    @Autowired
+    private HoaTietRepository hoaTietRepository;
+    @Autowired
+    private MauSacRepository mauSacRepository;
+    @Autowired
+    private PhongCachRepository phongCachRepository;
 
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo) {
@@ -34,9 +52,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Override
     public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id,pageable);
+        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id, pageable);
     }
-
 
 
 //    @Override
@@ -48,12 +65,18 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
         List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
-            SanPhamChiTiet sanPhamChiTietSave= SanPhamChiTiet
+            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet
                     .builder()
                     .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
                     .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                    .trangThai(Integer.valueOf(sanPhamChiTietRequest.getTrangThai()))
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                     .sanPham(sanPhamRepository.findById(sanPhamChiTietRequest.getIdSanPham()).get())
+                    .danhMuc(danhMucRepository.findById(sanPhamChiTietRequest.getIdDanhMuc()).get())
+                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
+                    .kichThuoc(kichThuocRepository.findById(sanPhamChiTietRequest.getIdKichThuoc()).get())
+                    .mauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get())
+                    .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
+                    .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
                     .build();
             sanPhamChiTiets.add(sanPhamChiTietSave);
         });

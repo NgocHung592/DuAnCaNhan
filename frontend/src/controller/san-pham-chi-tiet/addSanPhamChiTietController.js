@@ -23,23 +23,21 @@ window.addSanPhamChiTietController = function ($http, $scope) {
     idChatLieu: "",
     idHoaTiet: "",
     idKichThuoc: "",
-    gia: Number,
-    trangThai: Number,
-    soLuong: Number,
+    gia: "",
+    daXoa: false,
+    soLuong: "",
   };
-  $scope.addProduct = function (  ) {
-    $scope.products.push($scope.product);
-    console.log($scope.products);
+  $scope.addSizeAndQuanlity = function () {
+    $scope.products.post($scope.product);
   };
-  $scope.getSanPhamChiTiet = function () {
+  $scope.saveProduct = function (event) {
+    event.preventDefault();
     $http
-      .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .post(sanPhamChiTietAPI + "/add", $scope.products)
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response.data;
-        $scope.totalPages = new Array(response.data.totalPages);
+        alert("Them thanh cong");
       });
   };
-  $scope.getSanPhamChiTiet();
 
   $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
     $scope.listChatLieuTrangThai = response.data;

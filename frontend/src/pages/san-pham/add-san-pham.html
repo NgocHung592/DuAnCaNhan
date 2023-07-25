@@ -4,27 +4,61 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <form>
+                        <h4>SẢN PHẨM</h4>
+                        <form novalidate name="formAdd" role="form">
                             <div class="mb-3">
                                 <label class="form-label">Mã sản phẩm</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" name="maSanPham" required disabled
                                     ng-model="detailProduct.ma">
+                                <span ng-show="formAdd.maSanPham.$invalid" class="has-error ">Mã
+                                    không
+                                    được
+                                    trống</span>
+                                <!-- <div class="relative">
+                                    <input type="text" id="floating_outlined"
+                                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" " />
+                                    <label for="floating_outlined"
+                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mã
+                                        sản phẩm
+                                    </label>
+                                </div> -->
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tên sản phẩm</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" name="tenSanPham" required
                                     ng-model="detailProduct.ten">
+                                <span ng-show="formAdd.tenSanPham.$invalid" ng-hide="show?true:false"
+                                    class="has-error">Tên
+                                    không
+                                    được
+                                    trống</span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" name="moTa" required
                                     ng-model="detailProduct.moTa">
+                                <span ng-show="formAdd.moTa.$invalid" ng-hide="show?true:false" class="has-error">Mô tả
+                                    không
+                                    được
+                                    trống</span>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a type="button" class="btn btn-primary" ng-disabled="formAdd.$invalid"
+                                    id="liveToastBtn" ng-click="add($event)">Thêm</a>
                             </div>
                         </form>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" ng-click="add($event)">Thêm</a>
-                            <a type="button" class="btn btn-primary" href="#san-pham/hien-thi">Back</a>
+                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                data-bs-delay="1500">
+                                <div class="toast-body">
+                                    {{message}}
+                                    <div id="myProgress">
+                                        <div id="myBar"></div>
+                                    </div>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>

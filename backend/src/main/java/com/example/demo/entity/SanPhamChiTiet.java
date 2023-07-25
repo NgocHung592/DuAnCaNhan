@@ -20,6 +20,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,22 +44,20 @@ public class SanPhamChiTiet implements Serializable {
     @Column(name = "gia")
     private BigDecimal gia;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
-
-    @Temporal(TemporalType.DATE)
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private Timestamp ngayTao;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private Timestamp ngaySua;
 
     @Column(name = "nguoi_tao")
     private String nguoiTao;
 
     @Column(name = "nguoi_sua")
-    private String nguoi_sua;
+    private String nguoiSua;
+
+    @Column(name = "da_xoa")
+    private Boolean daXoa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "san_pham_id", referencedColumnName = "id")
