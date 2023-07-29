@@ -11,7 +11,7 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.ma"
+                  ng-model="form_nv.ma"
                   required
                 />
               </div>
@@ -21,7 +21,7 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.hoten"
+                  ng-model="form_nv.ten"
                   required
                 />
               </div>
@@ -31,7 +31,37 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.email"
+                  ng-model="form_nv.email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Ngày sinh</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="form_nv.ngaysinh"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="form_nv.sdt"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Số căn cước</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="form_nv.cmt"
                   required
                 />
               </div>

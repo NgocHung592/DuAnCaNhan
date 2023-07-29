@@ -1,6 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.KhachHang;
+import com.example.demo.entity.NhanVien;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +19,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
 //        "FROM tai_khoan, hang_khach_hang\n" +
 //        "WHERE tai_khoan.hang_khach_hang=hang_khach_hang.id")
 //List<KhachHang> getList();
+    @Query("select kd from KhachHang kd where kd.hangKhachHang is not null")
+    Page<KhachHang> getAll(Pageable pageable);
+
     @Query("select kd from KhachHang  kd where kd.trangThai=1")
     List<KhachHang> getListStatus();
 }

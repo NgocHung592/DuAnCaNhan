@@ -24,7 +24,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public Page<KhachHang> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return khachHangRepository.findAll(pageable);
+        return khachHangRepository.getAll(pageable);
     }
 
     @Override

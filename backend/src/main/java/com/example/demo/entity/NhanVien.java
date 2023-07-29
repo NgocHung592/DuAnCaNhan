@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,15 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
-@Table(name="tai_khoan")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Builder
+@ToString
+@Table(name="tai_khoan")
 public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,16 +42,22 @@ public class NhanVien {
     private Date ngaysinh;
     @Column(name="ngay_tao")
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaytao;
     @Column(name="anh_dai_dien")
     private  String anhdaidien;
     @Column(name="mat_khau")
     private  String matkhau;
+    @Column(name="so_can_cuoc")
+    private  String cmt;
     @Column(name="ghi_chu")
     private  String ghichu;
     @Column(name="trang_thai")
     private  Integer trangthai;
+
+    @ManyToOne()
+    @JoinColumn(name="vai_tro_id",referencedColumnName = "id")
+    private VaiTro vaiTro;
 
 
 }

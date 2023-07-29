@@ -53,9 +53,13 @@
                   <th scope="row">{{kh.ma}}</th>
                   <th scope="row">{{kh.hoten}}</th>
 
-                  <th scope="row">{{kh.hangKhachHang.ten}}</th>
+                  <th class="text-warning" scope="row">
+                    {{kh.hangKhachHang.ten}}
+                  </th>
                   <th scope="row">{{kh.email}}</th>
-                  <th scope="row">{{kh.ngaytao}}</th>
+                  <th scope="row">
+                    {{kh.ngaytao | date: 'dd/MM/yyyy hh:mm a'}}
+                  </th>
                   <th class="text-success" scope="row">
                     {{kh.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
                   </th>

@@ -7,7 +7,7 @@ window.addKhachHangController = function ($http, $scope, $rootScope) {
     ten: "",
     email: "",
     ngaytao: date,
-    idHangKhachHang: "",
+    idHangKhachHang: "9309e014-df10-40d8-a01b-65091091e05f",
     trangThai: 1,
   };
 
