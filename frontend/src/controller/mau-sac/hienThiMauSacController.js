@@ -19,13 +19,15 @@ window.hienThiMauSacController = function ($http, $scope) {
       $scope.getMauSac();
     }
   };
-  $scope.nextPage = function (index) {
-    $scope.currentPage = index++;
+  $scope.nextPage = function () {
+    $scope.currentPage++;
+    $scope.getMauSac();
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 1) {
+    if ($scope.currentPage >= 0) {
       $scope.currentPage--;
+      $scope.getMauSac();
     }
   };
 };

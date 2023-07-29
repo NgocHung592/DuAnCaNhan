@@ -16,18 +16,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "san-pham/update-san-pham.html",
       controller: updateSanPhamController,
     })
-    .when("/danh-muc/hien-thi", {
-      templateUrl: "danh-muc/hien-thi-danh-muc.html",
-      controller: hienThiDanhMucController,
-    })
-    .when("/danh-muc/add", {
-      templateUrl: "danh-muc/add-danh-muc.html",
-      controller: addDanhMucController,
-    })
-    .when("/danh-muc/update/:id", {
-      templateUrl: "danh-muc/update-danh-muc.html",
-      controller: updateDanhMucController,
-    })
+
     .when("/mau-sac/hien-thi", {
       templateUrl: "mau-sac/hien-thi-mau-sac.html",
       controller: hienThiMauSacController,
@@ -101,26 +90,17 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "phong-cach/update-phong-cach.html",
       controller: updatePhongCachController,
     })
-    .when("/kieu-dang/hien-thi", {
-      templateUrl: "kieu-dang/hien-thi-kieu-dang.html",
-      controller: hienThiKieuDangController,
-    })
+
     .when("/khach-hang/hien-thi", {
       templateUrl: "khach-hang/hien-thi-khach-hang.html",
       controller: hienThiKhachHangController,
     })
-    .when("/kieu-dang/add", {
-      templateUrl: "kieu-dang/add-kieu-dang.html",
-      controller: addKieuDangController,
-    })
+
     .when("/khach-hang/add", {
       templateUrl: "khach-hang/add-khach-hang.html",
       controller: addKhachHangController,
     })
-    .when("/kieu-dang/update/:id", {
-      templateUrl: "kieu-dang/update-kieu-dang.html",
-      controller: updateKieuDangController,
-    })
+
     .when("/khach-hang/update/:id", {
       templateUrl: "khach-hang/update-khach-hang.html",
       controller: updateKhachHangController,
@@ -133,18 +113,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "quan-ly-thu-chi.html",
       controller: ThuChiController,
     })
-    .when("/san-pham-chi-tiet/hien-thi", {
-      templateUrl: "san-pham-chi-tiet/hien-thi-san-pham-chi-tiet.html",
-      controller: hienThiSanPhamChiTietController,
-    })
-    .when("/san-pham-chi-tiet/add", {
-      templateUrl: "san-pham-chi-tiet/add-san-pham-chi-tiet.html",
-      controller: addSanPhamChiTietController,
-    })
-    .when("/san-pham-chi-tiet/update/:id", {
-      templateUrl: "san-pham-chi-tiet/update-san-pham-chi-tiet.html",
-      controller: updateSanPhamChiTietController,
-    })
+
     .when("/khuyen-mai/hienthi", {
       templateUrl: "khuyen-mai/hien-thi-khuyen-mai.html",
       controller: KhuyenMaiController,
