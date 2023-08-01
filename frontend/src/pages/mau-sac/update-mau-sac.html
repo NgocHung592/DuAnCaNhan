@@ -8,11 +8,8 @@
                         <form>
                             <div class="mb-3">
                                 <label class="form-label">Mã màu sắc</label>
-                                <input type="text" class="form-control" ng-model="formMauSac.ma">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Tên màu sắc</label>
-                                <input type="text" class="form-control" ng-model="formMauSac.ten">
+                                <input type="color" class="form-control form-control-color" id="color"
+                                    ng-model="formMauSac.ma">
                             </div>
                             <div class="mb-3" class="form-check">
                                 <label class="form-label">Trạng thái</label><br>
@@ -36,6 +33,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1500">
+            <div class="toast-body">
+                {{message}}
+                <div id="myProgress">
+                    <div id="myBar"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 </main>

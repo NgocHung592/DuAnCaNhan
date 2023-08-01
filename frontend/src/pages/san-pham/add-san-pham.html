@@ -4,22 +4,27 @@
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a type="button" class="btn btn-primary" ng-click="saveProduct($event)"
-                            id="liveToastBtn">Lưu</a>
+                        <a type="button" class="btn btn-primary" ng-click="saveProduct($event)" id="liveToastBtn">Hoàn
+                            Tất</a>
                     </div>
                     <div>
-                        <span> <label class="form-label">Tên Sản Phẩm</label>
-                        </span>
-                        <span><input type="text"></span>
+                        <label for="exampleDataList" class="form-label">Tên Sản Phẩm</label>
+                        <input class="form-control mb-3" list="datalistOptions" id="exampleDataList">
+                        <datalist id="datalistOptions">
+                            <option value="San Francisco">
+                            <option value="New York">
+                            <option value="Seattle">
+                            <option value="Los Angeles">
+                            <option value="Chicago">
+                        </datalist>
                     </div>
                     <div>
-                        <span> <label class="form-label">Mô Tả</label>
-                        </span>
-                        <span><textarea name="" id="" cols="100" rows="3"></textarea></span>
+                        <label class="form-label">Mô Tả</label>
+                        <textarea class="form-control mb-3 " cols="100" rows="3"></textarea>
                     </div>
-                    <div class="col-md-4">
-                        <label>Đơn Giá</label>
-                        <input type="number" ng-model="product.gia">
+                    <div>
+                        <label class="form-label">Đơn Giá</label>
+                        <input class="form-control mb-3" type="number" ng-model="product.gia">
                     </div>
 
                 </div>
@@ -31,97 +36,21 @@
                     <div class="align-self-center w-100">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="">Chất Liệu</label>
-                                <select ng-model="product.tenDanhMuc">
-                                    <option value=""></option>
-                                    <option value="{{danhMuc.ten}}" ng-repeat="danhMuc in listDanhMucTrangThai">
-                                        {{danhMuc.ten}}</option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addDanhMuc">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addDanhMuc" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <h4>DANH MỤC</h4>
-                                                        <form>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Mã danh mục</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formDanhMuc.ma">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tên danh mục</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formDanhMuc.ten">
-                                                            </div>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-10"> <label class="form-label">Chất Liệu</label>
+                                        <select class="form-control " ng-model="product.idChatLieu">
+                                            <option value="{{chatLieu.id}}"
+                                                ng-repeat="chatLieu in listChatLieuTrangThai">
+                                                {{chatLieu.ten}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#addChatLieu">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i>
+                                        </a>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="col-md-4">
-                                <select ng-model="product.tenPhongCach">
-                                    <option value="">Phong Cách</option>
-                                    <option value="{{phongCach.ten}}" ng-repeat="phongCach in listPhongCachTrangThai">
-                                        {{phongCach.ten}}</option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addPhongCach">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addPhongCach" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <h4>PHONG CÁCH</h4>
-                                                        <form>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Mã phong cách</label>
-                                                                <input type="text" class="form-control"
-                                                                    aria-describedby="emailHelp"
-                                                                    ng-model="formPhongCach.ma">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tên phong cách</label>
-                                                                <input type="text" class="form-control"
-                                                                    aria-describedby="emailHelp"
-                                                                    ng-model="formPhongCach.ten">
-                                                            </div>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <select ng-model="product.tenChatLieu">
-                                    <option value="">Họa Tiết</option>
-                                    <option value="{{chatLieu.ten}}" ng-repeat="chatLieu in listChatLieuTrangThai">
-                                        {{chatLieu.ten}}
-                                    </option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addChatLieu">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="modal fade" id="addChatLieu" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -132,18 +61,15 @@
                                                         <h4>CHẤT LIỆU</h4>
                                                         <form>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Mã chất liệu</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formChatLieu.ma">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tên chất liệu</label>
+                                                                <label class="form-label">Tên Chất Liệu</label>
                                                                 <input type="text" class="form-control"
                                                                     ng-model="formChatLieu.ten">
                                                             </div>
-                                                            <button type="button" class="btn btn-primary align-middle"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-dismiss="modal" id="liveToastBtn"
+                                                                    ng-click="addChatLieu($event)">Thêm</button>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -153,15 +79,70 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <select ng-model="product.tenHoaTiet">
-                                    <option value="">Cổ Áo</option>
-                                    <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
-                                        {{hoaTiet.ten}}
-                                    </option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-label ">Phong Cách</label>
+                                        <select class="form-control" ng-model="product.tenPhongCach">
+                                            <option value="{{phongCach.ten}}"
+                                                ng-repeat="phongCach in listPhongCachTrangThai">
+                                                {{phongCach.ten}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#addPhongCach">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <div class="modal fade" id="addPhongCach" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="container-fluid">
+                                                        <h4>PHONG CÁCH</h4>
+                                                        <form>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tên Phong Cách</label>
+                                                                <input type="text" class="form-control"
+                                                                    ng-model="formPhongCach.ten">
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal" id="liveToastBtn"
+                                                        ng-click="addPhongCach($event)">Thêm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-label ">Họa Tiết</label>
+                                        <select class="form-control" ng-model="product.tenHoaTiet">
+                                            <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
+                                                {{hoaTiet.ten}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="modal fade" id="addHoaTiet" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -172,20 +153,18 @@
                                                         <h4>HỌA TIẾT</h4>
                                                         <form>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Mã hoạ tiết</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formHoaTiet.ma">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tên họa tiết</label>
+                                                                <label class="form-label">Tên Họa Tiết</label>
                                                                 <input type="text" class="form-control"
                                                                     ng-model="formHoaTiet.ten">
                                                             </div>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
+
                                                         </form>
                                                     </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal" id="liveToastBtn"
+                                                        ng-click="addHoaTiet($event)">Thêm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,15 +172,65 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <select ng-model="product.tenHoaTiet">
-                                    <option value="">Tay Áo</option>
-                                    <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
-                                        {{hoaTiet.ten}}
-                                    </option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-label ">Cổ Áo</label>
+                                        <select class="form-control" ng-model="product.tenCoAo">
+                                            <option class="form-control" value="{{coAo.ten}}"
+                                                ng-repeat="coAo in listCoAoTrangThai">
+                                                {{coAo.ten}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2"> <a data-bs-toggle="modal" data-bs-target="#addCoAo">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i> </a></div>
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <div class="modal fade" id="addCoAo" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="container-fluid">
+                                                        <h4>CỔ ÁO</h4>
+                                                        <form>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tên Cổ Áo</label>
+                                                                <input type="text" class="form-control"
+                                                                    ng-model="formCoAo.ten">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal" id="liveToastBtn"
+                                                        ng-click="addCoAo($event)">Thêm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-label ">Tay Áo</label>
+                                        <select class="form-control" ng-model="product.tenTayAo">
+                                            <option value="{{tayAo.id}}" ng-repeat="tayAo in listTayAorangThai">
+                                                {{tayAo.ten}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i> </a>
+                                    </div>
+                                </div>
+
+
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="modal fade" id="addHoaTiet" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -212,34 +241,17 @@
                                                         <h4>HỌA TIẾT</h4>
                                                         <form>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Mã hoạ tiết</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formHoaTiet.ma">
-                                                            </div>
-                                                            <div class="mb-3">
                                                                 <label class="form-label">Tên họa tiết</label>
                                                                 <input type="text" class="form-control"
                                                                     ng-model="formHoaTiet.ten">
                                                             </div>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addAnh" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <input type="button" value="">
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal" id="liveToastBtn"
+                                                        ng-click="addHoaTiet($event)">Thêm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,53 +259,41 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <select ng-model="product.tenHoaTiet">
-                                    <option value="">Màu Sắc</option>
-                                    <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
-                                        {{hoaTiet.ten}}
-                                    </option>
-                                </select>
-                                <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
-                                    <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-10"> <label class="form-label">Màu Sắc</label>
+                                        <select class="form-control" ng-model="product.idMauSac">
+                                            <option value="{{mauSac.id}}" style="background-color: {{mauSac.ma}};"
+                                                ng-repeat="mauSac in listMauSacTrangThai" selected="selected">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2"> <a data-bs-toggle="modal" data-bs-target="#addMauSac">
+                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
+                                                style="color: #1862e2; padding-top: 50px;"></i> </a></div>
+                                </div>
+
+
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addHoaTiet" tabindex="-1"
+                                    <div class="modal fade" id="addMauSac" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <div class="container-fluid">
-                                                        <h4>HỌA TIẾT</h4>
+                                                        <h4>MÀU SẮC</h4>
                                                         <form>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Mã hoạ tiết</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formHoaTiet.ma">
+                                                                <label class="form-label">Mã Màu Sắc</label>
+                                                                <input type="color" class="form-control"
+                                                                    ng-model="formMauSac.ma">
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tên họa tiết</label>
-                                                                <input type="text" class="form-control"
-                                                                    ng-model="formHoaTiet.ten">
-                                                            </div>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal" id="liveToastBtn"
-                                                                ng-click="addSanPham($event)">Thêm</button>
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addAnh" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <input type="button" value="">
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal" id="liveToastBtn"
+                                                        ng-click="addMauSac($event)">Thêm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -310,46 +310,44 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>Kích Thước Và Số Lượng</h4>
-                        <div class="align-middle">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addSizeAndColer">
-                                Thêm Kích Cỡ
-                            </button>
+                        <div>
+                            <div class=align-middle>
+                                <button type="button" class="btn btn-primary align-middle" data-bs-toggle="modal"
+                                    data-bs-target="#addSizeAndColer">
+                                    Thêm Kích Cỡ
+                                </button>
+                            </div>
                             <div class="modal fade" id="addSizeAndColer" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-4">Kích Thước</div>
-                                                    <div class="col-md-8">
-                                                        <select ng-model="size.tenKichThuoc">
-                                                            <option value="">Kích Thước</option>
-                                                            <option value="{{kichThuoc.ten}}"
-                                                                ng-repeat="kichThuoc in listKichThuocTrangThai">
-                                                                {{kichThuoc.ten}}
-                                                            </option>
-                                                        </select>
-                                                        <a data-bs-toggle="modal" data-bs-target="#addKichThuoc"
-                                                            data-bs-dismiss="modal">
-                                                            <i class="fa-sharp fa-solid fa-circle-plus"></i>
-                                                        </a>
-                                                        <button ng-click="addSize();">Add</button>
-                                                    </div>
+                                                <div>
+                                                    <label>Kích Thước</label>
+                                                    <select class="form-control" ng-model="size.tenKichThuoc">
+                                                        <option value="{{kichThuoc.id}}"
+                                                            ng-repeat="kichThuoc in listKichThuocTrangThai">
+                                                            {{kichThuoc.ten}}
+                                                        </option>
+                                                    </select>
+                                                    <a data-bs-toggle="modal" data-bs-target="#addKichThuoc"
+                                                        data-bs-dismiss="modal">
+                                                        <i class="fa-sharp fa-solid fa-circle-plus"></i>
+                                                    </a>
                                                 </div>
-                                                <div class=" row">
-                                                    <div class="col-md-4">Số Lượng</div>
-                                                    <div class="col-md-8">
-                                                        <input type="number" ng-model="product.soLuong">
+                                                <div>
+                                                    <label>Số Lượng</label>
+                                                    <div>
+                                                        <input class="form-control col-md-8" type="number"
+                                                            ng-model="product.soLuong">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                ng-click="generateSanPham();">Xác
-                                                Nhận</button>
+                                                ng-click="generateSanPham();">Thêm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +410,7 @@
                 </div>
             </div>
         </div>
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast-container position-fixed top-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-bs-delay="1500">
                 <div class="toast-body">

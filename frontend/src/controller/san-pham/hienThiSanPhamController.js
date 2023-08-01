@@ -28,7 +28,8 @@ window.hienThiSanPhamController = function ($http, $scope) {
     $scope.getSanPhamChiTiet();
   };
   $scope.nextPage = function () {
-    if ($scope.currentPage <= $scope.totalPages.length) {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
       $scope.currentPage++;
       $scope.getSanPhamChiTiet();
     }

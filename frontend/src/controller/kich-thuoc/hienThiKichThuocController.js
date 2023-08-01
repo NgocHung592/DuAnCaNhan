@@ -18,13 +18,18 @@ window.hienThiKichThuocController = function ($http, $scope) {
       $scope.getKichThuoc();
     }
   };
-  $scope.nextPage = function (index) {
-    $scope.currentPage = index++;
+  $scope.nextPage = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getKichThuoc();
+    }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 1) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
+      $scope.getKichThuoc();
     }
   };
 };

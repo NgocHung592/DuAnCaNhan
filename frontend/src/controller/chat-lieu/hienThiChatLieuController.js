@@ -4,8 +4,8 @@ window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
 
   $scope.currentPage = 0;
   $scope.totalPages = [];
-
-  $scope.getData = function () {
+  $scope.count = 0;
+  $scope.getChatLieu = function () {
     $http
       .get(chatLieuAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
@@ -14,7 +14,7 @@ window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
       });
   };
 
-  $scope.getData();
+  $scope.getChatLieu();
   $rootScope.getChatLieuTrangThai = function () {
     $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
       $scope.listChatLieuTrangThai = response.data;
@@ -23,17 +23,22 @@ window.hienThiChatLieuController = function ($http, $scope, $rootScope) {
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;
-      $scope.getData();
+      $scope.getChatLieu();
     }
   };
 
-  $scope.nextPage = function (index) {
-    $scope.currentPage = index++;
+  $scope.nextPage = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getChatLieu();
+    }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 1) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
+      $scope.getChatLieu();
     }
   };
 };

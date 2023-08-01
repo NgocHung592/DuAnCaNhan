@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,11 +18,12 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Autowired
     private MauSacRepository mauSacRepository;
+    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<MauSac> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return mauSacRepository.findAll(pageable);
+        return mauSacRepository.getAll(pageable);
     }
 
     @Override
@@ -36,15 +38,27 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac add(MauSac mauSac) {
-        return mauSacRepository.save(mauSac);
+        MauSac mauSacSave= MauSac.builder()
+                .ma(mauSac.getMa())
+                .ten(mauSac.getTen())
+                .daXoa(mauSac.getDaXoa())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .build();
+        return mauSacRepository.save(mauSacSave);
     }
 
     @Override
     public MauSac update(MauSac mauSac, UUID id) {
-        if (mauSacRepository.existsById(id)) {
-            return mauSacRepository.save(mauSac);
-        }
-        return null;
+        MauSac mauSacUpdate= MauSac.builder()
+                .id(id)
+                .ma(mauSac.getMa())
+                .ten(mauSac.getTen())
+                .daXoa(mauSac.getDaXoa())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .build();
+        return mauSacRepository.save(mauSacUpdate);
     }
 
     @Override

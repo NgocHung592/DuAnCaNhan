@@ -16,7 +16,7 @@
                                     <th scope="col">Mã</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành Động</th>
 
                                 </tr>
                             </thead>
@@ -35,17 +35,19 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example center">
+                        <nav aria-label="Page navigation example ">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="previousPage()">Previous</a>
+                                    <a class="page-link" ng-click="previousPage()" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
                                 </li>
                                 <li class="page-item" ng-repeat="page in totalPages track by $index"
                                     ng-click="changePage($index);">
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage($index)">Next</a>
+                                    <a class="page-link" ng-click="nextPage()">&raquo;</a>
                                 </li>
                             </ul>
                         </nav>

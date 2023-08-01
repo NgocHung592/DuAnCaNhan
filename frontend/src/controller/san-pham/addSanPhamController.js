@@ -164,9 +164,16 @@ window.addSanPhamController = function ($http, $scope) {
   };
   $scope.getMauSacTrangThai();
   //add nhanh thuoc tinh
-  $scope.addSanPham = function () {
-    $http.post(sanPhamAPI + "/add", $scope.detailProduct).then(function () {
-      $scope.getSanPhamTrangThai();
+  $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
+
+  $scope.formChatLieu = {
+    ma: $scope.randoom,
+    ten: "",
+    daXoa: false,
+  };
+  $scope.addChatLieu = function () {
+    $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
+      $scope.getChatLieuTrangThai();
     });
   };
   $scope.addHoaTiet = function () {

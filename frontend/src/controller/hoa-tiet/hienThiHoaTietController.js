@@ -23,12 +23,17 @@ window.hienThiHoaTietController = function ($http, $scope, $location) {
     });
   };
   $scope.nextPage = function (index) {
-    $scope.currentPage = index++;
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getHoaTiet();
+    }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 1) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
+      $scope.getHoaTiet();
     }
   };
 };

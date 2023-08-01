@@ -20,12 +20,15 @@ window.hienThiMauSacController = function ($http, $scope) {
     }
   };
   $scope.nextPage = function () {
-    $scope.currentPage++;
-    $scope.getMauSac();
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getMauSac();
+    }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage >= 0) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
       $scope.getMauSac();
     }

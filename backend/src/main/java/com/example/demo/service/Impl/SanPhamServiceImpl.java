@@ -20,6 +20,8 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
 
+    long currentTimestampMillis = System.currentTimeMillis();
+
     @Override
     public Page<SanPham> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
@@ -33,7 +35,6 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham add(SanPham sanPham) {
-        long currentTimestampMillis = System.currentTimeMillis();
         if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
             return null;
         }
@@ -50,7 +51,6 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-        long currentTimestampMillis = System.currentTimeMillis();
         if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
             return null;
         }
