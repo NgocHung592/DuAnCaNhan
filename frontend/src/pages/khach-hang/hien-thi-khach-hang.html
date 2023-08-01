@@ -1,5 +1,6 @@
 <main class="content">
   <div class="container-fluid p-0">
+    <h3>Quản lý khách hàng</h3>
     <div class="row">
       <div class="card flex-fill">
         <div class="card-body d-flex">
@@ -9,85 +10,175 @@
                 >+ Thêm mới</a
               >
             </div>
-            <div class="row">
+            <br />
+            <form class="row">
               <div class="col-md-4">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="Tìm mã khach hang"
-                />
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Trạng thái</option>
+                  <option value="1">Tất cả</option>
+                  <option value="3">Kích hoạt</option>
+                  <option value="2">Hủy kích hoạt</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Hạng khách hàng</option>
+                  <option value="1">Nhân viên</option>
+                  <option value="2">Quản lý</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group rounded">
+                  <input
+                    type="search"
+                    ng-model="maFilter"
+                    class="form-control rounded"
+                    placeholder="Tìm theo mã"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                    required
+                  />
+                  <span class="input-group-text border-0" id="search-addon">
+                    <button
+                      class="fas fa-search"
+                      ng-click="searchmaa()"
+                    ></button>
+                  </span>
+                </div>
+              </div>
+            </form>
+            <br />
+
+            <form class="row">
+              <div class="col-md-4">
+                <div class="input-group rounded">
+                  <input
+                    type="date"
+                    class="form-control rounded"
+                    placeholder="Tìm theo số điện thoại"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                  />
+                </div>
               </div>
               <div class="col-md-4">
-                <a
-                  type="button"
-                  class="btn btn-primary"
-                  href="#/khuyenmai/tim-kiem"
-                  >Tìm kiếm</a
-                >
-                <a
-                  type="button"
-                  class="btn btn-warning"
-                  href="#/khuyenmai/lam-moi"
-                  >Làm mới</a
-                >
+                <div class="input-group rounded">
+                  <input
+                    ng-model="tenFilter"
+                    type="search"
+                    class="form-control rounded"
+                    placeholder="Tìm theo tên"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                  />
+                  <span class="input-group-text border-0" id="search-addon">
+                    <button
+                      class="fas fa-search"
+                      ng-click="searchten()"
+                    ></button>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group rounded">
+                  <input
+                    ng-model="sdtFilter"
+                    type="search"
+                    class="form-control rounded"
+                    placeholder="Tìm theo số điện thoại"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                  />
+                  <span class="input-group-text border-0" id="search-addon">
+                    <button
+                      class="fas fa-search"
+                      ng-click="searchsdt()"
+                    ></button>
+                  </span>
+                </div>
+              </div>
+            </form>
+            <br />
+            <div class="m-portlet">
+              <div class="m-portlet">
+                <div class="m-portlet__body">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <table
+                        id="custom-table"
+                        style="text-align: center"
+                        class="table table-bordered m-table d-sm-table m-table--head-bg-primary"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Ngày Tạo</th>
+                            <th scope="col">Hạng</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Hành động</th>
+                          </tr>
+                        </thead>
+                        <tbody ng-repeat="kh in list_kh.content">
+                          <tr>
+                            <th scope="row">{{$index+1}}</th>
+                            <th scope="row">{{kh.ma}}</th>
+                            <th scope="row">{{kh.hoten}}</th>
+                            <th scope="row">{{kh.email}}</th>
+                            <th scope="row">{{kh.ngaysinh}}</th>
+                            <th scope="row">{{kh.sodienthoai}}</th>
+                            <th scope="row">
+                              {{kh.ngaytao | date: 'dd/MM/yyyy hh:mm a'}}
+                            </th>
+                            <th scope="row">{{kh.hangKhachHang.ten}}</th>
+
+                            <th scope="row">
+                              {{kh.trangthai==1?"Kích hoạt":"Hủy kích hoạt"}}
+                            </th>
+                            <th>
+                              <a
+                                type="button"
+                                href="#khach-hang/update/{{kh.id}}"
+                                class="fas fa-highlighter"
+                                style="font-size: 21px; color: rgb(52, 22, 161)"
+                              ></a>
+                              <i
+                                type="button"
+                                class="material-icons"
+                                style="color: rgb(163, 66, 66)"
+                                ng-click="delete(kh.id)"
+                                >delete</i
+                              >
+                            </th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <br />
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Mã</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Hạng</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Ngày Tạo</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody ng-repeat="kh in list_kh.content">
-                <tr>
-                  <th scope="row">{{$index+1}}</th>
-                  <th scope="row">{{kh.ma}}</th>
-                  <th scope="row">{{kh.hoten}}</th>
-
-                  <th class="text-warning" scope="row">
-                    {{kh.hangKhachHang.ten}}
-                  </th>
-                  <th scope="row">{{kh.email}}</th>
-                  <th scope="row">
-                    {{kh.ngaytao | date: 'dd/MM/yyyy hh:mm a'}}
-                  </th>
-                  <th class="text-success" scope="row">
-                    {{kh.trangThai==1?"Kích hoạt":"Hủy kích hoạt"}}
-                  </th>
-                  <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning"
-                      href="#khach-hang/update/{{kh.id}}"
-                      >Chi tiết</a
-                    >
-                    <a
-                      type="button"
-                      class="btn btn-danger"
-                      ng-click="delete(kh.id)"
-                      >Xóa</a
-                    >
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
+            <nav aria-label="Page navigation example center">
+              <ul class="pagination justify-content-center">
+                <li class="page-item">
+                  <a class="page-link" ng-click="previousPage()"><<</a>
+                </li>
                 <li
                   class="page-item"
                   ng-repeat="page in totalPages track by $index"
                   ng-click="changePage($index);"
                 >
                   <a class="page-link">{{$index+1}}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" ng-click="nextPage($index)">>></a>
                 </li>
               </ul>
             </nav>

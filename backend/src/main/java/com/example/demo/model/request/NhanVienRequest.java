@@ -14,11 +14,11 @@ import java.util.UUID;
 public class NhanVienRequest {
     private String ma;
 
-    private String sdt;
+    private String sodienthoai;
 
     private String cmt;
 
-    private String matKhau;
+    private String matkhau;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
@@ -32,7 +32,7 @@ public class NhanVienRequest {
     @Temporal(TemporalType.DATE)
     private Date ngaytao;
 
-    private String trangThai;
+    private String trangthai;
 
     private UUID idVaiTro;
 }

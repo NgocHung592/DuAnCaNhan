@@ -1,7 +1,8 @@
 package com.example.demo.restcontroller;
 
 
-import com.example.demo.entity.KhachHang;
+
+import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.HangKhachHangRepository;
@@ -21,30 +22,44 @@ public class KhachHangRestController {
     @Autowired
     private KhachHangService khachHangService;
     @GetMapping("hien-thi")
-    public Page<KhachHang> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+    public Page<TaiKhoan> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return khachHangService.getAll(pageNo);
     }
 
     @GetMapping("trang-thai")
-    public List<KhachHang> hienThiTrangThai() {
+    public List<TaiKhoan> hienThiTrangThai() {
         return khachHangService.getListStatus();
     }
     @GetMapping("detail/{id}")
-    public KhachHang getOne(@PathVariable("id") String id) {
+    public TaiKhoan getOne(@PathVariable("id") String id) {
         return khachHangService.detail(UUID.fromString(id));
     }
     @PutMapping("update/{id}")
-    public KhachHang put(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id") String id) {
+    public TaiKhoan put(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id") String id) {
         return khachHangService.update(khachHangRequest, UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public KhachHang post(@RequestBody KhachHangRequest taiKhoan){
+    public TaiKhoan post(@RequestBody KhachHangRequest taiKhoan){
         return khachHangService.add(taiKhoan);
     }
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id){
         khachHangService.delete(UUID.fromString(id));
+    }
+
+
+    @GetMapping("/searchma")
+    public Page<TaiKhoan> searchProductsByName(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam String ma ) {
+        return khachHangService.getten(ma,pageNo);
+    }
+    @GetMapping("/searchsdt")
+    public Page<TaiKhoan> searchProductsByNamesdt(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam String sdt ) {
+        return khachHangService.gettenn(sdt,pageNo);
+    }
+    @GetMapping("/searchten")
+    public Page<TaiKhoan> searchProductsByNameten(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam String ten ) {
+        return khachHangService.gettennt(ten,pageNo);
     }
 
 

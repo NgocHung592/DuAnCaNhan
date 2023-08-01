@@ -1,5 +1,8 @@
 window.hienThiNhanVienController = function ($http, $scope) {
   $scope.list_nv = [];
+  $scope.maFilter = "";
+  $scope.sdtFilter = "";
+  $scope.tenFilter = "";
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.getNhanVien = function () {
@@ -10,6 +13,7 @@ window.hienThiNhanVienController = function ($http, $scope) {
         $scope.totalPages = new Array(response.data.totalPages);
       });
   };
+
   $scope.getNhanVien();
   $scope.changePage = function (index) {
     if (index >= 0) {
@@ -17,15 +21,39 @@ window.hienThiNhanVienController = function ($http, $scope) {
       $scope.getNhanVien();
     }
   };
+  $scope.nextPage = function (index) {
+    $scope.currentPage = index++;
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+    }
+  };
   $scope.delete = function (id) {
     $http.delete(nhanVienAPI + "/delete/" + id).then(function () {
       $scope.getNhanVien();
     });
   };
-
-  $scope.updateTrangThai = function (id) {
+  $scope.searchmaa = function () {
     $http
-      .put(NhanVienAPI + "/updateTrangThai" + id)
-      .then(function (response) {});
+      .get(nhanVienAPI + "/searchma?ma=" + $scope.maFilter)
+      .then(function (response) {
+        $scope.list_nv = response.data;
+      });
+  };
+  $scope.searchsdt = function () {
+    $http
+      .get(nhanVienAPI + "/searchsdt?sdt=" + $scope.sdtFilter)
+      .then(function (response) {
+        $scope.list_nv = response.data;
+      });
+  };
+  $scope.searchten = function () {
+    $http
+      .get(nhanVienAPI + "/searchten?ten=" + $scope.tenFilter)
+      .then(function (response) {
+        $scope.list_nv = response.data;
+      });
   };
 };

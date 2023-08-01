@@ -17,9 +17,13 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
   $scope.update = function (id) {
     $scope.updateKhachHang = {
       ma: $scope.detailKhachHang.ma,
-      ten: $scope.detailKhachHang.ten,
+      ten: $scope.detailKhachHang.hoten,
+      idHangKhachHang: $scope.detailKhachHang.hangKhachHang.id,
       email: $scope.detailKhachHang.email,
-      trangThai: $scope.detailKhachHang.trangThai,
+      ngaytao: $scope.detailKhachHang.ngaytao,
+      sodienthoai: $scope.detailKhachHang.sodienthoai,
+      ngaysinh: $scope.detailKhachHang.ngaysinh,
+      trangthai: $scope.detailKhachHang.trangthai,
     };
     $http
       .put(khachHangAPI + "/update/" + id, $scope.updateKhachHang)

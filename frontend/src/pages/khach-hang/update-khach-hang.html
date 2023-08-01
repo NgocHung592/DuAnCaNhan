@@ -32,21 +32,49 @@
                   ng-model="detailKhachHang.email"
                 />
               </div>
+              <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="detailKhachHang.sodienthoai"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Ngày sinh</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="detailKhachHang.ngaysinh"
+                />
+              </div>
+              <div class="mb-3">
+                <div ng-model="detailKhachHang.hangKhachHang.id">
+                  <span
+                    value="{{hangKhachHang.id}}"
+                    ng-selected="detailKhachHang.hangKhachHang.id"
+                  >
+                  </span>
+                </div>
+              </div>
               <div class="mb-3" class="form-check">
                 <label class="form-label">Trạng thái</label><br />
                 <input
                   type="radio"
                   value="1"
-                  ng-model="detailKhachHang.trangThai"
-                  ng-checked="detailKhachHang.trangThai==1"
+                  ng-model="detailKhachHang.trangthai"
+                  ng-checked="detailKhachHang.trangthai==1"
                   class="form-check-input"
                 />
+
                 <label class="form-check-label"> Kích hoạt </label>
                 <input
                   type="radio"
                   value="0"
-                  ng-model="detailKhachHang.trangThai"
-                  ng-checked="detailKhachHang.trangThai==0"
+                  ng-model="detailKhachHang.trangthai"
+                  ng-checked="detailKhachHang.trangthai==0"
                   class="form-check-input"
                 />
                 <label class="form-check-label"> Hủy kích hoạt </label>

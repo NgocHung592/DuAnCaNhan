@@ -18,11 +18,18 @@ public class KhachHangRequest {
 
     private String email;
 
+    private String matkhau;
+
+    private String sodienthoai;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    private Date ngaysinh;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
     private Date ngaytao;
 
-    private String trangThai;
+    private String trangthai;
 
     private UUID idHangKhachHang;
 }

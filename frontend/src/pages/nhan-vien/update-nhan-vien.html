@@ -11,7 +11,7 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.ma"
+                  ng-model="detailNhanVien.ma"
                 />
               </div>
               <div class="mb-3">
@@ -20,7 +20,7 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.hoten"
+                  ng-model="detailNhanVien.hoten"
                 />
               </div>
               <div class="mb-3">
@@ -29,7 +29,34 @@
                   type="text"
                   class="form-control"
                   aria-describedby="emailHelp"
-                  ng-model="formNhanVien.email"
+                  ng-model="detailNhanVien.email"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Ngày sinh</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="detailNhanVien.ngaysinh"
+                />
+              </div>
+              <div class="mb-3">
+                <div ng-model="detailNhanVien.vaiTro.id">
+                  <span
+                    value="{{vaiTro.id}}"
+                    ng-selected="detailNhanVien.vaiTro.id"
+                  >
+                  </span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  ng-model="detailNhanVien.sodienthoai"
                 />
               </div>
 
@@ -38,16 +65,16 @@
                 <input
                   type="radio"
                   value="1"
-                  ng-model="formNhanVien.trangthai"
-                  ng-checked="formNhanVien.trangthai==1"
+                  ng-model="detailNhanVien.trangthai"
+                  ng-checked="detailNhanVien.trangthai==1"
                   class="form-check-input"
                 />
                 <label class="form-check-label"> Kích hoạt </label>
                 <input
                   type="radio"
                   value="0"
-                  ng-model="formNhanVien.trangthai"
-                  ng-checked="formNhanVien.trangthai==0"
+                  ng-model="detailNhanVien.trangthai"
+                  ng-checked="detailNhanVien.trangthai==0"
                   class="form-check-input"
                 />
                 <label class="form-check-label"> Hủy kích hoạt </label>
@@ -57,7 +84,7 @@
               <a
                 type="button"
                 class="btn btn-primary"
-                ng-click="update(formNhanVien.id)"
+                ng-click="update(detailNhanVien.id)"
                 >Cập nhật</a
               >
               <a

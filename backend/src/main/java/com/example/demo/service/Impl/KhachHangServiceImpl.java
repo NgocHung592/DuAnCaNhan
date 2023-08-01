@@ -1,7 +1,8 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HangKhachHang;
-import com.example.demo.entity.KhachHang;
+
+import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.repository.HangKhachHangRepository;
 import com.example.demo.repository.KhachHangRepository;
@@ -22,34 +23,34 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Autowired
     private HangKhachHangRepository hangKhachHangRepository;
     @Override
-    public Page<KhachHang> getAll(Integer pageNo) {
+    public Page<TaiKhoan> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return khachHangRepository.getAll(pageable);
     }
 
     @Override
-    public List<KhachHang> getListStatus() {
+    public List<TaiKhoan> getListStatus() {
         return khachHangRepository.getListStatus();
     }
 
     @Override
-    public KhachHang add(KhachHangRequest khachHangRequest) {
-        KhachHang khachHang=KhachHang.builder()
+    public TaiKhoan add(KhachHangRequest khachHangRequest) {
+        TaiKhoan khachHang=TaiKhoan.builder()
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getTen())
-                .email(khachHangRequest.getEmail()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangThai(Integer.valueOf(khachHangRequest.getTrangThai())).build();
+                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau()).sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest.getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         return khachHangRepository.save(khachHang);
     }
 
     @Override
-    public KhachHang update(KhachHangRequest khachHangRequest, UUID id) {
-        KhachHang khachHang=KhachHang.builder().id(id)
+    public TaiKhoan update(KhachHangRequest khachHangRequest, UUID id) {
+        TaiKhoan khachHang=TaiKhoan.builder().id(id)
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getTen())
-                .email(khachHangRequest.getEmail()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangThai(Integer.valueOf(khachHangRequest.getTrangThai())).build();
+                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau()).sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest.getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         return khachHangRepository.save(khachHang);
     }
 
     @Override
-    public KhachHang detail(UUID id) {
+    public TaiKhoan detail(UUID id) {
         return khachHangRepository.findById(id).orElse(null);
     }
 
@@ -57,5 +58,22 @@ public class KhachHangServiceImpl implements KhachHangService {
     public void delete(UUID id) {
         khachHangRepository.deleteById(id);
 
+    }
+    @Override
+    public Page<TaiKhoan> getten(String ma, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        return khachHangRepository.findByMaContainingIgnoreCase(pageable,ma);
+    }
+
+    @Override
+    public Page<TaiKhoan> gettenn(String sdt, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        return khachHangRepository.findBySodienthoaiContainingIgnoreCase(pageable,sdt);
+    }
+
+    @Override
+    public Page<TaiKhoan> gettennt(String ten, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        return khachHangRepository.findByTenContainingIgnoreCase(pageable,ten);
     }
 }

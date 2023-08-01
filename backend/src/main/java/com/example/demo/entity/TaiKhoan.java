@@ -2,13 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,7 +16,7 @@ import java.util.UUID;
 @Builder
 @ToString
 @Table(name="tai_khoan")
-public class NhanVien {
+public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
@@ -34,7 +29,7 @@ public class NhanVien {
     private  String sodienthoai;
     @Column(name="email")
     private  String email;
-    @Column(name="gioi_tinh")
+        @Column(name="gioi_tinh")
     private  Boolean gioitinh;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
@@ -44,13 +39,13 @@ public class NhanVien {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngaytao;
-    @Column(name="anh_dai_dien")
+        @Column(name="anh_dai_dien")
     private  String anhdaidien;
     @Column(name="mat_khau")
     private  String matkhau;
     @Column(name="so_can_cuoc")
     private  String cmt;
-    @Column(name="ghi_chu")
+        @Column(name="ghi_chu")
     private  String ghichu;
     @Column(name="trang_thai")
     private  Integer trangthai;
@@ -60,4 +55,7 @@ public class NhanVien {
     private VaiTro vaiTro;
 
 
+    @ManyToOne()
+    @JoinColumn(name="hang_khach_hang",referencedColumnName = "id")
+    private HangKhachHang hangKhachHang;
 }
