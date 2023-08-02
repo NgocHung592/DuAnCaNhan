@@ -34,6 +34,11 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
+    public List<SanPham> findByName(SanPham sanPham) {
+        return sanPhamRepository.findByName(sanPham);
+    }
+
+    @Override
     public SanPham add(SanPham sanPham) {
         if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
             return null;

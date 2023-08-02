@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.SanPham;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.service.SanPhamChiTietService;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -26,4 +28,6 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
 
     @Query("select spct from SanPhamChiTiet spct where spct.sanPham.id=?1")
     Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Pageable pageable);
+
+
 }

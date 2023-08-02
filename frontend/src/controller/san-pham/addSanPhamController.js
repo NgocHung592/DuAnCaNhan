@@ -13,30 +13,28 @@ window.addSanPhamController = function ($http, $scope) {
   $scope.totalPages = [];
   $scope.products = [];
   $scope.prductDetails = [];
-  $scope.sizes = [];
-  $scope.colors = [];
-  $scope.sizeAndColors = [];
-
+  $scope.sizeAndQuantitys = [];
+  $scope.randoom = "SP" + Math.floor(Math.random() * 10000) + 1;
+  $scope.show = Boolean;
   $scope.currentPage = 0;
+
   $scope.product = {
-    tenSanPham: "",
-    tenDanhMuc: "",
-    tenPhongCach: "",
-    tenChatLieu: "",
-    tenHoaTiet: "",
+    idSanPham: "",
+    idPhongCach: "",
+    idChatLieu: "",
+    idHoaTiet: "",
+    idCoAo: "",
+    idTayAo: "",
+    idMauSac: "",
     gia: "",
+    daXoa: false,
+  };
+  $scope.sizeAndQuantity = {
+    tenKichThuoc: "",
     soLuong: "",
     daXoa: false,
   };
-  $scope.size = {
-    tenKichThuoc: "",
-  };
-  $scope.color = {
-    tenMauSac: "",
-  };
 
-  $scope.randoom = "SP" + Math.floor(Math.random() * 10000) + 1;
-  $scope.show = Boolean;
   $scope.detailProduct = {
     id: "",
     ma: $scope.randoom,
@@ -45,50 +43,45 @@ window.addSanPhamController = function ($http, $scope) {
     daXoa: false,
   };
 
-  $scope.addSize = function () {
-    var newSize = angular.copy($scope.size);
-    $scope.sizes.push(newSize);
-    console.log($scope.sizes);
+  $scope.addSizeAndQuantity = function () {
+    let newSizeAndQuantity = angular.copy($scope.sizeAndQuantity);
+    $scope.sizeAndQuantitys.push(newSizeAndQuantity);
+    console.log($scope.sizeAndQuantitys);
   };
-  $scope.addColor = function () {
-    var newColor = angular.copy($scope.color);
-    $scope.colors.push(newColor);
-    console.log($scope.colors);
-  };
-
-  $scope.generateSanPham = function () {
-    var newProduct = angular.copy($scope.product);
-    $scope.products.push(newProduct);
-    $scope.colors.forEach((color) => {
-      $scope.sizes.forEach((size) => {
-        $scope.sizeAndColor = {
-          tenKichThuoc: size.tenKichThuoc,
-          tenMauSac: color.tenMauSac,
-        };
-        $scope.sizeAndColors.push($scope.sizeAndColor);
-      });
-    });
-    $scope.products.forEach((product) => {
-      $scope.sizeAndColors.forEach((sizeAndColor) => {
-        $scope.detailProduct = {
-          tenSanPham: product.tenSanPham,
-          tenDanhMuc: product.tenDanhMuc,
-          tenPhongCach: product.tenPhongCach,
-          tenChatLieu: product.tenChatLieu,
-          tenHoaTiet: product.tenHoaTiet,
-          tenKichThuoc: sizeAndColor.tenKichThuoc,
-          tenMauSac: sizeAndColor.tenMauSac,
-          gia: product.gia,
-          soLuong: product.soLuong,
-          daXoa: false,
-        };
-        $scope.prductDetails.push($scope.detailProduct);
-        console.log($scope.prductDetails);
-      });
-    });
-  };
+  // $scope.generateSanPham = function () {
+  //   var newProduct = angular.copy($scope.product);
+  //   $scope.products.push(newProduct);
+  //   $scope.colors.forEach((color) => {
+  //     $scope.sizes.forEach((size) => {
+  //       $scope.sizeAndColor = {
+  //         tenKichThuoc: size.tenKichThuoc,
+  //         tenMauSac: color.tenMauSac,
+  //       };
+  //       $scope.sizeAndColors.push($scope.sizeAndColor);
+  //     });
+  //   });
+  //   $scope.products.forEach((product) => {
+  //     $scope.sizeAndColors.forEach((sizeAndColor) => {
+  //       $scope.detailProduct = {
+  //         tenSanPham: product.tenSanPham,
+  //         tenDanhMuc: product.tenDanhMuc,
+  //         tenPhongCach: product.tenPhongCach,
+  //         tenChatLieu: product.tenChatLieu,
+  //         tenHoaTiet: product.tenHoaTiet,
+  //         tenKichThuoc: sizeAndColor.tenKichThuoc,
+  //         tenMauSac: sizeAndColor.tenMauSac,
+  //         gia: product.gia,
+  //         soLuong: product.soLuong,
+  //         daXoa: false,
+  //       };
+  //       $scope.prductDetails.push($scope.detailProduct);
+  //       console.log($scope.prductDetails);
+  //     });
+  //   });
+  // };
 
   $scope.saveProduct = function (event) {
+    event.preventDefault();
     var elem = document.getElementById("myBar");
     var width = 0;
     var id = setInterval(frame, 10);

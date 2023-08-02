@@ -13,6 +13,8 @@ public interface SanPhamService {
 
     List<SanPham> getAllByStatus();
 
+    List<SanPham> findByName(SanPham sanPham);
+
     SanPham add(SanPham sanPham);
 
     SanPham update(SanPham sanPham, UUID id);
