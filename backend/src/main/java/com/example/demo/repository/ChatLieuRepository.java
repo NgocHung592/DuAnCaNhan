@@ -21,5 +21,4 @@ public interface ChatLieuRepository extends JpaRepository<ChatLieu, UUID> {
     @Query("select cl from ChatLieu cl where cl.daXoa=false order by cl.ngayTao desc ")
     List<ChatLieu> getAllByStatus();
 
-    Optional<ChatLieu> findByTen(String ten);
 }
