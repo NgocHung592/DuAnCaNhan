@@ -66,27 +66,28 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-        List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
-        sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
-            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet
-                    .builder()
-                    .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
-                    .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .ngayTao(new Timestamp(currentTimestampMillis))
-                    .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
-                    .danhMuc(danhMucRepository.findById(getIdDanhMuc(sanPhamChiTietRequest.getTenDanhMuc())).get())
-                    .hoaTiet(hoaTietRepository.findById(getIdHoaTiet(sanPhamChiTietRequest.getTenHoaTiet())).get())
-                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
-                    .mauSac(mauSacRepository.findById(getIdSMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
-                    .phongCach(phongCachRepository.findById(getIdPhongCach(sanPhamChiTietRequest.getTenPhongCach())).get())
-                    .chatLieu(chatLieuRepository.findById(getIdChatLieu(sanPhamChiTietRequest.getTenChatLieu())).get())
-                    .build();
-            sanPhamChiTiets.add(sanPhamChiTietSave);
-        });
-
-        return sanPhamChiTietRepository.saveAll(sanPhamChiTiets);
+    public List<SanPhamChiTiet> add(SanPhamChiTietRequest sanPhamChiTietRequest) {
+//        List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
+//        sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
+//            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet
+//                    .builder()
+//                    .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
+//                    .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
+//                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+//                    .ngayTao(new Timestamp(currentTimestampMillis))
+//                    .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
+//                    .danhMuc(danhMucRepository.findById(getIdDanhMuc(sanPhamChiTietRequest.getTenDanhMuc())).get())
+//                    .hoaTiet(hoaTietRepository.findById(getIdHoaTiet(sanPhamChiTietRequest.getTenHoaTiet())).get())
+//                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
+//                    .mauSac(mauSacRepository.findById(getIdSMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
+//                    .phongCach(phongCachRepository.findById(getIdPhongCach(sanPhamChiTietRequest.getTenPhongCach())).get())
+//                    .chatLieu(chatLieuRepository.findById(getIdChatLieu(sanPhamChiTietRequest.getTenChatLieu())).get())
+//                    .build();
+//            sanPhamChiTiets.add(sanPhamChiTietSave);
+//        });
+//
+//        return sanPhamChiTietRepository.saveAll(sanPhamChiTiets);
+        return null;
     }
 
     public UUID getIdSanPham(String ten) {

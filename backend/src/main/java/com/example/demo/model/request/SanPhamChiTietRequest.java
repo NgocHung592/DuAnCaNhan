@@ -13,24 +13,24 @@ import java.util.UUID;
 @ToString
 public class SanPhamChiTietRequest {
 
-    private String soLuong;
-
     private Double gia;
 
     private String daXoa;
 
+    private String maSanPham;
+
     private String tenSanPham;
 
-    private String tenDanhMuc;
+    private String idChatLieu;
 
-    private String tenChatLieu;
+    private String idPhongCach;
 
-    private String tenHoaTiet;
+    private String idHoaTiet;
 
-    private String tenKichThuoc;
+    private String idCoAo;
 
-    private String tenMauSac;
+    private String idTayAo;
 
-    private String tenPhongCach;
+    private String idMauSac;
 
 }

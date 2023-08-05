@@ -16,12 +16,13 @@ window.addSanPhamController = function ($http, $scope) {
   $scope.products = [];
   $scope.prductDetails = [];
   $scope.sizeAndQuantitys = [];
-  $scope.randoom = "SP" + Math.floor(Math.random() * 10000) + 1;
   $scope.show = Boolean;
   $scope.currentPage = 0;
+  $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.product = {
-    idSanPham: "",
+    maSanPham: $scope.randoomSanPham,
+    tenSanPham: "",
     idPhongCach: "",
     idChatLieu: "",
     idHoaTiet: "",
@@ -37,78 +38,36 @@ window.addSanPhamController = function ($http, $scope) {
     daXoa: false,
   };
 
-  $scope.detailProduct = {
-    id: "",
-    ma: $scope.randoom,
-    ten: "",
-    moTa: "",
-    daXoa: false,
-  };
-
   $scope.addSizeAndQuantity = function () {
     let newSizeAndQuantity = angular.copy($scope.sizeAndQuantity);
     $scope.sizeAndQuantitys.push(newSizeAndQuantity);
     console.log($scope.sizeAndQuantitys);
   };
-  // $scope.generateSanPham = function () {
-  //   var newProduct = angular.copy($scope.product);
-  //   $scope.products.push(newProduct);
-  //   $scope.colors.forEach((color) => {
-  //     $scope.sizes.forEach((size) => {
-  //       $scope.sizeAndColor = {
-  //         tenKichThuoc: size.tenKichThuoc,
-  //         tenMauSac: color.tenMauSac,
-  //       };
-  //       $scope.sizeAndColors.push($scope.sizeAndColor);
-  //     });
-  //   });
-  //   $scope.products.forEach((product) => {
-  //     $scope.sizeAndColors.forEach((sizeAndColor) => {
-  //       $scope.detailProduct = {
-  //         tenSanPham: product.tenSanPham,
-  //         tenDanhMuc: product.tenDanhMuc,
-  //         tenPhongCach: product.tenPhongCach,
-  //         tenChatLieu: product.tenChatLieu,
-  //         tenHoaTiet: product.tenHoaTiet,
-  //         tenKichThuoc: sizeAndColor.tenKichThuoc,
-  //         tenMauSac: sizeAndColor.tenMauSac,
-  //         gia: product.gia,
-  //         soLuong: product.soLuong,
-  //         daXoa: false,
-  //       };
-  //       $scope.prductDetails.push($scope.detailProduct);
-  //       console.log($scope.prductDetails);
-  //     });
-  //   });
-  // };
 
   $scope.saveProduct = function (event) {
     event.preventDefault();
-    console.log($scope.product);
-    // var elem = document.getElementById("myBar");
-    // var width = 0;
-    // var id = setInterval(frame, 10);
-    // function frame() {
-    //   if (width >= 100) {
-    //     clearInterval(id);
-    //   } else {
-    //     width++;
-    //     elem.style.width = width + "%";
-    //   }
-    // }
-    // if ($scope.product.gia != "") {
-    //   $http
-    //     .post(sanPhamChiTietAPI + "/add", $scope.prductDetails)
-    //     .then(function () {
-    //       $scope.message = "Thêm thành công";
-    //       $scope.show = true;
-    //       return true;
-    //     });
-    // } else {
-    //   $scope.message = "Thêm thất bại";
-    //   $scope.show = false;
-    //   return false;
-    // }
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    if ($scope.product.gia != "") {
+      $http.post(sanPhamChiTietAPI + "/add", $scope.product).then(function () {
+        $scope.message = "Thêm thành công";
+        $scope.show = true;
+        return true;
+      });
+    } else {
+      $scope.message = "Thêm thất bại";
+      $scope.show = false;
+      return false;
+    }
   };
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {

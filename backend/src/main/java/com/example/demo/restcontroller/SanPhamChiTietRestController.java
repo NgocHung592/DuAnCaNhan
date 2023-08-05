@@ -1,5 +1,6 @@
 package com.example.demo.restcontroller;
 
+import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.service.SanPhamChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,9 @@ public class SanPhamChiTietRestController {
         return new ResponseEntity(sanPhamChiTietService.getAllSanPhamChiTietById(UUID.fromString(id),Integer.valueOf(pageNo)), HttpStatus.OK);
     }
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody List<SanPhamChiTietRequest> sanPhamChiTietRequests){
-        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequests),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest){
+        System.out.println(sanPhamChiTietRequest);
+        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequest),HttpStatus.OK);
     }
 
 }

@@ -9,10 +9,10 @@
                     </div>
                     <div>
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.idSanPham">
+                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.tenSanPham">
                         <datalist id="datalistOptions">
                             <option value="{{sanPham.ten}}"
-                                ng-repeat="sanPham in listSanPhamTrangThai | filter:product.idSanPham">
+                                ng-repeat="sanPham in listSanPhamTrangThai | filter:product.tenSanPham">
                         </datalist>
                     </div>
                     <div>
@@ -418,9 +418,9 @@
                                                     <p class="file-upload-main-error"></p>
                                                 </div>
                                                 <div class="file-upload-mask"></div>
-                                                <ul class="file-upload-errors"></ul><input type="file"
-                                                    id="input-file-now" class="file-upload-input"
-                                                    data-mdb-file-upload="file-upload" accept="">
+                                                <ul class="file-upload-errors"></ul>
+                                                <input type="file" id="input-file-now" class="file-upload-input"
+                                                    data-mdb-file-upload="file-upload" accept="" on-click="addImages()">
                                                 <div class="file-upload-previews"></div>
                                             </div>
                                         </div>
