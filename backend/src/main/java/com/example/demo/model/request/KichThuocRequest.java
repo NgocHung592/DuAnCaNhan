@@ -1,2 +1,4 @@
-package com.example.demo.model.request;public class KichThuocRequest {
+package com.example.demo.model.request;
+
+public class KichThuocRequest {
 }

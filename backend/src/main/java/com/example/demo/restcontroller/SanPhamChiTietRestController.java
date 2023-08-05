@@ -1,5 +1,6 @@
 package com.example.demo.restcontroller;
 
+import com.example.demo.entity.KichThuocChiTiet;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.service.SanPhamChiTietService;
@@ -37,6 +38,9 @@ public class SanPhamChiTietRestController {
     @PostMapping("add")
     public ResponseEntity add(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest){
         System.out.println(sanPhamChiTietRequest);
+        List<KichThuocChiTiet> list=sanPhamChiTietRequest.getKichThuocChiTiets();
+        System.out.println(list);
+
         return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequest),HttpStatus.OK);
     }
 

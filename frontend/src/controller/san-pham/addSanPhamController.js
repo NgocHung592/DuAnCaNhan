@@ -23,8 +23,10 @@ window.addSanPhamController = function ($http, $scope) {
   $scope.product = {
     maSanPham: $scope.randoomSanPham,
     tenSanPham: "",
+    moTa: "",
     idPhongCach: "",
     idChatLieu: "",
+    kichThuocChiTiets: $scope.sizeAndQuantitys,
     idHoaTiet: "",
     idCoAo: "",
     idTayAo: "",
@@ -39,9 +41,25 @@ window.addSanPhamController = function ($http, $scope) {
   };
 
   $scope.addSizeAndQuantity = function () {
+    let index = -1;
     let newSizeAndQuantity = angular.copy($scope.sizeAndQuantity);
-    $scope.sizeAndQuantitys.push(newSizeAndQuantity);
-    console.log($scope.sizeAndQuantitys);
+
+    $scope.sizeAndQuantitys.forEach(function (sizeAndQuantity, i) {
+      if (sizeAndQuantity.tenKichThuoc == newSizeAndQuantity.tenKichThuoc) {
+        index = i;
+      }
+    });
+    if (index !== -1) {
+      $scope.sizeAndQuantitys[index].soLuong += newSizeAndQuantity.soLuong;
+    } else {
+      $scope.sizeAndQuantitys.push(newSizeAndQuantity);
+      console.log($scope.sizeAndQuantitys);
+    }
+  };
+  $scope.removeSize = function (index) {
+    if (index !== -1) {
+      $scope.sizeAndQuantitys.splice(index, 1);
+    }
   };
 
   $scope.saveProduct = function (event) {
@@ -59,10 +77,18 @@ window.addSanPhamController = function ($http, $scope) {
     }
     if ($scope.product.gia != "") {
       $http.post(sanPhamChiTietAPI + "/add", $scope.product).then(function () {
+        console.log($scope.product);
         $scope.message = "Thêm thành công";
         $scope.show = true;
         return true;
       });
+      $http
+        .post(sanPhamChiTietAPI + "/add", $scope.sizeAndQuantitys)
+        .then(function () {
+          $scope.message = "Thêm thành công";
+          $scope.show = true;
+          return true;
+        });
     } else {
       $scope.message = "Thêm thất bại";
       $scope.show = false;

@@ -381,7 +381,8 @@
                                                 class="form-control form-control-sm" style="width: 60px;" />
 
                                             <button class="btn btn-link px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                on-click="tangSoLuong()">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -389,7 +390,7 @@
                                     <th scope="row">{{sizeAndQuantity.daXoa?"Ngừng sử dụng":"Đang sử dụng"}}
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-danger ">Xóa</a>
+                                        <a type="button" class="btn btn-danger" ng-click="removeSize($index)">Xóa</a>
                                     </th>
                                 </tr>
                             </tbody>

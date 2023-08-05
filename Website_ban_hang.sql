@@ -1,5 +1,6 @@
 Create database DU_AN_WEBSITE_BAN_HANG_QUAN_AO
-Use DU_AN_WEBSITE_BAN_HANG_QUAN_AO
+drop database DU_AN_WEBSITE_BAN_HANG_QUAN_AO
+USE DU_AN_WEBSITE_BAN_HANG_QUAN_AO
 Go
 SET ANSI_NULLS ON
 GO
@@ -12,7 +13,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -25,7 +25,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -38,7 +37,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -51,7 +49,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -64,7 +61,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -77,7 +73,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -91,7 +86,6 @@ Create table [danh_muc]
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
@@ -105,35 +99,67 @@ Create table [danh_muc]
 	ma varchar(20) ,
 	ten nvarchar(50) not null,
 	mo_ta nvarchar(50),
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
 	da_xoa bit
  )
-
+   Create table [tay_ao](
+	id UNIQUEIDENTIFIER 
+		DEFAULT NEWID() PRIMARY KEY,
+	ma varchar(20) ,
+	ten nvarchar(50) not null,
+	mo_ta nvarchar(50),
+	ngay_tao datetime,
+	ngay_sua datetime,
+	nguoi_tao nvarchar(50),
+	nguoi_sua  nvarchar(50),
+	da_xoa bit
+ )  
+ Create table [co_ao](
+	id UNIQUEIDENTIFIER 
+		DEFAULT NEWID() PRIMARY KEY,
+	ma varchar(20) ,
+	ten nvarchar(50) not null,
+	mo_ta nvarchar(50),
+	ngay_tao datetime,
+	ngay_sua datetime,
+	nguoi_tao nvarchar(50),
+	nguoi_sua  nvarchar(50),
+	da_xoa bit
+ )
+  
   Create table [san_pham_chi_tiet](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
-	so_luong int,
 	gia decimal(20,0),
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
 	da_xoa bit,
 	san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham(id),
-	danh_muc_id UNIQUEIDENTIFIER REFERENCES danh_muc(id),
 	mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
-	kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id),
 	chat_lieu_id UNIQUEIDENTIFIER REFERENCES chat_lieu(id),
 	hoa_tiet_id UNIQUEIDENTIFIER REFERENCES hoa_tiet(id),
-	phong_cach_id UNIQUEIDENTIFIER REFERENCES phong_cach(id)
+	phong_cach_id UNIQUEIDENTIFIER REFERENCES phong_cach(id),
+	tay_ao_id UNIQUEIDENTIFIER REFERENCES tay_ao(id),
+	co_ao_id UNIQUEIDENTIFIER REFERENCES co_ao(id),
 
  )
-
+ Create table [kich_thuoc_chi_tiet](
+	id UNIQUEIDENTIFIER 
+		DEFAULT NEWID() PRIMARY KEY,
+	so_luong int, 
+	ngay_tao datetime,
+	ngay_sua datetime,
+	nguoi_tao nvarchar(50),
+	nguoi_sua  nvarchar(50),
+	da_xoa bit,
+	chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
+	kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id),
+ )
   Create table [hinh_anh](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
@@ -141,7 +167,6 @@ Create table [danh_muc]
 	ten nvarchar(50) not null,
 	anh_noi_bat varchar(max),
 	duong_dan varchar(max),
-	trang_thai int,
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),

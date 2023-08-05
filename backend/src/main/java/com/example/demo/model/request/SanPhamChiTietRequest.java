@@ -1,11 +1,13 @@
 package com.example.demo.model.request;
 
+ import com.example.demo.entity.KichThuocChiTiet;
  import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.UUID;
+ import java.util.ArrayList;
+ import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,16 +23,20 @@ public class SanPhamChiTietRequest {
 
     private String tenSanPham;
 
-    private String idChatLieu;
+    private String moTa;
 
-    private String idPhongCach;
+    private ArrayList<KichThuocChiTiet> kichThuocChiTiets;
 
-    private String idHoaTiet;
+    private UUID idChatLieu;
 
-    private String idCoAo;
+    private UUID idPhongCach;
 
-    private String idTayAo;
+    private UUID idHoaTiet;
 
-    private String idMauSac;
+    private UUID idCoAo;
+
+    private UUID idTayAo;
+
+    private UUID idMauSac;
 
 }

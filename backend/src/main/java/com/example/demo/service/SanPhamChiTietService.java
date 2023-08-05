@@ -18,7 +18,7 @@ public interface SanPhamChiTietService {
 
 //    SanPhamChiTiet getOne(UUID id);
 //
-    List<SanPhamChiTiet> add(SanPhamChiTietRequest sanPhamChiTietRequest);
+    SanPhamChiTiet add(SanPhamChiTietRequest sanPhamChiTietRequest);
 //
 //    SanPhamChiTiet update(MauSac mauSac, UUID id);
 //
