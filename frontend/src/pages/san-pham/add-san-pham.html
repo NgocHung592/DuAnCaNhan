@@ -8,9 +8,8 @@
                             Tất</a>
                     </div>
                     <div>
-                        <label for="exampleDataList" class="form-label">Tên Sản Phẩm</label>
-                        <input class="form-control mb-3" list="datalistOptions" id="exampleDataList"
-                            ng-model="product.idSanPham">
+                        <label class="form-label">Tên Sản Phẩm</label>
+                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.idSanPham">
                         <datalist id="datalistOptions">
                             <option value="{{sanPham.ten}}"
                                 ng-repeat="sanPham in listSanPhamTrangThai | filter:product.idSanPham">
@@ -24,7 +23,6 @@
                         <label class="form-label">Đơn Giá</label>
                         <input class="form-control mb-3" type="number" ng-model="product.gia">
                     </div>
-
                 </div>
             </div>
         </div>
@@ -35,9 +33,10 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="row">
-                                    <div class="col-md-10"> <label class="form-label">Chất Liệu</label>
-                                        <select class="form-control " ng-model="product.idChatLieu">
-                                            <option value="">-- Chọn chất liệu --</option>
+                                    <div class="col-md-10">
+                                        <label class="form-label">Chất Liệu</label>
+                                        <select class="form-control" ng-model="product.idChatLieu">
+                                            <option hidden selected value="">-- Chọn chất liệu --</option>
                                             <option value="{{chatLieu.id}}"
                                                 ng-repeat="chatLieu in listChatLieuTrangThai">
                                                 {{chatLieu.ten}}</option>
@@ -81,9 +80,9 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <label class="form-label ">Phong Cách</label>
-                                        <select class="form-control" ng-model="product.tenPhongCach">
-                                            <option value="">-- Chọn phong cách --</option>
-                                            <option value="{{phongCach.ten}}"
+                                        <select class="form-control" ng-model="product.idPhongCach">
+                                            <option hidden selected value="">-- Chọn phong cách --</option>
+                                            <option value="{{phongCach.id}}"
                                                 ng-repeat="phongCach in listPhongCachTrangThai">
                                                 {{phongCach.ten}}</option>
                                         </select>
@@ -128,9 +127,9 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <label class="form-label ">Họa Tiết</label>
-                                        <select class="form-control mb-3" ng-model="product.tenHoaTiet">
-                                            <option value="">-- Chọn họa tiết --</option>
-                                            <option value="{{hoaTiet.ten}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
+                                        <select class="form-control mb-3" ng-model="product.idHoaTiet">
+                                            <option hidden selected value="">-- Chọn họa tiết --</option>
+                                            <option value="{{hoaTiet.id}}" ng-repeat="hoaTiet in listHoaTietTrangThai">
                                                 {{hoaTiet.ten}}
                                             </option>
                                         </select>
@@ -175,9 +174,9 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <label class="form-label ">Cổ Áo</label>
-                                        <select class="form-control" ng-model="product.tenCoAo">
-                                            <option value="">-- Chọn cổ áo --</option>
-                                            <option class="form-control" value="{{coAo.ten}}"
+                                        <select class="form-control" ng-model="product.idCoAo">
+                                            <option hidden selected value="">-- Chọn cổ áo --</option>
+                                            <option class="form-control" value="{{coAo.id}}"
                                                 ng-repeat="coAo in listCoAoTrangThai">
                                                 {{coAo.ten}}
                                             </option>
@@ -218,34 +217,33 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <label class="form-label ">Tay Áo</label>
-                                        <select class=" form-control" ng-model="product.tenTayAo">
-                                            <option value="">-- Chọn tay áo --</option>
+                                        <select class=" form-control" ng-model="product.idTayAo">
+                                            <option hidden selected value="">-- Chọn tay áo --</option>
                                             <option value="{{tayAo.id}}" ng-repeat="tayAo in listTayAoTrangThai">
                                                 {{tayAo.ten}}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <a data-bs-toggle="modal" data-bs-target="#addHoaTiet">
+                                        <a data-bs-toggle="modal" data-bs-target="#addTayAo">
                                             <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
                                                 style="color: #1862e2; padding-top: 50px;"></i> </a>
                                     </div>
                                 </div>
 
-
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <div class="modal fade" id="addHoaTiet" tabindex="-1"
+                                    <div class="modal fade" id="addTayAo" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <div class="container-fluid">
-                                                        <h4>HỌA TIẾT</h4>
+                                                        <h4>TAY ÁO</h4>
                                                         <form>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Tên họa tiết</label>
+                                                                <label class="form-label">Tên tay áo</label>
                                                                 <input type="text" class="form-control"
-                                                                    ng-model="formHoaTiet.ten">
+                                                                    ng-model="formTayAo.ten">
                                                             </div>
                                                         </form>
                                                     </div>
@@ -262,9 +260,9 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
-                                    <div class="col-md-10"> <label class="form-label">Màu Sắc</label>
+                                    <div class="col-md-10 "> <label class="form-label">Màu Sắc</label>
                                         <select class="form-control" ng-model="product.idMauSac">
-                                            <option value="">-- Chọn màu sắc --</option>
+                                            <option hidden selected value="">-- Chọn màu sắc --</option>
                                             <option class="form-option" value="{{mauSac.id}}"
                                                 style="background-color: {{mauSac.ma}};"
                                                 ng-repeat="mauSac in listMauSacTrangThai">
@@ -325,7 +323,8 @@
                                                             Thước</label>
                                                         <select class="form-control mb-3"
                                                             ng-model="sizeAndQuantity.tenKichThuoc">
-                                                            <option value="">-- Chọn kích thước --</option>
+                                                            <option hidden selected value="">-- Chọn kích thước --
+                                                            </option>
                                                             <option value="{{kichThuoc.ten}}"
                                                                 ng-repeat="kichThuoc in listKichThuocTrangThai">
                                                                 {{kichThuoc.ten}}

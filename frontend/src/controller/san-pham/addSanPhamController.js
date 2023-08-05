@@ -84,30 +84,31 @@ window.addSanPhamController = function ($http, $scope) {
 
   $scope.saveProduct = function (event) {
     event.preventDefault();
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-    if ($scope.product.gia != "") {
-      $http
-        .post(sanPhamChiTietAPI + "/add", $scope.prductDetails)
-        .then(function () {
-          $scope.message = "Thêm thành công";
-          $scope.show = true;
-          return true;
-        });
-    } else {
-      $scope.message = "Thêm thất bại";
-      $scope.show = false;
-      return false;
-    }
+    console.log($scope.product);
+    // var elem = document.getElementById("myBar");
+    // var width = 0;
+    // var id = setInterval(frame, 10);
+    // function frame() {
+    //   if (width >= 100) {
+    //     clearInterval(id);
+    //   } else {
+    //     width++;
+    //     elem.style.width = width + "%";
+    //   }
+    // }
+    // if ($scope.product.gia != "") {
+    //   $http
+    //     .post(sanPhamChiTietAPI + "/add", $scope.prductDetails)
+    //     .then(function () {
+    //       $scope.message = "Thêm thành công";
+    //       $scope.show = true;
+    //       return true;
+    //     });
+    // } else {
+    //   $scope.message = "Thêm thất bại";
+    //   $scope.show = false;
+    //   return false;
+    // }
   };
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {
