@@ -8,8 +8,10 @@ window.addSanPhamController = function ($http, $scope) {
   $scope.listMauSacTrangThai = [];
   $scope.listKichThuocTrangThai = [];
   $scope.listHoaTietTrangThai = [];
-  $scope.listHoaTietTrangThai = [];
   $scope.listKieuDangTrangThai = [];
+  $scope.listCoAoTrangThai = [];
+  $scope.listTayAoTrangThai = [];
+
   $scope.totalPages = [];
   $scope.products = [];
   $scope.prductDetails = [];
@@ -156,6 +158,20 @@ window.addSanPhamController = function ($http, $scope) {
     });
   };
   $scope.getMauSacTrangThai();
+
+  $scope.getCoAoTrangThai = function () {
+    $http.get(coAoAPI + "/trang-thai").then(function (response) {
+      $scope.listCoAoTrangThai = response.data;
+    });
+  };
+  $scope.getCoAoTrangThai();
+
+  $scope.getTayAoTrangThai = function () {
+    $http.get(tayAoAPI + "/trang-thai").then(function (response) {
+      $scope.listTayAoTrangThai = response.data;
+    });
+  };
+  $scope.getTayAoTrangThai();
   //add nhanh thuoc tinh
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
 
