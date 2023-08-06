@@ -26,7 +26,7 @@ window.addSanPhamController = function ($http, $scope) {
     moTa: "",
     idPhongCach: "",
     idChatLieu: "",
-    kichThuocChiTiets: $scope.sizeAndQuantitys,
+    kichThuocChiTiets: [],
     idHoaTiet: "",
     idCoAo: "",
     idTayAo: "",
@@ -75,13 +75,29 @@ window.addSanPhamController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
+    $scope.productDetail = {
+      maSanPham: $scope.product.maSanPham,
+      tenSanPham: $scope.product.tenSanPham,
+      moTa: $scope.product.moTa,
+      idPhongCach: $scope.product.idPhongCach,
+      idChatLieu: $scope.product.idChatLieu,
+      kichThuocChiTiets: $scope.sizeAndQuantitys,
+      idHoaTiet: $scope.product.idHoaTiet,
+      idCoAo: $scope.product.idCoAo,
+      idTayAo: $scope.product.idTayAo,
+      idMauSac: $scope.product.idMauSac,
+      gia: $scope.product.gia,
+      daXoa: $scope.product.daXoa,
+    };
     if ($scope.product.gia != "") {
-      $http.post(sanPhamChiTietAPI + "/add", $scope.product).then(function () {
-        console.log($scope.product);
-        $scope.message = "Thêm thành công";
-        $scope.show = true;
-        return true;
-      });
+      $http
+        .post(sanPhamChiTietAPI + "/add", $scope.productDetail)
+        .then(function () {
+          console.log($scope.productDetail);
+          $scope.message = "Thêm thành công";
+          $scope.show = true;
+          return true;
+        });
       $http
         .post(sanPhamChiTietAPI + "/add", $scope.sizeAndQuantitys)
         .then(function () {

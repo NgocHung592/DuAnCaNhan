@@ -12,7 +12,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "san-pham/add-san-pham.html",
       controller: addSanPhamController,
     })
-    .when("/san-pham/view-update/:id", {
+    .when("/san-pham/update/:id", {
       templateUrl: "san-pham/update-san-pham.html",
       controller: updateSanPhamController,
     })

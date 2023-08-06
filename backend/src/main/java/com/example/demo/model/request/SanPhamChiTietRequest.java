@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
  import java.util.ArrayList;
+ import java.util.List;
  import java.util.UUID;
 
 @Getter
@@ -25,7 +26,7 @@ public class SanPhamChiTietRequest {
 
     private String moTa;
 
-    private ArrayList<KichThuocChiTiet> kichThuocChiTiets;
+    private List<KichThuocChiTietRequest> kichThuocChiTiets;
 
     private UUID idChatLieu;
 

@@ -6,27 +6,21 @@ import java.math.BigDecimal;
 
 public interface SanPhamChiTietResponse {
 
-    @Value("#{target.id_san_pham}")
-    String getIDSanPham();
+    @Value("#{target.id_san_pham_chi_tiet}")
+    String getIDSanPhamChiTiet();
 
     @Value("#{target.ten_san_pham}")
     String getTen();
 
-    @Value("#{target.anh_noi_bat}")
-    String getAnhNoiBat();
+//    @Value("#{target.anh_noi_bat}")
+//    String getAnhNoiBat();
 
     @Value("#{target.so_luong}")
     Integer getSoLuong();
 
-    @Value("#{target.gia_min}")
-    BigDecimal getGiaMin();
+    @Value("#{target.gia}")
+    BigDecimal getGia();
 
-    @Value("#{target.gia_max}")
-    BigDecimal getGiaMax();
-
-    @Value("#{target.mo_ta}")
-    String getMoTa();
-
-    @Value("#{target.trang_thai}")
-    Boolean getTrangThai();
+    @Value("#{target.da_xoa}")
+    Boolean getDaXoa();
 }

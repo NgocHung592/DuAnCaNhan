@@ -15,6 +15,7 @@ import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.repository.CoAoRepository;
 import com.example.demo.repository.DanhMucRepository;
 import com.example.demo.repository.HoaTietRepository;
+import com.example.demo.repository.KichThuocChiTietRepository;
 import com.example.demo.repository.KichThuocRepository;
 import com.example.demo.repository.MauSacRepository;
 import com.example.demo.repository.PhongCachRepository;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,12 +57,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private TayAoRepository tayAoRepository;
     @Autowired
     private CoAoRepository coAoRepository;
+    @Autowired
+    private KichThuocChiTietRepository kichThuocChiTietRepository;
 
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamChiTietRepository.getPage(pageable);
     }
 
@@ -71,7 +75,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public SanPhamChiTiet add(SanPhamChiTietRequest sanPhamChiTietRequest) {
+    public SanPhamChiTiet getOne(UUID id) {
+        return sanPhamChiTietRepository.findById(id).get();
+    }
+
+    @Override
+    public List<KichThuocChiTiet> add(SanPhamChiTietRequest sanPhamChiTietRequest) {
         if (!sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
             SanPham sanPhamSave = SanPham.builder()
                     .ma(sanPhamChiTietRequest.getMaSanPham())
@@ -87,7 +96,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                     .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
                     .ngayTao(new Timestamp(currentTimestampMillis))
-                    .ngayTao(null)
+                    .nguoiTao(null)
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                     .sanPham(sanPham)
                     .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
                     .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
@@ -96,25 +106,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                     .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
                     .mauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get())
                     .build();
-            SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
-
-            List<KichThuocChiTiet> kichThuocChiTietList = new ArrayList<>();
-            sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTiet -> {
-                KichThuocChiTiet kichThuocChiTietSave = KichThuocChiTiet.builder()
-                        .soLuong(Integer.valueOf(kichThuocChiTiet.getSoLuong()))
-                        .ngayTao(new Timestamp(currentTimestampMillis))
-                        .nguoiTao(null)
-//                        .kichThuoc(kichThuocRepository.findById())
-                        .sanPhamChiTiet(sanPhamChiTiet)
-                        .build();
-                kichThuocChiTietList.add(kichThuocChiTietSave);
-            });
+            return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
 
         }
         SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                 .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
                 .ngayTao(new Timestamp(currentTimestampMillis))
-                .ngayTao(null)
+                .nguoiTao(null)
+                .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                 .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
                 .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
                 .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
@@ -123,8 +122,29 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
                 .mauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get())
                 .build();
-        return sanPhamChiTietRepository.save(sanPhamChiTietSave);
+        return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+    }
 
+    private List<KichThuocChiTiet> getKichThuocChiTiets(SanPhamChiTietRequest sanPhamChiTietRequest, SanPhamChiTiet sanPhamChiTietSave) {
+        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
+
+        List<KichThuocChiTiet> kichThuocChiTietList = new ArrayList<>();
+        sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTiet -> {
+            KichThuocChiTiet kichThuocChiTietSave = KichThuocChiTiet.builder()
+                    .soLuong(Integer.valueOf(kichThuocChiTiet.getSoLuong()))
+                    .ngayTao(new Timestamp(currentTimestampMillis))
+                    .nguoiTao(null)
+                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(kichThuocChiTiet.getTenKichThuoc())).get())
+                    .sanPhamChiTiet(sanPhamChiTiet)
+                    .build();
+            kichThuocChiTietList.add(kichThuocChiTietSave);
+        });
+        return kichThuocChiTietRepository.saveAll(kichThuocChiTietList);
+    }
+
+    @Override
+    public List<KichThuocChiTiet> getList(UUID id) {
+        return kichThuocChiTietRepository.getList(id);
     }
 
     public UUID getIdSanPham(String ten) {
@@ -136,12 +156,17 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-//
-//    @Override
-//    public SanPhamChiTiet update(MauSac mauSac, UUID id) {
-//        return null;
-//    }
-//
+    public UUID getIdKichThuoc(String ten) {
+        for (KichThuoc kichThuoc : kichThuocRepository.findAll()) {
+            if (ten.equals(kichThuoc.getTen())) {
+                return kichThuoc.getId();
+            }
+        }
+        return null;
+    }
+
+
+
 //    @Override
 //    public void delete(UUID id) {
 //

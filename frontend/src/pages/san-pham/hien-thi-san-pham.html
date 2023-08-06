@@ -104,18 +104,17 @@
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
                                     <th scope="row"><img class="table_img"
-                                            src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"></th>
+                                            src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}" alt="Không có ảnh"></th>
                                     <th scope="row">{{sanPhamChiTiet.ten}}</th>
                                     <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.giaMin | number}} đ</th>
-                                    <th scope="row">{{sanPhamChiTiet.moTa}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.trangThai?"Ngừng kinh Doanh":"Kinh Doanh"}}
+                                    <th scope="row">{{sanPhamChiTiet.gia | number}} VND</th>
+                                    <th scope="row">{{sanPhamChiTiet.daXoa?"Ngừng kinh Doanh":"Kinh Doanh"}}
                                     </th>
                                     <th>
                                         <a type="button" class="btn btn-warning "
-                                            href="#san-pham-chi-tiet/update/{{sanPhamChiTiet.idsanPham}}">Chi
+                                            href="#san-pham/update/{{sanPhamChiTiet.idsanPhamChiTiet}}">Chi
                                             tiết</a>
-                                        <a type="button" class="btn btn-danger" ng-click="delete(sanPham.id)">Xóa</a>
+
                                     </th>
                                 </tr>
                             </tbody>

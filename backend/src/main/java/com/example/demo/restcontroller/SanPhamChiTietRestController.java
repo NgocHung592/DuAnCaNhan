@@ -2,8 +2,12 @@ package com.example.demo.restcontroller;
 
 import com.example.demo.entity.KichThuocChiTiet;
 import com.example.demo.entity.SanPhamChiTiet;
+import com.example.demo.model.request.KichThuocChiTietRequest;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.service.SanPhamChiTietService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +31,25 @@ public class SanPhamChiTietRestController {
     private SanPhamChiTietService sanPhamChiTietService;
 
     @GetMapping("hien-thi")
-    public ResponseEntity getAll(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo){
+    public ResponseEntity getAll(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
         return new ResponseEntity(sanPhamChiTietService.getAll(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
-    @GetMapping("detail-san-pham/{id}")
-    public ResponseEntity getAllSanPhamChiTiet(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
-                                               @PathVariable("id") String id){
-        return new ResponseEntity(sanPhamChiTietService.getAllSanPhamChiTietById(UUID.fromString(id),Integer.valueOf(pageNo)), HttpStatus.OK);
-    }
-    @PostMapping("add")
-    public ResponseEntity add(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest){
-        System.out.println(sanPhamChiTietRequest);
-        List<KichThuocChiTiet> list=sanPhamChiTietRequest.getKichThuocChiTiets();
-        System.out.println(list);
 
-        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequest),HttpStatus.OK);
+    @GetMapping("detail-san-pham/{id}")
+    public ResponseEntity detail(
+            @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);
+    }
+    @GetMapping("detail-kich-thuoc/{id}")
+    public ResponseEntity detailKichThuoc(
+            @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.getList(UUID.fromString(id)), HttpStatus.OK);
+    }
+
+    @PostMapping("add")
+    public ResponseEntity add(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest) {
+
+        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequest), HttpStatus.OK);
     }
 
 }

@@ -17,17 +17,16 @@ import java.util.UUID;
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, UUID> {
 
     @Query(value = """
-               SELECT a.id as id_san_pham, a.ten as ten_san_pham,c.anh_noi_bat as anh_noi_bat,sum(b.so_luong) as so_luong,
-               min (b.gia) as gia_min,max (b.gia) as gia_max,a.mo_ta as mo_ta,a.da_xoa as trang_thai FROM san_pham a
-               inner join san_pham_chi_tiet b on a.id=b.san_pham_id
-               inner join hinh_anh c on c.chi_tiet_san_pham_id=b.id
-               where b.da_xoa=0
-               group by a.ten, a.mo_ta, a.da_xoa,c.anh_noi_bat,a.id
+               select a.id as id_san_pham_chi_tiet, b.ten as ten_san_pham,sum(c.so_luong) as so_luong,a.gia as gia,a.da_xoa as da_xoa from san_pham_chi_tiet a
+               inner join san_pham b on a.san_pham_id=b.id
+               inner join kich_thuoc_chi_tiet c on a.id=c.chi_tiet_san_pham_id
+               group by a.id,b.ten,a.gia,a.da_xoa,a.ngay_tao
+               order by a.ngay_tao desc 
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getPage(Pageable pageable);
 
     @Query("select spct from SanPhamChiTiet spct where spct.sanPham.id=?1")
-    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Pageable pageable);
+    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Pageable pageable);
 
 
 }
