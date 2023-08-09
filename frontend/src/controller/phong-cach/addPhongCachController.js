@@ -2,7 +2,6 @@ window.addPhongCachController = function ($http, $scope) {
   $scope.randoom = "PC" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formPhongCach = {
-    id: "",
     ma: $scope.randoom,
     ten: "",
     daXoa: false,

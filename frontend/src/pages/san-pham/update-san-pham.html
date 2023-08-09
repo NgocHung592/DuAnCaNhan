@@ -267,8 +267,8 @@
                                         <select class="form-control" ng-model="productDetail.mauSac.ma">
                                             <option hidden selected value="">-- Chọn màu sắc --</option>
                                             <option ng-selected="productDetail.mauSac.ma" class="form-option"
-                                                value="{{mauSac.id}}" style="background-color: {{mauSac.ma}};"
-                                                ng-repeat="mauSac in listMauSacTrangThai">
+                                                value="{{mauSac.id}}" ng-repeat="mauSac in listMauSacTrangThai">
+                                                {{mauSac.ten}}
                                             </option>
                                         </select>
                                     </div>
