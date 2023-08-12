@@ -16,10 +16,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Table(name = "kich_thuoc_chi_tiet")
+@Table(name = "kich_thuoc_mau_sac")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,6 +36,9 @@ public class KichThuocChiTiet {
 
     @Column(name = "so_luong")
     private Integer soLuong;
+
+    @Column(name = "gia")
+    private BigDecimal donGia;
 
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
@@ -54,6 +58,10 @@ public class KichThuocChiTiet {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kich_thuoc_id", referencedColumnName = "id")
     private KichThuoc kichThuoc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mau_sac_id", referencedColumnName = "id")
+    private MauSac mauSac;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
