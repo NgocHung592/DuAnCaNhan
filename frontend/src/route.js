@@ -1,6 +1,8 @@
 var myApp = angular.module("myApp", ["ngRoute"]);
 
-myApp.config(function ($routeProvider, $locationProvider) {
+myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
+  $httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+
   $locationProvider.hashPrefix("");
 
   $routeProvider
@@ -148,6 +150,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
     .when("/khuyen-mai/update/:id", {
       templateUrl: "khuyen-mai/update-khuyen-mai.html",
       controller: updateKhuyenMaiController,
+    })
+    .when("/ban-hang/tai-quay", {
+      templateUrl: "ban-hang-tai-quay/hien-thi.html",
+      controller: addHoaDonController,
     })
     .otherwise({
       redirectTo: "/admin",

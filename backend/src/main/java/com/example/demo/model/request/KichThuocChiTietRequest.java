@@ -13,7 +13,11 @@ public class KichThuocChiTietRequest {
 
     private String soLuong;
 
+    private Double gia;
+
     private String tenKichThuoc;
+
+    private String tenMauSac;
 
     private String sanPhamChiTiet;
 

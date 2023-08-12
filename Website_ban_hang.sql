@@ -133,14 +133,12 @@ Create table [danh_muc]
   Create table [san_pham_chi_tiet](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
-	gia decimal(20,0),
 	ngay_tao datetime,
 	ngay_sua datetime,
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
 	da_xoa bit,
 	san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham(id),
-	mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
 	chat_lieu_id UNIQUEIDENTIFIER REFERENCES chat_lieu(id),
 	hoa_tiet_id UNIQUEIDENTIFIER REFERENCES hoa_tiet(id),
 	phong_cach_id UNIQUEIDENTIFIER REFERENCES phong_cach(id),
@@ -148,9 +146,10 @@ Create table [danh_muc]
 	co_ao_id UNIQUEIDENTIFIER REFERENCES co_ao(id),
 
  )
- Create table [kich_thuoc_chi_tiet](
+ Create table [kich_thuoc_mau_sac](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
+	gia decimal(20,0),
 	so_luong int, 
 	ngay_tao datetime,
 	ngay_sua datetime,
@@ -158,6 +157,7 @@ Create table [danh_muc]
 	nguoi_sua  nvarchar(50),
 	da_xoa bit,
 	chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
+	mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
 	kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id),
  )
   Create table [hinh_anh](
@@ -380,4 +380,3 @@ Create table [danh_muc]
 	mo_ta nvarchar(max),
 	thoi_gian_cap_nhap datetime
  )
-

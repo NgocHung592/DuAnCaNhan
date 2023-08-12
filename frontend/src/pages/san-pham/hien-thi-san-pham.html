@@ -96,7 +96,8 @@
                                     <th scope="col">Ảnh Đại Diện</th>
                                     <th scope="col">Tên Sản Phẩm</th>
                                     <th scope="col">Số Lượng</th>
-                                    <th scope="col">Đơn Giá </th>
+                                    <th scope="col">Giá Nhỏ Nhất</th>
+                                    <th scope="col">Giá Lớn Nhất</th>
                                     <th scope="col">Trạng Thái</th>
                                     <th scope="col">Hành Động</th>
 
@@ -109,7 +110,8 @@
                                             src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}" alt="Không có ảnh"></th>
                                     <th scope="row">{{sanPhamChiTiet.ten}}</th>
                                     <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.gia | number}} VND</th>
+                                    <th scope="row">{{sanPhamChiTiet.giaNhoNhat | number}} VND</th>
+                                    <th scope="row">{{sanPhamChiTiet.giaLonNhat | number}} VND</th>
                                     <th scope="row">{{sanPhamChiTiet.daXoa?"Ngừng kinh Doanh":"Kinh Doanh"}}
                                     </th>
                                     <th>

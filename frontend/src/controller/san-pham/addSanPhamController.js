@@ -59,8 +59,8 @@ window.addSanPhamController = function ($http, $scope) {
     if ($scope.listKichThuocTrangThai[index].checked) {
       $scope.sizeAndQuantity = {
         tenKichThuoc: $scope.listKichThuocTrangThai[index].ten,
-        soLuong: 0,
-        gia: 0,
+        soLuong: 10,
+        gia: 100000,
         daXoa: false,
       };
       let newSizeAndQuantity = angular.copy($scope.sizeAndQuantity);
@@ -96,17 +96,19 @@ window.addSanPhamController = function ($http, $scope) {
           daXoa: size.daXoa,
         };
         let newSizeAndColor = angular.copy($scope.sizeAndColor);
-        // if ($scope.sizeAndColors.filter((item) => item !== newSizeAndColor)) {
-        //   $scope.sizeAndColors.push(newSizeAndColor);
-        // } else {
-        //   $scope.sizeAndColors.splice(index, 1);
-        // }
-        $scope.sizeAndColors.forEach(function (sizeAndColor, i) {
-          if (sizeAndColor.tenKichThuoc == newSizeAndColor.tenKichThuoc) {
-            index = i;
+        let exists = false;
+
+        for (let i = 0; i < $scope.sizeAndColors.length; i++) {
+          let existingItem = $scope.sizeAndColors[i];
+
+          if (angular.equals(existingItem, newSizeAndColor)) {
+            exists = true;
+            break;
           }
-        });
-        if (index !== -1) {
+        }
+
+        if (exists) {
+          // console.log(newSizeAndColor);
         } else {
           $scope.sizeAndColors.push(newSizeAndColor);
         }
@@ -125,7 +127,37 @@ window.addSanPhamController = function ($http, $scope) {
   };
   $scope.changeGia = function (index) {
     $scope.sizeAndColors[index].gia = $scope.sizeAndColors[index].gia;
-    console.log($scope.sizeAndColors);
+  };
+
+  let uploadFiles = (files) => {
+    let CLOUD_NAME = "djz9ks2ft";
+    let urls = [];
+    let api = "https://api.cloudinary.com/v1_1/";
+
+    for (const file of files) {
+      var formData = new FormData();
+      formData.append("upload_preset", "upload-image");
+      formData.append("folder", "ECMA");
+      formData.append("file", file);
+
+      for (const obj of formData) {
+        console.log(obj);
+      }
+
+      $http
+        .post(api + CLOUD_NAME + "/image/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (response) {
+          console.log(response.data);
+        });
+    }
+
+    // console.log($scope.PRESENT_NAME);
+    // let productImages = document.getElementById("product-image");
+    // console.log(productImages.files);
   };
 
   $scope.saveProduct = function (event) {
@@ -147,12 +179,10 @@ window.addSanPhamController = function ($http, $scope) {
       moTa: $scope.product.moTa,
       idPhongCach: $scope.product.idPhongCach,
       idChatLieu: $scope.product.idChatLieu,
-      kichThuocChiTiets: $scope.sizeAndQuantitys,
       idHoaTiet: $scope.product.idHoaTiet,
       idCoAo: $scope.product.idCoAo,
       idTayAo: $scope.product.idTayAo,
-      idMauSac: $scope.product.idMauSac,
-      gia: $scope.product.gia,
+      kichThuocChiTiets: $scope.sizeAndColors,
       daXoa: $scope.product.daXoa,
     };
     if ($scope.product.gia != "") {
@@ -176,6 +206,10 @@ window.addSanPhamController = function ($http, $scope) {
       $scope.show = false;
       return false;
     }
+
+    // Hoặc nếu bạn muốn gửi file:
+    let productImages = document.getElementById("product-image");
+    uploadFiles(productImages.files);
   };
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {

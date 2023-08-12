@@ -18,8 +18,11 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.so_luong}")
     Integer getSoLuong();
 
-    @Value("#{target.gia}")
-    BigDecimal getGia();
+    @Value("#{target.gia_nho_nhat}")
+    BigDecimal getGiaNhoNhat();
+
+    @Value("#{target.gia_lon_nhat}")
+    BigDecimal getGiaLonNhat();
 
     @Value("#{target.da_xoa}")
     Boolean getDaXoa();

@@ -341,7 +341,7 @@
                                     <th scope="col">Hành Động</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sizeColor in sizeAndColors">
+                            <tbody ng-repeat="sizeColor in sizeAndColors track by $index">
                                 <tr>
                                     <td>{{$index+1}}</td>
                                     <td>{{sizeColor.tenKichThuoc}}</td>
@@ -379,16 +379,18 @@
                                                                         </div>
                                                                         <div class="file-upload-mask"></div>
                                                                         <ul class="file-upload-errors"></ul>
-                                                                        <input type="file" id="input-file-now"
-                                                                            class="file-upload-input"
-                                                                            data-mdb-file-upload="file-upload" accept=""
-                                                                            on-click="addImages()">
+                                                                        <input type="file" multiple
+                                                                            class="file-upload-input" id="product-image"
+                                                                            data-mdb-file-upload="file-upload"
+                                                                            ng-model="images">
                                                                         <div class="file-upload-previews"></div>
+
                                                                     </div>
                                                                 </div>
                                                             </section>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>

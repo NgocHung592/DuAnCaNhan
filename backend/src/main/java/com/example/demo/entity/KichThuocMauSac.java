@@ -28,7 +28,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
-public class KichThuocChiTiet {
+public class KichThuocMauSac {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

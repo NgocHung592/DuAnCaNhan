@@ -38,9 +38,6 @@ public class SanPhamChiTiet implements Serializable {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "gia")
-    private BigDecimal gia;
-
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
 
@@ -67,10 +64,6 @@ public class SanPhamChiTiet implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "co_ao_id", referencedColumnName = "id")
     private CoAo coAo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mau_sac_id", referencedColumnName = "id")
-    private MauSac mauSac;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_lieu_id", referencedColumnName = "id")

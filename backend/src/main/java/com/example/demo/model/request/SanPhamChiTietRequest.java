@@ -1,12 +1,10 @@
 package com.example.demo.model.request;
 
- import com.example.demo.entity.KichThuocChiTiet;
  import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
- import java.util.ArrayList;
  import java.util.List;
  import java.util.UUID;
 
@@ -15,8 +13,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class SanPhamChiTietRequest {
-
-    private Double gia;
 
     private String daXoa;
 
@@ -37,7 +33,5 @@ public class SanPhamChiTietRequest {
     private UUID idCoAo;
 
     private UUID idTayAo;
-
-    private UUID idMauSac;
 
 }

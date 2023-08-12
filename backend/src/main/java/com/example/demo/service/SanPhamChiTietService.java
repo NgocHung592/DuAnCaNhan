@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KichThuocChiTiet;
-import com.example.demo.entity.MauSac;
+import com.example.demo.entity.KichThuocMauSac;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
@@ -18,9 +17,9 @@ public interface SanPhamChiTietService {
 
     SanPhamChiTiet getOne(UUID id);
 
-    List<KichThuocChiTiet> add(SanPhamChiTietRequest sanPhamChiTietRequest);
+    List<KichThuocMauSac> add(SanPhamChiTietRequest sanPhamChiTietRequest);
 
-    List<KichThuocChiTiet> getList(UUID id);
+    List<KichThuocMauSac> getList(UUID id);
 //
 //
 //    void delete(UUID id);

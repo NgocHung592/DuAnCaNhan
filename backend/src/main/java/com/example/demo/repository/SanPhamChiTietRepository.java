@@ -17,11 +17,12 @@ import java.util.UUID;
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, UUID> {
 
     @Query(value = """
-               select a.id as id_san_pham_chi_tiet, b.ten as ten_san_pham,sum(c.so_luong) as so_luong,a.gia as gia,a.da_xoa as da_xoa from san_pham_chi_tiet a
+               select a.id as id_san_pham_chi_tiet, b.ten as ten_san_pham,min(c.gia) as gia_nho_nhat,max(c.gia) as gia_lon_nhat,sum(so_luong) as so_luong,a.da_xoa as da_xoa from san_pham_chi_tiet a
                inner join san_pham b on a.san_pham_id=b.id
-               inner join kich_thuoc_chi_tiet c on a.id=c.chi_tiet_san_pham_id
-               group by a.id,b.ten,a.gia,a.da_xoa,a.ngay_tao
-               order by a.ngay_tao desc 
+               inner join kich_thuoc_mau_sac c on a.id=c.chi_tiet_san_pham_id
+               where c.da_xoa='false'
+               group by a.id,b.ten,a.da_xoa,a.ngay_tao
+               order by a.ngay_tao desc
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getPage(Pageable pageable);
 
