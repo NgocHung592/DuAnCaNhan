@@ -155,6 +155,7 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",
       controller: addHoaDonController,
     })
+
     .otherwise({
       redirectTo: "/admin",
     });

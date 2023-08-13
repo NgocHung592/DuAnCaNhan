@@ -5,16 +5,147 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>BÁN HÀNG TẠI QUẦY</h4>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="modal fade" id="addSanPham" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Ảnh Đại Diện</th>
+                                                        <th scope="col">Tên Sản Phẩm</th>
+                                                        <th scope="col">Số Lượng</th>
+                                                        <th scope="col">Giá Nhỏ Nhất</th>
+                                                        <th scope="col">Giá Lớn Nhất</th>
+                                                        <th scope="col">Trạng Thái</th>
+                                                        <th scope="col">Hành Động</th>
 
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content ">
+                                                    <tr>
+                                                        <th scope="row">{{$index+1}}</th>
+                                                        <th scope="row"><img class="table_img"
+                                                                src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"
+                                                                alt="Không có ảnh"></th>
+                                                        <th scope="row">{{sanPhamChiTiet.ten}}</th>
+                                                        <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
+                                                        <th scope="row">{{sanPhamChiTiet.giaNhoNhat | number}} VND</th>
+                                                        <th scope="row">{{sanPhamChiTiet.giaLonNhat | number}} VND</th>
+                                                        <th scope="row">{{sanPhamChiTiet.daXoa?"Ngừng kinh Doanh":"Kinh
+                                                            Doanh"}}
+                                                        </th>
+                                                        <th>
+                                                            <a type="button" class="btn btn-warning "
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#addSanPhamChiTiet"
+                                                                ng-click="detailSanPhamChiTiet(sanPhamChiTiet.idsanPhamChiTiet)">Chọn</a>
+
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <nav aria-label="Page navigation example ">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item">
+                                                        <a class="page-link" ng-click="previousPage()"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item" ng-repeat="page in totalPages track by $index"
+                                                        ng-click="changePage($index);">
+                                                        <a class="page-link">{{$index+1}}</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="modal fade" id="addSanPhamChiTiet" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <button data-bs-dismiss="modal" data-bs-toggle="modal"
+                                                data-bs-target="#addSanPham">Close</button>
+                                            <img src="" alt="ko co anh">
+                                            <p>{{productDetail.sanPham.ten}}</p>
+                                            <p>{{productDetail.tayAo.ten}}</p>
+                                            <p>{{productDetail.coAo.ten}}</p>
+                                            <p>{{productDetail.chatLieu.ten}}</p>
+                                            <p>{{productDetail.hoaTiet.ten}}</p>
+                                            <p>{{productDetail.phongCach.ten}}</p>
+
+                                            <div>
+                                                <p>Kích thước:</p>
+                                                <button class="btn" ng-repeat="sizeAndQuantity in sizeAndQuantitys"
+                                                    ng-model="filterKichThuoc"
+                                                    ng-click="selectedSize(sizeAndQuantity.kichThuoc.ten)"
+                                                    type="submit">{{sizeAndQuantity.kichThuoc.ten}}</button>
+                                            </div>
+                                            <div>
+                                                <p>Màu sắc:</p>
+                                                <button class="btn "
+                                                    ng-repeat="sizeAndQuantity in sizeAndQuantitys | filter: filterKichThuoc">{{sizeAndQuantity.mauSac.ten}}</button>
+                                            </div>
+                                            <div>
+                                                <p>Số lượng:</p>
+                                                <button class="btn "
+                                                    ng-repeat="sizeAndQuantity in sizeAndQuantitys | filter: filterKichThuoc">{{sizeAndQuantity.soLuong}}</button>
+                                            </div>
+                                            <div>
+                                                <p>Đơn giá:</p>
+                                                <button class="btn "
+                                                    ng-repeat="sizeAndQuantity in sizeAndQuantitys | filter: filterKichThuoc">{{sizeAndQuantity.donGia
+                                                    | number}} VND</button>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                data-bs-toggle="modal" data-bs-target="#addSanPham"
+                                                ng-click="addChatLieu($event)">Thêm Vào Giở Hàng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="modal fade" id="addTaiKhoan" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h4>Tài Khoản</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                ng-click="addChatLieu($event)">Thêm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                aria-selected="true">Home</button>
 
                             <li class="nav-item" role="presentation" ng-repeat="hoaDon in listHoaDon">
                                 <button class="nav-link" id="{{hoaDon.ma}}" data-bs-toggle="tab"
-                                    data-bs-target="#{{hoaDon.ma}}" type="button" role="tab"
-                                    aria-controls="{{hoaDon.ma}}" aria-selected="false">{{hoaDon.ma}}</button>
+                                    data-bs-target="#{{hoaDon.ma}}*" type="button" role="tab"
+                                    aria-controls="{{hoaDon.ma}}" aria-selected="?true:false">{{hoaDon.ma}}
+                                    <a role="button" ng-click="xoaHoaDon($event,hoaDon.id)">X</a>
+                                </button>
                             </li>
 
                             <li class="nav-item" role="presentation">
@@ -24,60 +155,147 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active " id="nav-home" role="tabpanel"
-                                aria-labelledby="nav-home-tab" tabindex="0">
-                                aaaaaaaaaaaaaaaaaa
-                            </div>
-                            <div class="tab-pane fade " ng-repeat="hoaDon in listHoaDon" id="{{hoaDon.ma}}"
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab" tabindex="0"></div>
+                            <div class="tab-pane fade" ng-repeat="hoaDon in listHoaDon" id="{{hoaDon.ma}}*"
                                 role="tabpanel" aria-labelledby="{{hoaDon.ma}}" tabindex="0">
-                                bbbbbbbbbbbbbbbbbbb
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên Sản Phẩm</th>
+                                            <th scope="col">Số Lượng</th>
+                                            <th scope="col">Đơn Giá</th>
+                                            <th scope="col">Hành Động</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content ">
+                                        <tr>
+                                            <th scope="row">{{$index+1}}</th>
+                                            <th scope="row"><img class="table_img"
+                                                    src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"
+                                                    alt="Không có ảnh"></th>
+                                            <th scope="row">{{sanPhamChiTiet.ten}}</th>
+                                            <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
+                                            <th scope="row">{{sanPhamChiTiet.giaNhoNhat | number}} VND</th>
+                                            <th scope="row">{{sanPhamChiTiet.giaLonNhat | number}} VND</th>
+                                            <th scope="row">{{sanPhamChiTiet.daXoa?"Ngừng kinh Doanh":"Kinh Doanh"}}
+                                            </th>
+                                            <th>
+                                                <a type="button" class="btn btn-warning "
+                                                    href="#san-pham/update/{{sanPhamChiTiet.idsanPhamChiTiet}}">Chi
+                                                    tiết</a>
+
+                                            </th>
+                                        </tr>
+                                    </tbody> -->
+                                </table>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSanPham">Thêm
+                                    Sản Phẩm
+                                </button>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="card flex-fill">
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <h5>Tài Khoản</h5>
+                        <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addTaiKhoan">Chọn tài khoản</a>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="card flex-fill">
+                <div class="card-body d-flex">
+                    <div class="align-self-center w-100">
+                        <h5>Khách Hàng</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <form ng-if="show">
+                                    <div class="mb-3">
+                                        <label class="form-label">Họ Và Tên</label>
+                                        <input type="text" class="form-control" ng-model="formPhongCach.ma">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Số Điện Thoại</label>
+                                        <input type="text" class="form-control" ng-model="formPhongCach.ten">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Địa Chỉ</label>
+                                        <input type="text" class="form-control" ng-model="formPhongCach.ten">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option hidden selected value="">Tỉnh / Thành Phố</option>
+                                                <option>
+                                                    {{coAo.ten}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option hidden selected value="">Quận / Huyện</option>
+                                                <option>
+                                                    {{coAo.ten}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option hidden selected value="">Phường / Xã</option>
+                                                <option>
+                                                    {{coAo.ten}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <h4>Thông Tin Thanh Toán</h4>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" ng-model="show"
+                                        ng-init="show=false" id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Giao Hàng</label>
+                                </div>
+                                <br>
+                                <div>
+                                    <span>Tiền Hàng</span>
+                                    <!-- <span>100000</span> -->
+                                </div>
+                                <br>
+                                <div>
+                                    <p>Phí Vận Chuyển</p>
+                                </div>
+                                <div>
+                                    <p>Giảm Giá</p>
+                                </div>
+                                <div>
+                                    <p>Quyền Lợi Thành Viên</p>
+                                </div>
+                                <div>
+                                    <p>Tổng Số Tiền</p>
+                                </div>
+                                <button class="btn btn-primary">Thanh Toán</button>
+                            </div>
 
-                        </div>
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">Home</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="{{hoaDon.ma}}" data-bs-toggle="pill"
-                                    ng-repeat="hoaDon in listHoaDon" data-bs-target="#{{hoaDon.ma}}" type="button"
-                                    role="tab" aria-controls="{{hoaDon.ma}}"
-                                    aria-selected="false">{{hoaDon.ma}}</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                aria-labelledby="pills-home-tab">a</div>
-                            <div class="tab-pane fade" ng-repeat="hoaDon in listHoaDon" id="{{hoaDon.ma}}"
-                                role="tabpanel" aria-labelledby="{{hoaDon.ma}}">{{hoaDon.ma}}</div>
-                        </div>
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">Home</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-profile" type="button" role="tab"
-                                    aria-controls="pills-profile" aria-selected="false">Profile</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-contact" type="button" role="tab"
-                                    aria-controls="pills-contact" aria-selected="false">Contact</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                aria-labelledby="pills-home-tab">...</div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                aria-labelledby="pills-profile-tab">...</div>
-                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                aria-labelledby="pills-contact-tab">...</div>
                         </div>
                     </div>
                 </div>

@@ -17,5 +17,5 @@ public interface HoaDonService {
 
     HoaDon detail(UUID id);
 
-//    HoaDon delete(UUID id);
+    HoaDon delete(UUID id);
 }
