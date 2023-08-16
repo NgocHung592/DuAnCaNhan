@@ -18,7 +18,7 @@ window.updateNhanVienController = function ($http, $scope, $routeParams) {
     $scope.updateNhanVien = {
       ma: $scope.detailNhanVien.ma,
       ten: $scope.detailNhanVien.hoten,
-      idVaiTro: $scope.detailNhanVien.vaiTro.id,
+      idVaiTro: $scope.detailNhanVien.vaiTro.ten,
       email: $scope.detailNhanVien.email,
       ngaytao: $scope.detailNhanVien.ngaytao,
       sodienthoai: $scope.detailNhanVien.sodienthoai,

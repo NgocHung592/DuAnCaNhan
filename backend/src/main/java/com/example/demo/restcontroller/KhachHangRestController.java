@@ -2,6 +2,7 @@ package com.example.demo.restcontroller;
 
 
 
+import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.repository.KhachHangRepository;
@@ -40,7 +41,8 @@ public class KhachHangRestController {
     }
 
     @PostMapping("add")
-    public TaiKhoan post(@RequestBody KhachHangRequest taiKhoan){
+    public DiaChi post(@RequestBody KhachHangRequest taiKhoan){
+        System.out.println(taiKhoan);
         return khachHangService.add(taiKhoan);
     }
     @DeleteMapping("delete/{id}")

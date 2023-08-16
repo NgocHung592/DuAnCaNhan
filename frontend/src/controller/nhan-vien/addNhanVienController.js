@@ -21,7 +21,7 @@ window.addNhanVienController = function ($http, $scope, $rootScope) {
     cmt: "",
     matkhau: "123",
     ngaytao: date,
-    idVaiTro: "b9cdb679-65cf-40f1-bb4a-b2753a6d3a00",
+    idVaiTro: "Nhân Viên",
     trangthai: 1,
   };
 

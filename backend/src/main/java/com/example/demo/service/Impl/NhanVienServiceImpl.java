@@ -1,6 +1,6 @@
 package com.example.demo.service.Impl;
-
 import com.example.demo.entity.TaiKhoan;
+import com.example.demo.entity.VaiTro;
 import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.repository.NhanVienRepository;
 import com.example.demo.repository.VaiTroRepository;
@@ -33,10 +33,20 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public TaiKhoan add(NhanVienRequest nhanVienRequest) {
-        TaiKhoan nhanVien=TaiKhoan.builder()
+        TaiKhoan nhanVien=TaiKhoan.builder().vaiTro(vaiTroRepository.findById(getId(nhanVienRequest.getIdVaiTro())).get())
                 .ma(nhanVienRequest.getMa()).hoten(nhanVienRequest.getTen())
-                .email(nhanVienRequest.getEmail()).cmt(nhanVienRequest.getCmt()).matkhau(nhanVienRequest.getMatkhau()).sodienthoai(nhanVienRequest.getSodienthoai()).ngaysinh(nhanVienRequest.getNgaysinh()).ngaytao(nhanVienRequest.getNgaytao()).vaiTro(vaiTroRepository.findById(nhanVienRequest.getIdVaiTro()).get()).trangthai(Integer.valueOf(nhanVienRequest.getTrangthai())).build();
+                .email(nhanVienRequest.getEmail()).cmt(nhanVienRequest.getCmt()).matkhau(nhanVienRequest.getMatkhau()).sodienthoai(nhanVienRequest.getSodienthoai()).ngaysinh(nhanVienRequest.getNgaysinh()).ngaytao(nhanVienRequest.getNgaytao()).trangthai(Integer.valueOf(nhanVienRequest.getTrangthai())).build();
         return nhanVienRepository.save(nhanVien);
+    }
+    public UUID getId(String ten){
+        for (VaiTro vaiTro : vaiTroRepository.findAll()) {
+            if (ten.equals(vaiTro.getTen())) {
+                return vaiTro.getId();
+            }
+        }
+        return null;
+
+
     }
     public TaiKhoan getOne(UUID id) {
         return nhanVienRepository.findById(id).orElse(null);
@@ -46,7 +56,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public TaiKhoan update(NhanVienRequest nhanVienRequest, UUID id) {
         TaiKhoan nhanVien=TaiKhoan.builder().id(id)
                 .ma(nhanVienRequest.getMa()).hoten(nhanVienRequest.getTen())
-                .email(nhanVienRequest.getEmail()).ngaysinh(nhanVienRequest.getNgaysinh()).cmt(nhanVienRequest.getCmt()).matkhau(nhanVienRequest.getMatkhau()).sodienthoai(nhanVienRequest.getSodienthoai()).ngaytao(nhanVienRequest.getNgaytao()).vaiTro(vaiTroRepository.findById(nhanVienRequest.getIdVaiTro()).get()).trangthai(Integer.valueOf(nhanVienRequest.getTrangthai())).build();
+                .email(nhanVienRequest.getEmail()).ngaysinh(nhanVienRequest.getNgaysinh()).cmt(nhanVienRequest.getCmt()).matkhau(nhanVienRequest.getMatkhau()).sodienthoai(nhanVienRequest.getSodienthoai()).ngaytao(nhanVienRequest.getNgaytao()).vaiTro(vaiTroRepository.findById(getId(nhanVienRequest.getIdVaiTro())).get()).trangthai(Integer.valueOf(nhanVienRequest.getTrangthai())).build();
 
         return nhanVienRepository.save(nhanVien);
     }

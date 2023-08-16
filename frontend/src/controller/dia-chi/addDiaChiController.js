@@ -1,36 +1,4 @@
-window.updateKhachHangController = function ($http, $scope, $routeParams) {
-  $scope.list_Hang = [];
-
-  $http
-    .get(khachHangAPI + "/detail/" + $routeParams.id)
-    .then(function (response) {
-      $scope.detailKhachHang = response.data;
-      console.log($scope.detailKhachHang);
-    });
-
-  $scope.list_Hang = function () {
-    $http.get(hangKhachHangAPI + "/trang-thai").then(function (response) {
-      $scope.list_Hang = response.data;
-    });
-  };
-  $scope.list_Hang();
-  $scope.update = function (id) {
-    $scope.updateKhachHang = {
-      ma: $scope.detailKhachHang.ma,
-      ten: $scope.detailKhachHang.hoten,
-      idHangKhachHang: $scope.detailKhachHang.hangKhachHang.id,
-      email: $scope.detailKhachHang.email,
-      ngaytao: $scope.detailKhachHang.ngaytao,
-      sodienthoai: $scope.detailKhachHang.sodienthoai,
-      ngaysinh: $scope.detailKhachHang.ngaysinh,
-      trangthai: $scope.detailKhachHang.trangthai,
-    };
-    $http
-      .put(khachHangAPI + "/update/" + id, $scope.updateKhachHang)
-      .then(function () {
-        alert("Cập nhật thành công");
-      });
-  };
+window.addDiaChiController = function ($http, $scope) {
   $scope.show = Boolean;
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
@@ -60,7 +28,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
   };
 
   var renderData = (array, select) => {
-    let row = ' <option disable value=""></option>';
+    let row = ' <option disable value="">Chọn</option>';
     array.forEach((element) => {
       row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`;
     });
@@ -90,8 +58,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
     quanHuyen: "",
     phuongXa: "",
     ngayTao: date,
-    idTaiKhoan: $routeParams.id,
-    mota: "",
+    idTaiKhoan: "3cc6b634-b0f4-4bea-907c-095bc555211b",
     trangThai: 1,
   };
   var printResult = () => {
@@ -106,7 +73,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
     }
   };
 
-  $scope.addDiaChi = function () {
+  $scope.add = function () {
     var elem = document.getElementById("myBar");
     var width = 0;
     var id = setInterval(frame, 15);
@@ -121,9 +88,13 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
 
     $http.post(diaChiAPI + "/add", $scope.form_dc).then(function () {
       $scope.message = "Thêm thành công";
-      console.log(form_dc);
       $scope.show = true;
       return true;
     });
   };
+  // $http.post(diaChiAPI + "/add", $scope.form_dc).then(function () {
+  //   $scope.message = "Thêm thành công";
+  //   $scope.show = true;
+  //   return true;
+  // });
 };

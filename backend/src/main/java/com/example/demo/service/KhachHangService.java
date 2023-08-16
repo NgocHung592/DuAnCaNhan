@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ public interface KhachHangService {
 
     List<TaiKhoan> getListStatus();
 
-    TaiKhoan add(KhachHangRequest khachHangRequest);
+    DiaChi add(KhachHangRequest khachHangRequest);
 
     TaiKhoan update(KhachHangRequest khachHangRequest, UUID id);
 

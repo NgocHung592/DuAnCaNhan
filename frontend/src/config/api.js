@@ -36,4 +36,6 @@ window.hangKhachHangAPI = url + "/hang-khach-hang";
 
 window.vaiTroAPI = url + "/vai-tro";
 
+window.diaChiAPI = url + "/dia-chi";
+
 window.api_url = "https://www.thecolorapi.com";

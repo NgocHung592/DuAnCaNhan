@@ -1,11 +1,12 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.HangKhachHang;
+import com.example.demo.entity.*;
 
-import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
+import com.example.demo.repository.DiaChiRepository;
 import com.example.demo.repository.HangKhachHangRepository;
 import com.example.demo.repository.KhachHangRepository;
+import com.example.demo.repository.VaiTroRepository;
 import com.example.demo.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,10 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Autowired
     private KhachHangRepository khachHangRepository;
     @Autowired
+    private DiaChiRepository diaChiRepository;
+    @Autowired
+    private VaiTroRepository vaiTroRepository;
+    @Autowired
     private HangKhachHangRepository hangKhachHangRepository;
     @Override
     public Page<TaiKhoan> getAll(Integer pageNo) {
@@ -34,11 +39,29 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public TaiKhoan add(KhachHangRequest khachHangRequest) {
-        TaiKhoan khachHang=TaiKhoan.builder()
+    public DiaChi add(KhachHangRequest khachHangRequest) {
+        TaiKhoan khachHang=TaiKhoan.builder().vaiTro(vaiTroRepository.findById(getId(khachHangRequest.getIdVaiTro())).get())
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getTen())
-                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau()).sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest.getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
-        return khachHangRepository.save(khachHang);
+                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau())
+                .sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest
+                        .getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).
+                        hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.
+                                getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
+        TaiKhoan KhachHangg= khachHangRepository.save(khachHang);
+        DiaChi diaChi=DiaChi.builder().taiKhoan(KhachHangg).tinhthanhpho(khachHangRequest.getTinhThanhPho())
+                .phuongxa(khachHangRequest.getPhuongXa()).quanhuyen(khachHangRequest.getQuanHuyen())
+                .mota(khachHangRequest.getMota()).build();
+        return diaChiRepository.save(diaChi);
+    }
+    public UUID getId(String ten){
+        for (VaiTro vaiTro : vaiTroRepository.findAll()) {
+            if (ten.equals(vaiTro.getTen())) {
+                return vaiTro.getId();
+            }
+        }
+        return null;
+
+
     }
 
     @Override

@@ -12,6 +12,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class KhachHangRequest {
+
+
     private String ma;
 
     private String ten;
@@ -25,6 +27,7 @@ public class KhachHangRequest {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
     private Date ngaysinh;
+
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
     private Date ngaytao;
@@ -32,4 +35,14 @@ public class KhachHangRequest {
     private String trangthai;
 
     private UUID idHangKhachHang;
+
+    private String idVaiTro;
+
+    private String mota;
+
+    private String quanHuyen;
+
+    private String phuongXa;
+
+    private String tinhThanhPho;
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface NhanVienRepository extends JpaRepository<TaiKhoan, UUID> {
 
 
-    @Query("select nv from TaiKhoan nv where nv.vaiTro is not null")
+    @Query("select kd from TaiKhoan kd where kd.vaiTro.ten LIKE 'Nhân Viên' ")
     Page<TaiKhoan> getAll(Pageable pageable);
     @Query("select nv from TaiKhoan  nv where nv.trangthai = 1 and nv.vaiTro is not null")
     Page<TaiKhoan> getAllByStatus(Pageable pageable);

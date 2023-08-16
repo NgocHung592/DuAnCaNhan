@@ -20,7 +20,7 @@ public interface KhachHangRepository extends JpaRepository<TaiKhoan, UUID> {
 //        "FROM tai_khoan, hang_khach_hang\n" +
 //        "WHERE tai_khoan.hang_khach_hang=hang_khach_hang.id")
 //List<KhachHang> getList();
-    @Query("select kd from TaiKhoan kd where kd.hangKhachHang is not null")
+    @Query("select kh from TaiKhoan kh where kh.vaiTro.ten LIKE 'Khách hàng' ")
     Page<TaiKhoan> getAll(Pageable pageable);
 
     @Query("select kd from TaiKhoan  kd where kd.trangthai=1")

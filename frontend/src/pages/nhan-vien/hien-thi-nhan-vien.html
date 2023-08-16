@@ -122,7 +122,7 @@
                             <th scope="col">Ngày sinh</th>
                             <th scope="col">Số điện thoại</th>
 
-                            <th scope="col">Chức Vụ</th>
+                            <th scope="col">Vai trò</th>
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Thao Tác</th>
@@ -134,7 +134,9 @@
                             <th scope="row">{{nv.ma}}</th>
                             <th scope="row">{{nv.hoten}}</th>
                             <th scope="row">{{nv.email}}</th>
-                            <th scope="row">{{nv.ngaysinh}}</th>
+                            <th scope="row">
+                              {{nv.ngaysinh | date: 'dd/MM/yyyy'}}
+                            </th>
                             <th scope="row">{{nv.sodienthoai}}</th>
 
                             <th scope="row">{{nv.vaiTro.ten}}</th>

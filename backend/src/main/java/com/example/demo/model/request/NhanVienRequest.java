@@ -34,5 +34,5 @@ public class NhanVienRequest {
 
     private String trangthai;
 
-    private UUID idVaiTro;
+    private String idVaiTro;
 }

@@ -33,6 +33,11 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "kich-thuoc/hien-thi-kich-thuoc.html",
       controller: hienThiKichThuocController,
     })
+    .when("/dia-chi/hien-thi", {
+      templateUrl: "dia-chi/hien-thi-dia-chi.html",
+      controller: hienThiDiaChiController,
+    })
+
     .when("/kich-thuoc/add", {
       templateUrl: "kich-thuoc/add-kich-thuoc.html",
       controller: addKichThuocController,

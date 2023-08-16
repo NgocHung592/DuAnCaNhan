@@ -58,4 +58,6 @@ public class TaiKhoan {
     @ManyToOne()
     @JoinColumn(name="hang_khach_hang",referencedColumnName = "id")
     private HangKhachHang hangKhachHang;
+
+
 }

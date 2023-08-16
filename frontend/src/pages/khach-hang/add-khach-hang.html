@@ -105,6 +105,52 @@
                   >Ngày sinh không được trống</span
                 >
               </div>
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <div class="container-fluid">
+                      <h4>ĐỊA CHỈ</h4>
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Số nhà, tên đường</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            ng-model="form_kh.mota"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Tỉnh thành phố</label>
+                          <select
+                            id="city"
+                            class="browser-default custom-select"
+                          >
+                            <option selected id="thanhpho"></option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Quận huyện</label>
+                          <select
+                            class="browser-default custom-select"
+                            id="district"
+                          >
+                            <option value="" selected></option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Phường xã</label>
+                          <select
+                            class="browser-default custom-select"
+                            id="ward"
+                          >
+                            <option value="" selected></option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a
@@ -112,7 +158,7 @@
                 id="liveToastBtn"
                 class="btn btn-primary"
                 ng-disabled="formAdd.$invalid"
-                ng-click="add($event)"
+                ng-click="addKhachHang($event)"
                 >Thêm</a
               >
               <a

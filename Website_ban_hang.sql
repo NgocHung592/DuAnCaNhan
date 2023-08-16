@@ -338,6 +338,12 @@ Create table [danh_muc]
 	tinh_thanh_pho nvarchar(20),
 	quan_huyen nvarchar(20),
 	phuong_xa nvarchar(20),
+     ngay_tao datetime,
+     ngay_sua datetime,
+     nguoi_tao nvarchar(50),
+     nguoi_sua  nvarchar(50),
+     da_xoa bit,
+     trang_thai int,
 	tai_khoan_id UNIQUEIDENTIFIER REFERENCES tai_khoan(id)
  )
 
