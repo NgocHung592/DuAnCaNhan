@@ -1,4 +1,4 @@
-window.updateChatLieuController = function ($http, $scope, $routeParams) {
+window.updateCoAoController = function ($http, $scope, $routeParams) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -8,20 +8,18 @@ window.updateChatLieuController = function ($http, $scope, $routeParams) {
       toastBootstrap.show();
     });
   }
-  $scope.formChatLieu = {
+  $scope.formCoAo = {
     id: "",
     ma: "",
     ten: "",
     daXoa: Boolean,
   };
 
-  $http
-    .get(chatLieuAPI + "/detail/" + $routeParams.id)
-    .then(function (response) {
-      if (response.status == 200) {
-        $scope.formChatLieu = response.data;
-      }
-    });
+  $http.get(coAoAPI + "/detail/" + $routeParams.id).then(function (response) {
+    if (response.status == 200) {
+      $scope.formCoAo = response.data;
+    }
+  });
 
   $scope.update = function (id) {
     let elem = document.getElementById("myBar");
@@ -35,10 +33,8 @@ window.updateChatLieuController = function ($http, $scope, $routeParams) {
         elem.style.width = width + "%";
       }
     }
-    $http
-      .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
-      .then(function () {
-        $scope.message = "Cập Nhật Thành Công";
-      });
+    $http.put(coAoAPI + "/update/" + id, $scope.formCoAo).then(function () {
+      $scope.message = "Cập Nhật Thành Công";
+    });
   };
 };

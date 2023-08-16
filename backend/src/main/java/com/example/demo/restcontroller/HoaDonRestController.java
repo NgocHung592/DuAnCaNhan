@@ -4,6 +4,8 @@ import com.example.demo.entity.HoaDon;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,6 +19,10 @@ public class HoaDonRestController {
     @GetMapping("hien-thi")
     public Page<HoaDon> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return hoaDonService.getAll(pageNo);
+    }
+    @GetMapping("get-list")
+    public ResponseEntity getList() {
+        return new ResponseEntity(hoaDonService.getList(), HttpStatus.OK);
     }
 
     @GetMapping("detail/{id}")

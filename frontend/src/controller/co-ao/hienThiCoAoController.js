@@ -1,23 +1,24 @@
-window.hienThiChatLieuController = function ($http, $scope) {
-  $scope.listChatLieu = [];
+window.hienThiCoAoController = function ($http, $scope, $rootScope) {
+  $scope.listCoAo = [];
+
   $scope.currentPage = 0;
   $scope.totalPages = [];
-
-  $scope.getChatLieu = function () {
+  $scope.count = 0;
+  $scope.getCoAo = function () {
     $http
-      .get(chatLieuAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .get(coAoAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listChatLieu = response.data;
+        $scope.listCoAo = response.data;
         $scope.totalPages = new Array(response.data.totalPages);
       });
   };
 
-  $scope.getChatLieu();
+  $scope.getCoAo();
 
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;
-      $scope.getChatLieu();
+      $scope.getCoAo();
     }
   };
 
@@ -25,14 +26,14 @@ window.hienThiChatLieuController = function ($http, $scope) {
     let length = $scope.totalPages.length;
     if ($scope.currentPage < length - 1) {
       $scope.currentPage++;
-      $scope.getChatLieu();
+      $scope.getCoAo();
     }
   };
 
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
-      $scope.getChatLieu();
+      $scope.getCoAo();
     }
   };
 };

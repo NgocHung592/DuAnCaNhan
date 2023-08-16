@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.UUID;
+ import java.util.List;
+ import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,24 +14,24 @@ import java.util.UUID;
 @ToString
 public class SanPhamChiTietRequest {
 
-    private String soLuong;
-
-    private Double gia;
-
     private String daXoa;
+
+    private String maSanPham;
 
     private String tenSanPham;
 
-    private String tenDanhMuc;
+    private String moTa;
 
-    private String tenChatLieu;
+    private List<KichThuocChiTietRequest> kichThuocChiTiets;
 
-    private String tenHoaTiet;
+    private UUID idChatLieu;
 
-    private String tenKichThuoc;
+    private UUID idPhongCach;
 
-    private String tenMauSac;
+    private UUID idHoaTiet;
 
-    private String tenPhongCach;
+    private UUID idCoAo;
+
+    private UUID idTayAo;
 
 }

@@ -9,12 +9,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class HoaDonServiceImpl implements HoaDonService{
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
+    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<HoaDon> getAll(Integer pageNo) {
@@ -23,8 +26,18 @@ public class HoaDonServiceImpl implements HoaDonService{
     }
 
     @Override
+    public List<HoaDon> getList() {
+        return hoaDonReponsitory.findAll();
+    }
+
+    @Override
     public HoaDon add(HoaDon hoaDon) {
-        return hoaDonReponsitory.save(hoaDon);
+        HoaDon hoaDonSave= HoaDon.builder()
+                .ma(hoaDon.getMa())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .build();
+        return hoaDonReponsitory.save(hoaDonSave);
     }
 
     @Override

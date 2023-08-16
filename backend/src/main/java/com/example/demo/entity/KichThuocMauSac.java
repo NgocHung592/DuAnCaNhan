@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,13 +16,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
-@Table(name = "san_pham_chi_tiet")
+@Table(name = "kich_thuoc_mau_sac")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,11 +28,17 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
-public class SanPhamChiTiet implements Serializable {
+public class KichThuocMauSac {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
+    @Column(name = "so_luong")
+    private Integer soLuong;
+
+    @Column(name = "gia")
+    private BigDecimal donGia;
 
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
@@ -54,26 +56,14 @@ public class SanPhamChiTiet implements Serializable {
     private Boolean daXoa;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "san_pham_id", referencedColumnName = "id")
-    private SanPham sanPham;
+    @JoinColumn(name = "kich_thuoc_id", referencedColumnName = "id")
+    private KichThuoc kichThuoc;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tay_ao_id", referencedColumnName = "id")
-    private TayAo tayAo;
+    @JoinColumn(name = "mau_sac_id", referencedColumnName = "id")
+    private MauSac mauSac;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "co_ao_id", referencedColumnName = "id")
-    private CoAo coAo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_lieu_id", referencedColumnName = "id")
-    private ChatLieu chatLieu;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hoa_tiet_id", referencedColumnName = "id")
-    private HoaTiet hoaTiet;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phong_cach_id", referencedColumnName = "id")
-    private PhongCach phongCach;
+    @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
+    private SanPhamChiTiet sanPhamChiTiet;
 }

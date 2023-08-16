@@ -12,7 +12,7 @@ window.updateMauSacController = function ($http, $scope, $routeParams) {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Boolean,
+    daXoa: Boolean,
   };
 
   $http.get(mauSacAPI + "/detail/" + $routeParams.id).then(function (response) {
@@ -40,7 +40,7 @@ window.updateMauSacController = function ($http, $scope, $routeParams) {
       $http
         .put(mauSacAPI + "/update/" + id, $scope.formMauSac)
         .then(function () {
-          $scope.message = "Thêm Thành Công";
+          $scope.message = "Cập Nhật Thành Công";
         });
     });
   };

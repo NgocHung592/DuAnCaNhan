@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,17 +24,25 @@ public class SanPhamChiTietRestController {
     private SanPhamChiTietService sanPhamChiTietService;
 
     @GetMapping("hien-thi")
-    public ResponseEntity getAll(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo){
+    public ResponseEntity getAll(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
         return new ResponseEntity(sanPhamChiTietService.getAll(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
+
     @GetMapping("detail-san-pham/{id}")
-    public ResponseEntity getAllSanPhamChiTiet(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
-                                               @PathVariable("id") String id){
-        return new ResponseEntity(sanPhamChiTietService.getAllSanPhamChiTietById(UUID.fromString(id),Integer.valueOf(pageNo)), HttpStatus.OK);
+    public ResponseEntity detail(
+            @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);
     }
+    @GetMapping("detail-kich-thuoc/{id}")
+    public ResponseEntity detailKichThuoc(
+            @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.getList(UUID.fromString(id)), HttpStatus.OK);
+    }
+
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody List<SanPhamChiTietRequest> sanPhamChiTietRequests){
-        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequests),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest) {
+
+        return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequest), HttpStatus.OK);
     }
 
 }

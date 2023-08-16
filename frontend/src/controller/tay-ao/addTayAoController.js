@@ -1,4 +1,4 @@
-window.addMauSacController = function ($http, $scope) {
+window.addTayAoController = function ($http, $scope) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -8,13 +8,16 @@ window.addMauSacController = function ($http, $scope) {
       toastBootstrap.show();
     });
   }
-  $scope.formMauSac = {
-    ma: "",
+  $scope.randoom = "TA" + Math.floor(Math.random() * 10000) + 1;
+
+  $scope.formTayAo = {
+    ma: $scope.randoom,
     ten: "",
     daXoa: false,
   };
 
-  $scope.add = function () {
+  $scope.add = function (event) {
+    event.preventDefault();
     let elem = document.getElementById("myBar");
     let width = 0;
     let id = setInterval(frame, 10);
@@ -26,13 +29,14 @@ window.addMauSacController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-    let colorStr = document.getElementById("color").value;
-    let color = colorStr.slice(1, 7);
-    $http.get(api_url + "/id?hex=" + color).then(function (response) {
-      $scope.formMauSac.ten = response.data.name.value;
-      $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
+    if ($scope.formTayAo.ten != "") {
+      $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
         $scope.message = "Thêm Thành Công";
+        return true;
       });
-    });
+    } else {
+      $scope.message = "Thêm Thất Bại";
+      return false;
+    }
   };
 };

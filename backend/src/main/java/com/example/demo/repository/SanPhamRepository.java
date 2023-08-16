@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -20,4 +21,6 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             SELECT * FROM san_pham sp WHERE sp.ten LIKE %:#{#sanPham.ten}% 
             """, nativeQuery = true)
     List<SanPham> findByName(@Param("sanPham") SanPham sanPham);
+
+    Optional<SanPham> findByTen(String ten);
 }

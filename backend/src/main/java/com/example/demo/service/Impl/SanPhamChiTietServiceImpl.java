@@ -1,23 +1,22 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.DanhMuc;
-import com.example.demo.entity.HoaTiet;
 import com.example.demo.entity.KichThuoc;
+import com.example.demo.entity.KichThuocMauSac;
 import com.example.demo.entity.MauSac;
-import com.example.demo.entity.PhongCach;
 import com.example.demo.entity.SanPham;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.repository.ChatLieuRepository;
-import com.example.demo.repository.DanhMucRepository;
+import com.example.demo.repository.CoAoRepository;
 import com.example.demo.repository.HoaTietRepository;
+import com.example.demo.repository.KichThuocChiTietRepository;
 import com.example.demo.repository.KichThuocRepository;
 import com.example.demo.repository.MauSacRepository;
 import com.example.demo.repository.PhongCachRepository;
 import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.repository.SanPhamRepository;
+import com.example.demo.repository.TayAoRepository;
 import com.example.demo.service.SanPhamChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,8 +38,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
     @Autowired
-    private DanhMucRepository danhMucRepository;
-    @Autowired
     private KichThuocRepository kichThuocRepository;
     @Autowired
     private ChatLieuRepository chatLieuRepository;
@@ -50,12 +47,18 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private MauSacRepository mauSacRepository;
     @Autowired
     private PhongCachRepository phongCachRepository;
+    @Autowired
+    private TayAoRepository tayAoRepository;
+    @Autowired
+    private CoAoRepository coAoRepository;
+    @Autowired
+    private KichThuocChiTietRepository kichThuocChiTietRepository;
 
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamChiTietRepository.getPage(pageable);
     }
 
@@ -66,51 +69,81 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-        List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
-        sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
-            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet
-                    .builder()
-                    .gia(BigDecimal.valueOf(sanPhamChiTietRequest.getGia()))
-                    .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .ngayTao(new Timestamp(currentTimestampMillis))
-                    .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
-                    .danhMuc(danhMucRepository.findById(getIdDanhMuc(sanPhamChiTietRequest.getTenDanhMuc())).get())
-                    .hoaTiet(hoaTietRepository.findById(getIdHoaTiet(sanPhamChiTietRequest.getTenHoaTiet())).get())
-                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
-                    .mauSac(mauSacRepository.findById(getIdSMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
-                    .phongCach(phongCachRepository.findById(getIdPhongCach(sanPhamChiTietRequest.getTenPhongCach())).get())
-                    .chatLieu(chatLieuRepository.findById(getIdChatLieu(sanPhamChiTietRequest.getTenChatLieu())).get())
-                    .build();
-            sanPhamChiTiets.add(sanPhamChiTietSave);
-        });
+    public SanPhamChiTiet getOne(UUID id) {
+        return sanPhamChiTietRepository.findById(id).get();
+    }
 
-        return sanPhamChiTietRepository.saveAll(sanPhamChiTiets);
+    @Override
+    public List<KichThuocMauSac> add(SanPhamChiTietRequest sanPhamChiTietRequest) {
+        if (!sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
+            SanPham sanPhamSave = SanPham.builder()
+                    .ma(sanPhamChiTietRequest.getMaSanPham())
+                    .ten(sanPhamChiTietRequest.getTenSanPham())
+                    .moTa(sanPhamChiTietRequest.getMoTa())
+                    .ngayTao(new Timestamp(currentTimestampMillis))
+                    .nguoiTao(null)
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                    .build();
+            SanPham sanPham = sanPhamRepository.save(sanPhamSave);
+
+
+            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
+                    .ngayTao(new Timestamp(currentTimestampMillis))
+                    .nguoiTao(null)
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                    .sanPham(sanPham)
+                    .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
+                    .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
+                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
+                    .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
+                    .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
+                    .build();
+            return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+
+        }
+        SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao(null)
+                .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
+                .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
+                .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
+                .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
+                .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
+                .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
+                .build();
+        return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+    }
+
+    private List<KichThuocMauSac> getKichThuocChiTiets(SanPhamChiTietRequest sanPhamChiTietRequest, SanPhamChiTiet sanPhamChiTietSave) {
+        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
+
+        List<KichThuocMauSac> kichThuocChiTietList = new ArrayList<>();
+        sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTietRequest -> {
+            KichThuocMauSac kichThuocChiTietSave = KichThuocMauSac.builder()
+                    .soLuong(Integer.valueOf(kichThuocChiTietRequest.getSoLuong()))
+                    .donGia(BigDecimal.valueOf(kichThuocChiTietRequest.getGia()))
+                    .ngayTao(new Timestamp(currentTimestampMillis))
+                    .nguoiTao(null)
+                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(kichThuocChiTietRequest.getTenKichThuoc())).get())
+                    .mauSac(mauSacRepository.findById(getIdMauSac(kichThuocChiTietRequest.getTenMauSac())).get())
+                    .sanPhamChiTiet(sanPhamChiTiet)
+                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                    .build();
+            kichThuocChiTietList.add(kichThuocChiTietSave);
+        });
+        return kichThuocChiTietRepository.saveAll(kichThuocChiTietList);
+    }
+
+    @Override
+    public List<KichThuocMauSac> getList(UUID id) {
+        return kichThuocChiTietRepository.getList(id);
     }
 
     public UUID getIdSanPham(String ten) {
         for (SanPham sanPham : sanPhamRepository.findAll()) {
             if (ten.equals(sanPham.getTen())) {
                 return sanPham.getId();
-            }
-        }
-        return null;
-    }
-
-    public UUID getIdDanhMuc(String ten) {
-        for (DanhMuc danhMuc : danhMucRepository.findAll()) {
-            if (ten.equals(danhMuc.getTen())) {
-                return danhMuc.getId();
-            }
-        }
-        return null;
-    }
-
-    public UUID getIdHoaTiet(String ten) {
-        for (HoaTiet hoaTiet : hoaTietRepository.findAll()) {
-            if (ten.equals(hoaTiet.getTen())) {
-                return hoaTiet.getId();
             }
         }
         return null;
@@ -125,7 +158,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-    public UUID getIdSMauSac(String ten) {
+    public UUID getIdMauSac(String ten) {
         for (MauSac mauSac : mauSacRepository.findAll()) {
             if (ten.equals(mauSac.getTen())) {
                 return mauSac.getId();
@@ -134,29 +167,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-    public UUID getIdPhongCach(String ten) {
-        for (PhongCach phongCach : phongCachRepository.findAll()) {
-            if (ten.equals(phongCach.getTen())) {
-                return phongCach.getId();
-            }
-        }
-        return null;
-    }
 
-    public UUID getIdChatLieu(String ten) {
-        for (ChatLieu chatLieu : chatLieuRepository.findAll()) {
-            if (ten.equals(chatLieu.getTen())) {
-                return chatLieu.getId();
-            }
-        }
-        return null;
-    }
-//
-//    @Override
-//    public SanPhamChiTiet update(MauSac mauSac, UUID id) {
-//        return null;
-//    }
-//
 //    @Override
 //    public void delete(UUID id) {
 //
