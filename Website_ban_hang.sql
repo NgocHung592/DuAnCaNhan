@@ -172,8 +172,10 @@ Create table [danh_muc]
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
 	da_xoa bit,
-	chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id)
+	chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
+	mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
  )
+ drop table hinh_anh
  
  Create table [khuyen_mai](
 	id UNIQUEIDENTIFIER 
@@ -327,7 +329,7 @@ Create table [danh_muc]
 	so_luong int,
 	don_gia decimal(20,0),
 	thanh_tien decimal(20,0),
-	san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
+	kich_thuoc_mau_sac_id UNIQUEIDENTIFIER REFERENCES kich_thuoc_mau_sac(id),
 	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id)
  )
 

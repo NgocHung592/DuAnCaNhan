@@ -10,19 +10,22 @@ public interface SanPhamChiTietResponse {
     String getIDSanPhamChiTiet();
 
     @Value("#{target.ten_san_pham}")
-    String getTen();
+    String getTenSanPham();
 
-//    @Value("#{target.anh_noi_bat}")
-//    String getAnhNoiBat();
+    @Value("#{target.ten_mau_sac}")
+    String getTenMauSac();
+
+    @Value("#{target.ten_kich_thuoc}")
+    String getTenKichThuoc();
+
+    @Value("#{target.anh_noi_bat}")
+    String getAnhNoiBat();
 
     @Value("#{target.so_luong}")
     Integer getSoLuong();
 
-    @Value("#{target.gia_nho_nhat}")
-    BigDecimal getGiaNhoNhat();
-
-    @Value("#{target.gia_lon_nhat}")
-    BigDecimal getGiaLonNhat();
+    @Value("#{target.don_gia}")
+    BigDecimal getDonGia();
 
     @Value("#{target.da_xoa}")
     Boolean getDaXoa();

@@ -28,7 +28,7 @@ public class HoaDonServiceImpl implements HoaDonService{
 
     @Override
     public List<HoaDon> getList() {
-        return hoaDonReponsitory.findAll();
+        return hoaDonReponsitory.getHoaDonCho();
     }
 
     @Override
@@ -37,6 +37,7 @@ public class HoaDonServiceImpl implements HoaDonService{
                 .ma(hoaDon.getMa())
                 .ngayTao(new Timestamp(currentTimestampMillis))
                 .nguoiTao(null)
+                .trangThai(hoaDon.getTrangThai())
                 .build();
         return hoaDonReponsitory.save(hoaDonSave);
     }

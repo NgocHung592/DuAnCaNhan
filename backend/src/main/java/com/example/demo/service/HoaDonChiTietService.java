@@ -2,16 +2,20 @@ package com.example.demo.service;
 
 import com.example.demo.entity.HoaDonChiTiet;
 import com.example.demo.entity.HoaDonChiTietId;
+import com.example.demo.model.request.HoaDonChiTietRequest;
+import com.example.demo.model.response.HoaDonChiTietReponse;
 import org.springframework.data.domain.Page;
 
-public interface HoaDonChiTietService {
-    Page<HoaDonChiTiet> getAll(Integer pageNo);
+import java.util.UUID;
 
-    HoaDonChiTiet add(HoaDonChiTiet hoaDonChiTiet);
+public interface HoaDonChiTietService {
+    Page<HoaDonChiTietReponse> getAll(Integer pageNo);
+
+    HoaDonChiTiet add(HoaDonChiTietRequest hoaDonChiTietRequest);
 
     HoaDonChiTiet update(HoaDonChiTiet hoaDonChiTiet, HoaDonChiTietId hoaDonChiTietId);
 
     HoaDonChiTiet detail(HoaDonChiTietId hoaDonChiTietId);
 
-//    HoaDonChiTiet delete(HoaDonChiTietId hoaDonChiTietId);
+    HoaDonChiTiet delete(UUID id);
 }
