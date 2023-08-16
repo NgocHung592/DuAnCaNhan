@@ -39,4 +39,8 @@ public class HoaDonRestController {
     public HoaDon update(@RequestBody HoaDon hoaDon, @PathVariable("id") String id) {
         return hoaDonService.update(hoaDon, UUID.fromString(id));
     }
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity delete(@PathVariable("id") String id) {
+        return new ResponseEntity(hoaDonService.delete(UUID.fromString(id)),HttpStatus.OK);
+    }
 }

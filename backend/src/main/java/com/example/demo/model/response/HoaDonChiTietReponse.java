@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.math.BigDecimal;
 
-public interface SanPhamChiTietResponse {
+public interface HoaDonChiTietReponse {
 
-    @Value("#{target.id_san_pham_chi_tiet}")
-    String getIDSanPhamChiTiet();
+    @Value("#{target.id_hoa_don_chi_tiet}")
+    String getIdHoaDonChiTiet();
+
+    @Value("#{target.ma_hoa_don}")
+    String getMaHoaDon();
 
     @Value("#{target.ten_san_pham}")
     String getTenSanPham();
@@ -27,6 +30,6 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.don_gia}")
     BigDecimal getDonGia();
 
-    @Value("#{target.da_xoa}")
-    Boolean getDaXoa();
+    @Value("#{target.thanh_tien}")
+    BigDecimal getThanhTien();
 }

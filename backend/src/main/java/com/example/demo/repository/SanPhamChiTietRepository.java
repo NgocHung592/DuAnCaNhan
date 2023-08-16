@@ -17,12 +17,15 @@ import java.util.UUID;
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, UUID> {
 
     @Query(value = """
-               select a.id as id_san_pham_chi_tiet, b.ten as ten_san_pham,min(c.gia) as gia_nho_nhat,max(c.gia) as gia_lon_nhat,sum(so_luong) as so_luong,a.da_xoa as da_xoa from san_pham_chi_tiet a
-               inner join san_pham b on a.san_pham_id=b.id
-               inner join kich_thuoc_mau_sac c on a.id=c.chi_tiet_san_pham_id
-               where c.da_xoa='false'
-               group by a.id,b.ten,a.da_xoa,a.ngay_tao
-               order by a.ngay_tao desc
+              select c.id as id_san_pham_chi_tiet,e.anh_noi_bat as anh_noi_bat,b.ten as ten_san_pham,d.ten as ten_mau_sac,g.ten as ten_kich_thuoc,c.gia as don_gia,c.so_luong as so_luong,a.da_xoa as da_xoa from san_pham_chi_tiet a
+              inner join san_pham b on a.san_pham_id=b.id
+              inner join kich_thuoc_mau_sac c on a.id=c.chi_tiet_san_pham_id
+              inner join mau_sac d on c.mau_sac_id=d.id
+              inner join kich_thuoc g on g.id=c.kich_thuoc_id
+              inner join hinh_anh e on e.chi_tiet_san_pham_id=a.id
+              where c.da_xoa=0
+              group by c.id,b.ten,a.da_xoa,a.ngay_tao ,c.gia,d.ten,c.so_luong,e.anh_noi_bat,g.ten
+              order by a.ngay_tao desc
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getPage(Pageable pageable);
 
