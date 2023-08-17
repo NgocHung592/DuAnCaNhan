@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.response.HoaDonRepone;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface HoaDonService {
     HoaDon detail(UUID id);
 
     HoaDon delete(UUID id);
+
+    List<HoaDon> getExcel();
+
+    Page<HoaDonRepone> getAlll(Integer pageNo);
 }
