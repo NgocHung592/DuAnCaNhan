@@ -20,9 +20,9 @@ public class HoaDonChiTietRestController {
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
 
-    @GetMapping("hien-thi")
-    public Page<HoaDonChiTietReponse> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return hoaDonChiTietService.getAll(pageNo);
+    @GetMapping("hien-thi/{ma}")
+    public ResponseEntity hienThi(@PathVariable("ma") String ma) {
+        return new ResponseEntity(hoaDonChiTietService.getAll(ma),HttpStatus.OK);
     }
 
 //    @GetMapping("detail/{id}")
@@ -35,12 +35,13 @@ public class HoaDonChiTietRestController {
         return hoaDonChiTietService.add(hoaDonChiTietRequest);
     }
 
-//    @PutMapping("update/{id}")
-//    public HoaDonChiTiet update(@RequestBody HoaDonChiTiet hoaDonChiTiet, @PathVariable("id") String id) {
-//        return hoaDonChiTietService.update(hoaDonChiTiet, );
-//    }
+    @PutMapping("update/{id}")
+    public ResponseEntity update(@RequestBody HoaDonChiTietRequest hoaDonChiTietRequest, @PathVariable("id") String id) {
+        return new ResponseEntity(hoaDonChiTietService.update(hoaDonChiTietRequest, UUID.fromString(id)),HttpStatus.OK);
+    }
+
     @DeleteMapping("delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") String id){
+    public ResponseEntity delete(@PathVariable("id") String id) {
         return new ResponseEntity(hoaDonChiTietService.delete(UUID.fromString(id)), HttpStatus.OK);
     }
 }

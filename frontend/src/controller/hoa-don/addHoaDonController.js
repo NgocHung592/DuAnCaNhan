@@ -6,6 +6,10 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
+  $scope.listHoaDonChiTiet = [];
+  $scope.cityOptions = [];
+  $scope.districtOptions = [];
+  $scope.wardOptions = [];
   $scope.filter;
   $scope.formHoaDonChiTiet = {
     idHoaDon: "",
@@ -14,10 +18,27 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     donGia: "",
     thanhTien: "",
   };
+  $scope.formDiaChi = {
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
+  };
+  $scope.formHoaDon = {
+    soNha: "",
+    tenThanhPho: "",
+    tenQuanHuyen: "",
+    tenPhuongXa: "",
+  };
+  $scope.hoaDonThanhToan = {
+    tenKhachHang: "",
+    diaChiKhachHang: "",
+    tongTien: "",
+    trangThai: 1,
+  };
+
   $scope.getList = function () {
     $http.get(hoaDonAPI + "/get-list").then(function (response) {
       $scope.listHoaDon = response.data;
-      console.log($scope.listHoaDon);
     });
   };
   $scope.getList();
@@ -67,27 +88,21 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       });
   };
   $scope.getSanPhamChiTiet();
-  // $scope.detailSanPhamChiTiet = function (index) {
-  //   $http
-  //     .get(sanPhamChiTietAPI + "/detail-san-pham/" + index)
-  //     .then(function (response) {
-  //       $scope.productDetail = response.data;
-  //       console.log($scope.productDetail);
-  //     });
-  //   $http
-  //     .get(sanPhamChiTietAPI + "/detail-kich-thuoc/" + index)
-  //     .then(function (response) {
-  //       $scope.sizeAndQuantitys = response.data;
-  //       console.log($scope.sizeAndQuantitys);
-  //     });
-  // };
 
   $scope.getIdHoaDon = function (idHoaDon, maHoaDon) {
     $scope.formHoaDonChiTiet.idHoaDon = idHoaDon;
-    $scope.filter = maHoaDon;
-    $scope.tongTien = $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.filter)
-      .reduce((total, item) => total + item.thanhTien, 0);
+    $scope.maHoaDon = maHoaDon;
+    $scope.getHoaDonChiTiet();
+  };
+  $scope.getHoaDonChiTiet = function () {
+    $http
+      .get(hoaDonChiTietAPI + "/hien-thi/" + $scope.maHoaDon)
+      .then(function (response) {
+        $scope.listHoaDonChiTiet = response.data;
+        $scope.tongTien = $scope.listHoaDonChiTiet
+          .filter((item) => item.maHoaDon === $scope.maHoaDon)
+          .reduce((total, item) => total + item.thanhTien, 0);
+      });
   };
   $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
     $scope.formHoaDonChiTiet.idSanPhamChiTiet = idSanPhamChiTiet;
@@ -100,25 +115,24 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
         $scope.getHoaDonChiTiet();
       });
   };
-  $scope.getHoaDonChiTiet = function () {
-    $http
-      .get(hoaDonChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-      .then(function (response) {
-        $scope.listHoaDonChiTiet = response.data.content;
-        console.log($scope.listHoaDonChiTiet);
-      });
-  };
-  $scope.changeSoLuong = function (index) {
-    var item = $scope.listHoaDonChiTiet[index];
+
+  $scope.changeSoLuong = function (index, idHoaDonChiTiet) {
+    let item = $scope.listHoaDonChiTiet[index];
+    item.soLuong = $scope.listHoaDonChiTiet[index].soLuong;
+
     item.thanhTien = item.soLuong * item.donGia;
-    $scope.listHoaDonChiTiet[index].soLuong = item.soLuong;
     $scope.hoaDonUpdate = {
       soLuong: item.soLuong,
       thanhTien: item.thanhTien,
     };
-    $http.post();
+
+    $http
+      .put(hoaDonChiTietAPI + "/update/" + idHoaDonChiTiet, $scope.hoaDonUpdate)
+      .then(function () {
+        console.log($scope.hoaDonUpdate);
+      });
     $scope.tongTien = $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.filter)
+      .filter((item) => item.maHoaDon === $scope.maHoaDon)
       .reduce((total, item) => total + item.thanhTien, 0);
   };
   $scope.xoaSanPhamGioHang = function (id) {
@@ -126,35 +140,126 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       $scope.getHoaDonChiTiet();
     });
   };
-  $scope.getHoaDonChiTiet();
-  $scope.selectedSize = function (selectedSize) {
-    $scope.filterKichThuoc = selectedSize;
-    console.log($scope.filterKichThuoc);
-  };
   $scope.khachHangDefault = true;
+  $scope.show = false;
   $scope.addKhachHang = function () {
     $scope.khachHangDefault = false;
     $scope.chonKhachHang = true;
   };
+  $scope.giaoHang = function () {
+    $scope.show = !$scope.show;
+    const host = "https://provinces.open-api.vn/api/";
 
-  $scope.changePage = function (index) {
-    $scope.currentPage = index;
-    $scope.getSanPhamChiTiet();
-  };
-  $scope.nextPage = function () {
-    let length = $scope.totalPages.length;
-    if ($scope.currentPage < length - 1) {
-      $scope.currentPage++;
-      $scope.getSanPhamChiTiet();
-    }
-  };
-  $scope.previousPage = function () {
-    if ($scope.currentPage >= 0) {
-      $scope.currentPage--;
-      $scope.getSanPhamChiTiet();
-    }
+    var callAPI = (api) => {
+      return axios.get(api).then((response) => {
+        $scope.cityOptions = response.data;
+      });
+    };
+
+    callAPI(host + "?depth=1");
+
+    var callApiDistrict = (api) => {
+      return axios.get(api).then((response) => {
+        $scope.districtOptions = response.data.districts;
+      });
+    };
+
+    var callApiWard = (api) => {
+      return axios.get(api).then((response) => {
+        $scope.wardOptions = response.data.wards;
+      });
+    };
+
+    $scope.onCityChange = () => {
+      const selectedCityCode = $scope.formDiaChi.tinhThanhPho;
+      if (selectedCityCode) {
+        const api = host + "p/" + selectedCityCode + "?depth=2";
+        callApiDistrict(api);
+        printResult();
+      }
+    };
+
+    $scope.onDistrictChange = () => {
+      const selectedDistrictCode = $scope.formDiaChi.quanHuyen;
+      if (selectedDistrictCode) {
+        const api = host + "d/" + selectedDistrictCode + "?depth=2";
+        callApiWard(api);
+        printResult();
+      }
+    };
+
+    $scope.onWardChange = () => {
+      printResult();
+    };
+
+    var printResult = () => {
+      if (
+        $scope.formDiaChi.quanHuyen &&
+        $scope.formDiaChi.tinhThanhPho &&
+        $scope.formDiaChi.phuongXa
+      ) {
+        $scope.formHoaDon.tenThanhPho = $scope.cityOptions.find(
+          (option) => option.code == $scope.formDiaChi.tinhThanhPho
+        ).name;
+
+        $scope.formHoaDon.tenQuanHuyen = $scope.districtOptions.find(
+          (option) => option.code == $scope.formDiaChi.quanHuyen
+        ).name;
+        $scope.formHoaDon.tenPhuongXa = $scope.wardOptions.find(
+          (option) => option.code == $scope.formDiaChi.phuongXa
+        ).name;
+      }
+    };
   };
 
+  // $scope.changePage = function (index) {
+  //   $scope.currentPage = index;
+  //   $scope.getHoaDonChiTiet();
+  // };
+  // $scope.nextPage = function () {
+  //   let length = $scope.totalPages.length;
+  //   if ($scope.currentPage < length - 1) {
+  //     $scope.currentPage++;
+  //     $scope.getHoaDonChiTiet();
+  //   }
+  // };
+  // $scope.previousPage = function () {
+  //   if ($scope.currentPage >= 0) {
+  //     $scope.currentPage--;
+  //     $scope.getHoaDonChiTiet();
+  //   }
+  // };
+  $scope.thanhToan = function () {
+    let tenKhachHangMacDinh = document.getElementById("tenKhachHang").value;
+    if ($scope.hoaDonThanhToan.tenKhachHang === "") {
+      $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
+      $scope.hoaDonThanhToan.diaChi = "";
+    } else {
+      $scope.hoaDonThanhToan.diaChiKhachHang =
+        $scope.formHoaDon.soNha +
+        ", " +
+        $scope.formHoaDon.tenPhuongXa +
+        ", " +
+        $scope.formHoaDon.tenQuanHuyen +
+        ", " +
+        $scope.formHoaDon.tenThanhPho;
+      $scope.hoaDonThanhToan.tenKhachHang;
+    }
+    $scope.hoaDonThanhToan.tenKhachHang;
+    $scope.hoaDonThanhToan.tongTien = $scope.listHoaDonChiTiet
+      .filter((item) => item.maHoaDon === $scope.maHoaDon)
+      .reduce((total, item) => total + item.thanhTien, 0);
+    console.log();
+    $http
+      .put(
+        hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+        $scope.hoaDonThanhToan
+      )
+      .then(function () {
+        $scope.getList();
+      });
+    console.log($scope.hoaDonThanhToan);
+  };
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,9 +31,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     private KichThuocChiTietRepository kichThuocChiTietRepository;
 
     @Override
-    public Page<HoaDonChiTietReponse> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        return hoaDonChiTietRepository.getGioHang(pageable);
+    public List<HoaDonChiTietReponse> getAll(String ma) {
+        return hoaDonChiTietRepository.getGioHang(ma);
     }
 
     @Override
@@ -48,11 +48,13 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet update(HoaDonChiTiet hoaDonChiTiet, HoaDonChiTietId hoaDonChiTietId) {
-//        if (hoaDonChiTietRepository.existsById(hoaDonChiTietId)) {
-//            return hoaDonChiTietRepository.save(hoaDonChiTiet);
-//        }
-        return null;
+    public HoaDonChiTiet update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
+        Optional<HoaDonChiTiet> optional = hoaDonChiTietRepository.findById(id);
+            return optional.map(o -> {
+                o.setSoLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()));
+                o.setThanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()));
+                return hoaDonChiTietRepository.save(o);
+            }).orElse(null);
     }
 
     @Override
@@ -63,9 +65,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
     @Override
     public HoaDonChiTiet delete(UUID id) {
-        Optional<HoaDonChiTiet> optional=hoaDonChiTietRepository.findById(id);
+        Optional<HoaDonChiTiet> optional = hoaDonChiTietRepository.findById(id);
 
-        return optional.map(o->{
+        return optional.map(o -> {
             hoaDonChiTietRepository.delete(o);
             return o;
         }).orElse(null);

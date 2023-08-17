@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +45,16 @@ public class HoaDonServiceImpl implements HoaDonService{
 
     @Override
     public HoaDon update(HoaDon hoaDon, UUID id) {
-        if(hoaDonReponsitory.existsById(id)) {
-            return hoaDonReponsitory.save(hoaDon);
-        }
-        return null;
+       Optional<HoaDon> optional=hoaDonReponsitory.findById(id);
+        return optional.map(o->{
+            o.setTrangThai(1);
+            o.setTenKhachHang(hoaDon.getTenKhachHang());
+            o.setDiaChiKhachHang(hoaDon.getDiaChiKhachHang());
+            o.setSoDienThoaiKhachHang(hoaDon.getSoDienThoaiKhachHang());
+            o.setNgayThanhToan(new Timestamp(currentTimestampMillis));
+            o.setTongTien(hoaDon.getTongTien());
+            return hoaDonReponsitory.save(o);
+        }).orElse(null);
     }
 
     @Override
