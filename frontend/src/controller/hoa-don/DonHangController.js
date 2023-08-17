@@ -1,4 +1,4 @@
-window.hienThiHoaDonChiTiet = function ($http, $scope, $routeParams) {
+window.DonHangController = function ($http, $scope, $routeParams) {
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
   $scope.formHoaDon = {

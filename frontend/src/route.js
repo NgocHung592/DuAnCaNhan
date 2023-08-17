@@ -132,8 +132,13 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       controller: updateKhachHangController,
     })
     .when("/hoa-don/hien-thi", {
-      templateUrl: "hien-thi-hoa-don.html",
+      templateUrl: "hoa-don/hien-thi-hoa-don.html",
       controller: HoaDonController,
+    })
+
+    .when("/hoa-don/update/:id", {
+      templateUrl: "hoa-don/hien-thi-don-hang.html",
+      controller: DonHangController,
     })
     .when("/thu-chi/hien-thi", {
       templateUrl: "quan-ly-thu-chi.html",

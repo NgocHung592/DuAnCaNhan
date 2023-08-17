@@ -16,10 +16,14 @@ import java.util.UUID;
 public class HoaDonRestController {
     @Autowired
     private HoaDonService hoaDonService;
-    @GetMapping("hien-thi")
-    public Page<HoaDon> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return hoaDonService.getAll(pageNo);
-    }
+//    @GetMapping("hien-thi")
+//    public Page<HoaDon> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+//        return hoaDonService.getAll(pageNo);
+//    }
+@GetMapping("hien-thi")
+public ResponseEntity getAlll(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo){
+    return new ResponseEntity(hoaDonService.getAlll(Integer.valueOf(pageNo)), HttpStatus.OK);
+}
     @GetMapping("get-list")
     public ResponseEntity getList() {
         return new ResponseEntity(hoaDonService.getList(), HttpStatus.OK);
