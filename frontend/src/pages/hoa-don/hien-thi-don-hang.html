@@ -1,0 +1,153 @@
+<main class="content">
+    <section>
+      <div class="container-fluid p-0">
+        <div class="row">
+          <h1>QUẢN LÝ ĐƠN HÀNG</h1>
+          <div class="card flex-fill">
+            <br />
+    </section>
+    <section>
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="card flex-fill">
+            <br />
+            <h1>THÔNG TIN ĐƠN HÀNG</h1>
+            <hr />
+            <div class="container">
+              <table ng-repeat="hoaDon in listHoaDon">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Trạng thái</div>
+                      <div class="col-9">
+                        <button class="btn btn-warning">
+                          {{formHoaDon.trangThai==0?"Xác nhận
+                          đơn":formHoaDon.trangThai==1?"Chuẩn bị
+                          hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Họ và tên</div>
+                      <div class="col-9">{{formHoaDon.tenKhachHang}}</div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Loại</div>
+                      <div class="col-9">
+                        <button class="btn btn-warning">{{listHoaDon.loaiHoaDon}}</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Số điện thoại</div>
+                      <div class="col-9">0123456789</div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Mã đơn hàng</div>
+                      <div class="col-9">{{formHoaDon.ma}}</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Email</div>
+                      <div class="col-9">tunnph25693@fpt.edu.vn</div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-6"></div>
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-3">Địa chỉ</div>
+                      <div class="col-9">acb minh khai tu liem ha noi</div>
+                    </div>
+                  </div>
+                </div>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="card flex-fill">
+            <br />
+            <div class="row">
+              <div class="col-10">
+                <h1 style="text-align: left">LỊCH SỬ THANH TOÁN</h1>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-warning" style="text-align: right">
+                  Xác nhận thanh toán
+                </button>
+              </div>
+            </div>
+            <hr />
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Số tiền</th>
+                  <th scope="col">Thời gian</th>
+                  <th scope="col">Loại giao dịch</th>
+                  <th scope="col">Phương thức thanh toán</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Ghi chú</th>
+                  <th scope="col">Nhân viên xác nhận</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">{{$index+1}}</th>
+                  <th scope="row">{{hoaDon.ma}}</th>
+                  <th scope="row">
+                    {{hoaDon.ngayDatHang | date: 'dd/MM/yyyy hh:mm a'}}
+                  </th>
+                  <th scope="row">{{hoaDon.tenKhachHang}}</th>
+                  <th scope="row">{{hoaDon.tongTien}}</th>
+                  <th scope="row">
+                    {{hoaDon.trangThai==0?"Xác nhận
+                    đơn":hoaDon.trangThai==1?"Chuẩn bị
+                    hàng":hoaDon.trangThai==2?"Đang giao":"Đã giao"}}
+                  </th>
+                  <th>
+                    <a
+                      type="button"
+                      class="btn btn-warning"
+                      href="#hoa-don/update/{{hoaDon.id}}"
+                      >Chi tiết đơn hàng</a
+                    >
+                    <a
+                      type="button"
+                      class="btn btn-danger"
+                      ng-click="delete(hoaDon.id)"
+                      >Xóa</a
+                    >
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="../../../js/custom/don-hang.js"></script>
+    <link rel="stylesheet" href="../../../css/custom/don-hang.sass">
+  </main>
+  
