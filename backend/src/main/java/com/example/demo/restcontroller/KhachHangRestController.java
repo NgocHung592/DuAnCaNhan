@@ -5,6 +5,7 @@ package com.example.demo.restcontroller;
 import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
+import com.example.demo.model.response.TaiKhoanReponse;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.HangKhachHangRepository;
 import com.example.demo.service.KhachHangService;
@@ -23,7 +24,7 @@ public class KhachHangRestController {
     @Autowired
     private KhachHangService khachHangService;
     @GetMapping("hien-thi")
-    public Page<TaiKhoan> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+    public Page<TaiKhoanReponse> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return khachHangService.getAll(pageNo);
     }
 

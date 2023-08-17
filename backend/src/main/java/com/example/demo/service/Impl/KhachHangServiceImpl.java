@@ -3,6 +3,7 @@ package com.example.demo.service.Impl;
 import com.example.demo.entity.*;
 
 import com.example.demo.model.request.KhachHangRequest;
+import com.example.demo.model.response.TaiKhoanReponse;
 import com.example.demo.repository.DiaChiRepository;
 import com.example.demo.repository.HangKhachHangRepository;
 import com.example.demo.repository.KhachHangRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +29,10 @@ public class KhachHangServiceImpl implements KhachHangService {
     private VaiTroRepository vaiTroRepository;
     @Autowired
     private HangKhachHangRepository hangKhachHangRepository;
+
+    long currentTimestampMillis = System.currentTimeMillis();
     @Override
-    public Page<TaiKhoan> getAll(Integer pageNo) {
+    public Page<TaiKhoanReponse> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return khachHangRepository.getAll(pageable);
     }
@@ -44,14 +48,22 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getTen())
                 .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau())
                 .sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest
-                        .getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).
-                        hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.
-                                getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
+                        .getNgaysinh()).ngaytao(new Timestamp(currentTimestampMillis)).hangKhachHang(hangKhachHangRepository.findById(getIdHang(khachHangRequest.getIdHangKhachHang())).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         TaiKhoan KhachHangg= khachHangRepository.save(khachHang);
         DiaChi diaChi=DiaChi.builder().taiKhoan(KhachHangg).tinhthanhpho(khachHangRequest.getTinhThanhPho())
                 .phuongxa(khachHangRequest.getPhuongXa()).quanhuyen(khachHangRequest.getQuanHuyen())
                 .mota(khachHangRequest.getMota()).build();
         return diaChiRepository.save(diaChi);
+    }
+    public UUID getIdHang(String ten){
+        for (HangKhachHang hangKhachHang : hangKhachHangRepository.findAll()) {
+            if (ten.equals(hangKhachHang.getTen())) {
+                return hangKhachHang.getId();
+            }
+        }
+        return null;
+
+
     }
     public UUID getId(String ten){
         for (VaiTro vaiTro : vaiTroRepository.findAll()) {
@@ -68,7 +80,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     public TaiKhoan update(KhachHangRequest khachHangRequest, UUID id) {
         TaiKhoan khachHang=TaiKhoan.builder().id(id)
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getTen())
-                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau()).sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest.getNgaysinh()).ngaytao(khachHangRequest.getNgaytao()).hangKhachHang(hangKhachHangRepository.findById(khachHangRequest.getIdHangKhachHang()).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
+                .email(khachHangRequest.getEmail()).matkhau(khachHangRequest.getMatkhau()).sodienthoai(khachHangRequest.getSodienthoai()).ngaysinh(khachHangRequest.getNgaysinh()).ngaytao(new Timestamp(currentTimestampMillis)).hangKhachHang(hangKhachHangRepository.findById(getIdHang(khachHangRequest.getIdHangKhachHang())).get()).trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         return khachHangRepository.save(khachHang);
     }
 

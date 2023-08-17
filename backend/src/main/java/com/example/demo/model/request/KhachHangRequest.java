@@ -34,7 +34,7 @@ public class KhachHangRequest {
 
     private String trangthai;
 
-    private UUID idHangKhachHang;
+    private String idHangKhachHang;
 
     private String idVaiTro;
 

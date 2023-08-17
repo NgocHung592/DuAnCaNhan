@@ -4,13 +4,14 @@ package com.example.demo.service;
 import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
+import com.example.demo.model.response.TaiKhoanReponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface KhachHangService {
-    Page<TaiKhoan> getAll(Integer pageNo);
+    Page<TaiKhoanReponse> getAll(Integer pageNo);
 
     List<TaiKhoan> getListStatus();
 

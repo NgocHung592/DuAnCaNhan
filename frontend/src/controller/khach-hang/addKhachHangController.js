@@ -22,9 +22,9 @@ window.addKhachHangController = function ($http, $scope, $rootScope) {
     tinhThanhPho: "",
     quanHuyen: "",
     phuongXa: "",
-    ngayTao: date,
+    ngaytao: date,
     mota: "",
-    idHangKhachHang: "b441027a-0973-4196-ad03-33719f6552d6",
+    idHangKhachHang: "Khách hàng",
     idVaiTro: "Khách hàng",
     trangthai: 1,
   };

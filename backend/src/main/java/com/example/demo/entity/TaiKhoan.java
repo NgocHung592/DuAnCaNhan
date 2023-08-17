@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -36,9 +37,8 @@ public class TaiKhoan {
     @Column(name="ngay_sinh")
     private Date ngaysinh;
     @Column(name="ngay_tao")
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngaytao;
+
+    private Timestamp ngaytao;
         @Column(name="anh_dai_dien")
     private  String anhdaidien;
     @Column(name="mat_khau")
