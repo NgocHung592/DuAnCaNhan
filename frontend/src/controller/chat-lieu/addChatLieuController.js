@@ -8,16 +8,17 @@ window.addChatLieuController = function ($http, $scope) {
       toastBootstrap.show();
     });
   }
+
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formChatLieu = {
-    ma: $scope.randoom,
-    ten: "",
+    maChatLieu: $scope.randoom,
+    tenChatLieu: "",
     daXoa: false,
   };
 
-  $scope.add = function (event) {
-    event.preventDefault();
+  $scope.add = function (e) {
+    e.preventDefault();
     let elem = document.getElementById("myBar");
     let width = 0;
     let id = setInterval(frame, 10);
@@ -29,14 +30,15 @@ window.addChatLieuController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formChatLieu.ten != "") {
-      $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
-        $scope.message = "Thêm Thành Công";
-        return true;
-      });
-    } else {
-      $scope.message = "Thêm Thất Bại";
+    if ($scope.formChatLieu.tenChatLieu == "") {
+      $scope.message = "Tên Chất Liệu Không Được Trống";
       return false;
+    } else {
+      $http
+        .post(chatLieuAPI + "/add", $scope.formChatLieu)
+        .then(function () {});
+      $scope.message = "Thêm Thành Công";
+      return true;
     }
   };
 };

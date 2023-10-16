@@ -2,7 +2,7 @@ let url = "http://localhost:8080";
 
 window.sanPhamAPI = url + "/san-pham";
 
-window.chatLieuAPI = url + "/chat-lieu";
+window.chatLieuAPI = url + "/api/v1/chat-lieu";
 
 window.danhMucAPI = url + "/danh-muc";
 
