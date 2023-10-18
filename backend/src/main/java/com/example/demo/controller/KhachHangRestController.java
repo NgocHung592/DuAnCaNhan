@@ -1,4 +1,4 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 
 
@@ -6,12 +6,9 @@ import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.TaiKhoan;
 import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.model.response.TaiKhoanReponse;
-import com.example.demo.repository.KhachHangRepository;
-import com.example.demo.repository.HangKhachHangRepository;
 import com.example.demo.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

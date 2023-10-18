@@ -1,20 +1,16 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 
 
 import com.example.demo.entity.TaiKhoan;
-import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.model.request.NhanVienRequest;
-import com.example.demo.repository.NhanVienRepository;
 import com.example.demo.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/nhan-vien/")

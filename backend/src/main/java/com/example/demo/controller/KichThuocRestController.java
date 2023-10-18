@@ -1,6 +1,5 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.KichThuoc;
 import com.example.demo.service.KichThuocService;
 import org.springframework.beans.factory.annotation.Autowired;

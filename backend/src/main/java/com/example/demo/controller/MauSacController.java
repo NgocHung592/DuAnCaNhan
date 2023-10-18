@@ -1,8 +1,6 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.MauSac;
-import com.example.demo.entity.SanPham;
 import com.example.demo.service.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/mau-sac/")
 @CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false")
-public class MauSacRestController {
+public class MauSacController {
 
     @Autowired
     private MauSacService mauSacService;

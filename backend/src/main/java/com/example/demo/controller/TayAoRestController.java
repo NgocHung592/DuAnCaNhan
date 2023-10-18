@@ -1,6 +1,5 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.CoAo;
 import com.example.demo.entity.TayAo;
 import com.example.demo.service.TayAoService;
 import org.springframework.beans.factory.annotation.Autowired;

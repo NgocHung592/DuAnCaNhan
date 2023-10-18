@@ -1,12 +1,10 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 
 import com.example.demo.entity.HoaDonChiTiet;
 import com.example.demo.model.request.HoaDonChiTietRequest;
-import com.example.demo.model.response.HoaDonChiTietReponse;
 import com.example.demo.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,6 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.HangKhachHang;
 import com.example.demo.entity.VaiTro;
-import com.example.demo.service.HangKhachHangService;
 import com.example.demo.service.VaiTroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

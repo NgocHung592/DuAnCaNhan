@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public Page<MauSac> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return mauSacRepository.getAll(pageable);
     }
 
@@ -50,15 +51,17 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac update(MauSac mauSac, UUID id) {
-        MauSac mauSacUpdate= MauSac.builder()
-                .id(id)
-                .ma(mauSac.getMa())
-                .ten(mauSac.getTen())
-                .daXoa(mauSac.getDaXoa())
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
-                .build();
-        return mauSacRepository.save(mauSacUpdate);
+        Optional<MauSac> optional=mauSacRepository.findById(id);
+        if (optional.isPresent()){
+            optional.map(mauSacUpdate->{
+                mauSacUpdate.setTen(mauSac.getTen());
+                mauSacUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                mauSacUpdate.setNguoiSua("Hưng");
+                mauSacUpdate.setDaXoa(mauSac.getDaXoa());
+                return mauSacRepository.save(mauSacUpdate);
+            }).orElse(null);
+        }
+      return null;
     }
 
     @Override

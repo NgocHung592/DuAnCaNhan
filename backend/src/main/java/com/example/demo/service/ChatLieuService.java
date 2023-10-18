@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.SanPham;
+import com.example.demo.model.request.ChatLieuRequest;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ChatLieuService {
 
     List<ChatLieu> getAllByStatus();
 
-    ChatLieu add(ChatLieu chatLieu);
+    ChatLieu add(ChatLieuRequest chatLieuRequest);
 
     ChatLieu update(ChatLieu chatLieu, UUID id);
 

@@ -1,9 +1,6 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.MauSac;
 import com.example.demo.entity.PhongCach;
-import com.example.demo.service.MauSacService;
 import com.example.demo.service.PhongCachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

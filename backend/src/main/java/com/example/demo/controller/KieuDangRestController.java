@@ -1,9 +1,7 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.KieuDang;
 import com.example.demo.model.request.KieuDangRequest;
-import com.example.demo.service.ChatLieuService;
 import com.example.demo.service.KieuDangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

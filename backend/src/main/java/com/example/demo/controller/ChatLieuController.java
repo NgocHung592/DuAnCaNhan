@@ -1,6 +1,7 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 import com.example.demo.entity.ChatLieu;
+import com.example.demo.model.request.ChatLieuRequest;
 import com.example.demo.service.ChatLieuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,9 +22,9 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
+@RequestMapping("/api/v1/chat-lieu/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+public class ChatLieuController {
 
     @Autowired
     private ChatLieuService chatLieuService;
@@ -44,8 +45,8 @@ public class ChatLieuRestController {
     }
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ChatLieu chatLieu) {
-        return new ResponseEntity(chatLieuService.add(chatLieu),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody ChatLieuRequest chatLieuRequest) {
+        return new ResponseEntity(chatLieuService.add(chatLieuRequest),HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
