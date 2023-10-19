@@ -21,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/phong-cach/")
 @CrossOrigin(origins = "*",maxAge = 4800,allowCredentials = "false")
-public class PhongCachRestController {
+public class PhongCachController {
 
     @Autowired
     private PhongCachService phongCachService;

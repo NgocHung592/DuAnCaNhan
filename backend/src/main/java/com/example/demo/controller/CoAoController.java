@@ -23,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/co-ao/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class CoAoRestController {
+public class CoAoController {
 
     @Autowired
     private CoAoService coAoService;

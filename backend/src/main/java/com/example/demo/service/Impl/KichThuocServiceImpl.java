@@ -9,7 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,10 +19,11 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Autowired
     private KichThuocRepository kichThuocRepository;
+    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<KichThuoc> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return kichThuocRepository.findAll(pageable);
     }
 
@@ -31,13 +34,26 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public KichThuoc add(KichThuoc kichThuoc) {
-        return kichThuocRepository.save(kichThuoc);
+        KichThuoc kichThuocSave= KichThuoc.builder()
+                .ma(kichThuoc.getMa())
+                .ten(kichThuoc.getTen())
+                .nguoiTao("Hưng")
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .daXoa(kichThuoc.getDaXoa())
+                .build();
+        return kichThuocRepository.save(kichThuocSave);
     }
 
     @Override
     public KichThuoc update(KichThuoc kichThuoc, UUID id) {
-        if (kichThuocRepository.existsById(id)) {
-            return kichThuocRepository.save(kichThuoc);
+        Optional<KichThuoc> optional = kichThuocRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(kichThuocUpdate -> {
+                kichThuocUpdate.setTen(kichThuoc.getTen());
+                kichThuocUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                kichThuocUpdate.setNguoiSua("Hưng");
+                return kichThuocRepository.save(kichThuocUpdate);
+            }).orElse(null);
         }
         return null;
     }

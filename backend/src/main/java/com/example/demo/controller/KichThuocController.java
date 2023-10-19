@@ -21,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/kich-thuoc/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class KichThuocRestController {
+public class KichThuocController {
 
     @Autowired
     private KichThuocService kichThuocService;

@@ -9,7 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,10 +19,11 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Autowired
     private PhongCachRepository phongCachRepository;
+    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<PhongCach> getAll(Integer pageNo) {
-        Pageable pageable= PageRequest.of(pageNo,5);
+        Pageable pageable= PageRequest.of(pageNo,10);
         return phongCachRepository.findAll(pageable);
     }
 
@@ -36,13 +39,27 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Override
     public PhongCach add(PhongCach phongCach) {
-        return phongCachRepository.save(phongCach);
+        PhongCach phongCachSave= PhongCach.builder()
+                .ma(phongCach.getMa())
+                .ten(phongCach.getTen())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao("Hưng")
+                .daXoa(phongCach.getDaXoa())
+                .build();
+        return phongCachRepository.save(phongCachSave);
     }
 
     @Override
     public PhongCach update(PhongCach phongCach, UUID id) {
-        if (phongCachRepository.existsById(id)) {
-            phongCachRepository.save(phongCach);
+        Optional<PhongCach> optionalPhongCach=phongCachRepository.findById(id);
+        if (optionalPhongCach.isPresent()){
+            optionalPhongCach.map(phongCachUpdate->{
+                phongCachUpdate.setTen(phongCach.getTen());
+                phongCachUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                phongCachUpdate.setNguoiSua("Hưng");
+                phongCachUpdate.setDaXoa(phongCach.getDaXoa());
+                return phongCachRepository.save(phongCachUpdate);
+            }).orElse(null);
         }
         return null;
     }
