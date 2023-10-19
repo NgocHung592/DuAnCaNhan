@@ -268,7 +268,8 @@ GO
 	nguoi_tao nvarchar(50),
 	nguoi_sua  nvarchar(50),
 	khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
-	nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id)
+	nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id),
+	voucher_id UNIQUEIDENTIFIER REFERENCES voucher(id)
  )
 
  Create table [hoa_don_chi_tiet](
