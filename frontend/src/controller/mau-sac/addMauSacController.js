@@ -1,4 +1,4 @@
-window.addMauSacController = function ($http, $scope) {
+window.addMauSacController = function ($http, $scope, $location) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -31,7 +31,7 @@ window.addMauSacController = function ($http, $scope) {
     $http.get(api_url + "/id?hex=" + color).then(function (response) {
       $scope.formMauSac.ten = response.data.name.value;
       $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
-        $scope.message = "Thêm Thành Công";
+        $location.path("/mau-sac/hien-thi");
       });
     });
   };
