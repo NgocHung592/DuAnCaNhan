@@ -1,5 +1,4 @@
 window.hienThiPhongCachController = function ($http, $scope) {
-  $scope.listPhongCach = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
 
@@ -8,6 +7,7 @@ window.hienThiPhongCachController = function ($http, $scope) {
       .get(phongCachAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listPhongCach = response.data;
+        console.log($scope.listPhongCach);
         $scope.totalPages = new Array(response.data.totalPages);
       });
   };

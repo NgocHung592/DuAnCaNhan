@@ -1,16 +1,4 @@
 window.addSanPhamController = function ($http, $scope) {
-  $scope.listSanPhamChiTiet = [];
-  $scope.listDanhMucTrangThai = [];
-  $scope.listChatLieuTrangThai = [];
-  $scope.listSanPhamTrangThai = [];
-  $scope.listHoaTietTrangThai = [];
-  $scope.listPhongCachTrangThai = [];
-  $scope.listMauSacTrangThai = [];
-  $scope.listKichThuocTrangThai = [];
-  $scope.listHoaTietTrangThai = [];
-  $scope.listKieuDangTrangThai = [];
-  $scope.listCoAoTrangThai = [];
-  $scope.listTayAoTrangThai = [];
   $scope.totalPages = [];
   $scope.products = [];
   $scope.prductDetails = [];
@@ -211,6 +199,7 @@ window.addSanPhamController = function ($http, $scope) {
     let productImages = document.getElementById("product-image");
     uploadFiles(productImages.files);
   };
+
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {
     $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
@@ -218,13 +207,6 @@ window.addSanPhamController = function ($http, $scope) {
     });
   };
   $scope.getChatLieuTrangThai();
-
-  $scope.getDanhMucTrangThai = function () {
-    $http.get(danhMucAPI + "/trang-thai").then(function (response) {
-      $scope.listDanhMucTrangThai = response.data;
-    });
-  };
-  $scope.getDanhMucTrangThai();
 
   $scope.getSanPhamTrangThai = function (response) {
     $http.get(sanPhamAPI + "/trang-thai").then(function (response) {

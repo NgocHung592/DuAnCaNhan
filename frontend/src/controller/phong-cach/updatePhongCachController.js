@@ -1,9 +1,14 @@
-window.updatePhongCachController = function ($http, $scope, $routeParams) {
+window.updatePhongCachController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   $scope.formPhongCach = {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Number,
+    daXoa: Boolean,
   };
 
   $http
@@ -14,11 +19,37 @@ window.updatePhongCachController = function ($http, $scope, $routeParams) {
       }
     });
 
-  $scope.update = function (id) {
+  $scope.update = function (e, idPhongCach) {
+    e.preventDefault();
+    let elem = document.getElementById("myBar");
+    let width = 0;
+    let idp = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(idp);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+
+    if ($scope.formPhongCach.ten === "") {
+      $scope.message = "Tên phong cách không được để trống ";
+      return;
+    }
     $http
-      .put(phongCachAPI + "/update/" + id, $scope.formPhongCach)
+      .put(phongCachAPI + "/update/" + idPhongCach, $scope.formPhongCach)
       .then(function () {
-        alert("Cập nhật thành công");
+        $location.path("/phong-cach/hien-thi");
       });
   };
+  const toastTrigger = document.getElementById("liveToastBtn");
+  const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
 };

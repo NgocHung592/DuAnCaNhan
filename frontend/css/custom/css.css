@@ -38,3 +38,47 @@ h4 {
     text-align: center;
 
 }
+
+.trang-thai {
+    background-color: green;
+
+}
+
+.custom-select {
+    background-color: #f2f2f2;
+    color: #333;
+    border: none;
+    padding: 5px;
+}
+
+/* Tạo một class cho option để tùy chỉnh chúng */
+.custom-option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Tùy chỉnh option khi được hover */
+.custom-option:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Tạo một class cho select để tùy chỉnh nền và màu chữ */
+.custom-select {
+    background-color: #f2f2f2;
+    color: #333;
+    border: none;
+    padding: 5px;
+}
+
+/* Tạo một class cho option để tùy chỉnh chúng */
+.custom-option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Tùy chỉnh option khi được hover */
+.custom-option:hover {
+    background-color: #fff;
+    color: #fff;
+}

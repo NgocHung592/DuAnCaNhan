@@ -1,4 +1,9 @@
-window.updateTayAoController = function ($http, $scope, $routeParams) {
+window.updateTayAoController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -33,8 +38,13 @@ window.updateTayAoController = function ($http, $scope, $routeParams) {
         elem.style.width = width + "%";
       }
     }
-    $http.put(tayAoAPI + "/update/" + id, $scope.formTayAo).then(function () {
-      $scope.message = "Cập Nhật Thành Công";
-    });
+    if ($scope.formTayAo.ten == "") {
+      $scope.message = "Tên tay áo không được trống";
+      return;
+    } else {
+      $http.put(tayAoAPI + "/update/" + id, $scope.formTayAo).then(function () {
+        $location.path("/tay-ao/hien-thi");
+      });
+    }
   };
 };

@@ -4,7 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <h4>HỌA TIẾT</h4>
+                        <h4>DANH SÁCH HỌA TIẾT</h4>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" href="#hoa-tiet/add">Thêm</a>
                         </div>
@@ -12,10 +12,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
+                                    <th scope="col">Mã Họa Tiết</th>
+                                    <th scope="col">Tên Họa Tiết</th>
                                     <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Hành Động</th>
+                                    <th scope="col">Thao Tác</th>
 
                                 </tr>
                             </thead>
@@ -24,14 +24,17 @@
                                     <th scope="row">{{$index+1}}</th>
                                     <th scope="row">{{hoaTiet.ma}}</th>
                                     <th scope="row">{{hoaTiet.ten}}</th>
-                                    <th
-                                        ng-class="{'badge text-bg-success': !hoaTiet.daXoa,'badge text-bg-danger':hoaTiet.daXoa}">
-                                        {{hoaTiet.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+                                    <th>
+                                        <p ng-class="{' align-middle text-bg-success text-light ': !hoaTiet.daXoa
+                                        ,'align-middle text-bg-danger text-light':hoaTiet.daXoa}">
+                                            {{hoaTiet.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+
+                                        </p>
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning "
-                                            href="#hoa-tiet/update/{{hoaTiet.id}}">Chi
-                                            tiết</a>
+                                        <a href="#hoa-tiet/update/{{hoaTiet.id}}">
+                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        </a>
                                     </th>
                                 </tr>
                             </tbody>
@@ -40,7 +43,8 @@
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">
+                                            << </span>
                                     </a>
                                 </li>
                                 <li class="page-item" ng-repeat="page in totalPages track by $index"
@@ -48,7 +52,7 @@
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                    <a class="page-link" ng-click="nextPage()">>></a>
                                 </li>
                             </ul>
                         </nav>

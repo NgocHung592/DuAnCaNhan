@@ -4,7 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <h4>MÀU SẮC</h4>
+                        <h4>DANH SÁCH MÀU SẮC</h4>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" href="#mau-sac/add">Thêm</a>
                         </div>
@@ -16,21 +16,28 @@
                                     <th scope="col">Tên Màu</th>
                                     <th scope="col">Màu Sắc</th>
                                     <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Hành Động</th>
+                                    <th scope="col">Thao Tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="mauSac in listMauSac.content">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <td scope="row">{{$index+1}}</td>
                                     <th scope="row">{{mauSac.ma}}</th>
                                     <th scope="row">{{mauSac.ten}}</th>
-                                    <th scope="row" style="background-color: {{mauSac.ma}};"></th>
-                                    <th scope="row">{{mauSac.daXoa?"Hủy Kích Hoạt":"Kích Hoạt"}}
+                                    <th style="background-color: {{mauSac.ma}};"></th>
+                                    <th>
+                                        <p ng-class="{' align-middle text-bg-success text-light ': !mauSac.daXoa
+                                        ,'align-middle text-bg-danger text-light':mauSac.daXoa}">
+                                            {{mauSac.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+
+                                        </p>
+                                    </th>
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning "
-                                            href="#mau-sac/update/{{mauSac.id}}">Chi tiết</a>
+                                        <a href="#mau-sac/update/{{mauSac.id}}">
+                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        </a>
                                     </th>
                                 </tr>
                             </tbody>
@@ -39,7 +46,8 @@
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">
+                                            << </span>
                                     </a>
                                 </li>
                                 <li class="page-item" ng-repeat="page in totalPages track by $index"
@@ -47,7 +55,7 @@
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                    <a class="page-link" ng-click="nextPage()">>></a>
                                 </li>
                             </ul>
                         </nav>

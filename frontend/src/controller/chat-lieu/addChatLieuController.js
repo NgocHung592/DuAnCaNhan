@@ -12,8 +12,8 @@ window.addChatLieuController = function ($http, $scope, $location) {
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formChatLieu = {
-    maChatLieu: $scope.randoom,
-    tenChatLieu: "",
+    ma: $scope.randoom,
+    ten: "",
     daXoa: false,
   };
 
@@ -30,7 +30,7 @@ window.addChatLieuController = function ($http, $scope, $location) {
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formChatLieu.tenChatLieu == "") {
+    if ($scope.formChatLieu.ten == "") {
       $scope.message = "Tên Chất Liệu Không Được Trống";
       return false;
     } else {
