@@ -15,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/nhan-vien/")
 @CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false")
-public class NhanVienRestController {
+public class NhanVienController {
 
     @Autowired
     private NhanVienService nhanVienService;

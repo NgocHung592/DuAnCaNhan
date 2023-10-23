@@ -1,12 +1,8 @@
 package com.example.demo.controller;
 
-<<<<<<< HEAD:backend/src/main/java/com/example/demo/controller/PhongCachController.java
 import com.example.demo.entity.PhongCach;
 import com.example.demo.service.PhongCachService;
-=======
 import com.example.demo.model.request.KieuDangRequest;
-import com.example.demo.service.KieuDangService;
->>>>>>> main:backend/src/main/java/com/example/demo/controller/KieuDangRestController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

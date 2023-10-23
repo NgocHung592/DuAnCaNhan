@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/vai-tro/")
 @RestController
-public class VaiTroRestController {
+public class VaiTroController {
 
 
     @Autowired

@@ -17,7 +17,7 @@ import java.util.UUID;
 @CrossOrigin("*")
 @RequestMapping("/khach-hang/")
 @RestController
-public class KhachHangRestController {
+public class KhachHangController {
     @Autowired
     private KhachHangService khachHangService;
     @GetMapping("hien-thi")

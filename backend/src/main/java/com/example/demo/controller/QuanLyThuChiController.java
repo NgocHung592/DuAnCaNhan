@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/thu-chi/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class QuanLyThuChiRestController {
+public class QuanLyThuChiController {
     @Autowired
     private HoaDonThuChiService hoaDonService;
     @GetMapping("hien-thi")

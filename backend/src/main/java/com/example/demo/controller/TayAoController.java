@@ -23,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tay-ao/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class TayAoRestController {
+public class TayAoController {
 
     @Autowired
     private TayAoService tayAoService;

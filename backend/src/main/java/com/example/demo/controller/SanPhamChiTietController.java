@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/san-pham-chi-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class SanPhamChiTietRestController {
+public class SanPhamChiTietController {
     @Autowired
     private SanPhamChiTietService sanPhamChiTietService;
 
