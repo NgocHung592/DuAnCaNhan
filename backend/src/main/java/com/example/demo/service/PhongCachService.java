@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KichThuoc;
-import com.example.demo.entity.MauSac;
 import com.example.demo.entity.PhongCach;
 import org.springframework.data.domain.Page;
 

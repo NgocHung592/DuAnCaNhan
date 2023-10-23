@@ -1,9 +1,7 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.MauSac;
-import com.example.demo.entity.SanPham;
-import com.example.demo.service.MauSacService;
+import com.example.demo.entity.KichThuoc;
+import com.example.demo.service.KichThuocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,40 +19,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/mau-sac/")
-@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false")
-public class MauSacRestController {
+@RequestMapping("/kich-thuoc/")
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+public class KichThuocController {
 
     @Autowired
-    private MauSacService mauSacService;
+    private KichThuocService kichThuocService;
 
     @GetMapping("hien-thi")
-    public Page<MauSac> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return mauSacService.getAll(pageNo);
+    public Page<KichThuoc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return kichThuocService.getAll(pageNo);
     }
 
     @GetMapping("trang-thai")
-    public List<MauSac> hienThiTheoTrangThai() {
-        return mauSacService.getAllByStatus();
+    public List<KichThuoc> hienThiTheoTrangThai() {
+        return kichThuocService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")
-    public MauSac detail(@PathVariable("id") String id) {
-        return mauSacService.getOne(UUID.fromString(id));
+    public KichThuoc detail(@PathVariable("id") String id) {
+        return kichThuocService.detail(UUID.fromString(id));
     }
 
     @PostMapping("add")
-    public MauSac add(@RequestBody MauSac mauSac) {
-        return mauSacService.add(mauSac);
+    public KichThuoc add(@RequestBody KichThuoc kichThuoc) {
+        return kichThuocService.add(kichThuoc);
     }
 
     @PutMapping("update/{id}")
-    public MauSac update(@RequestBody MauSac mauSac, @PathVariable("id") String id) {
-        return mauSacService.update(mauSac, UUID.fromString(id));
+    public KichThuoc update(@RequestBody KichThuoc kichThuoc, @PathVariable("id") String id) {
+        return kichThuocService.update(kichThuoc, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        mauSacService.delete(UUID.fromString(id));
+        kichThuocService.delete(UUID.fromString(id));
     }
 }

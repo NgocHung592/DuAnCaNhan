@@ -1,10 +1,11 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.KichThuoc;
-import com.example.demo.service.KichThuocService;
+import com.example.demo.entity.CoAo;
+import com.example.demo.service.CoAoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,40 +21,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/kich-thuoc/")
+@RequestMapping("/co-ao/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class KichThuocRestController {
+public class CoAoController {
 
     @Autowired
-    private KichThuocService kichThuocService;
+    private CoAoService coAoService;
 
     @GetMapping("hien-thi")
-    public Page<KichThuoc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return kichThuocService.getAll(pageNo);
+    public Page<CoAo> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return coAoService.getAll(pageNo);
     }
 
     @GetMapping("trang-thai")
-    public List<KichThuoc> hienThiTheoTrangThai() {
-        return kichThuocService.getAllByStatus();
+    public List<CoAo> hienThiTheoTrangThai() {
+        return coAoService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")
-    public KichThuoc detail(@PathVariable("id") String id) {
-        return kichThuocService.detail(UUID.fromString(id));
+    public ResponseEntity detail(@PathVariable("id") String id) {
+        return new ResponseEntity(coAoService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PostMapping("add")
-    public KichThuoc add(@RequestBody KichThuoc kichThuoc) {
-        return kichThuocService.add(kichThuoc);
+    public ResponseEntity add(@RequestBody CoAo coAo) {
+        return new ResponseEntity(coAoService.add(coAo),HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public KichThuoc update(@RequestBody KichThuoc kichThuoc, @PathVariable("id") String id) {
-        return kichThuocService.update(kichThuoc, UUID.fromString(id));
+    public ResponseEntity update(@RequestBody CoAo coAo, @PathVariable("id") String id) {
+        return new ResponseEntity(coAoService.update(coAo, UUID.fromString(id)),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        kichThuocService.delete(UUID.fromString(id));
+        coAoService.delete(UUID.fromString(id));
     }
 }

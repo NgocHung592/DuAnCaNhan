@@ -6,13 +6,8 @@ import com.example.demo.model.request.HoaDonChiTietRequest;
 import com.example.demo.model.response.HoaDonChiTietReponse;
 import com.example.demo.repository.HoaDonChiTietRepository;
 import com.example.demo.repository.HoaDonReponsitory;
-import com.example.demo.repository.KichThuocChiTietRepository;
-import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,8 +22,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     private HoaDonChiTietRepository hoaDonChiTietRepository;
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
-    @Autowired
-    private KichThuocChiTietRepository kichThuocChiTietRepository;
+
 
     @Override
     public List<HoaDonChiTietReponse> getAll(String ma) {
@@ -42,7 +36,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
                 .donGia(BigDecimal.valueOf(hoaDonChiTietRequest.getDonGia()))
                 .thanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()))
                 .hoaDon(hoaDonReponsitory.findById(hoaDonChiTietRequest.getIdHoaDon()).get())
-                .kichThuocMauSac(kichThuocChiTietRepository.findById(hoaDonChiTietRequest.getIdSanPhamChiTiet()).get())
+//                .kichThuocMauSac(kichThuocChiTietRepository.findById(hoaDonChiTietRequest.getIdSanPhamChiTiet()).get())
                 .build();
         return hoaDonChiTietRepository.save(hoaDonChiTietSave);
     }

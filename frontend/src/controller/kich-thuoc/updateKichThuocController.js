@@ -1,4 +1,9 @@
-window.updateKichThuocController = function ($http, $scope, $routeParams) {
+window.updateKichThuocController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   $scope.formKichThuoc = {
     id: "",
     ma: "",
@@ -14,11 +19,37 @@ window.updateKichThuocController = function ($http, $scope, $routeParams) {
       }
     });
 
-  $scope.update = function (id) {
-    $http
-      .put(kichThuocAPI + "/update/" + id, $scope.formKichThuoc)
-      .then(function () {
-        alert("Cập nhật thành công");
-      });
+  $scope.update = function (e, idKichThuoc) {
+    e.preventDefault();
+    let elem = document.getElementById("myBar");
+    let width = 0;
+    let id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    if ($scope.formKichThuoc.ten === "") {
+      $scope.message = "Tên kích thước không được trống";
+      return;
+    } else {
+      $http
+        .put(kichThuocAPI + "/update/" + idKichThuoc, $scope.formKichThuoc)
+        .then(function () {
+          $location.path("/kich-thuoc/hien-thi");
+        });
+    }
   };
+  const toastTrigger = document.getElementById("liveToastBtn");
+  const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
 };

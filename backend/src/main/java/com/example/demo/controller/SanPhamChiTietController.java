@@ -1,4 +1,4 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.service.SanPhamChiTietService;

@@ -26,7 +26,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-public class SanPham implements Serializable {
+public class SanPham   {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

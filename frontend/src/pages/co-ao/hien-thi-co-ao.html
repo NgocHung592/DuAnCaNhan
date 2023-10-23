@@ -4,8 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <h4>CỔ ÁO</h4>
-
+                        <h4>DANH SÁCH CỔ ÁO</h4>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" href="#/co-ao/add">Thêm</a>
                         </div>
@@ -13,10 +12,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Hành Động</th>
+                                    <th scope="col">Mã Cổ Áo</th>
+                                    <th scope="col">Tên Cổ Áo</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">Thao Tác</th>
 
                                 </tr>
                             </thead>
@@ -25,11 +24,17 @@
                                     <th scope="row">{{$index+1}}</th>
                                     <th scope="row">{{coAo.ma}}</th>
                                     <th scope="row">{{coAo.ten}}</th>
-                                    <th scope="row">{{coAo.daXoa?"Hủy Kích Hoạt":"Kích Hoạt"}}
+                                    <th>
+                                        <p ng-class="{' align-middle text-bg-success text-light ': !coAo.daXoa
+                                        ,'align-middle text-bg-danger text-light':coAo.daXoa}">
+                                            {{coAo.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+
+                                        </p>
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning " href="#co-ao/update/{{coAo.id}}">Chi
-                                            tiết</a>
+                                        <a href="#co-ao/update/{{coAo.id}}">
+                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        </a>
                                     </th>
                                 </tr>
                             </tbody>

@@ -1,9 +1,7 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.CoAo;
 import com.example.demo.service.ChatLieuService;
-import com.example.demo.service.CoAoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,40 +21,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/co-ao/")
+@RequestMapping("/api/v1/chat-lieu/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class CoAoRestController {
+public class ChatLieuController {
 
     @Autowired
-    private CoAoService coAoService;
+    private ChatLieuService chatLieuService;
 
     @GetMapping("hien-thi")
-    public Page<CoAo> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return coAoService.getAll(pageNo);
+    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return chatLieuService.getAll(pageNo);
     }
 
     @GetMapping("trang-thai")
-    public List<CoAo> hienThiTheoTrangThai() {
-        return coAoService.getAllByStatus();
+    public List<ChatLieu> hienThiTheoTrangThai() {
+        return chatLieuService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        return new ResponseEntity(coAoService.detail(UUID.fromString(id)), HttpStatus.OK);
+        return new ResponseEntity(chatLieuService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody CoAo coAo) {
-        return new ResponseEntity(coAoService.add(coAo),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody ChatLieu chatLieu) {
+        return new ResponseEntity(chatLieuService.add(chatLieu),HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update(@RequestBody CoAo coAo, @PathVariable("id") String id) {
-        return new ResponseEntity(coAoService.update(coAo, UUID.fromString(id)),HttpStatus.OK);
+    public ResponseEntity update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
+        return new ResponseEntity(chatLieuService.update(chatLieu, UUID.fromString(id)),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        coAoService.delete(UUID.fromString(id));
+        chatLieuService.delete(UUID.fromString(id));
     }
 }

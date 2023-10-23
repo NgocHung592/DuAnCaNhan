@@ -1,7 +1,5 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.CoAo;
-import com.example.demo.entity.HoaTiet;
 import com.example.demo.entity.PhongCach;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

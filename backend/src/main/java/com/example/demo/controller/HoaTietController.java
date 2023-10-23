@@ -1,9 +1,11 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
+<<<<<<< HEAD:backend/src/main/java/com/example/demo/controller/HoaTietController.java
 import com.example.demo.entity.HoaTiet;
-import com.example.demo.service.ChatLieuService;
 import com.example.demo.service.HoaTietService;
+=======
+import com.example.demo.service.DanhMucService;
+>>>>>>> main:backend/src/main/java/com/example/demo/controller/DanhMucRestController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/hoa-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class HoaTietRestController {
+public class HoaTietController {
     @Autowired
     private HoaTietService hoaTietService;
 

@@ -9,7 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,10 +20,12 @@ public class HoaTietServiceImpl implements HoaTietService {
     @Autowired
     private HoaTietRepository hoaTietRepository;
 
+    long currentTimestampMillis = System.currentTimeMillis();
+
     @Override
     public Page<HoaTiet> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return hoaTietRepository.findAll(pageable);
+        return hoaTietRepository.getAll(pageable);
     }
 
     @Override
@@ -31,13 +35,31 @@ public class HoaTietServiceImpl implements HoaTietService {
 
     @Override
     public HoaTiet add(HoaTiet hoaTiet) {
-        return hoaTietRepository.save(hoaTiet);
+        if (hoaTiet.getTen().isBlank()){
+            return null;
+        }
+        HoaTiet hoaTietSave=HoaTiet.builder()
+                .ma(hoaTiet.getMa())
+                .ten(hoaTiet.getTen())
+                .ngayTao(new Timestamp(currentTimestampMillis))
+                .nguoiTao("Hưng")
+                .daXoa(hoaTiet.getDaXoa())
+                .build();
+        return hoaTietRepository.save(hoaTietSave);
     }
 
     @Override
     public HoaTiet update(HoaTiet hoaTiet, UUID id) {
-        if (hoaTietRepository.existsById(id)) {
-            return hoaTietRepository.save(hoaTiet);
+        Optional<HoaTiet> optionalHoaTiet=hoaTietRepository.findById(id);
+        if (optionalHoaTiet.isPresent()){
+            optionalHoaTiet.map(hoaTietUpdate->{
+                hoaTietUpdate.setTen(hoaTiet.getTen());
+                hoaTietUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                hoaTietUpdate.setNguoiSua("Hưng");
+                hoaTietUpdate.setDaXoa(hoaTiet.getDaXoa());
+                return hoaTietRepository.save(hoaTietUpdate);
+            }).orElse(null);
+
         }
         return null;
     }

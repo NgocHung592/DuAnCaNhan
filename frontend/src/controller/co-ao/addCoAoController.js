@@ -1,4 +1,4 @@
-window.addCoAoController = function ($http, $scope) {
+window.addCoAoController = function ($http, $scope, $location) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -29,14 +29,13 @@ window.addCoAoController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formCoAo.ten != "") {
-      $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
-        $scope.message = "Thêm Thành Công";
-        return true;
-      });
+    if ($scope.formCoAo.ten == "") {
+      $scope.message = "Tên cổ áo không được trống";
+      return;
     } else {
-      $scope.message = "Thêm Thất Bại";
-      return false;
+      $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
+        $location.path("/co-ao/hien-thi");
+      });
     }
   };
 };

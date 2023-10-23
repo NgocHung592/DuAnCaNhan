@@ -1,10 +1,14 @@
-window.updateHoaTietController = function ($http, $scope, $routeParams) {
-  $scope.listHoaTiet = [];
+window.updateHoaTietController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   $scope.formHoaTiet = {
     id: "",
     ma: "",
     ten: "",
-    trangThai: Number,
+    daXoa: Boolean,
   };
 
   $http
@@ -15,11 +19,37 @@ window.updateHoaTietController = function ($http, $scope, $routeParams) {
       }
     });
 
-  $scope.update = function (id) {
-    $http
-      .put(hoaTietAPI + "/update/" + id, $scope.formHoaTiet)
-      .then(function () {
-        alert("Cập nhật thành công");
-      });
+  $scope.update = function (idHoaTiet) {
+    let elem = document.getElementById("myBar");
+    let width = 0;
+    let idp = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(idp);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+
+    if ($scope.formHoaTiet.ten === "") {
+      $scope.message = "Tên họa tiết không được trống";
+      return null;
+    } else {
+      $http
+        .put(hoaTietAPI + "/update/" + idHoaTiet, $scope.formHoaTiet)
+        .then(function () {
+          $location.path("/hoa-tiet/hien-thi");
+        });
+    }
   };
+  const toastTrigger = document.getElementById("liveToastBtn");
+  const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
 };

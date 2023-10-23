@@ -1,4 +1,4 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
 import com.example.demo.entity.HangKhachHang;
 import com.example.demo.service.HangKhachHangService;
@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/hang-khach-hang/")
 @RestController
-public class HangKhachHangRestController {
+public class HangKhachHangController {
 
     @Autowired
     private HangKhachHangService hangKhachHangService;

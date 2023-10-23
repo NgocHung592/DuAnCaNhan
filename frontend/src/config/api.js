@@ -4,13 +4,9 @@ window.sanPhamAPI = url + "/san-pham";
 
 window.chatLieuAPI = url + "/api/v1/chat-lieu";
 
-window.danhMucAPI = url + "/danh-muc";
-
 window.mauSacAPI = url + "/mau-sac";
 
 window.kichThuocAPI = url + "/kich-thuoc";
-
-window.kieuDangAPI = url + "/kieu-dang";
 
 window.phongCachAPI = url + "/phong-cach";
 

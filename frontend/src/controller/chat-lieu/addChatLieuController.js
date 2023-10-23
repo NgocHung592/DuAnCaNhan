@@ -1,4 +1,4 @@
-window.addChatLieuController = function ($http, $scope) {
+window.addChatLieuController = function ($http, $scope, $location) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -12,8 +12,8 @@ window.addChatLieuController = function ($http, $scope) {
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formChatLieu = {
-    maChatLieu: $scope.randoom,
-    tenChatLieu: "",
+    ma: $scope.randoom,
+    ten: "",
     daXoa: false,
   };
 
@@ -30,14 +30,13 @@ window.addChatLieuController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formChatLieu.tenChatLieu == "") {
+    if ($scope.formChatLieu.ten == "") {
       $scope.message = "Tên Chất Liệu Không Được Trống";
       return false;
     } else {
-      $http
-        .post(chatLieuAPI + "/add", $scope.formChatLieu)
-        .then(function () {});
-      $scope.message = "Thêm Thành Công";
+      $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
+        $location.path("/chat-lieu/hien-thi");
+      });
       return true;
     }
   };

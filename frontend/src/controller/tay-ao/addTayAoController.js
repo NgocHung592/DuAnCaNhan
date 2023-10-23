@@ -1,4 +1,4 @@
-window.addTayAoController = function ($http, $scope) {
+window.addTayAoController = function ($http, $scope, $location) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -29,14 +29,14 @@ window.addTayAoController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formTayAo.ten != "") {
+    if ($scope.formTayAo.ten == "") {
+      $scope.message = "Tên tay áo không được trống";
+      return false;
+    } else {
       $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
-        $scope.message = "Thêm Thành Công";
+        $location.path("/tay-ao/hien-thi");
         return true;
       });
-    } else {
-      $scope.message = "Thêm Thất Bại";
-      return false;
     }
   };
 };

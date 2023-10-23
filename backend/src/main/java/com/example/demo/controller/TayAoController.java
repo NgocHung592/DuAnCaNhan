@@ -1,12 +1,11 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.entity.DanhMuc;
-import com.example.demo.entity.KieuDang;
-import com.example.demo.service.ChatLieuService;
-import com.example.demo.service.DanhMucService;
+import com.example.demo.entity.TayAo;
+import com.example.demo.service.TayAoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,39 +19,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+
 @RestController
-@RequestMapping("/danh-muc/")
+@RequestMapping("/tay-ao/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class DanhMucRestController {
+public class TayAoRestController {
+
     @Autowired
-    private DanhMucService danhMucService;
+    private TayAoService tayAoService;
 
     @GetMapping("hien-thi")
-    public Page<DanhMuc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return danhMucService.getAll(pageNo);
+    public Page<TayAo> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return tayAoService.getAll(pageNo);
     }
+
     @GetMapping("trang-thai")
-    public List<DanhMuc> hienThiTrangThai() {
-        return danhMucService.getListStatus();
+    public List<TayAo> hienThiTheoTrangThai() {
+        return tayAoService.getAllByStatus();
     }
 
     @GetMapping("detail/{id}")
-    public DanhMuc detail(@PathVariable("id") String id) {
-        return danhMucService.getOne(UUID.fromString(id));
+    public ResponseEntity detail(@PathVariable("id") String id) {
+        return new ResponseEntity(tayAoService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PostMapping("add")
-    public DanhMuc add(@RequestBody DanhMuc danhMuc) {
-        return danhMucService.add(danhMuc);
+    public ResponseEntity add(@RequestBody TayAo tayAo) {
+        return new ResponseEntity(tayAoService.add(tayAo),HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public DanhMuc update(@RequestBody DanhMuc danhMuc, @PathVariable("id") String id) {
-        return danhMucService.update(danhMuc, UUID.fromString(id));
+    public ResponseEntity update(@RequestBody TayAo tayAo, @PathVariable("id") String id) {
+        return new ResponseEntity(tayAoService.update(tayAo, UUID.fromString(id)),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        danhMucService.delete(UUID.fromString(id));
+        tayAoService.delete(UUID.fromString(id));
     }
 }

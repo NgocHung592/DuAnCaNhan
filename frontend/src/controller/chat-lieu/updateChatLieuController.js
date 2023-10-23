@@ -1,13 +1,9 @@
-window.updateChatLieuController = function ($http, $scope, $routeParams) {
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
+window.updateChatLieuController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   $scope.formChatLieu = {
     id: "",
     ma: "",
@@ -35,10 +31,24 @@ window.updateChatLieuController = function ($http, $scope, $routeParams) {
         elem.style.width = width + "%";
       }
     }
-    $http
-      .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
-      .then(function () {
-        $scope.message = "Cập Nhật Thành Công";
-      });
+
+    if ($scope.formChatLieu.ten === "") {
+      $scope.message = "Tên Chất Liệu Không Được Trống";
+    } else {
+      $http
+        .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
+        .then(function () {
+          $location.path("/chat-lieu/hien-thi");
+        });
+    }
   };
+  const toastTrigger = document.getElementById("liveToastBtn");
+  const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
 };

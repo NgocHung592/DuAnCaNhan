@@ -1,9 +1,8 @@
-package com.example.demo.restcontroller;
+package com.example.demo.controller;
 
-import com.example.demo.entity.ChatLieu;
-import com.example.demo.service.ChatLieuService;
+import com.example.demo.entity.SanPham;
+import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,44 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/chat-lieu/")
+@RequestMapping("/san-pham/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class ChatLieuRestController {
+public class SanPhamRestController {
 
     @Autowired
-    private ChatLieuService chatLieuService;
+    private SanPhamService sanPhamService;
 
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return new ResponseEntity(sanPhamService.getAll(pageNo), HttpStatus.OK);
     }
 
     @GetMapping("trang-thai")
-    public List<ChatLieu> hienThiTheoTrangThai() {
-        return chatLieuService.getAllByStatus();
+    public ResponseEntity hienThiTheoTrangThai() {
+        return new ResponseEntity(sanPhamService.getAllByStatus(), HttpStatus.OK);
     }
 
     @GetMapping("detail/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        return new ResponseEntity(chatLieuService.detail(UUID.fromString(id)), HttpStatus.OK);
+        return new ResponseEntity(sanPhamService.detail(UUID.fromString(id)), HttpStatus.OK);
+    }
+    @GetMapping("search")
+    public ResponseEntity findByName(@RequestBody SanPham sanPham) {
+        return new ResponseEntity(sanPhamService.findByName(sanPham), HttpStatus.OK);
     }
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ChatLieu chatLieu) {
-        return new ResponseEntity(chatLieuService.add(chatLieu),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody SanPham sanPham) {
+        return new ResponseEntity(sanPhamService.add(sanPham), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return new ResponseEntity(chatLieuService.update(chatLieu, UUID.fromString(id)),HttpStatus.OK);
+    public ResponseEntity update( SanPham sanPham, @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        chatLieuService.delete(UUID.fromString(id));
+        sanPhamService.delete(UUID.fromString(id));
     }
 }
+

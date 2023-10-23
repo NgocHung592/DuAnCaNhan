@@ -1,4 +1,4 @@
-window.addMauSacController = function ($http, $scope) {
+window.addMauSacController = function ($http, $scope, $location) {
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
   if (toastTrigger) {
@@ -14,13 +14,14 @@ window.addMauSacController = function ($http, $scope) {
     daXoa: false,
   };
 
-  $scope.add = function () {
+  $scope.add = function (e) {
+    e.preventDefault();
     let elem = document.getElementById("myBar");
     let width = 0;
-    let id = setInterval(frame, 10);
+    let idp = setInterval(frame, 10);
     function frame() {
       if (width >= 100) {
-        clearInterval(id);
+        clearInterval(idp);
       } else {
         width++;
         elem.style.width = width + "%";
@@ -28,10 +29,14 @@ window.addMauSacController = function ($http, $scope) {
     }
     let colorStr = document.getElementById("color").value;
     let color = colorStr.slice(1, 7);
+    if ($scope.formMauSac.ma === "") {
+      $scope.message = "Hãy chọn một màu sắc";
+      return;
+    }
     $http.get(api_url + "/id?hex=" + color).then(function (response) {
       $scope.formMauSac.ten = response.data.name.value;
       $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
-        $scope.message = "Thêm Thành Công";
+        $location.path("/mau-sac/hien-thi");
       });
     });
   };
