@@ -278,7 +278,7 @@ GO
 	so_luong int,
 	don_gia decimal(20,0),
 	thanh_tien decimal(20,0),
-	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id)
+	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
 	san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES  san_pham_chi_tiet(id)
  )
 
