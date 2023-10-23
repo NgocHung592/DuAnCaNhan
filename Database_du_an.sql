@@ -149,7 +149,7 @@ GO
 	so_luong int,
 	hinh_thuc_giam varchar(50),
 	gia_tri_giam decimal(20,0),
-	gia_tri_giam_toi_thieu decimal(20,0),
+	gia_tri_don_toi_thieu decimal(20,0),
 	gia_tri_giam_toi_da decimal(20,0),
 	ngay_bat_dau datetime,
 	ngay_ket_thuc datetime,
