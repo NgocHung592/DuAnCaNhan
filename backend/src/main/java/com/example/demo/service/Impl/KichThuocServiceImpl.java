@@ -24,7 +24,7 @@ public class KichThuocServiceImpl implements KichThuocService {
     @Override
     public Page<KichThuoc> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return kichThuocRepository.findAll(pageable);
+        return kichThuocRepository.getAll(pageable);
     }
 
     @Override
@@ -52,6 +52,7 @@ public class KichThuocServiceImpl implements KichThuocService {
                 kichThuocUpdate.setTen(kichThuoc.getTen());
                 kichThuocUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
                 kichThuocUpdate.setNguoiSua("Hưng");
+                kichThuocUpdate.setDaXoa(kichThuoc.getDaXoa());
                 return kichThuocRepository.save(kichThuocUpdate);
             }).orElse(null);
         }

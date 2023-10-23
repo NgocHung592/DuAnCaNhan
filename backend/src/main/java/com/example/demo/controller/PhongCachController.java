@@ -4,6 +4,8 @@ import com.example.demo.entity.PhongCach;
 import com.example.demo.service.PhongCachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +29,8 @@ public class PhongCachController {
     private PhongCachService phongCachService;
 
     @GetMapping("hien-thi")
-    public Page<PhongCach> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return phongCachService.getAll(pageNo);
+    public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return new ResponseEntity(phongCachService.getAll(pageNo), HttpStatus.OK);
     }
 
     @GetMapping("trang-thai")

@@ -10,7 +10,6 @@ import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.repository.CoAoRepository;
 import com.example.demo.repository.HoaTietRepository;
-import com.example.demo.repository.KichThuocChiTietRepository;
 import com.example.demo.repository.KichThuocRepository;
 import com.example.demo.repository.MauSacRepository;
 import com.example.demo.repository.PhongCachRepository;
@@ -51,8 +50,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private TayAoRepository tayAoRepository;
     @Autowired
     private CoAoRepository coAoRepository;
-    @Autowired
-    private KichThuocChiTietRepository kichThuocChiTietRepository;
+
 
     long currentTimestampMillis = System.currentTimeMillis();
 
@@ -98,7 +96,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                     .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                     .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
                     .build();
-            return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+//            return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
 
         }
         SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
@@ -112,32 +110,34 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                 .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
                 .build();
-        return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+//        return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
+        return null;
     }
 
-    private List<KichThuocMauSac> getKichThuocChiTiets(SanPhamChiTietRequest sanPhamChiTietRequest, SanPhamChiTiet sanPhamChiTietSave) {
-        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
-
-        List<KichThuocMauSac> kichThuocChiTietList = new ArrayList<>();
-        sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTietRequest -> {
-            KichThuocMauSac kichThuocChiTietSave = KichThuocMauSac.builder()
-                    .soLuong(Integer.valueOf(kichThuocChiTietRequest.getSoLuong()))
-                    .donGia(BigDecimal.valueOf(kichThuocChiTietRequest.getGia()))
-                    .ngayTao(new Timestamp(currentTimestampMillis))
-                    .nguoiTao(null)
-                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(kichThuocChiTietRequest.getTenKichThuoc())).get())
-                    .mauSac(mauSacRepository.findById(getIdMauSac(kichThuocChiTietRequest.getTenMauSac())).get())
-                    .sanPhamChiTiet(sanPhamChiTiet)
-                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .build();
-            kichThuocChiTietList.add(kichThuocChiTietSave);
-        });
-        return kichThuocChiTietRepository.saveAll(kichThuocChiTietList);
-    }
+//    private List<KichThuocMauSac> getKichThuocChiTiets(SanPhamChiTietRequest sanPhamChiTietRequest, SanPhamChiTiet sanPhamChiTietSave) {
+//        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
+//
+//        List<KichThuocMauSac> kichThuocChiTietList = new ArrayList<>();
+//        sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTietRequest -> {
+//            KichThuocMauSac kichThuocChiTietSave = KichThuocMauSac.builder()
+//                    .soLuong(Integer.valueOf(kichThuocChiTietRequest.getSoLuong()))
+//                    .donGia(BigDecimal.valueOf(kichThuocChiTietRequest.getGia()))
+//                    .ngayTao(new Timestamp(currentTimestampMillis))
+//                    .nguoiTao(null)
+//                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(kichThuocChiTietRequest.getTenKichThuoc())).get())
+//                    .mauSac(mauSacRepository.findById(getIdMauSac(kichThuocChiTietRequest.getTenMauSac())).get())
+//                    .sanPhamChiTiet(sanPhamChiTiet)
+//                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+//                    .build();
+//            kichThuocChiTietList.add(kichThuocChiTietSave);
+//        });
+//        return kichThuocChiTietRepository.saveAll(kichThuocChiTietList);
+//    }
 
     @Override
     public List<KichThuocMauSac> getList(UUID id) {
-        return kichThuocChiTietRepository.getList(id);
+//        return kichThuocChiTietRepository.getList(id);
+        return null;
     }
 
     public UUID getIdSanPham(String ten) {
@@ -167,9 +167,4 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-
-//    @Override
-//    public void delete(UUID id) {
-//
-//    }
 }

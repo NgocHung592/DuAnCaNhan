@@ -24,7 +24,7 @@ public class PhongCachServiceImpl implements PhongCachService {
     @Override
     public Page<PhongCach> getAll(Integer pageNo) {
         Pageable pageable= PageRequest.of(pageNo,10);
-        return phongCachRepository.findAll(pageable);
+        return phongCachRepository.getAll(pageable);
     }
 
     @Override

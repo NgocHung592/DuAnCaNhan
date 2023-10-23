@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/hang-khach-hang/")
 @RestController
-public class HangKhachHangRestController {
+public class HangKhachHangController {
 
     @Autowired
     private HangKhachHangService hangKhachHangService;

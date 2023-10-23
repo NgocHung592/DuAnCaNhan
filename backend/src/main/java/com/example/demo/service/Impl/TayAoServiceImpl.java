@@ -54,15 +54,20 @@ public class TayAoServiceImpl implements TayAoService {
         if (tayAo.getMa().isBlank() || tayAo.getTen().isBlank()) {
             return null;
         }
-        TayAo tayAoUpdate = TayAo.builder()
-                .id(id)
-                .ma(tayAo.getMa())
-                .ten(tayAo.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
-                .daXoa(tayAo.getDaXoa())
-                .build();
-        return tayAoRepository.save(tayAoUpdate);
+        Optional<TayAo> optionalTayAo=tayAoRepository.findById(id);
+        if (optionalTayAo.isPresent()) {
+            optionalTayAo.map(tayAoUpdate->{
+                tayAoUpdate.setTen(tayAo.getTen());
+                tayAoUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                tayAoUpdate.setNguoiSua("Hưng");
+                tayAoUpdate.setDaXoa(tayAo.getDaXoa());
+                return tayAoRepository.save(tayAoUpdate);
+
+            }).orElse(null);
+
+        }
+        return null;
+
     }
 
     @Override

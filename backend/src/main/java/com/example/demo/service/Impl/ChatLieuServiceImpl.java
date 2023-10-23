@@ -1,7 +1,6 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.ChatLieu;
-import com.example.demo.model.request.ChatLieuRequest;
 import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.service.ChatLieuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,13 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 @Service
 public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Autowired
     private ChatLieuRepository chatLieuRepository;
 
-    long currentTimestampMillis = System.currentTimeMillis();
+     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<ChatLieu> getAll(Integer pageNo) {
@@ -35,34 +33,34 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     }
 
     @Override
-    public ChatLieu add(ChatLieuRequest chatLieuRequest) {
-        if (chatLieuRequest.getMaChatLieu().isBlank() || chatLieuRequest.getTenChatLieu().isBlank()) {
+    public ChatLieu add(ChatLieu chatLieu) {
+        if(chatLieu.getMa().isBlank() || chatLieu.getTen().isBlank()){
             return null;
         }
-        ChatLieu chatLieuSave = ChatLieu.builder()
-                .ma(chatLieuRequest.getMaChatLieu())
-                .ten(chatLieuRequest.getTenChatLieu())
+        ChatLieu chatLieuSave= ChatLieu.builder()
+                .ma(chatLieu.getMa())
+                .ten(chatLieu.getTen())
                 .ngayTao(new Timestamp(currentTimestampMillis))
                 .nguoiTao("Hưng")
-                .daXoa(chatLieuRequest.getDaXoa())
+                .daXoa(chatLieu.getDaXoa())
                 .build();
         return chatLieuRepository.save(chatLieuSave);
     }
 
     @Override
     public ChatLieu update(ChatLieu chatLieu, UUID id) {
-        Optional<ChatLieu> optional = chatLieuRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.map(chatLieuUpdate -> {
-                chatLieuUpdate.setTen(chatLieu.getTen());
-                chatLieuUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
-                chatLieuUpdate.setNguoiTao("Hưng");
-                chatLieuUpdate.setDaXoa(chatLieu.getDaXoa());
-                return chatLieuRepository.save(chatLieuUpdate);
-            }).orElse(null);
+        Optional<ChatLieu> optional=chatLieuRepository.findById(id);
+        if (optional.isPresent()){
+        optional.map(chatLieuUpdte->{
+            chatLieuUpdte.setTen(chatLieu.getTen());
+            chatLieuUpdte.setNgaySua(new Timestamp(currentTimestampMillis));
+            chatLieuUpdte.setNguoiSua("Hưng");
+            chatLieuUpdte.setDaXoa(chatLieu.getDaXoa());
+            return  chatLieuRepository.save(chatLieuUpdte);
+        }).orElse(null);
         }
-        return null;
 
+       return null;
     }
 
     @Override

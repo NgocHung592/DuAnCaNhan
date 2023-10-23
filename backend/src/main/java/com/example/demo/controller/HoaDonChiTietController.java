@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/hoa-don-chi-tiet/")
-public class HoaDonChiTietRestController {
+public class HoaDonChiTietController {
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
 

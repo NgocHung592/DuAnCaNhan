@@ -44,7 +44,7 @@ public class MauSacServiceImpl implements MauSacService {
                 .ten(mauSac.getTen())
                 .daXoa(mauSac.getDaXoa())
                 .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
+                .nguoiTao("Hưng")
                 .build();
         return mauSacRepository.save(mauSacSave);
     }
@@ -54,6 +54,7 @@ public class MauSacServiceImpl implements MauSacService {
         Optional<MauSac> optional=mauSacRepository.findById(id);
         if (optional.isPresent()){
             optional.map(mauSacUpdate->{
+                mauSacUpdate.setMa(mauSac.getMa());
                 mauSacUpdate.setTen(mauSac.getTen());
                 mauSacUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
                 mauSacUpdate.setNguoiSua("Hưng");

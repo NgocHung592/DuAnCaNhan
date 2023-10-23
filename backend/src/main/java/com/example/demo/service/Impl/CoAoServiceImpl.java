@@ -43,7 +43,7 @@ public class CoAoServiceImpl implements CoAoService {
                 .ma(coAo.getMa())
                 .ten(coAo.getTen())
                 .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
+                .nguoiTao("Hưng")
                 .daXoa(coAo.getDaXoa())
                 .build();
         return coAoRepository.save(coAoSave);
@@ -51,18 +51,19 @@ public class CoAoServiceImpl implements CoAoService {
 
     @Override
     public CoAo update(CoAo coAo, UUID id) {
-        if(coAo.getMa().isBlank() || coAo.getTen().isBlank() ){
-            return null;
+        Optional<CoAo> optionalCoAo=coAoRepository.findById(id);
+        if (optionalCoAo.isPresent()){
+            optionalCoAo.map(coAoUpdate->{
+                coAoUpdate.setTen(coAoUpdate.getTen());
+                coAoUpdate.setNguoiSua("Hưng");
+                coAoUpdate.setNgaySua(new Timestamp((currentTimestampMillis)));
+                coAoUpdate.setDaXoa(coAo.getDaXoa());
+                return coAoRepository.save(coAoUpdate);
+
+            }).orElse(null);
         }
-        CoAo coAoUpdate= CoAo.builder()
-                .id(id)
-                .ma(coAo.getMa())
-                .ten(coAo.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
-                .daXoa(coAo.getDaXoa())
-                .build();
-        return coAoRepository.save(coAoUpdate);
+        return null;
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ChatLieu;
-import com.example.demo.model.request.ChatLieuRequest;
 import com.example.demo.service.ChatLieuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,8 +44,8 @@ public class ChatLieuController {
     }
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ChatLieuRequest chatLieuRequest) {
-        return new ResponseEntity(chatLieuService.add(chatLieuRequest),HttpStatus.OK);
+    public ResponseEntity add(@RequestBody ChatLieu chatLieu) {
+        return new ResponseEntity(chatLieuService.add(chatLieu),HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")

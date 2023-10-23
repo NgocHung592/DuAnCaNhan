@@ -21,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/hoa-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
-public class HoaTietRestController {
+public class HoaTietController {
     @Autowired
     private HoaTietService hoaTietService;
 
