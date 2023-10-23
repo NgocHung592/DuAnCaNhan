@@ -141,7 +141,7 @@ GO
  )
 
  
- Create table voucher(
+ Create table  ma_giam_gia(
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20),
@@ -159,7 +159,15 @@ GO
 	nguoi_sua  nvarchar(50),
 	da_xoa bit
  )
-
+Create table  ma_giam_gia_chi_tiet(
+	id UNIQUEIDENTIFIER 
+		DEFAULT NEWID() PRIMARY KEY,
+	don_gia decimal(20,0),
+	don_gia_sau_khi_giam (20,0),
+	ma_giam_gia_id  UNIQUEIDENTIFIER REFERENCES ma_giam_gia(id),
+	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
+	
+ )
  Create table [vai_tro](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
