@@ -1,146 +1,256 @@
+<style>
+  .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa radio buttons */
+  }
+</style>
 <main class="content">
   <div class="container-fluid p-0">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="card flex-fill">
-        <div class="card-body d-flex">
-          <div class="align-self-center w-100">
-            <form novalidate name="formAdd" role="form">
-              <div class="mb-3">
-                <label class="form-label">Mã nhân viên</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.ma"
-                  name="manv"
-                  required
-                  disabled
-                />
-                <span ng-show="formAdd.manv.$invalid" class="has-error"
-                  >Mã không được trống</span
-                >
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Tên nhân viên</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.ten"
-                  name="tennv"
-                  required
-                />
+        <div class="card-body">
+          <form novalidate name="formAdd" role="form">
+            <div class="text-center">
+              <h4 class="mb-3">QUẢN LÝ NHÂN VIÊN - THÊM MỚI</h4>
+            </div>
+            <div class="row">
+              <!-- Phần thông tin nhân viên (bốn phần tư màn hình) -->
+              <div class="col-md-6">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <form>
+                          <div class="mb-3">
+                            <label class="form-label">Mã nhân viên</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="form_nv.ma"
+                              name="manv"
+                              required
+                              disabled
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Tên nhân viên</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="form_nv.ten"
+                              required
+                              name="tennv"
+                            />
+                            <span
+                              ng-show="formAdd.tennv.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Tên nhân viên không được trống</span
+                            >
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="form_nv.email"
+                              required
+                              name="email"
+                            />
+                            <span
+                              ng-show="formAdd.email.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Email không được trống</span
+                            >
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="form_nv.sodienthoai"
+                              required
+                              name="sdt"
+                            />
+                            <span
+                              ng-show="formAdd.sdt.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Số điện thoại không được trống</span
+                            >
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-md-6">
+                              <div class="radio-group">
+                                <label class="form-label">Giới tính:</label>
+                                <div class="radio-option">
+                                  <input
+                                    ng-model="form_nv.gioitinh"
+                                    type="radio"
+                                    id="male"
+                                    name="gender"
+                                    value="true"
+                                  />
+                                  <label for="male">Nam</label>
+                                </div>
 
-                <span
-                  ng-show="formAdd.tennv.$invalid"
-                  ng-hide="show?true:false"
-                  class="has-error"
-                  >Tên không được trống</span
-                >
-              </div>
-              <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                <div
-                  id="liveToast"
-                  class="toast"
-                  role="alert"
-                  aria-live="assertive"
-                  aria-atomic="true"
-                  data-bs-delay="1500"
-                >
-                  <div class="toast-body">
-                    {{message}}
-                    <div id="myProgress">
-                      <div id="myBar"></div>
+                                <div class="radio-option">
+                                  <input
+                                    type="radio"
+                                    ng-model="form_nv.gioitinh"
+                                    id="female"
+                                    name="gender"
+                                    value="false"
+                                  />
+                                  <label for="female">Nữ</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="">
+                                <label class="form-label">Ngày sinh:</label>
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  ng-model="form_nv.ngaysinh"
+                                  required
+                                  name="ns"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="toast-container position-fixed bottom-0 end-0 p-3"
+                          >
+                            <div
+                              id="liveToast"
+                              class="toast"
+                              role="alert"
+                              aria-live="assertive"
+                              aria-atomic="true"
+                              data-bs-delay="1500"
+                            >
+                              <div class="toast-body">
+                                {{message}}
+                                <div id="myProgress">
+                                  <div id="myBar"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Email</label>
+              <!-- Phần địa chỉ (bốn phần tư màn hình) -->
+              <div class="col-md-6">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <form>
+                          <div class="mb-3">
+                            <label class="form-label">Số nhà, tên đường</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="form_nv.mota"
+                              name="mota"
+                            />
+                            <span
+                              ng-show="formAdd.mota.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Vui lòng nhập
+                            </span>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Tỉnh thành phố</label>
+                            <select
+                              name="tt"
+                              id="city"
+                              class="browser-default custom-select"
+                            >
+                              <option selected id="thanhpho"></option>
+                            </select>
+                            <span
+                              ng-show="formAdd.tt.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Vui lòng nhập
+                            </span>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Quận huyện</label>
+                            <select
+                              class="browser-default custom-select"
+                              id="district"
+                              name="qh"
+                            >
+                              <option value="" selected></option>
+                            </select>
+                            <span
+                              ng-show="formAdd.qh.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Vui lòng nhập
+                            </span>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Phường xã</label>
+                            <select
+                              class="browser-default custom-select"
+                              id="ward"
+                              name="px"
+                            >
+                              <option value="" selected></option>
+                            </select>
+                            <span
+                              ng-show="formAdd.px.$invalid"
+                              ng-hide="show?true:false"
+                              class="has-error"
+                              >Vui lòng nhập
+                            </span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.email"
-                  name="email"
-                  required
+                  type="file"
+                  onchange="angular.element(this).scope().import(this.files)"
                 />
-                <span
-                  ng-show="formAdd.email.$invalid"
-                  ng-hide="show?true:false"
-                  class="has-error"
-                  >Email không được trống</span
+
+                <a
+                  type="button"
+                  id="liveToastBtn"
+                  class="btn btn-primary"
+                  ng-disabled="formAdd.$invalid"
+                  ng-click="addNhanVien($event)"
+                  >Thêm</a
+                >
+                <a
+                  type="button"
+                  class="btn btn-primary"
+                  href="#nhan-vien/hien-thi"
+                  >Quay lại</a
                 >
               </div>
-              <div class="mb-3">
-                <label class="form-label">Ngày sinh</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.ngaysinh"
-                  name="ns"
-                  required
-                />
-                <span
-                  ng-show="formAdd.ns.$invalid"
-                  ng-hide="show?true:false"
-                  class="has-error"
-                  >Ngày sinh không được trống</span
-                >
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Số điện thoại</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.sodienthoai"
-                  required
-                  name="sdt"
-                />
-                <span
-                  ng-show="formAdd.sdt.$invalid"
-                  ng-hide="show?true:false"
-                  class="has-error"
-                  >Số điện thoại không được trống</span
-                >
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Số căn cước</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                  ng-model="form_nv.cmt"
-                  required
-                  name="cmt"
-                />
-                <span
-                  ng-show="formAdd.cmt.$invalid"
-                  ng-hide="show?true:false"
-                  class="has-error"
-                  >Số căn cước không được trống</span
-                >
-              </div>
-            </form>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <a
-                type="button"
-                id="liveToastBtn"
-                class="btn btn-primary"
-                ng-disabled="formAdd.$invalid"
-                ng-click="add($event)"
-                >Thêm</a
-              >
-              <a
-                type="button"
-                class="btn btn-primary"
-                href="#nhan-vien/hien-thi"
-                >Back</a
-              >
             </div>
-          </div>
+            <!-- Các nút điều hướng -->
+          </form>
         </div>
       </div>
     </div>

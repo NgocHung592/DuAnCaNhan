@@ -119,18 +119,18 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "nhan-vien/update-nhan-vien.html",
       controller: updateNhanVienController,
     })
-    .when("/khach-hang/hien-thi", {
-      templateUrl: "khach-hang/hien-thi-khach-hang.html",
-      controller: hienThiKhachHangController,
-    })
-    .when("/khach-hang/add", {
-      templateUrl: "khach-hang/add-khach-hang.html",
-      controller: addKhachHangController,
-    })
-    .when("/khach-hang/update/:id", {
-      templateUrl: "khach-hang/update-khach-hang.html",
-      controller: updateKhachHangController,
-    })
+    // .when("/khach-hang/hien-thi", {
+    //   templateUrl: "khach-hang/hien-thi-khach-hang.html",
+    //   controller: hienThiKhachHangController,
+    // })
+    // .when("/khach-hang/add", {
+    //   templateUrl: "khach-hang/add-khach-hang.html",
+    //   controller: addKhachHangController,
+    // })
+    // .when("/khach-hang/update/:id", {
+    //   templateUrl: "khach-hang/update-khach-hang.html",
+    //   controller: updateKhachHangController,
+    // })
     .when("/hoa-don/hien-thi", {
       templateUrl: "hoa-don/hien-thi-hoa-don.html",
       controller: HoaDonController,
