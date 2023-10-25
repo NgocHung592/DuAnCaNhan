@@ -163,12 +163,12 @@ Create table  ma_giam_gia_chi_tiet(
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
 	don_gia decimal(20,0),
-	don_gia_sau_khi_giam (20,0),
+	don_gia_sau_khi_giam decimal (20,0),
 	ma_giam_gia_id  UNIQUEIDENTIFIER REFERENCES ma_giam_gia(id),
 	hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
 	
  )
- Create table [vai_tro](
+ Create table [chuc_vu](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,
 	ma varchar(20) not null,
@@ -198,15 +198,17 @@ Create table  ma_giam_gia_chi_tiet(
 	trang_thai int,
     ngay_tao datetime,
     ngay_sua datetime,
+	da_xoa bit,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
-	so_nha nvarchar(20),
+	mo_ta nvarchar(20),
 	tinh_thanh_pho nvarchar(20),
 	quan_huyen nvarchar(20),
 	phuong_xa nvarchar(20),
-	vai_tro_id UNIQUEIDENTIFIER REFERENCES vai_tro(id)
+	chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
 
  )
+ drop table nhan_vien
  Create table [khach_hang](
 	id UNIQUEIDENTIFIER 
 		DEFAULT NEWID() PRIMARY KEY,

@@ -1,4 +1,4 @@
-gwindow.hienThiNhanVienController = function ($http, $scope) {
+window.hienThiNhanVienController = function ($http, $scope) {
   $scope.list_nv = [];
   $scope.searchKeyword = "";
   $scope.selectedOption = "";

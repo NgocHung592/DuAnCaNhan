@@ -37,7 +37,7 @@ public class LichSuHoaDon {
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
 
-    @ManyToOne
-    @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
-    private TaiKhoan taiKhoan;
+//    @ManyToOne
+//    @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
+////    private TaiKhoan taiKhoan;
 }

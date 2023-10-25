@@ -7,32 +7,44 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.UUID;
-
 @Getter
 @Setter
 public class NhanVienRequest {
     private String ma;
 
-    private String sodienthoai;
+    private String ten;
 
-    private String cmt;
+    private String hinhanh;
+
+    private Boolean gioitinh;
+
+    private String email;
 
     private String matkhau;
+
+    private String sodienthoai;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
     private Date ngaysinh;
 
-    private String ten;
-
-    private String email;
-
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
     private Date ngaytao;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    private Date ngaysua;
+
     private String trangthai;
 
     private String idVaiTro;
+
+    private String mota;
+
+    private String quanHuyen;
+
+    private String phuongXa;
+
+    private String tinhThanhPho;
 }

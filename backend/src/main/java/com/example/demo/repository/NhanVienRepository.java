@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
-
-import com.example.demo.entity.TaiKhoan;
+import com.example.demo.entity.NhanVien;
+import com.example.demo.model.response.NhanVienReponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,20 +13,26 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface NhanVienRepository extends JpaRepository<TaiKhoan, UUID> {
+public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
+    @Query(value = """  
+            select a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.mo_ta,a.phuong_xa,
+                        a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id 
+                        order by a.ngay_tao desc """, nativeQuery = true)
+    Page<NhanVienReponse> getNhanVienAll(Pageable pageable);
 
+    @Query(value = """  
+            select a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.mo_ta,a.phuong_xa,
+                        a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id where
+                                                    a.trang_thai like %:search% 
+                        order by a.ngay_tao desc """, nativeQuery = true)
+    Page<NhanVienReponse> getNhanVienTrangThai1(Pageable pageable, @Param("search") String search);
 
-    @Query("select kd from TaiKhoan kd where kd.vaiTro.ten LIKE 'Nhân Viên' ")
-    Page<TaiKhoan> getAll(Pageable pageable);
-    @Query("select nv from TaiKhoan  nv where nv.trangthai = 1 and nv.vaiTro is not null")
-    Page<TaiKhoan> getAllByStatus(Pageable pageable);
-    @Query("select nv from TaiKhoan  nv where nv.trangthai = 1 and nv.vaiTro is not null ")
-    List<TaiKhoan> findByTrangthai(Integer trangthai);
-    @Query("select nv from TaiKhoan  nv where nv.ma LIKE %:ma% and nv.vaiTro is not null ")
-    Page<TaiKhoan> findByMaContainingIgnoreCase(Pageable pageable,@Param("ma")String ma);
-    @Query("select nv from TaiKhoan  nv where nv.sodienthoai LIKE %:sodienthoai% and nv.vaiTro is not null ")
-    Page<TaiKhoan> findBySodienthoaiContainingIgnoreCase(Pageable pageable,@Param("sodienthoai")String sdt);
-    @Query("select nv from TaiKhoan  nv where nv.hoten LIKE %:ten% and nv.vaiTro is not null ")
-    Page<TaiKhoan> findByTenContainingIgnoreCase(Pageable pageable,@Param("ten")String ten);
+    @Query(value = """  
+            select  a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.mo_ta,a.phuong_xa,
+                                                    a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id  where
+                                                    a.ma like %:search% or a.ho_ten like %:search% or a.email like %:search% or a.so_dien_thoai like %:search%
+                                                    order by a.ngay_tao desc """, nativeQuery = true)
+    Page<NhanVienReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
+
 
 }
