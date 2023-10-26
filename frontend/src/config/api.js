@@ -24,8 +24,7 @@ window.hoaDonChiTietAPI = url + "/hoa-don-chi-tiet";
 
 window.khachHangAPI = url + "/khach-hang";
 
-window.khuyenmaiAPI = url + "/khuyen-mai";
-
+window.magiamgiaAPI = url + "/ma-giam-gia";
 window.nhanVienAPI = url + "/nhan-vien";
 
 window.thuChiAPI = url + "/thu-chi";

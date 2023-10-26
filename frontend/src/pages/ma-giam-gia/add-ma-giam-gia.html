@@ -1,0 +1,136 @@
+<br>
+<div class="card flex-md-fill w-100">
+    <div class="card-header">
+        <div class="col-md-4">
+            <a type="button" class="btn btn-warning" href="#ma-giam-gia/hienthi" >Back</a>
+        </div>
+    </div>
+    <div class="card-body d-flex">
+
+              <div class="container" align="left">
+                  <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                          <form>
+                              <div class="row">
+                            <div class="col-mb-12 row" >
+                            <label for="inputMa" class="col-sm-4 col-form-label">Mã giảm giá:</label>
+                             <div class="col-sm-8">
+                              <input type="text" class="form-control" id="inputMa"  ng-model="detailProduct.ma">
+
+                                 <div class="invalid-feedback">
+                                     Please provide a valid zip.
+                                 </div>
+                             </div>
+                            </div>
+                              </div>
+
+                              <br>
+
+                              <div class="row">
+                                  <div class="col-mb-12 row" >
+                                      <label for="inputTen" class="col-sm-4 col-form-label">Tên mã:</label>
+                                      <div class="col-sm-8">
+                                          <input type="text" class="form-control" id="inputTen" ng-model="detailProduct.tenKM">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <br>
+
+                                <div class="row">
+                                    <div class="col-mb-12 row">
+                                        <label for="inputHinhThucGG" class="col-sm-4 col-form-label">Hình Thức Giảm Giá:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-select" aria-label="Default select example" id="inputHinhThucGG" ng-model="detailProduct.hinhThucGiam">
+
+                                                <option value="1">Tiền mặt</option>
+                                                <option value="2">Phần trăm</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                              <br>
+
+                              <div class="row">
+                                  <div class="col-mb-12 row">
+
+                                      <label for="inputGTDToiThieu" class="col-sm-6 col-form-label">Giá trị đơn tối thiểu:</label>
+                                      <label for="inputGTD" class="col-sm-6 col-form-label">Giảm tối đa:</label>
+                                  </div>
+                                  <div class="col-mb-12 row" >
+                                      <div class ="col-sm-6">
+                                          <input type="number" class="form-control" id="inputGTDToiThieu" ng-model="detailProduct.giaTriDonToiThieu">
+                                      </div>
+
+
+                                      <div class="col-sm-6">
+                                          <input type="number" class="form-control" id="inputGTD"ng-model="detailProduct.giaTriGiamToiDa">
+                                      </div>
+                                  </div>
+
+
+                              </div>
+
+                              <br>
+
+                              <div class="row">
+                                  <div class="col-mb-12 row">
+
+                                      <label for="inputNbd" class="col-sm-6 col-form-label">Ngày bắt đầu:</label>
+                                      <label for="inputNkt" class="col-sm-6 col-form-label">Ngày kết thúc:</label>
+                                  </div>
+                                  <div class="col-mb-12 row" >
+                                      <div class ="col-sm-6">
+                                          <input type="datetime-local" class="form-control" id="inputNbd" ng-model="detailProduct.ngayBatDau">
+                                      </div>
+                                      <div class="col-sm-6">
+                                          <input type="datetime-local" class="form-control" id="inputNkt" ng-model="detailProduct.ngayKetThuc">
+                                      </div>
+                                  </div>
+
+
+                              </div>
+
+                              <br>
+
+                              <div class="row">
+                                  <div class="col-mb-12 row">
+
+                                      <label for="inputSlm" class="col-sm-6 col-form-label">Số lượng mã:</label>
+                                      <label for="inputTt" class="col-sm-6 col-form-label">Trạng thái:</label>
+                                  </div>
+                                  <div class="col-mb-12 row" >
+                                      <div class ="col-sm-6">
+                                          <input type="number" class="form-control" id="inputSlm" ng-model="detailProduct.soLuong">
+                                      </div>
+
+
+                                      <div class="col-sm-6">
+                                          <select class="form-select" aria-label="Default select example" id="inputTt" ng-model="detailProduct.trangThai">
+                                              <option value="1">Sắp diễn ra</option>
+                                              <option value="2">Đang diễn ra</option>
+                                              <option value="3">Đã hết hạn</option>
+                                          </select>
+                                      </div>
+                                  </div>
+
+
+                              </div>
+
+                              <br>
+                              <div class="col-md-4">
+                                  <a type="button" class="btn btn-primary" href="#ma-giam-gia/hienthi" ng-click="add($event)">Thêm mã</a>
+                              </div>
+
+                          </form>
+                             </div>
+                                <div class="col-md-2"></div>
+                      </div>
+              </div>
+              </div>
+
+          </div>
+
+
