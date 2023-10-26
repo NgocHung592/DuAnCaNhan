@@ -2,7 +2,7 @@
 <div class="card flex-md-fill w-100">
     <div class="card-header">
         <div class="col-md-4">
-            <a type="button" class="btn btn-warning" >Back</a>
+            <a type="button" class="btn btn-warning" href="#ma-giam-gia/hienthi">Back</a>
         </div>
     </div>
     <div class="card-body d-flex">
@@ -42,10 +42,10 @@
                             <div class="col-mb-12 row">
                                 <label for="inputHinhThucGG" class="col-sm-4 col-form-label">Hình Thức Giảm Giá:</label>
                                 <div class="col-sm-8">
-                                    <select class="form-select" aria-label="Default select example" id="inputHinhThucGG" ng-model="detailProduct.hinhThucGiam">
+                                    <select class="form-select" aria-label="Default select example" id="inputHinhThucGG" >
 
-                                        <option value="1">Tiền mặt</option>
-                                        <option value="2">Phần trăm</option>
+                                        <option  value="1" ng-model="detailProduct.hinhThucGiam" ng-checked="maGiamGia.hinhThucGiam=='1'">Tiền mặt</option>
+                                        <option value="2" ng-model="detailProduct.hinhThucGiam" ng-checked="maGiamGia.hinhThucGiam=='2'">Phần trăm</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,10 +108,10 @@
 
 
                                 <div class="col-sm-6">
-                                    <select class="form-select" aria-label="Default select example" id="inputTt" ng-model="detailProduct.trangThai">
-                                        <option value="1">Sắp diễn ra</option>
-                                        <option value="2">Đang diễn ra</option>
-                                        <option value="3">Đã hết hạn</option>
+                                    <select class="form-select" aria-label="Default select example" id="inputTt" >
+                                        <option value="1" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='1'">Sắp diễn ra</option>
+                                        <option value="2" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='2'">Đang diễn ra</option>
+                                        <option value="3" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='3'">Đã hết hạn</option>
                                     </select>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
 
                         <br>
                         <div class="col-md-4">
-                            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/hienthi" ng-click="update(detailProduct.id)">Thêm mã</a>
+                            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/hienthi" ng-click="update(detailProduct.id)">Cập nhật mã</a>
                         </div>
 
                     </form>

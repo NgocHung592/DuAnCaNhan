@@ -25,7 +25,7 @@ public class MaGiamGiaController {
     }
 
     @PostMapping("add")
-    public MaGiamGia add(@RequestBody @Valid MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception{
+    public MaGiamGia post(@RequestBody MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception{
         return maGiamGiaService.add(maGiamGia);
     }
 

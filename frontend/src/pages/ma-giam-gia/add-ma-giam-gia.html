@@ -108,8 +108,8 @@
 
 
                                       <div class="col-sm-6">
-                                          <select class="form-select" aria-label="Default select example" id="inputTt" ng-model="detailProduct.trangThai">
-                                              <option value="1">Sắp diễn ra</option>
+                                          <select class="form-select" aria-label="Default select example" id="inputTt"  disabled >
+                                              <option value="1" ng-model="detailProduct.trangThai">Sắp diễn ra</option>
                                               <option value="2">Đang diễn ra</option>
                                               <option value="3">Đã hết hạn</option>
                                           </select>
@@ -121,7 +121,7 @@
 
                               <br>
                               <div class="col-md-4">
-                                  <a type="button" class="btn btn-primary" href="#ma-giam-gia/hienthi" ng-click="add($event)">Thêm mã</a>
+                                  <a type="button" class="btn btn-primary" href="#/ma-giam-gia/hienthi" ng-click="add($event)">Thêm mã</a>
                               </div>
 
                           </form>
