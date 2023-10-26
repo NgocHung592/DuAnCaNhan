@@ -9,49 +9,25 @@
           <div class="align-self-center w-100">
             <div></div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <a type="button" class="btn btn-success" href="#nhan-vien/add"
-                >+ Thêm mới</a
-              >
+              <a type="button" class="btn btn-success" href="#nhan-vien/add">+ Thêm mới</a>
             </div>
 
             <div class="search-and-radio-container">
               <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
-                <input
-                  type="text"
-                  ng-model="searchKeyword"
-                  placeholder="Tìm kiếm theo mã, họ tên, email, số điện thoại"
-                  class="search-input"
-                />
+                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, họ tên, email, số điện thoại"
+                  class="search-input" />
               </div>
 
               <div class="radio-container">
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  ng-change="getNhanVien()"
-                  required
-                  id="option-all"
-                />
+                <input type="radio" ng-model="selectedOption" ng-change="getNhanVien()" required id="option-all" />
                 <label for="option-all">Tất cả</label>
 
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  value="1"
-                  ng-change="searchTT()"
-                  id="option-active"
-                  checked
-                />
+                <input type="radio" ng-model="selectedOption" value="1" ng-change="searchTT()" id="option-active"
+                  checked />
                 <label for="option-active">Đang hoạt động</label>
 
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  value="2"
-                  ng-change="searchTT()"
-                  id="option-inactive"
-                />
+                <input type="radio" ng-model="selectedOption" value="2" ng-change="searchTT()" id="option-inactive" />
                 <label for="option-inactive">Đã khóa</label>
               </div>
             </div>
@@ -76,19 +52,8 @@
                 <tr ng-repeat="nv in list_nv.content">
                   <th scope="row">{{$index+1}}</th>
                   <td>
-                    <i
-                      ng-if="!nv.hinhanh"
-                      style="font-size: 30px"
-                      class="fas fa-user-circle"
-                      aria-hidden="true"
-                    ></i>
-                    <i
-                      ng-if="nv.hinhanh"
-                      ng-src="{{nv.hinhanh}}"
-                      alt="Employee Image"
-                      width="200"
-                      height="200"
-                    ></i>
+                    <i ng-if="!nv.hinhanh" style="font-size: 30px" class="fas fa-user-circle" aria-hidden="true"></i>
+                    <i ng-if="nv.hinhanh" ng-src="{{nv.hinhanh}}" alt="Employee Image" width="200" height="200"></i>
                   </td>
                   <th scope="row">{{nv.ma}}</th>
                   <th scope="row">{{nv.hoTen}}</th>
@@ -98,21 +63,12 @@
                     {{nv.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
                   </th>
                   <th scope="row">
-                    <span class="text-g" ng-if="nv.trangThai==1"
-                      >Kích hoạt</span
-                    >
-                    <span class="text-glow" ng-if="nv.trangThai==2"
-                      >Đã khóa</span
-                    >
+                    <span class="text-g" ng-if="nv.trangThai==1">Kích hoạt</span>
+                    <span class="text-glow" ng-if="nv.trangThai==2">Đã khóa</span>
                   </th>
                   <th>
-                    <a
-                      type="button"
-                      class="fas fa-edit"
-                      style="font-size: 22px"
-                      aria-hidden="true"
-                      href="#nhan-vien/update/{{nv.id}}"
-                    ></a>
+                    <a type="button" class="fas fa-edit" style="font-size: 22px" aria-hidden="true"
+                      href="#nhan-vien/update/{{nv.id}}"></a>
                   </th>
                 </tr>
               </tbody>
@@ -125,11 +81,7 @@
               <div class="col-md-12">
                 <nav aria-label="Page navigation example center">
                   <ul class="pagination justify-content-center">
-                    <li
-                      class="page-item"
-                      ng-repeat="page in totalPages track by $index"
-                      ng-click="changePage($index);"
-                    >
+                    <li class="page-item" ng-repeat="page in totalPages track by $index" ng-click="changePage($index);">
                       <a class="page-link">{{$index+1}}</a>
                     </li>
                   </ul>
@@ -142,181 +94,3 @@
     </div>
   </div>
 </main>
-
-<style>
-  .checkbox-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .checkbox-item {
-    margin-right: 20px;
-    margin-bottom: 10px;
-  }
-
-  .checkbox-label {
-    display: inline-block;
-    margin-left: 5px;
-  }
-
-  .text-glow {
-    color: red; /* Màu của văn bản */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Màu sáng, độ mờ và màu ánh sáng */
-  }
-  .text-g {
-    color: green; /* Màu của văn bản */
-    text-shadow: 0 0 10px rgba(0, 255, 17, 0.5); /* Màu sáng, độ mờ và màu ánh sáng */
-  }
-
-  /* CSS cho phần header */
-  .card-header {
-    background-color: #f11596;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .card-title {
-    font-size: 24px;
-  }
-
-  /* CSS cho nút Thêm mới */
-  .btn-success {
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .btn-success:hover {
-    background-color: #218838;
-  }
-
-  /* CSS cho bảng dữ liệu */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .table th,
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-
-  .table th {
-    background-color: #f2f2f2;
-  }
-
-  .table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  /* CSS cho phân trang */
-  .pagination {
-    margin: 0;
-    padding: 0;
-  }
-
-  .page-item {
-    list-style: none;
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  .page-link {
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-  }
-
-  .page-link:hover {
-    background-color: #0056b3;
-  }
-
-  /* CSS cho ảnh nhân viên */
-  img.employee-image {
-    max-width: 100px;
-    max-height: 100px;
-    border-radius: 50%;
-  }
-  /* CSS cho khung tìm kiếm và radio buttons */
-  .search-and-radio-container {
-    display: flex;
-    align-items: center;
-  }
-
-  .search-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 5px 10px;
-    transition: border-color 0.3s;
-  }
-
-  .search-input {
-    border: none;
-    outline: none;
-    width: 100%;
-  }
-
-  .search-icon {
-    margin-right: 10px;
-    color: #333;
-    font-size: 16px;
-  }
-
-  .radio-container {
-    display: flex;
-    align-items: center;
-    margin-left: 50px; /* Điều chỉnh khoảng cách giữa khung tìm kiếm và radio buttons */
-  }
-
-  /* Thay đổi màu khi focus vào khung tìm kiếm */
-  .search-container:focus-within {
-    border-color: #007bff;
-  }
-
-  /* Ẩn radio buttons */
-  .radio-container input[type="radio"] {
-    display: none;
-  }
-
-  /* Tạo sự tương tác với label */
-  .radio-container label {
-    padding: 5px 10px;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  /* Tô màu khi radio được chọn */
-  .radio-container input[type="radio"]:checked + label {
-    background-color: #ff000d;
-    color: #fff;
-    border-color: #007bff;
-  }
-
-  /* Thay đổi màu khi hover vào label */
-  .radio-container label:hover {
-    background-color: #2200ff;
-    color: #fff;
-  }
-  .no-data-message {
-    text-align: center; /* Căn giữa theo chiều ngang */
-    margin-top: 50px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
-    font-size: 100px; /* Tùy chỉnh kích thước chữ */
-    color: red; /* Tùy chỉnh màu sắc chữ */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Tạo hiệu ứng glow */
-  }
-</style>

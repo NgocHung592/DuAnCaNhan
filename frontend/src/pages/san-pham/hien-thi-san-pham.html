@@ -5,7 +5,27 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>SẢN PHẨM CHI TIẾT</h4>
+                        <div class="search-and-radio-container">
+                            <div class="search-container">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, tên"
+                                    class="search-input" />
+                            </div>
 
+                            <div class="radio-container">
+                                <input type="radio" ng-model="selectedOption" ng-change="()" required id="option-all" />
+                                <label for="option-all">Tất cả</label>
+
+                                <input type="radio" ng-model="selectedOption" value="1" ng-change="()"
+                                    id="option-active" checked />
+                                <label for="option-active">Đang kinh doanh</label>
+
+                                <input type="radio" ng-model="selectedOption" value="2" ng-change="()"
+                                    id="option-inactive" />
+                                <label for="option-inactive">Ngừng kinh doanh</label>
+                            </div>
+
+                        </div>
                         <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" href="#san-pham/add">Thêm Sản Phẩm</a>
                         </div>
