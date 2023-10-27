@@ -40,10 +40,6 @@ public class SanPhamController {
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
-    @GetMapping("search")
-    public ResponseEntity findByName(@RequestBody SanPham sanPham) {
-        return new ResponseEntity(sanPhamService.findByName(sanPham), HttpStatus.OK);
-    }
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody SanPham sanPham) {

@@ -1,5 +1,6 @@
 package com.example.demo.service.Impl;
 
+import com.example.demo.entity.HinhAnh;
 import com.example.demo.entity.KichThuoc;
 import com.example.demo.entity.KichThuocMauSac;
 import com.example.demo.entity.MauSac;
@@ -9,6 +10,7 @@ import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.repository.CoAoRepository;
+import com.example.demo.repository.HinhAnhRepository;
 import com.example.demo.repository.HoaTietRepository;
 import com.example.demo.repository.KichThuocRepository;
 import com.example.demo.repository.MauSacRepository;
@@ -50,6 +52,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private TayAoRepository tayAoRepository;
     @Autowired
     private CoAoRepository coAoRepository;
+    @Autowired
+    private HinhAnhRepository hinhAnhRepository;
 
 
     long currentTimestampMillis = System.currentTimeMillis();
@@ -76,6 +80,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
             if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
+                        .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
+                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getGiaBan()))
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -88,7 +94,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-                sanPhamChiTietRepository.save(sanPhamChiTietSave);
+                SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
+                HinhAnh hinhAnhSave = HinhAnh.builder()
+                        .duong_dan(sanPhamChiTietRequest.getUrlImage())
+                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .nguoiTao("Hưng")
+                        .sanPhamChiTiet(sanPhamChiTiet)
+                        .build();
+                hinhAnhRepository.save(hinhAnhSave);
                 return;
             } else {
                 SanPham sanPhamSave = SanPham.builder()
@@ -103,6 +116,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                        .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
+                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getGiaBan()))
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
                         .sanPham(sanPham)
@@ -114,7 +129,15 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-                sanPhamChiTietRepository.save(sanPhamChiTietSave);
+               SanPhamChiTiet sanPhamChiTiet= sanPhamChiTietRepository.save(sanPhamChiTietSave);
+
+                HinhAnh hinhAnhSave = HinhAnh.builder()
+                        .duong_dan(sanPhamChiTietRequest.getUrlImage())
+                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .nguoiTao("Hưng")
+                        .sanPhamChiTiet(sanPhamChiTiet)
+                        .build();
+                hinhAnhRepository.save(hinhAnhSave);
                 return;
             }
         });

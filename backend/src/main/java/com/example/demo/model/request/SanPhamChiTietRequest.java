@@ -18,7 +18,7 @@ public class SanPhamChiTietRequest {
 
     private String tenSanPham;
 
-    private String giaBan;
+    private Double giaBan;
 
     private String soLuong;
 

@@ -38,6 +38,12 @@ public class SanPhamChiTiet implements Serializable {
     @Column(name = "id")
     private UUID id;
 
+    @Column(name = "so_luong")
+    private Integer soLuong;
+
+    @Column(name = "don_gia")
+    private BigDecimal donGia;
+
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
 

@@ -2,6 +2,7 @@ package com.example.demo.model.response;
 
 import org.springframework.beans.factory.annotation.Value;
 public interface HoaDonRepone {
+
     @Value("#{target.id}")
     String getID();
 
