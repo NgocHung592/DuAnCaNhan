@@ -271,3 +271,14 @@ img.employee-image {
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     /* Tạo hiệu ứng glow */
 }
+
+.merged-row td {
+    display: inline;
+    padding: 5px;
+}
+
+.san-pham-cung-mau {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #ccc;
+}

@@ -1,15 +1,13 @@
 window.addSanPhamController = function ($http, $scope) {
   $scope.totalPages = [];
   $scope.products = [];
-  $scope.prductDetails = [];
+  $scope.productDetails = [];
   $scope.sizeAndQuantitys = [];
   $scope.colors = [];
   $scope.sizeAndColors = [];
 
-  $scope.show = Boolean;
   $scope.currentPage = 0;
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
-  $scope.soLuong = "";
 
   $scope.product = {
     maSanPham: $scope.randoomSanPham,
@@ -17,7 +15,6 @@ window.addSanPhamController = function ($http, $scope) {
     moTa: "",
     idPhongCach: "",
     idChatLieu: "",
-    kichThuocChiTiets: [],
     idHoaTiet: "",
     idCoAo: "",
     idTayAo: "",
@@ -28,17 +25,10 @@ window.addSanPhamController = function ($http, $scope) {
     tenKichThuoc: "",
     soLuong: "",
     gia: "",
-    daXoa: false,
+    urlImage: "",
   };
   $scope.color = {
     tenMauSac: "",
-  };
-  $scope.sizeAndColor = {
-    tenKichThuoc: "",
-    tenMauSac: "",
-    soLuong: "",
-    gia: "",
-    daXoa: "",
   };
 
   $scope.addKichThuoc = function (index) {
@@ -72,8 +62,6 @@ window.addSanPhamController = function ($http, $scope) {
   };
 
   $scope.addSizeAndColor = function () {
-    let index = -1;
-
     $scope.sizeAndQuantitys.forEach((size) => {
       $scope.colors.forEach((color) => {
         $scope.sizeAndColor = {
@@ -81,11 +69,9 @@ window.addSanPhamController = function ($http, $scope) {
           tenMauSac: color.tenMauSac,
           soLuong: size.soLuong,
           gia: size.gia,
-          daXoa: size.daXoa,
         };
         let newSizeAndColor = angular.copy($scope.sizeAndColor);
         let exists = false;
-
         for (let i = 0; i < $scope.sizeAndColors.length; i++) {
           let existingItem = $scope.sizeAndColors[i];
 
@@ -100,104 +86,70 @@ window.addSanPhamController = function ($http, $scope) {
         } else {
           $scope.sizeAndColors.push(newSizeAndColor);
         }
+        $scope.groupedProducts = {};
+
+        $scope.sizeAndColors.forEach((product) => {
+          if (!$scope.groupedProducts[product.tenMauSac]) {
+            $scope.groupedProducts[product.tenMauSac] = [];
+          }
+          $scope.groupedProducts[product.tenMauSac].push(product);
+        });
       });
     });
+    console.log($scope.groupedProducts);
   };
 
   $scope.removeSize = function (index) {
     if (index !== -1) {
-      $scope.sizeAndColors.splice(index, 1);
+      // $scope.groupedProducts.remove(index, 1);
     }
-  };
-
-  $scope.changeSoLuong = function (index) {
-    $scope.sizeAndColors[index].soLuong = $scope.sizeAndColors[index].soLuong;
-  };
-  $scope.changeGia = function (index) {
-    $scope.sizeAndColors[index].gia = $scope.sizeAndColors[index].gia;
-  };
-
-  let uploadFiles = (files) => {
-    let CLOUD_NAME = "djz9ks2ft";
-    let urls = [];
-    let api = "https://api.cloudinary.com/v1_1/";
-
-    for (const file of files) {
-      var formData = new FormData();
-      formData.append("upload_preset", "upload-image");
-      formData.append("folder", "ECMA");
-      formData.append("file", file);
-
-      for (const obj of formData) {
-        console.log(obj);
-      }
-
-      $http
-        .post(api + CLOUD_NAME + "/image/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(function (response) {
-          console.log(response.data);
-        });
-    }
-
-    // console.log($scope.PRESENT_NAME);
-    // let productImages = document.getElementById("product-image");
-    // console.log(productImages.files);
   };
 
   $scope.saveProduct = function (event) {
     event.preventDefault();
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-    $scope.productDetail = {
-      maSanPham: $scope.product.maSanPham,
-      tenSanPham: $scope.product.tenSanPham,
-      moTa: $scope.product.moTa,
-      idPhongCach: $scope.product.idPhongCach,
-      idChatLieu: $scope.product.idChatLieu,
-      idHoaTiet: $scope.product.idHoaTiet,
-      idCoAo: $scope.product.idCoAo,
-      idTayAo: $scope.product.idTayAo,
-      kichThuocChiTiets: $scope.sizeAndColors,
-      daXoa: $scope.product.daXoa,
-    };
-    if ($scope.product.gia != "") {
-      $http
-        .post(sanPhamChiTietAPI + "/add", $scope.productDetail)
-        .then(function () {
-          console.log($scope.productDetail);
-          $scope.message = "Thêm thành công";
-          $scope.show = true;
-          return true;
-        });
-      $http
-        .post(sanPhamChiTietAPI + "/add", $scope.sizeAndQuantitys)
-        .then(function () {
-          $scope.message = "Thêm thành công";
-          $scope.show = true;
-          return true;
-        });
-    } else {
-      $scope.message = "Thêm thất bại";
-      $scope.show = false;
-      return false;
+    let productImages = document.getElementById("product-image");
+    for (const file of productImages.files) {
+      $scope.sizeAndColors.forEach((sizeAndColor) => {
+        const newProductDetail = {
+          maSanPham: $scope.product.maSanPham,
+          tenSanPham: $scope.product.tenSanPham,
+          moTa: $scope.product.moTa,
+          idPhongCach: $scope.product.idPhongCach,
+          idChatLieu: $scope.product.idChatLieu,
+          idHoaTiet: $scope.product.idHoaTiet,
+          idCoAo: $scope.product.idCoAo,
+          idTayAo: $scope.product.idTayAo,
+          tenKichThuoc: sizeAndColor.tenKichThuoc,
+          tenMauSac: sizeAndColor.tenMauSac,
+          soLuong: sizeAndColor.soLuong,
+          giaBan: sizeAndColor.gia,
+          urlImage: file.name, // Set the image name based on the selected file
+          daXoa: $scope.product.daXoa,
+        };
+
+        let exists = false;
+        for (let i = 0; i < $scope.productDetails.length; i++) {
+          const existingItem = $scope.productDetails[i];
+
+          if (angular.equals(existingItem, newProductDetail)) {
+            exists = true;
+            break;
+          }
+        }
+
+        if (exists) {
+          // Handle the case where the product detail already exists.
+        } else {
+          $scope.productDetails.push(newProductDetail);
+        }
+      });
     }
 
-    // Hoặc nếu bạn muốn gửi file:
-    let productImages = document.getElementById("product-image");
-    uploadFiles(productImages.files);
+    console.log($scope.productDetails);
+
+    $http
+      .post(sanPhamChiTietAPI + "/add", $scope.productDetails)
+      .then(function () {});
   };
 
   //load thuoc tinh theo trang thai kich hoat

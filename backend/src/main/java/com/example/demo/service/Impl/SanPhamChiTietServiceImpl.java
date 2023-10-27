@@ -73,11 +73,26 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
     @Override
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
-            if (!sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
+            if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
+                SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
+                        .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .nguoiTao("Hưng")
+                        .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
+                        .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
+                        .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
+                        .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
+                        .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
+                        .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
+                        .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
+                        .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
+                        .build();
+                sanPhamChiTietRepository.save(sanPhamChiTietSave);
+                return;
+            } else {
                 SanPham sanPhamSave = SanPham.builder()
-                        .ma(sanPhamChiTietRequest.getTenSanPham())
+                        .ma(sanPhamChiTietRequest.getMaSanPham())
                         .ten(sanPhamChiTietRequest.getTenSanPham())
                         .moTa(sanPhamChiTietRequest.getMoTa())
                         .ngayTao(new Timestamp(currentTimestampMillis))
@@ -86,7 +101,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .build();
                 SanPham sanPham = sanPhamRepository.save(sanPhamSave);
 
-                SanPhamChiTiet sanPhamChiTietSave= SanPhamChiTiet.builder()
+                SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -99,50 +114,21 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-                return sanPhamChiTietRepository.saveAll(sanPhamChiTietSave);
+                sanPhamChiTietRepository.save(sanPhamChiTietSave);
+                return;
             }
-            SanPhamChiTiet sanPhamChiTietSave= SanPhamChiTiet.builder()
-                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .sanPham(sanPham)
-                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
-                    .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
-                    .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
-                    .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
-                    .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
-                    .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
-                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
-                    .build();
-            return sanPhamChiTietRepository.saveAll(sanPhamChiTietSave);
         });
-    return null;
-    }
-
-//    private List<SanPhamChiTiet> getKichThuocChiTiets(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-//        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
-//
-//        List<KichThuocMauSac> kichThuocChiTietList = new ArrayList<>();
-//        sanPhamChiTietRequest.getKichThuocChiTiets().forEach(kichThuocChiTietRequest -> {
-//            KichThuocMauSac kichThuocChiTietSave = KichThuocMauSac.builder()
-//                    .soLuong(Integer.valueOf(kichThuocChiTietRequest.getSoLuong()))
-//                    .donGia(BigDecimal.valueOf(kichThuocChiTietRequest.getGia()))
-//                    .ngayTao(new Timestamp(currentTimestampMillis))
-//                    .nguoiTao(null)
-//                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(kichThuocChiTietRequest.getTenKichThuoc())).get())
-//                    .mauSac(mauSacRepository.findById(getIdMauSac(kichThuocChiTietRequest.getTenMauSac())).get())
-//                    .sanPhamChiTiet(sanPhamChiTiet)
-//                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-//                    .build();
-//            kichThuocChiTietList.add(kichThuocChiTietSave);
-//        });
-//        return kichThuocChiTietRepository.saveAll(kichThuocChiTietList);
-//    }
-
-    @Override
-    public List<KichThuocMauSac> getList(UUID id) {
-//        return kichThuocChiTietRepository.getList(id);
         return null;
     }
 
+    public UUID getIdSanPham(String ten) {
+        for (SanPham sanPham : sanPhamRepository.findAll()) {
+            if (ten.equals(sanPham.getTen())) {
+                return sanPham.getId();
+            }
+        }
+        return null;
+    }
 
     public UUID getIdKichThuoc(String ten) {
         for (KichThuoc kichThuoc : kichThuocRepository.findAll()) {

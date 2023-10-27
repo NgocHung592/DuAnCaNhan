@@ -145,20 +145,19 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       controller: ThuChiController,
     })
 
+    .when("/ma-giam-gia/hienthi", {
+      templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
+      controller: MaGiamGiaController,
+    })
 
-      .when("/ma-giam-gia/hienthi", {
-        templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
-        controller: MaGiamGiaController,
-      })
-
-      .when("/ma-giam-gia/add", {
-        templateUrl: "ma-giam-gia/add-ma-giam-gia.html",
-        controller: addMaGiamGiaController,
-      })
-      .when("/ma-giam-gia/update/:id", {
-        templateUrl: "ma-giam-gia/update-ma-giam-gia.html",
-        controller: updateMaGiamGiaController,
-      })
+    .when("/ma-giam-gia/add", {
+      templateUrl: "ma-giam-gia/add-ma-giam-gia.html",
+      controller: addMaGiamGiaController,
+    })
+    .when("/ma-giam-gia/update/:id", {
+      templateUrl: "ma-giam-gia/update-ma-giam-gia.html",
+      controller: updateMaGiamGiaController,
+    })
     .when("/ban-hang/tai-quay", {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",
       controller: addHoaDonController,

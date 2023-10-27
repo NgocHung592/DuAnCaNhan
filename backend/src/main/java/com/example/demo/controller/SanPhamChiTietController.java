@@ -34,15 +34,15 @@ public class SanPhamChiTietController {
             @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);
     }
-    @GetMapping("detail-kich-thuoc/{id}")
-    public ResponseEntity detailKichThuoc(
-            @PathVariable("id") String id) {
-        return new ResponseEntity(sanPhamChiTietService.getList(UUID.fromString(id)), HttpStatus.OK);
-    }
+//    @GetMapping("detail-kich-thuoc/{id}")
+//    public ResponseEntity detailKichThuoc(
+//            @PathVariable("id") String id) {
+//        return new ResponseEntity(sanPhamChiTietService.getList(UUID.fromString(id)), HttpStatus.OK);
+//    }
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-
+            System.out.println(sanPhamChiTietRequests);
         return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequests), HttpStatus.OK);
     }
 
