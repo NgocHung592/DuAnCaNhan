@@ -72,49 +72,52 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public List<KichThuocMauSac> add(SanPhamChiTietRequest sanPhamChiTietRequest) {
-        if (!sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
-            SanPham sanPhamSave = SanPham.builder()
-                    .ma(sanPhamChiTietRequest.getMaSanPham())
-                    .ten(sanPhamChiTietRequest.getTenSanPham())
-                    .moTa(sanPhamChiTietRequest.getMoTa())
-                    .ngayTao(new Timestamp(currentTimestampMillis))
-                    .nguoiTao(null)
-                    .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                    .build();
-            SanPham sanPham = sanPhamRepository.save(sanPhamSave);
+    public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
 
+        sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
+            if (!sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
+                SanPham sanPhamSave = SanPham.builder()
+                        .ma(sanPhamChiTietRequest.getTenSanPham())
+                        .ten(sanPhamChiTietRequest.getTenSanPham())
+                        .moTa(sanPhamChiTietRequest.getMoTa())
+                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .nguoiTao("Hưng")
+                        .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                        .build();
+                SanPham sanPham = sanPhamRepository.save(sanPhamSave);
 
-            SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
-                    .ngayTao(new Timestamp(currentTimestampMillis))
-                    .nguoiTao(null)
+                SanPhamChiTiet sanPhamChiTietSave= SanPhamChiTiet.builder()
+                        .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
+                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .nguoiTao("Hưng")
+                        .sanPham(sanPham)
+                        .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
+                        .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
+                        .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
+                        .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
+                        .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
+                        .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
+                        .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
+                        .build();
+                return sanPhamChiTietRepository.saveAll(sanPhamChiTietSave);
+            }
+            SanPhamChiTiet sanPhamChiTietSave= SanPhamChiTiet.builder()
                     .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                     .sanPham(sanPham)
+                    .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
+                    .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
                     .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
                     .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
-                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
-                    .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                     .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
+                    .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
+                    .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                     .build();
-//            return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
-
-        }
-        SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
-                .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
-                .chatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get())
-                .phongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get())
-                .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
-                .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
-                .coAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get())
-                .build();
-//        return getKichThuocChiTiets(sanPhamChiTietRequest, sanPhamChiTietSave);
-        return null;
+            return sanPhamChiTietRepository.saveAll(sanPhamChiTietSave);
+        });
+    return null;
     }
 
-//    private List<KichThuocMauSac> getKichThuocChiTiets(SanPhamChiTietRequest sanPhamChiTietRequest, SanPhamChiTiet sanPhamChiTietSave) {
+//    private List<SanPhamChiTiet> getKichThuocChiTiets(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
 //        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
 //
 //        List<KichThuocMauSac> kichThuocChiTietList = new ArrayList<>();
@@ -140,14 +143,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-    public UUID getIdSanPham(String ten) {
-        for (SanPham sanPham : sanPhamRepository.findAll()) {
-            if (ten.equals(sanPham.getTen())) {
-                return sanPham.getId();
-            }
-        }
-        return null;
-    }
 
     public UUID getIdKichThuoc(String ten) {
         for (KichThuoc kichThuoc : kichThuocRepository.findAll()) {

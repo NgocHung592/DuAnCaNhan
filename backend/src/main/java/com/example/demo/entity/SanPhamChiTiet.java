@@ -76,4 +76,12 @@ public class SanPhamChiTiet implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "phong_cach_id", referencedColumnName = "id")
     private PhongCach phongCach;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mau_sac_id", referencedColumnName = "id")
+    private MauSac mauSac;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kich_thuoc_id", referencedColumnName = "id")
+    private KichThuoc kichThuoc;
 }

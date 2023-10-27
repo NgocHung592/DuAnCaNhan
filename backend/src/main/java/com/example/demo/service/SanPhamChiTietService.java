@@ -17,10 +17,8 @@ public interface SanPhamChiTietService {
 
     SanPhamChiTiet getOne(UUID id);
 
-    List<KichThuocMauSac> add(SanPhamChiTietRequest sanPhamChiTietRequest);
+    List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);
 
     List<KichThuocMauSac> getList(UUID id);
-//
-//
-//    void delete(UUID id);
+
 }
