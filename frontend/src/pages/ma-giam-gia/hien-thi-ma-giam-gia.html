@@ -1,0 +1,96 @@
+<br />
+
+<div class="card flex-md-fill w-auto">
+    <div class="card-header">
+        <div class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="exampleFormControlInput1"
+                   placeholder="Tìm tên khuyến mãi">
+        </div>
+        <div class="col-md-4">
+            <a type="button" class="btn btn-primary" href="#/khuyenmai/tim-kiem">Tìm kiếm</a>
+            <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
+        </div>
+        <div class="col-md-4">
+            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/add">Thêm mã</a>
+        </div>
+    </div>
+    </div>
+    <br>
+    <br>
+    <div class="card-body d-flex align-self-center w-auto">
+        <div class="align-self-center w-auto">
+            <div class="row">
+        <div class="col-md-6">
+        <label class="col-form-label">Trạng Thái Mã Giảm Giá:</label>
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Default select example" >
+                <option value="1">Sắp diễn ra</option>
+                <option value="2">Đang diễn ra</option>
+                <option value="3">Đã hết hạn</option>
+            </select>
+        </div>
+    </div>
+        <div class="col-md-6">
+        <label class="col-form-label">Hình Thức Giảm Giá:</label>
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Default select example">
+
+                <option value="1">Tiền mặt</option>
+                <option value="2">Phần trăm</option>
+            </select>
+        </div>
+    </div>
+    </div>
+    <br>
+    <br />
+    <table class="table table-light table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Hình Thức </th>
+            <th scope="col">GT Đơn Tối Thiểu</th>
+            <th scope="col">Giảm Tối Đa</th>
+            <th scope="col">Ngày bắt đầu</th>
+            <th scope="col">Ngày kết thúc</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="maGiamGia in listMaGiamGia.content">
+        <tr>
+            <th>{{maGiamGia.ma}}</th>
+            <th>{{maGiamGia.tenKM}}</th>
+            <th>
+                <p ng-class="{' align-middle ': !maGiamGia.hinhThucGia=='0'
+                                        ,'align-middle':!maGiamGia.hinhThucGia}=='1'">
+                    {{maGiamGia.hinhThucGiam ? "Tiền mặt" : "Phần trăm"}}
+                </p>
+                </th>
+            <th>{{maGiamGia.giaTriDonToiThieu}}</th>
+            <th>{{maGiamGia.giaTriGiamToiDa}}</th>
+            <th>{{maGiamGia.ngayBatDau}}</th>
+            <th>{{maGiamGia.ngayKetThuc}}</th>
+            <th>{{maGiamGia.soLuong}}</th>
+            <th>
+            <p ng-class="{' align-middle text-bg-success text-light ': !maGiamGia.trangThai,
+            ' align-middle text-bg-success text-light ': !maGiamGia.trangThai,
+                'align-middle text-bg-danger text-light':!maGiamGia.trangThai}">
+                {{maGiamGia.trangThai ? "Sắp diễn ra" : "Đang diễn ra"}}
+            </p>
+            </th>
+            <th>
+                <a  href="#ma-giam-gia/update/{{maGiamGia.id}}">
+                    <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                </a>
+            </th>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
