@@ -60,7 +60,9 @@ window.addSanPhamController = function ($http, $scope, $location) {
       $scope.colors.splice(index, 1);
     }
   };
-
+  $scope.renderMota = function (tenSanPham) {
+    console.log(tenSanPham);
+  };
   $scope.addSizeAndColor = function () {
     $scope.sizeAndQuantitys.forEach((size) => {
       $scope.colors.forEach((color) => {

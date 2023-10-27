@@ -10,7 +10,8 @@
                     </div>
                     <div>
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.tenSanPham">
+                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.tenSanPham"
+                            ng-change="renderMota(product.tenSanPham)">
                         <datalist id="datalistOptions">
                             <option value="{{sanPham.ten}}"
                                 ng-repeat="sanPham in listSanPhamTrangThai | filter:product.tenSanPham">
