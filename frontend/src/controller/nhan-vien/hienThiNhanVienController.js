@@ -46,95 +46,58 @@ window.hienThiNhanVienController = function ($http, $scope) {
       });
   };
 
-  // $scope.getNhanVienTT1 = function () {
-  //   $http
-  //     .get(nhanVienAPI + "/hien-thiT?pageNo=" + $scope.currentPage)
-  //     .then(function (response) {
-  //       $scope.list_nv = response.data;
-  //       $scope.totalPages = new Array(response.data.totalPages);
-  //     });
-  // };
-  // $scope.getNhanVienTT1();
-  // $scope.changePage = function (index) {
-  //   if (index >= 0) {
-  //     $scope.currentPage = index;
-  //     $scope.getNhanVienTT1();
-  //   }
-  // };
-  // $scope.nextPage = function (index) {
-  //   $scope.currentPage = index++;
-  // };
+  $scope.import = function (files) {
+    var reader = new FileReader();
+    reader.onload = async () => {
+      var workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(reader.result);
+      const worksheet = workbook.getWorksheet("Sheet1");
+      var date = new Date();
+      worksheet.eachRow((row, index) => {
+        if (index > 1) {
+          let nhanvien = {
+            ma: row.getCell(1).value,
+            ten: row.getCell(2).value,
+            gioitinh: true && row.getCell(3).value,
+            idVaiTro: row.getCell(4).value,
+            email: row.getCell(5).value,
+            ngaysinh: row.getCell(6).value,
+            sodienthoai: row.getCell(7).value,
+            matkhau: "123",
+            ngaytao: date,
+            tinhThanhPho: row.getCell(8).value,
+            quanHuyen: row.getCell(9).value,
+            phuongXa: row.getCell(10).value,
+            mota: row.getCell(11).value,
+            trangthai: row.getCell(12).value,
+          };
+          $http.post(nhanVienAPI + "/add", nhanvien).then(function () {
+            alert("Thêm thành công");
+          });
+        }
+      });
+    };
+    reader.readAsArrayBuffer(files[0]);
+  };
+  $scope.exportToExcel = function () {
+    // Lấy dữ liệu từ bảng (sử dụng jQuery, hoặc nguyên bản AngularJS)
+    var tableData = [];
+    $("table tr").each(function (rowIndex, row) {
+      var rowData = [];
+      $(row)
+        .find("td")
+        .each(function (colIndex, cell) {
+          rowData.push(angular.element(cell).text());
+        });
+      tableData.push(rowData);
+    });
 
-  // $scope.previousPage = function () {
-  //   if ($scope.currentPage > 1) {
-  //     $scope.currentPage--;
-  //   }
-  // };
-  // $scope.getNhanVienTT2 = function () {
-  //   $http
-  //     .get(nhanVienAPI + "/hien-thiTT?pageNo=" + $scope.currentPage)
-  //     .then(function (response) {
-  //       $scope.list_nv = response.data;
-  //       $scope.totalPages = new Array(response.data.totalPages);
-  //     });
-  // };
-  // $scope.getNhanVienTT2();
-  // $scope.changePage = function (index) {
-  //   if (index >= 0) {
-  //     $scope.currentPage = index;
-  //     $scope.getNhanVienTT2();
-  //   }
-  // };
-  // $scope.nextPage = function (index) {
-  //   $scope.currentPage = index++;
-  // };
+    // Tạo tệp Excel sử dụng SheetJS
+    var ws = XLSX.utils.aoa_to_sheet(tableData);
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Danh sách");
 
-  // $scope.previousPage = function () {
-  //   if ($scope.currentPage > 1) {
-  //     $scope.currentPage--;
-  //   }
-  // };
-
-  // $scope.columns = [
-  //   { name: "ID   ", id: "id", checked: false },
-  //   { name: "Mã nhân viên   ", ma: "ma", checked: false },
-  //   { name: "Họ và tên   ", hoTen: "hoTen", checked: true },
-  //   { name: "Email   ", email: "email", checked: true },
-  //   { name: "Số điện thoại   ", soDienThoai: "soDienThoai", checked: false },
-  //   { name: "Ngày sinh   ", ngaySinh: "ngaySinh", checked: true },
-  //   { name: "Giới tính   ", gioiTinh: "gioiTinh", checked: true },
-  //   { name: "Mật khẩu   ", matKhau: "matKhau", checked: false },
-
-  //   {
-  //     name: "Địa chỉ",
-  //     moTa: "moTa",
-  //     phuongXa: "phuongXa",
-  //     quanHuyen: "quanHuyen",
-  //     tinhThanhPho: "tinhThanhPho",
-  //     checked: true,
-  //   },
-  //   { name: "Chức vụ   ", chucVu: "chucVu", checked: false },
-  //   { name: "Ngày tạo", ngayTao: "ngayTao", checked: false },
-
-  //   {
-  //     name: "Trạng Thái",
-  //     trangThai: "trangThai",
-  //     checked: true,
-  //   },
-  // ];
-
-  // $scope.getNhanVien = function () {
-  //   $http
-  //     .get(nhanVienAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-  //     .then(function (response) {
-  //       $scope.list_nv = response.data;
-  //       $scope.totalPages = new Array(response.data.totalPages);
-  //     });
-  // };
-  // $scope.getNhanVien();
-  // $scope.showCheckboxes = false;
-
-  // $scope.toggleCheckboxDisplay = function () {
-  //   $scope.showCheckboxes = !$scope.showCheckboxes;
-  // };
+    // Lưu tệp Excel
+    XLSX.writeFile(wb, "danh-sach.xlsx");
+  };
 };

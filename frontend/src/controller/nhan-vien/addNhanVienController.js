@@ -138,36 +138,4 @@ window.addNhanVienController = function ($http, $scope, $rootScope) {
       }
     }
   };
-  $scope.import = function (files) {
-    var reader = new FileReader();
-    reader.onload = async () => {
-      var workbook = new ExcelJS.Workbook();
-      await workbook.xlsx.load(reader.result);
-      const worksheet = workbook.getWorksheet("Sheet1");
-      worksheet.eachRow((row, index) => {
-        if (index > 1) {
-          let nhanvien = {
-            ma: row.getCell(1).value,
-            ten: row.getCell(2).value,
-            gioitinh: true && row.getCell(3).value,
-            idVaiTro: row.getCell(4).value,
-            email: row.getCell(5).value,
-            ngaysinh: row.getCell(6).value,
-            sodienthoai: row.getCell(7).value,
-            matkhau: "123",
-            ngaytao: date,
-            tinhThanhPho: row.getCell(8).value,
-            quanHuyen: row.getCell(9).value,
-            phuongXa: row.getCell(10).value,
-            mota: row.getCell(11).value,
-            trangthai: row.getCell(12).value,
-          };
-          $http.post(nhanVienAPI + "/add", nhanvien).then(function () {
-            alert("Thêm thành công");
-          });
-        }
-      });
-    };
-    reader.readAsArrayBuffer(files[0]);
-  };
 };

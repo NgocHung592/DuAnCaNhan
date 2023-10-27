@@ -2,6 +2,7 @@ package com.example.demo.model.response;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public interface NhanVienReponse {

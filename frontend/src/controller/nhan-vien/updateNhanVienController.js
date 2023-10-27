@@ -9,12 +9,17 @@ window.updateNhanVienController = function ($http, $scope, $routeParams) {
     $scope.updateNhanVien = {
       ma: $scope.detailNhanVien.ma,
       ten: $scope.detailNhanVien.hoten,
-      idVaiTro: $scope.detailNhanVien.vaiTro.ten,
+      idVaiTro: $scope.detailNhanVien.chucVu.ten,
       email: $scope.detailNhanVien.email,
+      gioitinh: $scope.detailNhanVien.gioitinh,
       ngaytao: $scope.detailNhanVien.ngaytao,
       sodienthoai: $scope.detailNhanVien.sodienthoai,
       ngaysinh: $scope.detailNhanVien.ngaysinh,
       trangthai: $scope.detailNhanVien.trangthai,
+      tinhThanhPho: $scope.detailNhanVien.tinhthanhpho,
+      quanHuyen: $scope.detailNhanVien.quanhuyen,
+      mota: $scope.detailNhanVien.mota,
+      phuongXa: $scope.detailNhanVien.phuongxa,
     };
     $http
       .put(nhanVienAPI + "/update/" + id, $scope.updateNhanVien)

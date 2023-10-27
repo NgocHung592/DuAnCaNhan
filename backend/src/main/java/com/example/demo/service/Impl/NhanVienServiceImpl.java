@@ -67,6 +67,7 @@ public class NhanVienServiceImpl implements NhanVienService {
                 .sodienthoai(nhanVienRequest.getSodienthoai())
                 .gioitinh(nhanVienRequest.getGioitinh())
                 .ngaysinh(nhanVienRequest.getNgaysinh())
+                .ngaytao(new Timestamp(currentTimestampMillis))
                 .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
                 .anhdaidien(nhanVienRequest.getHinhanh())
                 .ngaysua(new Timestamp(currentTimestampMillis))
