@@ -1,4 +1,4 @@
-window.addSanPhamController = function ($http, $scope) {
+window.addSanPhamController = function ($http, $scope, $location) {
   $scope.totalPages = [];
   $scope.products = [];
   $scope.productDetails = [];
@@ -149,7 +149,9 @@ window.addSanPhamController = function ($http, $scope) {
 
     $http
       .post(sanPhamChiTietAPI + "/add", $scope.productDetails)
-      .then(function () {});
+      .then(function () {
+        $location.path("/san-pham/hien-thi");
+      });
   };
 
   //load thuoc tinh theo trang thai kich hoat

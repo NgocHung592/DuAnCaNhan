@@ -119,29 +119,28 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Tên Sản Phẩm</th>
-                                    <th scope="col">Số Lượng</th>
-                                    <th scope="col">Chất Liệu</th>
-                                    <th scope="col">Phong Cách</th>
-                                    <th scope="col">Họa Tiết</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th>#</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Mô Tả</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thao Tác</th>
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content">
+                            <tbody ng-repeat="sanPham in listSanPham.content">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.tenSanPham}} [{{sanPhamChiTiet.tenMauSac}}
-                                        - {{sanPhamChiTiet.tenKichThuoc}}]</th>
-                                    <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                    <th scope="row">
+                                    <th>{{$index+1}}</th>
+                                    <th>{{sanPham.tenSanPham}} </th>
+                                    <th>{{sanPham.soLuong}}</th>
+                                    <th>{{sanPham.moTa}}</th>
+                                    <th ng-class="{' text-g ': !coAo.daXoa
+                                    ,'text-glow':coAo.daXoa}">
                                         {{sanPhamChiTiet.daXoa?"Ngừng kinh
                                         Doanh":"Đang Kinh Doanh"}}
                                     </th>
                                     <th>
-                                        <a href="#san-pham/update/{{sanPhamChiTiet.idsanPhamChiTiet}}">
+                                        <a href="#san-pham/update/{{sanPham.idSanPham}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
                                     </th>
@@ -152,7 +151,8 @@
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">
+                                            << </span>
                                     </a>
                                 </li>
                                 <li class="page-item" ng-repeat="page in totalPages track by $index"
@@ -160,7 +160,7 @@
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                    <a class="page-link" ng-click="nextPage()">>></a>
                                 </li>
                             </ul>
                         </nav>
