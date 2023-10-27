@@ -64,8 +64,8 @@
             <th>{{maGiamGia.ma}}</th>
             <th>{{maGiamGia.tenKM}}</th>
             <th>
-                <p ng-class="{' align-middle text-light ': !maGiamGia.trangThai,
-            ' align-middle text-light ': !maGiamGia.trangThai}">
+                <p ng-class="{' align-middle ': !maGiamGia.hinhThucGia=='0'
+                                        ,'align-middle':!maGiamGia.hinhThucGia}=='1'">
                     {{maGiamGia.hinhThucGiam ? "Tiền mặt" : "Phần trăm"}}
                 </p>
                 </th>
@@ -75,7 +75,7 @@
             <th>{{maGiamGia.ngayKetThuc}}</th>
             <th>{{maGiamGia.soLuong}}</th>
             <th>
-            <p ng-class="{' align-middle text-bg-warning text-light ': !maGiamGia.trangThai,
+            <p ng-class="{' align-middle text-bg-success text-light ': !maGiamGia.trangThai,
             ' align-middle text-bg-success text-light ': !maGiamGia.trangThai,
                 'align-middle text-bg-danger text-light':!maGiamGia.trangThai}">
                 {{maGiamGia.trangThai ? "Sắp diễn ra" : "Đang diễn ra"}}
