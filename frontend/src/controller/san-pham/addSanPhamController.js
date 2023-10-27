@@ -99,17 +99,31 @@ window.addSanPhamController = function ($http, $scope, $location) {
     console.log($scope.groupedProducts);
   };
 
-  $scope.removeSize = function (index) {
-    if (index !== -1) {
-      // $scope.groupedProducts.remove(index, 1);
+  $scope.removeSize = function (tenMauSac, index) {
+    if (
+      $scope.groupedProducts[tenMauSac] &&
+      $scope.groupedProducts[tenMauSac].length > index
+    ) {
+      $scope.groupedProducts[tenMauSac].splice(index, 1);
+      console.log($scope.groupedProducts);
     }
   };
 
   $scope.saveProduct = function (event) {
     event.preventDefault();
     let productImages = document.getElementById("product-image");
+    $scope.allProducts = [];
+
+    for (const key in $scope.groupedProducts) {
+      if ($scope.groupedProducts.hasOwnProperty(key)) {
+        const productsInGroup = $scope.groupedProducts[key];
+        $scope.allProducts = $scope.allProducts.concat(productsInGroup);
+      }
+    }
+    console.log($scope.allProducts);
+
     for (const file of productImages.files) {
-      $scope.sizeAndColors.forEach((sizeAndColor) => {
+      $scope.allProducts.forEach((sizeAndColor) => {
         const newProductDetail = {
           maSanPham: $scope.product.maSanPham,
           tenSanPham: $scope.product.tenSanPham,
@@ -126,7 +140,6 @@ window.addSanPhamController = function ($http, $scope, $location) {
           urlImage: file.name, // Set the image name based on the selected file
           daXoa: $scope.product.daXoa,
         };
-
         let exists = false;
         for (let i = 0; i < $scope.productDetails.length; i++) {
           const existingItem = $scope.productDetails[i];
