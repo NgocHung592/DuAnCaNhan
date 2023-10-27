@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -77,6 +78,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
     @Override
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
+        Random random = new Random();
+        int randomNumber = random.nextInt();
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
             if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
@@ -96,6 +99,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .build();
                 SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
                 HinhAnh hinhAnhSave = HinhAnh.builder()
+                        .ma("anh "+ randomNumber)
+                        .ten("anh "+ randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -132,6 +137,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                SanPhamChiTiet sanPhamChiTiet= sanPhamChiTietRepository.save(sanPhamChiTietSave);
 
                 HinhAnh hinhAnhSave = HinhAnh.builder()
+                        .ma("anh "+ randomNumber)
+                        .ten("anh "+ randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
