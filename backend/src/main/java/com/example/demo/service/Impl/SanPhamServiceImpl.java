@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,11 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.getAllByStatus();
     }
 
+    @Override
+    public Optional<SanPham> findbyName(String name) {
+        return sanPhamRepository.findByTen(name);
+    }
+
 
     @Override
     public SanPham add(SanPham sanPham) {
@@ -53,19 +59,18 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-        if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
-            return null;
+        Optional<SanPham> optional=sanPhamRepository.findById(id);
+        if (optional.isPresent()){
+            optional.map(sanPhamUpdate->{
+                sanPhamUpdate.setTen(sanPham.getTen());
+                sanPhamUpdate.setMoTa(sanPham.getMoTa());
+                sanPhamUpdate.setDaXoa(sanPham.getDaXoa());
+                sanPhamUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                sanPhamUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+                return sanPhamRepository.save(sanPhamUpdate);
+            }).orElse(null);
         }
-        SanPham sanPhamUpdate = SanPham.builder()
-                .id(id)
-                .ma(sanPham.getMa())
-                .ten(sanPham.getTen())
-                .moTa(sanPham.getMoTa())
-                .ngaySua(new Timestamp(currentTimestampMillis))
-                .ngaySua(null)
-                .daXoa(sanPham.getDaXoa())
-                .build();
-        return sanPhamRepository.save(sanPhamUpdate);
+       return null;
     }
 
     @Override

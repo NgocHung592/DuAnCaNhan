@@ -2,12 +2,14 @@ package com.example.demo.model.response;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import java.math.BigDecimal;
 
 public interface SanPhamReponse {
 
     @Value("#{target.id}")
     String getIdSanPham();
+
+    @Value("#{target.ma}")
+    String getMaSanPham();
 
     @Value("#{target.ten}")
     String getTenSanPham();

@@ -7,27 +7,39 @@ import java.math.BigDecimal;
 public interface SanPhamChiTietResponse {
 
     @Value("#{target.id}")
-    String getIdSanPham();
+    String getIdSanPhamChiTiet();
 
-    @Value("#{target.ten}")
+    @Value("#{target.duong_dan}")
+    String getDuongDan();
+
+    @Value("#{target.ten_san_pham}")
     String getTenSanPham();
 
     @Value("#{target.so_luong}")
     Integer getSoLuong();
 
-    @Value("#{target.ten}")
+    @Value("#{target.don_gia}")
+    BigDecimal getDonGia();
+
+    @Value("#{target.ten_kich_thuoc}")
+    String getTenKichThuoc();
+
+    @Value("#{target.ten_mau_sac}")
+    String getTenMauSac();
+
+    @Value("#{target.ten_chat_lieu}")
     String getTenChatLieu();
 
-    @Value("#{target.ten}")
+    @Value("#{target.ten_phong_cach}")
     String getTenPhongCach();
 
-    @Value("#{target.ten}")
+    @Value("#{target.ten_hoa_tiet}")
     String getTenHoaTiet();
 
-    @Value("#{target.ten}")
+    @Value("#{target.ten_tay_ao}")
     String getTenTayAo();
 
-    @Value("#{target.ten}")
+    @Value("#{target.ten_co_ao}")
     String getTenCoAo();
 
     @Value("#{target.da_xoa}")

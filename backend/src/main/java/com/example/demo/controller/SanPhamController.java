@@ -40,6 +40,10 @@ public class SanPhamController {
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
+    @GetMapping("find/{name}")
+    public ResponseEntity find(@PathVariable("name") String name) {
+        return new ResponseEntity(sanPhamService.findbyName(name), HttpStatus.OK);
+    }
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody SanPham sanPham) {
@@ -47,7 +51,7 @@ public class SanPhamController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update( SanPham sanPham, @PathVariable("id") String id) {
+    public ResponseEntity update( @RequestBody  SanPham sanPham, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);
     }
 

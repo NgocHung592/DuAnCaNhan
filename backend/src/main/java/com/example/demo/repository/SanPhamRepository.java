@@ -19,9 +19,9 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     List<SanPham> getAllByStatus();
 
     @Query(value = """
-            select sp.id,sp.ten, sum(spct.so_luong)as'so_luong',sp.mo_ta,sp.da_xoa from san_pham_chi_tiet spct
+            select sp.id,sp.ma,sp.ten, sum(spct.so_luong)as'so_luong',sp.mo_ta,sp.da_xoa from san_pham_chi_tiet spct
             inner join san_pham sp on sp.id=spct.san_pham_id
-            group by sp.id,sp.ten, sp.mo_ta,sp.da_xoa ,sp.ngay_tao
+            group by sp.id,sp.ma,sp.ten, sp.mo_ta,sp.da_xoa ,sp.ngay_tao
             order by sp.ngay_tao desc
             """, nativeQuery = true)
     Page<SanPhamReponse> getAll(Pageable pageable);

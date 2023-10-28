@@ -11,9 +11,9 @@ import java.util.UUID;
 
 public interface SanPhamChiTietService {
 
-    Page<SanPhamChiTietResponse> getAll(Integer pageNo);
+    Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id);
 
-    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Integer pageNo);
+//    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Integer pageNo);
 
     SanPhamChiTiet getOne(UUID id);
 

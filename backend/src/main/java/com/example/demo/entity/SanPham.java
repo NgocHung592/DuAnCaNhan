@@ -36,7 +36,6 @@ public class SanPham   {
     private String ma;
 
     @Column(name = "ten")
-    @Nationalized
     private String ten;
 
     @Column(name = "mo_ta")

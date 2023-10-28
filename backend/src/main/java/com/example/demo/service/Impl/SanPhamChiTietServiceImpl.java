@@ -60,20 +60,20 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
-    public Page<SanPhamChiTietResponse> getAll(Integer pageNo) {
+    public Page<SanPhamChiTietResponse> getAll(Integer pageNo,UUID id) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.getPage(pageable);
+        return sanPhamChiTietRepository.getPage(pageable,id);
     }
 
-    @Override
-    public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id, pageable);
-    }
+//    @Override
+//    public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
+//        Pageable pageable = PageRequest.of(pageNo, 10);
+//        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id, pageable);
+//    }
 
     @Override
     public SanPhamChiTiet getOne(UUID id) {
-        return sanPhamChiTietRepository.findById(id).get();
+        return sanPhamChiTietRepository.findById(id).orElse(null);
     }
 
     @Override
