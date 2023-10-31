@@ -40,13 +40,18 @@
 
                                 <div class="row">
                                     <div class="col-mb-12 row">
-                                        <label for="inputHinhThucGG" class="col-sm-4 col-form-label">Hình Thức Giảm Giá:</label>
+                                        <label class="col-sm-4 col-form-label">Hình Thức Giảm Giá:</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select" aria-label="Default select example" id="inputHinhThucGG" ng-model="detailProduct.hinhThucGiam">
-
-                                                <option value="1">Tiền mặt</option>
-                                                <option value="2">Phần trăm</option>
-                                            </select>
+                                            <input type="radio" value="false"  ng-model="detailProduct.hinhThucGiam"
+                                                   ng-checked="detailProduct.hinhThucGiam=='0'" class="form-check-input">
+                                            <label class="form-check-label">
+                                                Tiền mặt
+                                            </label>
+                                            <input type="radio" value="true" ng-model="detailProduct.hinhThucGiam"
+                                                   ng-checked="detailProduct.hinhThucGiam=='1'" class="form-check-input">
+                                            <label class="form-check-label">
+                                                Phần trăm
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +88,7 @@
                                   </div>
                                   <div class="col-mb-12 row" >
                                       <div class ="col-sm-6">
-                                          <input type="datetime-local" class="form-control" id="inputNbd" ng-model="detailProduct.ngayBatDau">
+                                          <input type="datetime-local"  onfocus="this.min = new Date().toISOString().split(':')[0] + ':' + new Date().toISOString().split(':')[1]"  class="form-control" id="inputNbd" ng-model="detailProduct.ngayBatDau">
                                       </div>
                                       <div class="col-sm-6">
                                           <input type="datetime-local" class="form-control" id="inputNkt" ng-model="detailProduct.ngayKetThuc">
