@@ -34,10 +34,6 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "kich-thuoc/hien-thi-kich-thuoc.html",
       controller: hienThiKichThuocController,
     })
-    .when("/dia-chi/hien-thi", {
-      templateUrl: "dia-chi/hien-thi-dia-chi.html",
-      controller: hienThiDiaChiController,
-    })
 
     .when("/kich-thuoc/add", {
       templateUrl: "kich-thuoc/add-kich-thuoc.html",
@@ -119,23 +115,19 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "nhan-vien/update-nhan-vien.html",
       controller: updateNhanVienController,
     })
-    // .when("/khach-hang/hien-thi", {
-    //   templateUrl: "khach-hang/hien-thi-khach-hang.html",
-    //   controller: hienThiKhachHangController,
-    // })
-    // .when("/khach-hang/add", {
-    //   templateUrl: "khach-hang/add-khach-hang.html",
-    //   controller: addKhachHangController,
-    // })
-    // .when("/khach-hang/update/:id", {
-    //   templateUrl: "khach-hang/update-khach-hang.html",
-    //   controller: updateKhachHangController,
-    // })
+    .when("/khach-hang/hien-thi", {
+      templateUrl: "khach-hang/hien-thi-khach-hang.html",
+      controller: hienThiKhachHangController,
+    })
+    .when("/khach-hang/add", {
+      templateUrl: "khach-hang/add-khach-hang.html",
+      controller: addKhachHangController,
+    })
+
     .when("/hoa-don/hien-thi", {
       templateUrl: "hoa-don/hien-thi-hoa-don.html",
       controller: HoaDonController,
     })
-
     .when("/hoa-don/update/:id", {
       templateUrl: "hoa-don/hien-thi-don-hang.html",
       controller: DonHangController,
@@ -145,23 +137,26 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       controller: ThuChiController,
     })
 
+    .when("/ma-giam-gia/hienthi", {
+      templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
+      controller: MaGiamGiaController,
+    })
 
-      .when("/ma-giam-gia/hienthi", {
-        templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
-        controller: MaGiamGiaController,
-      })
-
-      .when("/ma-giam-gia/add", {
-        templateUrl: "ma-giam-gia/add-ma-giam-gia.html",
-        controller: addMaGiamGiaController,
-      })
-      .when("/ma-giam-gia/update/:id", {
-        templateUrl: "ma-giam-gia/update-ma-giam-gia.html",
-        controller: updateMaGiamGiaController,
-      })
+    .when("/ma-giam-gia/add", {
+      templateUrl: "ma-giam-gia/add-ma-giam-gia.html",
+      controller: addMaGiamGiaController,
+    })
+    .when("/ma-giam-gia/update/:id", {
+      templateUrl: "ma-giam-gia/update-ma-giam-gia.html",
+      controller: updateMaGiamGiaController,
+    })
     .when("/ban-hang/tai-quay", {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",
       controller: addHoaDonController,
+    })
+    .when("/khach-hang/update/:id", {
+      templateUrl: "khach-hang/update-khach-hang.html",
+      controller: updateKhachHangController,
     })
 
     .otherwise({

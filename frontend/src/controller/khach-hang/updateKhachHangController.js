@@ -1,4 +1,34 @@
-window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
+window.updateKhachHangController = function ($http, $scope, $routeParams) {
+  $http
+    .get(khachHangAPI + "/detail/" + $routeParams.id)
+    .then(function (response) {
+      $scope.detailKhachHang = response.data;
+      console.log($scope.detailKhachHang);
+    });
+
+  $scope.update = function (id1, id2) {
+    $scope.updateKhachHang = {
+      ma: $scope.detailKhachHang.khachHang.ma,
+      ten: $scope.detailKhachHang.khachHang.hoten,
+      email: $scope.detailKhachHang.khachHang.email,
+      gioitinh: $scope.detailKhachHang.khachHang.gioitinh,
+      ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
+      sodienthoai: $scope.detailKhachHang.khachHang.sodienthoai,
+      ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
+      tinhThanhPho: $scope.detailKhachHang.tinhthanhpho,
+      quanHuyen: $scope.detailKhachHang.quanhuyen,
+      phuongXa: $scope.detailKhachHang.phuongxa,
+      ngaytao: $scope.detailKhachHang.khachHang.ngaytao,
+      trangthai: $scope.detailKhachHang.khachHang.trangthai,
+      mota: $scope.detailKhachHang.mota,
+    };
+    $http
+      .put(khachHangAPI + "/update/" + id1 + "/" + id2, $scope.updateKhachHang)
+      .then(function () {
+        alert("Cập nhật thành công");
+      });
+  };
+
   $scope.show = Boolean;
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
@@ -9,33 +39,16 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
       toastBootstrap.show();
     });
   }
-
-  $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
   var date = new Date();
-  $scope.list_NhanVien = [];
-  $scope.form_nv = {
-    ma: $scope.randoom,
-    ten: "",
-    email: "",
-    gioitinh: "",
-    ngaysinh: "",
-    sodienthoai: "",
-    hinhanh: "",
-    matkhau: "123",
+  $scope.form_dc = {
     tinhThanhPho: "",
     quanHuyen: "",
     phuongXa: "",
     ngaytao: date,
     mota: "",
-    idVaiTro: "Nhân viên",
     trangthai: 1,
   };
-  $scope.addNhanVien = function () {
-    const hinhanh = document.getElementById("product-image");
-    console.log(hinhanh);
-    for (const image of hinhanh.files) {
-      $scope.form_nv.hinhanh = image.name;
-    }
+  $scope.addDiaChi = function () {
     console.log($scope.form_nv);
     var elem = document.getElementById("myBar");
     var width = 0;
@@ -49,20 +62,22 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
       }
     }
     if (
-      $scope.form_nv.ten != "" &&
-      $scope.form_nv.email != "" &&
-      $scope.form_nv.sodienthoai != "" &&
-      $scope.form_nv.tinhThanhPho != "" &&
-      $scope.form_nv.quanHuyen != "" &&
-      $scope.form_nv.phuongXa != "" &&
-      $scope.form_nv.mota != ""
+      $scope.form_dc.tinhThanhPho != "" &&
+      $scope.form_dc.quanHuyen != "" &&
+      $scope.form_dc.phuongXa != "" &&
+      $scope.form_dc.mota != ""
     ) {
-      $http.post(nhanVienAPI + "/add", $scope.form_nv).then(function () {
-        $scope.message = "Thêm thành công";
-        $scope.show = true;
-        $location.path("/nhan-vien/hien-thi");
-        return true;
-      });
+      $http
+        .post(
+          khachHangAPI + "/addid/" + $scope.detailKhachHang.khachHang.id,
+          $scope.form_dc
+        )
+        .then(function () {
+          $scope.message = "Thêm thành công";
+          console.log(from_dc);
+          $scope.show = true;
+          return true;
+        });
     } else {
       $scope.message = "Thêm thất bại";
       $scope.show = false;
@@ -126,9 +141,9 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_nv.tinhThanhPho = $("#city option:selected").text();
-      $scope.form_nv.quanHuyen = $("#district option:selected").text();
-      $scope.form_nv.phuongXa = $("#ward option:selected").text();
+      $scope.form_dc.tinhThanhPho = $("#city option:selected").text();
+      $scope.form_dc.quanHuyen = $("#district option:selected").text();
+      $scope.form_dc.phuongXa = $("#ward option:selected").text();
     }
   };
 };

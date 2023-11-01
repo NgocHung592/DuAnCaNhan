@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,6 +21,8 @@ public class KhachHangRequest {
 
     private String email;
 
+    private Boolean gioitinh;
+
     private String matkhau;
 
     private String sodienthoai;
@@ -30,13 +33,14 @@ public class KhachHangRequest {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
-    private Date ngaytao;
+    private Timestamp ngaytao;
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    private Timestamp ngaysua;
 
     private String trangthai;
 
-    private String idHangKhachHang;
 
-    private String idVaiTro;
 
     private String mota;
 

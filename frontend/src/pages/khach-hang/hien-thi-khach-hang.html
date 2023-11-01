@@ -3,12 +3,12 @@
     <div class="row">
       <div class="card flex-fill">
         <div class="card-header">
-          <h5 class="card-title mb-0">QUẢN LÝ NHÂN VIÊN</h5>
+          <h5 class="card-title mb-0">QUẢN LÝ KHÁCH HÀNG</h5>
         </div>
         <div class="card-body d-flex">
           <div class="align-self-center w-100">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <label
+              <!-- <label
                 for="file-upload"
                 class="custom-file-upload btn btn-primary"
                 style="
@@ -25,11 +25,11 @@
                 id="file-upload"
                 style="display: none"
                 onchange="angular.element(this).scope().import(this.files)"
-              />
+              /> -->
               <a
                 type="button"
                 class="btn btn-success"
-                href="#nhan-vien/add"
+                href="#khach-hang/add"
                 style="
                   width: 100px;
                   margin-right: 10px;
@@ -41,7 +41,7 @@
               </a>
             </div>
 
-            <div class="search-and-radio-container">
+            <!-- <div class="search-and-radio-container">
               <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
                 <input
@@ -82,7 +82,7 @@
                 />
                 <label for="option-inactive">Đã khóa</label>
               </div>
-            </div>
+            </div> -->
 
             <br />
 
@@ -91,8 +91,8 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Ảnh</th>
-                  <th scope="col">Mã nhân viên</th>
-                  <th scope="col">Tên nhân viên</th>
+                  <th scope="col">Mã khách hàng</th>
+                  <th scope="col">Tên khách hàng</th>
                   <th scope="col">Email</th>
                   <th scope="col">Số điện thoại</th>
                   <th scope="col">Ngày tạo</th>
@@ -101,35 +101,35 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="nv in list_nv.content">
+                <tr ng-repeat="kh in list_kh.content">
                   <th scope="row">{{$index+1}}</th>
-
                   <td>
                     <i
-                      ng-if="!nv.hinhAnh"
+                      ng-if="!kh.hinhanh"
                       style="font-size: 30px"
                       class="fas fa-user-circle"
                       aria-hidden="true"
                     ></i>
-                    <img
-                      ng-if="nv.hinhAnh"
-                      src="../../../assets/{{nv.hinhAnh}}"
+                    <i
+                      ng-if="kh.hinhanh"
+                      ng-src="{{kh.hinhanh}}"
                       alt="Employee Image"
-                      class="table_img"
-                    />
+                      width="200"
+                      height="200"
+                    ></i>
                   </td>
-                  <th scope="row">{{nv.ma}}</th>
-                  <th scope="row">{{nv.hoTen}}</th>
-                  <th scope="row">{{nv.email}}</th>
-                  <th scope="row">{{nv.soDienThoai}}</th>
+                  <th scope="row">{{kh.ma}}</th>
+                  <th scope="row">{{kh.hoTen}}</th>
+                  <th scope="row">{{kh.email}}</th>
+                  <th scope="row">{{kh.soDienThoai}}</th>
                   <th scope="row">
-                    {{nv.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
+                    {{kh.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
                   </th>
                   <th scope="row">
-                    <span class="text-g" ng-if="nv.trangThai==1"
+                    <span class="text-g" ng-if="kh.trangThai==1"
                       >Kích hoạt</span
                     >
-                    <span class="text-glow" ng-if="nv.trangThai==2"
+                    <span class="text-glow" ng-if="kh.trangThai==2"
                       >Đã khóa</span
                     >
                   </th>
@@ -139,14 +139,14 @@
                       class="fas fa-edit"
                       style="font-size: 22px"
                       aria-hidden="true"
-                      href="#nhan-vien/update/{{nv.id}}"
+                      href="#khach-hang/update/{{kh.id}}"
                     ></a>
                   </th>
                 </tr>
               </tbody>
             </table>
-            <div class="no-data-message" ng-if="list_nv.content.length === 0">
-              Không tìm thấy dữ liệu phù hợp
+            <div class="no-data-message" ng-if="list_kh.content.length === 0">
+              KHÔNG CÓ DỮ LIỆU
             </div>
 
             <div class="row mt-4">
@@ -170,6 +170,7 @@
     </div>
   </div>
 </main>
+
 <style>
   .checkbox-container {
     display: flex;
@@ -331,10 +332,10 @@
   }
   .no-data-message {
     text-align: center; /* Căn giữa theo chiều ngang */
-    margin-top: 20px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
-    font-size: 20px; /* Tùy chỉnh kích thước chữ */
-    color: rgb(112, 111, 111); /* Tùy chỉnh màu sắc chữ */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng glow */
+    margin-top: 50px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
+    font-size: 100px; /* Tùy chỉnh kích thước chữ */
+    color: red; /* Tùy chỉnh màu sắc chữ */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Tạo hiệu ứng glow */
   }
   /* Ẩn trường input file gốc */
   input[type="file"] {

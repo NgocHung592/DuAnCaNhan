@@ -663,4 +663,5 @@ Create table [dia_chi](
     trang_thai int,
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id)
     )
+INSERT INTO  chuc_vu (ma,ten) VALUES ('CV1','Nhân viên')
 

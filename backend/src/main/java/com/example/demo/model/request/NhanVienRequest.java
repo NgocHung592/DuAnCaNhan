@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 @Getter
 @Setter
@@ -30,11 +31,11 @@ public class NhanVienRequest {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
-    private Date ngaytao;
+    private Timestamp ngaytao;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.DATE)
-    private Date ngaysua;
+    private Timestamp ngaysua;
 
     private String trangthai;
 

@@ -1,7 +1,68 @@
-window.addDiaChiController = function ($http, $scope) {
+window.addKhachHangController = function ($http, $scope, $rootScope) {
   $scope.show = Boolean;
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
+  $scope.randoom = "KH" + Math.floor(Math.random() * 10000) + 1;
+  var date = new Date();
+  $scope.list_KhachHang = [];
+  $scope.form_kh = {
+    ma: $scope.randoom,
+    ten: "",
+    email: "",
+    gioitinh: "",
+    ngaysinh: "",
+    sodienthoai: "",
+    matkhau: "123",
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
+    ngaytao: date,
+    mota: "",
+    trangthai: 1,
+  };
+  $scope.addKhachHang = function () {
+    console.log($scope.form_kh);
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 15);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    if (
+      $scope.form_kh.ten != "" &&
+      $scope.form_kh.email != "" &&
+      $scope.form_kh.sodienthoai != "" &&
+      $scope.form_kh.tinhThanhPho != "" &&
+      $scope.form_kh.quanHuyen != "" &&
+      $scope.form_kh.phuongXa != "" &&
+      $scope.form_kh.mota != ""
+    ) {
+      $http.post(khachHangAPI + "/add", $scope.form_kh).then(function () {
+        $scope.message = "Thêm thành công";
+        console.log(from_kh);
+        $scope.show = true;
+        return true;
+      });
+    } else {
+      $scope.message = "Thêm thất bại";
+      $scope.show = false;
+      return false;
+    }
+  };
+  $scope.show = Boolean;
+
   if (toastTrigger) {
     const toastBootstrap =
       bootstrap.Toast.getOrCreateInstance(toastLiveExample);
@@ -50,26 +111,16 @@ window.addDiaChiController = function ($http, $scope) {
   $("#ward").change(() => {
     printResult();
   });
-  $scope.randoom = "DC" + Math.floor(Math.random() * 10000) + 1;
-  var date = new Date();
-  $scope.form_dc = {
-    ten: $scope.randoom,
-    tinhThanhPho: "",
-    quanHuyen: "",
-    phuongXa: "",
-    ngayTao: date,
-    idTaiKhoan: "3cc6b634-b0f4-4bea-907c-095bc555211b",
-    trangThai: 1,
-  };
+
   var printResult = () => {
     if (
       $("#district").find(":selected").data("id") != "" &&
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_dc.tinhThanhPho = $("#city option:selected").text();
-      $scope.form_dc.quanHuyen = $("#district option:selected").text();
-      $scope.form_dc.phuongXa = $("#ward option:selected").text();
+      $scope.form_kh.tinhThanhPho = $("#city option:selected").text();
+      $scope.form_kh.quanHuyen = $("#district option:selected").text();
+      $scope.form_kh.phuongXa = $("#ward option:selected").text();
     }
   };
 
@@ -85,16 +136,5 @@ window.addDiaChiController = function ($http, $scope) {
         elem.style.width = width + "%";
       }
     }
-
-    $http.post(diaChiAPI + "/add", $scope.form_dc).then(function () {
-      $scope.message = "Thêm thành công";
-      $scope.show = true;
-      return true;
-    });
   };
-  // $http.post(diaChiAPI + "/add", $scope.form_dc).then(function () {
-  //   $scope.message = "Thêm thành công";
-  //   $scope.show = true;
-  //   return true;
-  // });
 };

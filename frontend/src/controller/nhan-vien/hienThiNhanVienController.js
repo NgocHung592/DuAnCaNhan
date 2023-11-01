@@ -9,6 +9,7 @@ window.hienThiNhanVienController = function ($http, $scope) {
       .get(nhanVienAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.list_nv = response.data;
+        console.log(response.data);
         $scope.totalPages = new Array(response.data.totalPages);
       });
   };
