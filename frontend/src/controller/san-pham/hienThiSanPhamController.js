@@ -2,6 +2,7 @@ window.hienThiSanPhamController = function ($http, $scope) {
   $scope.currentPage = 0;
   $scope.listSanPham = [];
   $scope.totalPages = [];
+  $scope.selectOption = "";
   $scope.getSanPham = function () {
     $http
       .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -12,6 +13,37 @@ window.hienThiSanPhamController = function ($http, $scope) {
       });
   };
   $scope.getSanPham();
+  $scope.loc = function () {
+    console.log($scope.selectOption);
+    $http
+      .get(
+        sanPhamAPI +
+          "/loc?pageNo=" +
+          $scope.currentPage +
+          "&loc=" +
+          $scope.selectOption
+      )
+      .then(function (response) {
+        $scope.listSanPham = response.data;
+        console.log($scope.listSanPham);
+      });
+  };
+  $scope.$watch("searchKeyword", function (newVal, oldVal) {
+    if (newVal !== oldVal) {
+      $http
+        .get(
+          sanPhamAPI +
+            "/search?pageNo=" +
+            $scope.currentPage +
+            "&keyword=" +
+            $scope.searchKeyword
+        )
+        .then(function (response) {
+          $scope.listSanPham = response.data;
+          console.log($scope.listSanPham);
+        });
+    }
+  });
   $scope.changePage = function (index) {
     $scope.currentPage = index;
     $scope.getSanPham();

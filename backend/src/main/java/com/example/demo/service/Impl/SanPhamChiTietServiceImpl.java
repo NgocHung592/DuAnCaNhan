@@ -2,7 +2,6 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HinhAnh;
 import com.example.demo.entity.KichThuoc;
-import com.example.demo.entity.KichThuocMauSac;
 import com.example.demo.entity.MauSac;
 import com.example.demo.entity.SanPham;
 import com.example.demo.entity.SanPhamChiTiet;
@@ -29,6 +28,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -60,9 +60,9 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
-    public Page<SanPhamChiTietResponse> getAll(Integer pageNo,UUID id) {
+    public Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.getPage(pageable,id);
+        return sanPhamChiTietRepository.getPage(pageable, id);
     }
 
 //    @Override
@@ -84,7 +84,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getGiaBan()))
+                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -99,8 +99,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .build();
                 SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
                 HinhAnh hinhAnhSave = HinhAnh.builder()
-                        .ma("anh "+ randomNumber)
-                        .ten("anh "+ randomNumber)
+                        .ma("anh " + randomNumber)
+                        .ten("anh " + randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -122,7 +122,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
-                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getGiaBan()))
+                        .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
                         .sanPham(sanPham)
@@ -134,11 +134,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-               SanPhamChiTiet sanPhamChiTiet= sanPhamChiTietRepository.save(sanPhamChiTietSave);
+                SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
 
                 HinhAnh hinhAnhSave = HinhAnh.builder()
-                        .ma("anh "+ randomNumber)
-                        .ten("anh "+ randomNumber)
+                        .ma("anh " + randomNumber)
+                        .ten("anh " + randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
                         .ngayTao(new Timestamp(currentTimestampMillis))
                         .nguoiTao("Hưng")
@@ -148,6 +148,34 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 return;
             }
         });
+        return null;
+    }
+
+    @Override
+    public SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
+        Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(id);
+        optional.map(sanPhamChiTietUpdate -> {
+            sanPhamChiTietUpdate.setSoLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()));
+            sanPhamChiTietUpdate.setDonGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()));
+            sanPhamChiTietUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+            sanPhamChiTietUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+            sanPhamChiTietUpdate.setDaXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()));
+            sanPhamChiTietUpdate.setMauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get());
+            sanPhamChiTietUpdate.setKichThuoc(kichThuocRepository.findById(sanPhamChiTietRequest.getIdKichThuoc()).get());
+            sanPhamChiTietUpdate.setChatLieu(chatLieuRepository.findById(sanPhamChiTietRequest.getIdChatLieu()).get());
+            sanPhamChiTietUpdate.setPhongCach(phongCachRepository.findById(sanPhamChiTietRequest.getIdPhongCach()).get());
+            sanPhamChiTietUpdate.setHoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get());
+            sanPhamChiTietUpdate.setTayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get());
+            sanPhamChiTietUpdate.setCoAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get());
+            return sanPhamChiTietRepository.save(sanPhamChiTietUpdate);
+        }).orElse(null);
+        Optional<HinhAnh> hinhAnh = hinhAnhRepository.findHinhAnh(id);
+        hinhAnh.map(hinhAnhUpdate -> {
+            hinhAnhUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+            hinhAnhUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+            hinhAnhUpdate.setDuong_dan(sanPhamChiTietRequest.getUrlImage());
+            return hinhAnhRepository.save(hinhAnhUpdate);
+        }).orElse(null);
         return null;
     }
 

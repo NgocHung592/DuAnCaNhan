@@ -1,6 +1,6 @@
 Create database DU_AN_WEBSITE_BAN_AO_PHONG_SIMPLE
 USE DU_AN_WEBSITE_BAN_AO_PHONG_SIMPLE
-Go
+GO
 
 SET ANSI_NULLS ON
 GO
@@ -160,14 +160,7 @@ Create table  ma_giam_gia(
     da_xoa bit
 )
 
-Create table  ma_giam_gia_chi_tiet(
-    id UNIQUEIDENTIFIER
-       DEFAULT NEWID() PRIMARY KEY,
-    don_gia decimal(20,0),
-    don_gia_sau_khi_giam decimal (20,0),
-    ma_giam_gia_id  UNIQUEIDENTIFIER REFERENCES ma_giam_gia(id),
-    hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
-)
+
 
 Create table [chuc_vu](
     id UNIQUEIDENTIFIER
@@ -265,6 +258,7 @@ Create table [hoa_don](
     ngay_mong_muon_nhan datetime,
     ngay_co_the_nhan datetime,
     ngay_nhan_duoc_hang datetime,
+	ten_khach_hang nvarchar,
     dia_chi_khach_hang nvarchar(max),
     so_dien_thoai_khach_hang varchar(15),
     phi_ship decimal(20,0),
@@ -278,7 +272,14 @@ Create table [hoa_don](
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id),
     )
-
+	Create table  ma_giam_gia_chi_tiet(
+    id UNIQUEIDENTIFIER
+       DEFAULT NEWID() PRIMARY KEY,
+    don_gia decimal(20,0),
+    don_gia_sau_khi_giam decimal (20,0),
+    ma_giam_gia_id  UNIQUEIDENTIFIER REFERENCES ma_giam_gia(id),
+    hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
+)
 Create table [hoa_don_chi_tiet](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,

@@ -30,7 +30,6 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.color = {
     tenMauSac: "",
   };
-
   $scope.addKichThuoc = function (index) {
     $scope.listKichThuocTrangThai[index].checked =
       !$scope.listKichThuocTrangThai[index].checked;
@@ -61,7 +60,9 @@ window.addSanPhamController = function ($http, $scope, $location) {
     }
   };
   $scope.renderMota = function (tenSanPham) {
-    console.log(tenSanPham);
+    $http.get(sanPhamAPI + "/find/" + tenSanPham).then(function (response) {
+      $scope.product.moTa = response.data.moTa;
+    });
   };
   $scope.addSizeAndColor = function () {
     $scope.sizeAndQuantitys.forEach((size) => {
@@ -114,6 +115,7 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.saveProduct = function (event) {
     event.preventDefault();
     let productImages = document.getElementById("product-image");
+    console.log(productImages);
     $scope.allProducts = [];
 
     for (const key in $scope.groupedProducts) {
@@ -138,7 +140,7 @@ window.addSanPhamController = function ($http, $scope, $location) {
           tenKichThuoc: sizeAndColor.tenKichThuoc,
           tenMauSac: sizeAndColor.tenMauSac,
           soLuong: sizeAndColor.soLuong,
-          giaBan: sizeAndColor.gia,
+          donGia: sizeAndColor.gia,
           urlImage: file.name, // Set the image name based on the selected file
           daXoa: $scope.product.daXoa,
         };

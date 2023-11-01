@@ -68,9 +68,6 @@ public class HoaDon {
     @Column(name = "phi_hoan_tra")
     private BigDecimal phiHoanTra;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
-
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
 
@@ -83,6 +80,6 @@ public class HoaDon {
     @Column(name = "nguoi_sua")
     private String nguoiSua;
 
-    @Column(name = "da_xoa")
-    private Boolean daXoa;
+    @Column(name = "trang_thai")
+    private Integer trangThai;
 }

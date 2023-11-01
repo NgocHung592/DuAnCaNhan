@@ -1,6 +1,5 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.SanPham;
 import com.example.demo.model.response.SanPhamReponse;
 import com.example.demo.repository.SanPhamRepository;
@@ -28,6 +27,18 @@ public class SanPhamServiceImpl implements SanPhamService {
     public Page<SanPhamReponse> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamRepository.getAll(pageable);
+    }
+
+    @Override
+    public Page<SanPhamReponse> loc(Integer pageNo,String trangThai) {
+        Pageable pageable=PageRequest.of(pageNo,10);
+        return sanPhamRepository.loc(pageable,trangThai);
+    }
+
+    @Override
+    public Page<SanPhamReponse> search(Integer pageNo, String keyword) {
+          Pageable pageable=PageRequest.of(pageNo,10);
+        return sanPhamRepository.search(pageable,keyword);
     }
 
     @Override
@@ -78,8 +89,5 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.findById(id).get();
     }
 
-    @Override
-    public void delete(UUID id) {
-        sanPhamRepository.deleteById(id);
-    }
+
 }

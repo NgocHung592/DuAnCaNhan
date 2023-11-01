@@ -6,7 +6,7 @@
                     <div class="align-self-center w-100">
                         <h4>DANH SÁCH MÀU SẮC</h4>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" href="#mau-sac/add">Thêm</a>
+                            <a type="button" class="btn btn-primary mb-3" href="#mau-sac/add">Thêm</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -25,7 +25,8 @@
                                     <td scope="row">{{$index+1}}</td>
                                     <th scope="row">{{mauSac.ma}}</th>
                                     <th scope="row">{{mauSac.ten}}</th>
-                                    <th style="background-color: {{mauSac.ma}};"></th>
+                                    <th style="background-color: {{mauSac.ma}};">
+                                    </th>
                                     <th>
                                         <p ng-class="{' text-g ': !mauSac.daXoa
                                         ,'text-glow':mauSac.daXoa}">

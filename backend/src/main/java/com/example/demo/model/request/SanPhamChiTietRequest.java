@@ -18,7 +18,7 @@ public class SanPhamChiTietRequest {
 
     private String tenSanPham;
 
-    private Double giaBan;
+    private Double donGia;
 
     private String soLuong;
 
@@ -37,6 +37,10 @@ public class SanPhamChiTietRequest {
     private UUID idCoAo;
 
     private UUID idTayAo;
+
+    private UUID idMauSac;
+
+    private UUID idKichThuoc;
 
     private String tenKichThuoc;
 

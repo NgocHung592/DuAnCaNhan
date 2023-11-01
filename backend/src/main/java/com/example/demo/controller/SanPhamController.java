@@ -51,13 +51,19 @@ public class SanPhamController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update( @RequestBody  SanPham sanPham, @PathVariable("id") String id) {
+    public ResponseEntity update(@RequestBody  SanPham sanPham, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") String id) {
-        sanPhamService.delete(UUID.fromString(id));
+   @GetMapping("/loc")
+    public ResponseEntity loc(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
+                              @RequestParam(name = "loc") String loc){
+        return new ResponseEntity(sanPhamService.loc(Integer.valueOf(pageNo),loc),HttpStatus.OK);
+   }
+    @GetMapping("/search")
+    public ResponseEntity search(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
+                              @RequestParam(name = "keyword") String keyword){
+        return new ResponseEntity(sanPhamService.search(Integer.valueOf(pageNo),keyword),HttpStatus.OK);
     }
 }
 

@@ -5,8 +5,7 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>BÁN HÀNG TẠI QUẦY</h4>
-
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <ul class="nav nav-tabs pb-4" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation" ng-repeat="hoaDon in listHoaDon | filter: 0">
                                 <button class="nav-link" id="{{hoaDon.ma}}" data-bs-toggle="tab"
                                     data-bs-target="#{{hoaDon.ma}}*" type="button" role="tab"
@@ -206,6 +205,7 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h5>Khách Hàng</h5>
+
                         <hr>
                         <div class="row">
                             <div class="col-md-7">
@@ -227,7 +227,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="form-label">Tỉnh / Thành Phố</label>
-                                            <select ng-model="formDiaChi.tinhThanhPho" ng-change="onCityChange()"
+                                            <select ng-model="formDiaChi.tinhThanhPho" ng-click="onCityChange()"
                                                 class="browser-default custom-select">
                                                 <option hidden selected value="">Tỉnh / Thành Phố</option>
                                                 <option ng-repeat="city in cityOptions" value="{{city.code}}">
@@ -237,7 +237,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Quận / Huyện</label>
-                                            <select ng-model="formDiaChi.quanHuyen" ng-change="onDistrictChange()"
+                                            <select ng-model="formDiaChi.quanHuyen" ng-click="onDistrictChange()"
                                                 class="browser-default custom-select">
                                                 <option hidden selected value="">Quận / Huyện</option>
                                                 <option ng-repeat="district in districtOptions"
@@ -248,7 +248,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Phường / Xã </label>
-                                            <select ng-model="formDiaChi.phuongXa" ng-change="onWardChange()"
+                                            <select ng-model="formDiaChi.phuongXa" ng-click="onWardChange()"
                                                 class="browser-default custom-select">
                                                 <option hidden selected value="">Phường / Xã</option>
                                                 <option ng-repeat="ward in wardOptions" value="{{ward.code}}">

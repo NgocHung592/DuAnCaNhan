@@ -22,5 +22,8 @@ public interface SanPhamService {
 
     SanPham detail(UUID id);
 
-    void delete(UUID id);
+    Page<SanPhamReponse> loc(Integer pageNo, String trangThai);
+
+    Page<SanPhamReponse> search(Integer pageNo, String keyword);
+
 }
