@@ -32,6 +32,9 @@ public class HoaDon {
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
 
+    @Column(name = "loai_hoa_don")
+    private String loai_hoa_don;
+
     @Column(name = "ngay_dat_hang")
     private Timestamp ngayDatHang;
 
