@@ -2,9 +2,12 @@ package com.example.demo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Nationalized;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Table(name = "san_pham")
+@Table(name = "hinh_anh")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +27,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-public class SanPham   {
+public class HinhAnh {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -38,8 +39,8 @@ public class SanPham   {
     @Column(name = "ten")
     private String ten;
 
-    @Column(name = "mo_ta")
-    private String moTa;
+    @Column(name = "duong_dan")
+    private String duong_dan;
 
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
@@ -55,4 +56,8 @@ public class SanPham   {
 
     @Column(name = "da_xoa")
     private Boolean daXoa;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
+    SanPhamChiTiet sanPhamChiTiet;
 }

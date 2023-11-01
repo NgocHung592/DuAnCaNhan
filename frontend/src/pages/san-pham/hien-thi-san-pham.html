@@ -4,31 +4,41 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <h4>SẢN PHẨM CHI TIẾT</h4>
-                        <div class="search-and-radio-container">
-                            <div class="search-container">
+                        <h4>DANH SÁCH SẢN PHẨM </h4>
+                        <div class="row pb-4 pr-2">
+                            <div class="search-container col-md-10">
                                 <i class="fas fa-search search-icon"></i>
-                                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, tên"
-                                    class="search-input" />
+                                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm sản phẩm theo mã, tên"
+                                    ng-change="search()" class="search-input" />
                             </div>
-
-                            <div class="radio-container">
-                                <input type="radio" ng-model="selectedOption" ng-change="()" required id="option-all" />
-                                <label for="option-all">Tất cả</label>
-
-                                <input type="radio" ng-model="selectedOption" value="1" ng-change="()"
-                                    id="option-active" checked />
-                                <label for="option-active">Đang kinh doanh</label>
-
-                                <input type="radio" ng-model="selectedOption" value="2" ng-change="()"
-                                    id="option-inactive" />
-                                <label for="option-inactive">Ngừng kinh doanh</label>
+                            <div class="col-md-2">
+                                <a type="button" class="btn btn-primary" href="#san-pham/add">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Thêm Sản Phẩm
+                                </a>
                             </div>
+                        </div>
+                        <div class="mb-3" class="form-check">
+                            <label class="form-label">Trạng thái</label><br>
+
+                            <input type="radio" value="false" class="form-check-input" ng-click="getSanPham()" checked
+                                name="trang_thai">
+                            <label class="form-check-label">
+                                Tất cả
+                            </label>
+                            <input type="radio" value="false" class="form-check-input" value="false" name="trang_thai"
+                                ng-change="loc()" ng-model="selectOption">
+                            <label class="form-check-label">
+                                Đang kinh doanh
+                            </label>
+                            <input type="radio" value="true" class="form-check-input" value="true" name="trang_thai"
+                                ng-model="selectOption" ng-change="loc()">
+                            <label class="form-check-label">
+                                Ngừng kinh doanh
+                            </label>
 
                         </div>
-                        <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" href="#san-pham/add">Thêm Sản Phẩm</a>
-                        </div>
+
                         <!-- <form class="row">
                             <div class="col-md-3">
                                 <label class="form-label">Sản Phẩm</label>
@@ -112,34 +122,32 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Ảnh Đại Diện</th>
-                                    <th scope="col">Tên Sản Phẩm</th>
-                                    <th scope="col">Số Lượng</th>
-                                    <th scope="col">Đơn Giá</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Hành Động</th>
+                                    <th>#</th>
+                                    <th>Mã Sản Phẩm</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Mô Tả</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thao Tác</th>
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content ">
+                            <tbody ng-repeat="sanPham in listSanPham.content">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
-                                    <th scope="row"><img class="table_img"
-                                            src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}" alt="Không có ảnh"></th>
-                                    <th scope="row">{{sanPhamChiTiet.tenSanPham}} [{{sanPhamChiTiet.tenMauSac}}
-                                        - {{sanPhamChiTiet.tenKichThuoc}}]</th>
-                                    <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                                    <th scope="row">{{sanPhamChiTiet.donGia | number}} VND</th>
-                                    <th scope="row">
-                                        {{sanPhamChiTiet.daXoa?"Ngừng kinh
-                                        Doanh":"Kinh Doanh"}}
+                                    <th>{{$index+1}}</th>
+                                    <th>{{sanPham.maSanPham}}</th>
+                                    <th>{{sanPham.tenSanPham}} </th>
+                                    <th>{{sanPham.soLuong}}</th>
+                                    <th>{{sanPham.moTa}}</th>
+                                    <th ng-class="{' text-g ': !sanPham.daXoa
+                                    ,'text-glow':sanPham.daXoa}">
+                                        {{sanPham.daXoa?"Ngừng kinh
+                                        Doanh":"Đang Kinh Doanh"}}
                                     </th>
                                     <th>
-                                        <a type="button" class="btn btn-warning "
-                                            href="#san-pham/update/{{sanPhamChiTiet.idsanPhamChiTiet}}">Chi
-                                            tiết</a>
-
+                                        <a href="#san-pham-chi-tiet/hien-thi/{{sanPham.idSanPham}}">
+                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        </a>
                                     </th>
                                 </tr>
                             </tbody>
@@ -148,7 +156,8 @@
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">
+                                            << </span>
                                     </a>
                                 </li>
                                 <li class="page-item" ng-repeat="page in totalPages track by $index"
@@ -156,7 +165,7 @@
                                     <a class="page-link">{{$index+1}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                    <a class="page-link" ng-click="nextPage()">>></a>
                                 </li>
                             </ul>
                         </nav>

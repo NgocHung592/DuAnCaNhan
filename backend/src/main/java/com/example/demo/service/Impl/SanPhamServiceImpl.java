@@ -1,7 +1,7 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.SanPham;
+import com.example.demo.model.response.SanPhamReponse;
 import com.example.demo.repository.SanPhamRepository;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,9 +24,21 @@ public class SanPhamServiceImpl implements SanPhamService {
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
-    public Page<SanPham> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        return sanPhamRepository.findAll(pageable);
+    public Page<SanPhamReponse> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamRepository.getAll(pageable);
+    }
+
+    @Override
+    public Page<SanPhamReponse> loc(Integer pageNo,String trangThai) {
+        Pageable pageable=PageRequest.of(pageNo,10);
+        return sanPhamRepository.loc(pageable,trangThai);
+    }
+
+    @Override
+    public Page<SanPhamReponse> search(Integer pageNo, String keyword) {
+          Pageable pageable=PageRequest.of(pageNo,10);
+        return sanPhamRepository.search(pageable,keyword);
     }
 
     @Override
@@ -34,9 +47,10 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
-    public List<SanPham> findByName(SanPham sanPham) {
-        return sanPhamRepository.findByName(sanPham);
+    public Optional<SanPham> findbyName(String name) {
+        return sanPhamRepository.findByTen(name);
     }
+
 
     @Override
     public SanPham add(SanPham sanPham) {
@@ -56,19 +70,18 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-        if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
-            return null;
+        Optional<SanPham> optional=sanPhamRepository.findById(id);
+        if (optional.isPresent()){
+            optional.map(sanPhamUpdate->{
+                sanPhamUpdate.setTen(sanPham.getTen());
+                sanPhamUpdate.setMoTa(sanPham.getMoTa());
+                sanPhamUpdate.setDaXoa(sanPham.getDaXoa());
+                sanPhamUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                sanPhamUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+                return sanPhamRepository.save(sanPhamUpdate);
+            }).orElse(null);
         }
-        SanPham sanPhamUpdate = SanPham.builder()
-                .id(id)
-                .ma(sanPham.getMa())
-                .ten(sanPham.getTen())
-                .moTa(sanPham.getMoTa())
-                .ngaySua(new Timestamp(currentTimestampMillis))
-                .ngaySua(null)
-                .daXoa(sanPham.getDaXoa())
-                .build();
-        return sanPhamRepository.save(sanPhamUpdate);
+       return null;
     }
 
     @Override
@@ -76,8 +89,5 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.findById(id).get();
     }
 
-    @Override
-    public void delete(UUID id) {
-        sanPhamRepository.deleteById(id);
-    }
+
 }

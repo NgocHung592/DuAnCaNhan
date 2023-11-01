@@ -36,3 +36,5 @@ window.vaiTroAPI = url + "/vai-tro";
 window.diaChiAPI = url + "/dia-chi";
 
 window.api_url = "https://www.thecolorapi.com";
+
+window.api_giaoHang = "https://provinces.open-api.vn/api/";

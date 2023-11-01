@@ -14,15 +14,19 @@ import lombok.ToString;
 @ToString
 public class SanPhamChiTietRequest {
 
-    private String daXoa;
-
     private String maSanPham;
 
     private String tenSanPham;
 
+    private Double donGia;
+
+    private String soLuong;
+
+    private String urlImage;
+
     private String moTa;
 
-    private List<KichThuocChiTietRequest> kichThuocChiTiets;
+    private String daXoa;
 
     private UUID idChatLieu;
 
@@ -33,5 +37,15 @@ public class SanPhamChiTietRequest {
     private UUID idCoAo;
 
     private UUID idTayAo;
+
+    private UUID idMauSac;
+
+    private UUID idKichThuoc;
+
+    private String tenKichThuoc;
+
+    private String tenMauSac;
+
+
 
 }

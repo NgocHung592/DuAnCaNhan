@@ -1,41 +1,64 @@
 window.hienThiSanPhamController = function ($http, $scope) {
-  $scope.listSanPhamChiTiet = [];
-  //   $scope.listDanhMucTrangThai = [];
-  //   $scope.listChatLieuTrangThai = [];
-  //   $scope.listSanPhamTrangThai = [];
-  //   $scope.listHoaTietTrangThai = [];
-  //   $scope.listPhongCachTrangThai = [];
-  //   $scope.listMauSacTrangThai = [];
-  //   $scope.listKichThuocTrangThai = [];
-  //   $scope.listHoaTietTrangThai = [];
-  //   $scope.listHoaTietTrangThai = [];
-  //   $scope.listKieuDangTrangThai = [];
   $scope.currentPage = 0;
+  $scope.listSanPham = [];
   $scope.totalPages = [];
-  $scope.getSanPhamChiTiet = function () {
+  $scope.selectOption = "";
+  $scope.getSanPham = function () {
     $http
-      .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response.data;
+        $scope.listSanPham = response.data;
+        console.log($scope.listSanPham);
         $scope.totalPages = new Array(response.data.totalPages);
       });
   };
-  $scope.getSanPhamChiTiet();
+  $scope.getSanPham();
+  $scope.loc = function () {
+    console.log($scope.selectOption);
+    $http
+      .get(
+        sanPhamAPI +
+          "/loc?pageNo=" +
+          $scope.currentPage +
+          "&loc=" +
+          $scope.selectOption
+      )
+      .then(function (response) {
+        $scope.listSanPham = response.data;
+        console.log($scope.listSanPham);
+      });
+  };
+  $scope.$watch("searchKeyword", function (newVal, oldVal) {
+    if (newVal !== oldVal) {
+      $http
+        .get(
+          sanPhamAPI +
+            "/search?pageNo=" +
+            $scope.currentPage +
+            "&keyword=" +
+            $scope.searchKeyword
+        )
+        .then(function (response) {
+          $scope.listSanPham = response.data;
+          console.log($scope.listSanPham);
+        });
+    }
+  });
   $scope.changePage = function (index) {
     $scope.currentPage = index;
-    $scope.getSanPhamChiTiet();
+    $scope.getSanPham();
   };
   $scope.nextPage = function () {
     let length = $scope.totalPages.length;
     if ($scope.currentPage < length - 1) {
       $scope.currentPage++;
-      $scope.getSanPhamChiTiet();
+      $scope.getSanPham();
     }
   };
   $scope.previousPage = function () {
     if ($scope.currentPage >= 0) {
       $scope.currentPage--;
-      $scope.getSanPhamChiTiet();
+      $scope.getSanPham();
     }
   };
   //   $http.get(chatLieuAPI + "/trang-thai").then(function (response) {

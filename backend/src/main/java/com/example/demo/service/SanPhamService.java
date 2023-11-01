@@ -1,19 +1,20 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KichThuoc;
 import com.example.demo.entity.SanPham;
+import com.example.demo.model.response.SanPhamReponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SanPhamService {
 
-    Page<SanPham> getAll(Integer pageNo);
+    Page<SanPhamReponse> getAll(Integer pageNo);
 
     List<SanPham> getAllByStatus();
 
-    List<SanPham> findByName(SanPham sanPham);
+    Optional<SanPham> findbyName(String name);
 
     SanPham add(SanPham sanPham);
 
@@ -21,5 +22,8 @@ public interface SanPhamService {
 
     SanPham detail(UUID id);
 
-    void delete(UUID id);
+    Page<SanPhamReponse> loc(Integer pageNo, String trangThai);
+
+    Page<SanPhamReponse> search(Integer pageNo, String keyword);
+
 }

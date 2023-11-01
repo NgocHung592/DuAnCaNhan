@@ -11,6 +11,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   $scope.districtOptions = [];
   $scope.wardOptions = [];
   $scope.filter;
+
   $scope.formHoaDonChiTiet = {
     idHoaDon: "",
     idSanPhamChiTiet: "",
@@ -146,70 +147,58 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     $scope.khachHangDefault = false;
     $scope.chonKhachHang = true;
   };
+
   $scope.giaoHang = function () {
     $scope.show = !$scope.show;
-    const host = "https://provinces.open-api.vn/api/";
+  };
+  $scope.getCity = function () {
+    const api = api_giaoHang + "?depth=1";
+    axios.get(api).then((response) => {
+      $scope.cityOptions = response.data;
+    });
+  };
+  $scope.getCity();
 
-    var callAPI = (api) => {
-      return axios.get(api).then((response) => {
-        $scope.cityOptions = response.data;
-      });
-    };
-
-    callAPI(host + "?depth=1");
-
-    var callApiDistrict = (api) => {
-      return axios.get(api).then((response) => {
+  $scope.onCityChange = () => {
+    const selectedCityCode = $scope.formDiaChi.tinhThanhPho;
+    if (selectedCityCode) {
+      const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
+      axios.get(api).then(function (response) {
         $scope.districtOptions = response.data.districts;
+        printResult();
       });
-    };
-
-    var callApiWard = (api) => {
-      return axios.get(api).then((response) => {
+    }
+  };
+  $scope.onDistrictChange = () => {
+    const selectedDistrictCode = $scope.formDiaChi.quanHuyen;
+    if (selectedDistrictCode) {
+      const api = api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
+      axios.get(api).then(function (response) {
         $scope.wardOptions = response.data.wards;
+        printResult();
       });
-    };
+    }
+  };
+  $scope.onWardChange = () => {
+    printResult();
+  };
+  var printResult = () => {
+    if (
+      $scope.formDiaChi.quanHuyen &&
+      $scope.formDiaChi.tinhThanhPho &&
+      $scope.formDiaChi.phuongXa
+    ) {
+      $scope.formHoaDon.tenThanhPho = $scope.cityOptions.find(
+        (option) => option.code == $scope.formDiaChi.tinhThanhPho
+      ).name;
 
-    $scope.onCityChange = () => {
-      const selectedCityCode = $scope.formDiaChi.tinhThanhPho;
-      if (selectedCityCode) {
-        const api = host + "p/" + selectedCityCode + "?depth=2";
-        callApiDistrict(api);
-        printResult();
-      }
-    };
-
-    $scope.onDistrictChange = () => {
-      const selectedDistrictCode = $scope.formDiaChi.quanHuyen;
-      if (selectedDistrictCode) {
-        const api = host + "d/" + selectedDistrictCode + "?depth=2";
-        callApiWard(api);
-        printResult();
-      }
-    };
-
-    $scope.onWardChange = () => {
-      printResult();
-    };
-
-    var printResult = () => {
-      if (
-        $scope.formDiaChi.quanHuyen &&
-        $scope.formDiaChi.tinhThanhPho &&
-        $scope.formDiaChi.phuongXa
-      ) {
-        $scope.formHoaDon.tenThanhPho = $scope.cityOptions.find(
-          (option) => option.code == $scope.formDiaChi.tinhThanhPho
-        ).name;
-
-        $scope.formHoaDon.tenQuanHuyen = $scope.districtOptions.find(
-          (option) => option.code == $scope.formDiaChi.quanHuyen
-        ).name;
-        $scope.formHoaDon.tenPhuongXa = $scope.wardOptions.find(
-          (option) => option.code == $scope.formDiaChi.phuongXa
-        ).name;
-      }
-    };
+      $scope.formHoaDon.tenQuanHuyen = $scope.districtOptions.find(
+        (option) => option.code == $scope.formDiaChi.quanHuyen
+      ).name;
+      $scope.formHoaDon.tenPhuongXa = $scope.wardOptions.find(
+        (option) => option.code == $scope.formDiaChi.phuongXa
+      ).name;
+    }
   };
 
   // $scope.changePage = function (index) {

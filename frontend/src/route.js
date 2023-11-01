@@ -18,6 +18,10 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "san-pham/update-san-pham.html",
       controller: updateSanPhamController,
     })
+    .when("/san-pham-chi-tiet/hien-thi/:id", {
+      templateUrl: "san-pham-chi-tiet/hien-thi-san-pham-chi-tiet.html",
+      controller: hienThiSanPhamChiTietController,
+    })
     .when("/mau-sac/hien-thi", {
       templateUrl: "mau-sac/hien-thi-mau-sac.html",
       controller: hienThiMauSacController,

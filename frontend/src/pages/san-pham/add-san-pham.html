@@ -10,7 +10,8 @@
                     </div>
                     <div>
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.tenSanPham">
+                        <input class="form-control mb-3" list="datalistOptions" ng-model="product.tenSanPham"
+                            ng-change="renderMota(product.tenSanPham)">
                         <datalist id="datalistOptions">
                             <option value="{{sanPham.ten}}"
                                 ng-repeat="sanPham in listSanPhamTrangThai | filter:product.tenSanPham">
@@ -328,79 +329,118 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Kích Thước</th>
-                                    <th scope="col">Màu Sắc</th>
-                                    <th scope="col">Số Lượng</th>
-                                    <th scope="col">Đơn Giá</th>
-                                    <!-- <th scope="col">Trạng Thái</th> -->
-                                    <th scope="col">Ảnh</th>
-                                    <th scope="col">Hành Động</th>
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="sizeColor in sizeAndColors track by $index">
-                                <tr>
-                                    <td>{{$index+1}}</td>
-                                    <td>{{sizeColor.tenKichThuoc}}</td>
-                                    <td rowspan="2">{{sizeColor.tenMauSac}}</td>
-                                    <td class="align-middle">
-                                        <div class="d-flex flex-row">
-                                            <input type="text" ng-model="sizeAndColors[$index].soLuong"
-                                                ng-change="changeSoLuong($index)" class="form-control form-control-sm"
-                                                style="width: 70px; height: 30px;" />
-                                        </div>
-                                    </td>
-                                    <td> <input type="text" ng-model="sizeAndColors[$index].gia"
-                                            ng-change="changeGia($index)" class="form-control form-control-sm"
-                                            style="width: 100px; height: 30px;" />
-                                    </td>
-                                    <td><a data-bs-toggle="modal" data-bs-target="#addAnh">
-                                            <i class="fa-solid fa-image fa-2xl"></i>
-                                        </a>
-                                    </td>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <div class="modal fade" id="addAnh" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="bg-white border rounded-5">
-                                                        <div class="uploadfile">
-                                                            <section class="p-4 d-flex justify-content-center w-100">
-                                                                <div class="file-upload-wrapper">
-                                                                    <div class="file-upload">
-                                                                        <div class="file-upload-message"><i
-                                                                                class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
-                                                                            <p class="file-upload-default-message">
-                                                                                Upload file</p>
-                                                                            <p class="file-upload-main-error"></p>
-                                                                        </div>
-                                                                        <div class="file-upload-mask"></div>
-                                                                        <ul class="file-upload-errors"></ul>
-                                                                        <input type="file" multiple
-                                                                            class="file-upload-input" id="product-image"
-                                                                            data-mdb-file-upload="file-upload"
-                                                                            ng-model="images">
-                                                                        <div class="file-upload-previews"></div>
 
-                                                                    </div>
+
+                        <div ng-repeat="(color, products) in  groupedProducts">
+                            <p class="san-pham-cung-mau">Các sản phẩm màu {{color}}</p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Kích Thước</th>
+                                        <th scope="col">Màu Sắc</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Đơn Giá</th>
+                                        <th scope="col">Ảnh</th>
+                                        <th scope="col">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="product in products track by $index">
+                                    <tr>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{product.tenKichThuoc}}</td>
+                                        <td>{{product.tenMauSac}}</td>
+                                        <td class="align-middle">
+                                            <div class="d-flex flex-row">
+                                                <input type="text" ng-model="product.soLuong"
+                                                    class="form-control form-control-sm"
+                                                    style="width: 70px; height: 30px;" />
+                                            </div>
+                                        </td>
+                                        <td> <input type="text" ng-model="product.gia"
+                                                class="form-control form-control-sm"
+                                                style="width: 100px; height: 30px;" />
+                                        </td>
+                                        <td>
+                                            <a data-bs-toggle="modal" data-bs-target="#addAnh">
+                                                <i class="fa-solid fa-image fa-2xl"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a ng-click="removeSize(product.tenMauSac,$index)">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <div class="modal fade" id="addAnh" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="bg-white border rounded-5">
+                                                <div class="uploadfile">
+                                                    <section class="p-4 d-flex justify-content-center w-100">
+                                                        <div class="file-upload-wrapper">
+                                                            <div class="file-upload">
+                                                                <div class="file-upload-message"><i
+                                                                        class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
+                                                                    <p class="file-upload-default-message">
+                                                                        Upload file</p>
                                                                 </div>
-                                                            </section>
-                                                        </div>
-                                                    </div>
+                                                                <div class="file-upload-mask"></div>
+                                                                <ul class="file-upload-errors"></ul>
+                                                                <input type="file" multiple class="file-upload-input"
+                                                                    id="product-image"
+                                                                    data-mdb-file-upload="file-upload"
+                                                                    ng-model="product.urlImage">
+                                                                <div class="file-upload-previews"></div>
 
+                                                            </div>
+                                                        </div>
+                                                    </section>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
-                                    <td>
-                                        <a type="button" class="btn btn-danger" ng-click="removeSize($index)">Xóa</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="modal fade" id="addAnh" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="bg-white border rounded-5">
+                                            <div class="uploadfile">
+                                                <section class="p-4 d-flex justify-content-center w-100">
+                                                    <div class="file-upload-wrapper">
+                                                        <div class="file-upload">
+                                                            <div class="file-upload-message"><i
+                                                                    class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
+                                                                <p class="file-upload-default-message">
+                                                                    Upload file</p>
+                                                            </div>
+                                                            <div class="file-upload-mask"></div>
+                                                            <ul class="file-upload-errors"></ul>
+                                                            <input type="file" multiple class="file-upload-input"
+                                                                id="product-image" data-mdb-file-upload="file-upload"
+                                                                ng-model="images">
+                                                            <div class="file-upload-previews"></div>
+
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class=align-middle>
                             <button type="button" class="btn btn-primary align-middle" data-bs-toggle="modal"
                                 data-bs-target="#addSizeAndQuantity">
