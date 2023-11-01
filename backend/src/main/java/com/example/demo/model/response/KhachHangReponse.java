@@ -1,11 +1,7 @@
 package com.example.demo.model.response;
-
 import org.springframework.beans.factory.annotation.Value;
-
-import java.sql.Timestamp;
 import java.util.Date;
-
-public interface NhanVienReponse {
+public interface KhachHangReponse {
     @Value("#{target.id}")
     String getId();
     @Value("#{target.ma}")
@@ -22,12 +18,8 @@ public interface NhanVienReponse {
     String getMatKhau();
     @Value("#{target.ngay_sinh}")
     Date getNgaySinh();
-    @Value("#{target.chuc_vu}")
-    String getChucVu();
     @Value("#{target.trang_thai}")
     Integer getTrangThai();
-    @Value("#{target.anh_dai_dien}")
-    String getHinhAnh();
     @Value("#{target.ngay_tao}")
     Date getNgayTao();
     @Value("#{target.mo_ta}")
@@ -38,5 +30,6 @@ public interface NhanVienReponse {
     String getTinhThanhPho();
     @Value("#{target.quan_huyen}")
     String getQuanHuyen();
+
 
 }

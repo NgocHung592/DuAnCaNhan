@@ -12,7 +12,7 @@
         <div class="card-body">
           <form novalidate name="formAdd" role="form">
             <div class="text-center">
-              <h4 class="mb-3">QUẢN LÝ NHÂN VIÊN - THÊM MỚI</h4>
+              <h4 class="mb-3">QUẢN LÝ KHÁCH HÀNG - THÊM MỚI</h4>
             </div>
             <div class="row">
               <!-- Phần thông tin nhân viên (bốn phần tư màn hình) -->
@@ -23,31 +23,27 @@
                       <div class="container-fluid">
                         <form>
                           <div class="mb-3">
-                            <input type="file" name="" id="product-image" />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Mã nhân viên </label>
+                            <label class="form-label">Mã khách hàng </label>
                             <input
                               type="text"
                               class="form-control"
                               aria-describedby="emailHelp"
-                              ng-model="form_nv.ma"
+                              ng-model="form_kh.ma"
                               name="manv"
                               required
                               disabled
                             />
                           </div>
-
                           <div class="mb-3">
                             <label class="form-label"
-                              >Tên nhân viên
+                              >Tên khách hàng
                               <span style="color: red">*</span></label
                             >
                             <input
                               type="text"
                               class="form-control"
                               aria-describedby="emailHelp"
-                              ng-model="form_nv.ten"
+                              ng-model="form_kh.ten"
                               required
                               name="tennv"
                             />
@@ -66,7 +62,7 @@
                               type="text"
                               class="form-control"
                               aria-describedby="emailHelp"
-                              ng-model="form_nv.email"
+                              ng-model="form_kh.email"
                               required
                               name="email"
                             />
@@ -86,7 +82,7 @@
                               type="text"
                               class="form-control"
                               aria-describedby="emailHelp"
-                              ng-model="form_nv.sodienthoai"
+                              ng-model="form_kh.sodienthoai"
                               required
                               name="sdt"
                             />
@@ -103,7 +99,7 @@
                                 <label class="form-label">Giới tính:</label>
                                 <div class="radio-option">
                                   <input
-                                    ng-model="form_nv.gioitinh"
+                                    ng-model="form_kh.gioitinh"
                                     type="radio"
                                     id="male"
                                     name="gender"
@@ -115,7 +111,7 @@
                                 <div class="radio-option">
                                   <input
                                     type="radio"
-                                    ng-model="form_nv.gioitinh"
+                                    ng-model="form_kh.gioitinh"
                                     id="female"
                                     name="gender"
                                     value="false"
@@ -130,7 +126,7 @@
                                 <input
                                   type="date"
                                   class="form-control"
-                                  ng-model="form_nv.ngaysinh"
+                                  ng-model="form_kh.ngaysinh"
                                   required
                                   name="ns"
                                 />
@@ -178,7 +174,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              ng-model="form_nv.mota"
+                              ng-model="form_kh.mota"
                               name="mota"
                             />
                             <span
@@ -249,13 +245,13 @@
                   id="liveToastBtn"
                   class="btn btn-primary"
                   ng-disabled="formAdd.$invalid"
-                  ng-click="addNhanVien($event)"
+                  ng-click="addKhachHang($event)"
                   >Thêm</a
                 >
                 <a
                   type="button"
                   class="btn btn-primary"
-                  href="#nhan-vien/hien-thi"
+                  href="#khach-hang/hien-thi"
                   >Quay lại</a
                 >
               </div>

@@ -1,0 +1,392 @@
+<style>
+  .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa radio buttons */
+  }
+</style>
+<main class="content">
+  <div class="container-fluid p-0">
+    <div class="row justify-content-center">
+      <div class="card flex-fill">
+        <div class="card-body">
+          <form novalidate name="formAdd" role="form">
+            <div class="text-center">
+              <h4 class="mb-3">THÔNG TIN NHÂN VIÊN</h4>
+            </div>
+            <div class="row">
+              <!-- Phần thông tin nhân viên (bốn phần tư màn hình) -->
+              <div class="col-md-6">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <form>
+                          <div class="mb-3">
+                            <label class="form-label">Mã khách hàng</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="detailKhachHang.khachHang.ma"
+                              disabled
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Tên khách hàng</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="detailKhachHang.khachHang.hoten"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="detailKhachHang.khachHang.email"
+                              required
+                              name="email"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-describedby="emailHelp"
+                              ng-model="detailKhachHang.khachHang.sodienthoai"
+                              required
+                              name="sdt"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Ngày sinh:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.khachHang.ngaysinh"
+                              required
+                              name="ns"
+                            />
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-md-6">
+                              <div class="radio-group">
+                                <label class="form-label">Trạng thái:</label>
+                                <div class="radio-option">
+                                  <input
+                                    ng-model="detailNhanVien.trangthai"
+                                    ng-checked="detailKhachHang.khachHang.trangthai==1"
+                                    type="radio"
+                                    id="male"
+                                    name="gender"
+                                    value="1"
+                                  />
+                                  <label for="male">Hoạt động</label>
+                                </div>
+
+                                <div class="radio-option">
+                                  <input
+                                    type="radio"
+                                    ng-model="detailKhachHang.khachHang.trangthai"
+                                    ng-checked="detailKhachHang.khachHang.trangthai==2"
+                                    id="female"
+                                    name="gender"
+                                    value="2"
+                                  />
+                                  <label for="female">Đã khóa</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="radio-group">
+                                <label class="form-label">Giới tính:</label>
+                                <div class="radio-option">
+                                  <input
+                                    ng-model="detailKhachHang.khachHang.gioitinh"
+                                    ng-checked="detailKhachHang.khachHang.gioitinh==true"
+                                    type="radio"
+                                    id="male"
+                                    name="g"
+                                    value="true"
+                                  />
+                                  <label for="male">Nam</label>
+                                </div>
+
+                                <div class="radio-option">
+                                  <input
+                                    type="radio"
+                                    ng-model="detailKhachHang.khachHang.gioitinh"
+                                    ng-checked="detailKhachHang.khachHang.gioitinh==false"
+                                    id="female"
+                                    name="g"
+                                    value="false"
+                                  />
+                                  <label for="female">Nữ</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Phần địa chỉ (bốn phần tư màn hình) -->
+              <div class="col-md-6">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <form>
+                          <div class="mb-3">
+                            <label class="form-label">Số nhà, tên đường</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.mota"
+                              name="mota"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Tỉnh thành phố</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.tinhthanhpho"
+                              name="mota"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Quận huyện</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.quanhuyen"
+                              name="mota"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Phường xã</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.phuongxa"
+                              name="mota"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Ngày tạo</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.khachHang.ngaytao"
+                              name="mota"
+                              disabled
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Ngày cập nhât</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailKhachHang.khachHang.ngaysua"
+                              name="mota"
+                              disabled
+                            />
+                          </div>
+                          <div class="col-md-4">
+                            <div
+                              class="d-grid gap-2 d-md-flex justify-content-md-end"
+                            >
+                              <div
+                                class="modal fade"
+                                id="adddc"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+                                      <div class="container-fluid">
+                                        <h4>ĐỊA CHỈ</h4>
+                                        <form>
+                                          <div class="mb-3">
+                                            <label class="form-label"
+                                              >Số nhà, tên đường
+                                              <span style="color: red"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              ng-model="form_dc.mota"
+                                              name="mota"
+                                            />
+                                            <span
+                                              ng-show="formAdd.mota.$invalid"
+                                              ng-hide="show?true:false"
+                                              class="has-error"
+                                              >Vui lòng nhập
+                                            </span>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label class="form-label"
+                                              >Tỉnh thành phố
+                                              <span style="color: red"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <select
+                                              name="tt"
+                                              id="city"
+                                              class="form-control"
+                                            >
+                                              <option
+                                                selected
+                                                id="thanhpho"
+                                              ></option>
+                                            </select>
+                                            <span
+                                              ng-show="formAdd.tt.$invalid"
+                                              ng-hide="show?true:false"
+                                              class="has-error"
+                                              >Vui lòng nhập
+                                            </span>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label class="form-label"
+                                              >Quận huyện
+                                              <span style="color: red"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <select
+                                              class="form-control"
+                                              id="district"
+                                              name="qh"
+                                            >
+                                              <option
+                                                value=""
+                                                selected
+                                              ></option>
+                                            </select>
+                                            <span
+                                              ng-show="formAdd.qh.$invalid"
+                                              ng-hide="show?true:false"
+                                              class="has-error"
+                                              >Vui lòng nhập
+                                            </span>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label class="form-label"
+                                              >Phường xã
+                                              <span style="color: red"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <select
+                                              class="form-control"
+                                              id="ward"
+                                              name="px"
+                                            >
+                                              <option
+                                                value=""
+                                                selected
+                                              ></option>
+                                            </select>
+                                            <span
+                                              ng-show="formAdd.px.$invalid"
+                                              ng-hide="show?true:false"
+                                              class="has-error"
+                                              >Vui lòng nhập
+                                            </span>
+                                          </div>
+                                          <div
+                                            class="d-grid gap-2 d-md-flex justify-content-md-end"
+                                          >
+                                            <a
+                                              type="button"
+                                              class="btn btn-primary"
+                                              id="liveToastBtn"
+                                              data-bs-dismiss="modal"
+                                              ng-click="addDiaChi($event)"
+                                              >Thêm</a
+                                            >
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <div
+                          class="d-grid gap-2 d-md-flex justify-content-md-end"
+                        >
+                          <a
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#adddc"
+                            >Thêm địa chỉ</a
+                          >
+                          <div
+                            class="d-grid gap-2 d-md-flex justify-content-md-end"
+                          >
+                            <a
+                              type="button"
+                              id="liveToastBtn"
+                              class="btn btn-primary"
+                              ng-click="update(detailKhachHang.id,detailKhachHang.khachHang.id)"
+                              >Cập nhật</a
+                            >
+                          </div>
+                          <a
+                            type="button"
+                            class="btn btn-primary"
+                            href="#khach-hang/hien-thi"
+                            >Quay lại</a
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="toast-container position-fixed top-0 end-0 p-3"
+                      >
+                        <div
+                          id="liveToast"
+                          class="toast"
+                          role="alert"
+                          aria-live="assertive"
+                          aria-atomic="true"
+                          data-bs-delay="1500"
+                        >
+                          <div class="toast-body">
+                            {{message}}
+                            <div id="myProgress">
+                              <div id="myBar"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Các nút điều hướng -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

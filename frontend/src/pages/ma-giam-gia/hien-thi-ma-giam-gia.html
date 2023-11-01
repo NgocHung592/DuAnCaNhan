@@ -1,14 +1,17 @@
 <br />
 
-<div class="card flex-md-fill w-auto">
+<div class="card d-flex align-self-center  w-auto">
     <div class="card-header">
         <div class="row">
-        <div class="col-md-4">
-            <input type="text" class="form-control" id="exampleFormControlInput1"
-                   placeholder="Tìm tên khuyến mãi">
+        <div class="col-md-4 align-self-right">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, tên"
+                       class="search-input" />
+            </div>
         </div>
         <div class="col-md-4">
-            <a type="button" class="btn btn-primary" href="#/khuyenmai/tim-kiem">Tìm kiếm</a>
+
             <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
         </div>
         <div class="col-md-4">
@@ -25,20 +28,27 @@
         <label class="col-form-label">Trạng Thái Mã Giảm Giá:</label>
         <div class="col-sm-4">
             <select class="form-select" aria-label="Default select example" >
-                <option value="1">Sắp diễn ra</option>
-                <option value="2">Đang diễn ra</option>
-                <option value="3">Đã hết hạn</option>
+                <option value="0">Sắp diễn ra</option>
+                <option value="1">Đang diễn ra</option>
+                <option value="2">Đã hết hạn</option>
             </select>
         </div>
     </div>
         <div class="col-md-6">
         <label class="col-form-label">Hình Thức Giảm Giá:</label>
         <div class="col-sm-4">
-            <select class="form-select" aria-label="Default select example">
 
-                <option value="1">Tiền mặt</option>
-                <option value="2">Phần trăm</option>
-            </select>
+                <input type="radio" value="false"  ng-model="detailProduct.hinhThucGiam"
+                       ng-checked="detailProduct.hinhThucGiam=='0'" class="form-check-input">
+                <label class="form-check-label">
+                    Tiền mặt
+                </label>
+                <input type="radio" value="true" ng-model="detailProduct.hinhThucGiam"
+                       ng-checked="detailProduct.hinhThucGiam=='1'" class="form-check-input">
+                <label class="form-check-label">
+                    Phần trăm
+                </label>
+
         </div>
     </div>
     </div>
@@ -63,15 +73,25 @@
         <tr>
             <th>{{maGiamGia.ma}}</th>
             <th>{{maGiamGia.tenKM}}</th>
-            <th>{{maGiamGia.hinhThucGiam}}</th>
+            <th>
+                <p>
+                    {{maGiamGia.hinhThucGiam ? "Tiền mặt" : "Phần trăm"}}
+                </p>
+                </th>
             <th>{{maGiamGia.giaTriDonToiThieu}}</th>
             <th>{{maGiamGia.giaTriGiamToiDa}}</th>
             <th>{{maGiamGia.ngayBatDau}}</th>
             <th>{{maGiamGia.ngayKetThuc}}</th>
             <th>{{maGiamGia.soLuong}}</th>
-            <th>{{maGiamGia.trangThai}}</th>
             <th>
-                <a type="button" class="btn btn-primary" href="">Sửa</a>
+            <p>
+                {{maGiamGia.trangThai ? "Sắp diễn ra" : "Đang diễn ra"}}
+            </p>
+            </th>
+            <th>
+                <a  href="#ma-giam-gia/update/{{maGiamGia.id}}">
+                    <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                </a>
             </th>
 
         </tr>
