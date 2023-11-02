@@ -38,7 +38,8 @@ public class HoaDonServiceImpl implements HoaDonService{
         HoaDon hoaDonSave= HoaDon.builder()
                 .ma(hoaDon.getMa())
                 .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
+                .loai_hoa_don("Tại quầy")
+                .nguoiTao("Hưng")
                 .trangThai(hoaDon.getTrangThai())
                 .build();
         return hoaDonReponsitory.save(hoaDonSave);

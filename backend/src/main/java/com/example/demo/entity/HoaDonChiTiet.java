@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import jakarta.persistence.JoinColumn;
@@ -44,6 +46,12 @@ public class HoaDonChiTiet {
 
     @Column(name = "thanh_tien")
     private BigDecimal thanhTien;
+
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
 
     @ManyToOne
     @JoinColumn(name = "san_pham_chi_tiet_id", referencedColumnName = "id")

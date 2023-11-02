@@ -30,14 +30,11 @@ public class LichSuHoaDon {
     @Column(name = "noi_dung")
     private String noi_dung;
 
-    @Column(name = "trang_thai")
+    @Column(name = "trang_thai_hoa_don")
     private Integer trangThai;
 
     @ManyToOne
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
 
-//    @ManyToOne
-//    @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
-////    private TaiKhoan taiKhoan;
 }
