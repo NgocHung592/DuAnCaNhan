@@ -6,8 +6,11 @@ import java.math.BigDecimal;
 
 public interface HoaDonChiTietReponse {
 
-    @Value("#{target.id}")
+    @Value("#{target.id_hoa_don_chi_tiet}")
     String getIdHoaDonChiTiet();
+
+    @Value("#{target.id_san_pham_chi_tiet}")
+    String getIdSanPhamChiTiet();
 
     @Value("#{target.ma}")
     String getMaHoaDon();
