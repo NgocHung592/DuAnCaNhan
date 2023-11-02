@@ -32,7 +32,7 @@ public class HinhThucThanhToan {
     private String noi_dung;
 
     @Column(name = "ngay_tao")
-    private Timestamp id;
+    private Timestamp ngayTao;
 
     @Column(name = "nguoi_tao")
     private String nguoi_tao;
