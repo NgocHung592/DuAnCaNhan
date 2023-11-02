@@ -15,12 +15,13 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RequestMapping("/hoa-don-chi-tiet/")
 public class HoaDonChiTietController {
+
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
 
     @GetMapping("hien-thi/{ma}")
-    public ResponseEntity hienThi(@PathVariable("ma") String ma) {
-        return new ResponseEntity(hoaDonChiTietService.getAll(ma),HttpStatus.OK);
+    public ResponseEntity hienThiGioHang(@RequestParam(value = "pageN",defaultValue = "0") String pageNo,@PathVariable("ma") String ma) {
+        return new ResponseEntity(hoaDonChiTietService.getGioHang(Integer.valueOf(pageNo),ma),HttpStatus.OK);
     }
 
 //    @GetMapping("detail/{id}")

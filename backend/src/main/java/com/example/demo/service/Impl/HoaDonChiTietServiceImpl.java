@@ -1,13 +1,16 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDonChiTiet;
-import com.example.demo.entity.HoaDonChiTietId;
 import com.example.demo.model.request.HoaDonChiTietRequest;
 import com.example.demo.model.response.HoaDonChiTietReponse;
 import com.example.demo.repository.HoaDonChiTietRepository;
 import com.example.demo.repository.HoaDonReponsitory;
+import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,11 +25,14 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     private HoaDonChiTietRepository hoaDonChiTietRepository;
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
+    @Autowired
+    private SanPhamChiTietRepository sanPhamChiTietRepository;
 
 
     @Override
-    public List<HoaDonChiTietReponse> getAll(String ma) {
-        return hoaDonChiTietRepository.getGioHang(ma);
+    public Page<HoaDonChiTietReponse> getGioHang(Integer pageNo,String ma) {
+        Pageable pageable=PageRequest.of(pageNo,5);
+        return hoaDonChiTietRepository.getGioHang(pageable,ma);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
                 .donGia(BigDecimal.valueOf(hoaDonChiTietRequest.getDonGia()))
                 .thanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()))
                 .hoaDon(hoaDonReponsitory.findById(hoaDonChiTietRequest.getIdHoaDon()).get())
-//                .kichThuocMauSac(kichThuocChiTietRepository.findById(hoaDonChiTietRequest.getIdSanPhamChiTiet()).get())
+                .sanPhamChiTiet(sanPhamChiTietRepository.findById(hoaDonChiTietRequest.getIdSanPhamChiTiet()).get())
                 .build();
         return hoaDonChiTietRepository.save(hoaDonChiTietSave);
     }
@@ -51,11 +57,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
             }).orElse(null);
     }
 
-    @Override
-    public HoaDonChiTiet detail(HoaDonChiTietId hoaDonChiTietId) {
-//        return hoaDonChiTietRepository.findById(hoaDonChiTietId).orElse(null);
-        return null;
-    }
+//    @Override
+//        public HoaDonChiTiet detail(HoaDonChiTietId hoaDonChiTietId) {
+////        return hoaDonChiTietRepository.findById(hoaDonChiTietId).orElse(null);
+//            return null;
+//    }
 
     @Override
     public HoaDonChiTiet delete(UUID id) {

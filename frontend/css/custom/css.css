@@ -1,6 +1,10 @@
 .table_img {
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
+}
+
+.custom-table {
+    text-align: center;
 }
 
 .has-error {

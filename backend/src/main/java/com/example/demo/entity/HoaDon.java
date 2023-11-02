@@ -29,9 +29,6 @@ public class HoaDon {
     @Column(name = "ma")
     private String ma;
 
-    @Column(name = "ngay_tao")
-    private Timestamp ngayTao;
-
     @Column(name = "loai_hoa_don")
     private String loai_hoa_don;
 
@@ -74,14 +71,11 @@ public class HoaDon {
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
 
-    @Column(name = "ngay_sua")
-    private Timestamp ngaySua;
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
 
     @Column(name = "nguoi_tao")
     private String nguoiTao;
-
-    @Column(name = "nguoi_sua")
-    private String nguoiSua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;

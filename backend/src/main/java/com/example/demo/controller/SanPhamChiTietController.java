@@ -25,6 +25,11 @@ public class SanPhamChiTietController {
     @Autowired
     private SanPhamChiTietService sanPhamChiTietService;
 
+    @GetMapping("hien-thi")
+    public ResponseEntity getSanPhamBanHang(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
+        return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
+    }
+
     @GetMapping("hien-thi/{id}")
     public ResponseEntity getAll(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.getAll(Integer.valueOf(pageNo), UUID.fromString(id)), HttpStatus.OK);
@@ -41,9 +46,9 @@ public class SanPhamChiTietController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest,@PathVariable("id") String id){
-        System.out.println(sanPhamChiTietRequest+id);
-        return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest,UUID.fromString(id)),HttpStatus.OK);
+    public ResponseEntity update(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest, @PathVariable("id") String id) {
+        System.out.println(sanPhamChiTietRequest + id);
+        return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
     }
 
 }

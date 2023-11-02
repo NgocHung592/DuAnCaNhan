@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KichThuocMauSac;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.response.SanPhamChiTietResponse;
@@ -13,7 +12,7 @@ public interface SanPhamChiTietService {
 
     Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id);
 
-//    Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id,Integer pageNo);
+    Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo);
 
     SanPhamChiTiet getOne(UUID id);
 
@@ -21,6 +20,5 @@ public interface SanPhamChiTietService {
 
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
 
-//    List<KichThuocMauSac> getList(UUID id);
 
 }

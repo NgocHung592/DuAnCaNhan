@@ -1,30 +1,28 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.HoaDonChiTiet;
-import com.example.demo.entity.HoaDonChiTietId;
 import com.example.demo.model.response.HoaDonChiTietReponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UUID> {
 
     @Query(value = """
-            select f.id as id_hoa_don_chi_tiet, j.ma as ma_hoa_don,e.anh_noi_bat as anh_noi_bat, b.ten as ten_san_pham,d.ten as ten_mau_sac ,g.ten as ten_kich_thuoc,f.don_gia as don_gia,f.so_luong as so_luong,f.thanh_tien as thanh_tien
-                                    from san_pham_chi_tiet a inner join san_pham b on a.san_pham_id=b.id
-                                    inner join kich_thuoc_mau_sac c on a.id=c.chi_tiet_san_pham_id\s
-                                    inner join mau_sac d on c.mau_sac_id=d.id
-                                    inner join kich_thuoc g on g.id=c.kich_thuoc_id
-                                    inner join hinh_anh e on e.chi_tiet_san_pham_id=a.id
-                                    inner join hoa_don_chi_tiet f on f.kich_thuoc_mau_sac_id=c.id
-                                    inner join hoa_don j on j.id=f.hoa_don_id
-                                    where j.ma like ?1
-                                    group by f.id,j.ma,b.ten,a.da_xoa,a.ngay_tao ,f.don_gia,d.ten,f.so_luong,e.anh_noi_bat,g.ten,f.thanh_tien
-                                    order by a.ngay_tao desc
+            select hdct.id,hd.ma,ha.duong_dan,sp.ten as 'ten_san_pham',kt.ten as'ten_kich_thuoc',ms.ten as'ten_mau_sac',hdct.so_luong,hdct.don_gia,hdct.thanh_tien  from hoa_don_chi_tiet hdct
+            inner join hoa_don hd on hd.id = hdct.hoa_don_id
+            inner join san_pham_chi_tiet spct on hdct.san_pham_chi_tiet_id = spct.id
+            inner join san_pham sp on spct.san_pham_id = sp.id
+            inner join kich_thuoc kt on spct.kich_thuoc_id = kt.id
+            inner join mau_sac ms on spct.mau_sac_id = ms.id
+            inner join hinh_anh ha on spct.id = ha.chi_tiet_san_pham_id
+            where hd.ma=?1
             """, nativeQuery = true)
-    List<HoaDonChiTietReponse> getGioHang(String ma);
+    Page<HoaDonChiTietReponse> getGioHang(Pageable pageable,String ma);
 }

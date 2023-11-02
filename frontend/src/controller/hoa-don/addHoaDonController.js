@@ -37,12 +37,12 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     trangThai: 1,
   };
 
-  $scope.getList = function () {
+  $scope.getListHoaDon = function () {
     $http.get(hoaDonAPI + "/get-list").then(function (response) {
       $scope.listHoaDon = response.data;
     });
   };
-  $scope.getList();
+  $scope.getListHoaDon();
 
   $scope.addHoaDon = function (event) {
     event.preventDefault();
@@ -73,13 +73,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       return false;
     }
   };
-  $scope.xoaHoaDon = function (event, index) {
-    event.preventDefault();
-    $http.delete(hoaDonAPI + "/delete/" + index).then(function () {
-      $scope.getList();
-    });
-  };
-
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -89,7 +82,27 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       });
   };
   $scope.getSanPhamChiTiet();
+  $scope.changePage = function (index) {
+    if (index >= 0) {
+      $scope.currentPage = index;
+      $scope.getChatLieu();
+    }
+  };
 
+  $scope.nextPage = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getChatLieu();
+    }
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+      $scope.getChatLieu();
+    }
+  };
   $scope.getIdHoaDon = function (idHoaDon, maHoaDon) {
     $scope.formHoaDonChiTiet.idHoaDon = idHoaDon;
     $scope.maHoaDon = maHoaDon;
@@ -97,9 +110,16 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   };
   $scope.getHoaDonChiTiet = function () {
     $http
-      .get(hoaDonChiTietAPI + "/hien-thi/" + $scope.maHoaDon)
+      .get(
+        hoaDonChiTietAPI +
+          "/hien-thi/" +
+          $scope.maHoaDon +
+          "?pageNo=" +
+          $scope.currentPage
+      )
       .then(function (response) {
-        $scope.listHoaDonChiTiet = response.data;
+        $scope.listHoaDonChiTiet = response.data.content;
+        console.log($scope.listHoaDonChiTiet);
         $scope.tongTien = $scope.listHoaDonChiTiet
           .filter((item) => item.maHoaDon === $scope.maHoaDon)
           .reduce((total, item) => total + item.thanhTien, 0);
@@ -129,9 +149,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
 
     $http
       .put(hoaDonChiTietAPI + "/update/" + idHoaDonChiTiet, $scope.hoaDonUpdate)
-      .then(function () {
-        console.log($scope.hoaDonUpdate);
-      });
+      .then(function () {});
     $scope.tongTien = $scope.listHoaDonChiTiet
       .filter((item) => item.maHoaDon === $scope.maHoaDon)
       .reduce((total, item) => total + item.thanhTien, 0);
@@ -254,6 +272,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   if (toastTrigger) {
     const toastBootstrap =
       bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    // console.log(boostrap.Toast);
     toastTrigger.addEventListener("click", () => {
       toastBootstrap.show();
     });

@@ -6,11 +6,14 @@ import java.math.BigDecimal;
 
 public interface HoaDonChiTietReponse {
 
-    @Value("#{target.id_hoa_don_chi_tiet}")
+    @Value("#{target.id}")
     String getIdHoaDonChiTiet();
 
-    @Value("#{target.ma_hoa_don}")
+    @Value("#{target.ma}")
     String getMaHoaDon();
+
+    @Value("#{target.duong_dan}")
+    String getDuongDan();
 
     @Value("#{target.ten_san_pham}")
     String getTenSanPham();
@@ -20,9 +23,6 @@ public interface HoaDonChiTietReponse {
 
     @Value("#{target.ten_kich_thuoc}")
     String getTenKichThuoc();
-
-    @Value("#{target.anh_noi_bat}")
-    String getAnhNoiBat();
 
     @Value("#{target.so_luong}")
     Integer getSoLuong();

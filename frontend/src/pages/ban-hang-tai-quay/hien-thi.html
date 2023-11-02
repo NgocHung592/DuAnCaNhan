@@ -21,12 +21,18 @@
                                     Đơn</button>
                             </li>
                         </ul>
+                        <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                data-bs-target="#addSanPham">Thêm
+                                Sản Phẩm
+                            </button>
+                        </div>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0"></div>
                             <div class="tab-pane fade" ng-repeat="hoaDon in listHoaDon" id="{{hoaDon.ma}}*"
                                 role="tabpanel" aria-labelledby="{{hoaDon.ma}}" tabindex="0">
-                                <table class="table">
+                                <table class="table align-self-center">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -35,38 +41,41 @@
                                             <th scope="col">Số Lượng</th>
                                             <th scope="col">Đơn Giá</th>
                                             <th scope="col">Thành Tiền</th>
-                                            <th scope="col">Hành Động</th>
+                                            <th scope="col">Thao Tác</th>
                                         </tr>
                                     </thead>
                                     <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
                                         <tr>
                                             <th scope="row">{{$index+1}}</th>
                                             <th scope="row"><img class="table_img"
-                                                    src="../../../assets/{{hoaDonChiTiet.anhNoiBat}}"
-                                                    alt="Không có ảnh"></th>
+                                                    src="../../../assets/{{hoaDonChiTiet.duongDan}}" alt="Không có ảnh">
+                                            </th>
                                             <th scope="row">{{hoaDonChiTiet.tenSanPham}} [ {{hoaDonChiTiet.tenMauSac}} -
                                                 {{hoaDonChiTiet.tenKichThuoc}} ]</th>
-                                            <th scope="row"><input type="text"
-                                                    ng-model="listHoaDonChiTiet[$index].soLuong"
+                                            <th scope="row">
+                                                <input type="number" ng-model="listHoaDonChiTiet[$index].soLuong"
                                                     ng-change="changeSoLuong($index,hoaDonChiTiet.idHoaDonChiTiet)"
                                                     class="form-control form-control-sm"
-                                                    style="width: 100px; height: 30px;" /></th>
+                                                    style="width: 100px; height: 30px;" />
+                                            </th>
                                             <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
                                             <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
 
                                             <th>
-                                                <a type="button" class="btn btn-warning "
-                                                    ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">Xóa</a>
+                                                <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
 
                                             </th>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <!-- <nav aria-label="Page navigation example ">
+                                <nav aria-label="Page navigation example ">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item">
                                             <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
+                                                <span aria-hidden="true">
+                                                    << </span>
                                             </a>
                                         </li>
                                         <li class="page-item" ng-repeat="page in totalPages track by $index"
@@ -74,17 +83,10 @@
                                             <a class="page-link">{{$index+1}}</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" ng-click="nextPage()">&raquo;</a>
+                                            <a class="page-link" ng-click="nextPage()">>></a>
                                         </li>
                                     </ul>
-                                </nav> -->
-                                <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addSanPham">Thêm
-                                        Sản Phẩm
-                                    </button>
-                                </div>
-
+                                </nav>
                             </div>
 
                         </div>
@@ -103,7 +105,7 @@
                                                         <th scope="col">Số Lượng</th>
                                                         <th scope="col">Đơn Giá</th>
                                                         <th scope="col">Trạng Thái</th>
-                                                        <th scope="col">Hành Động</th>
+                                                        <th scope="col">Thao Tác</th>
 
                                                     </tr>
                                                 </thead>
@@ -111,7 +113,7 @@
                                                     <tr>
                                                         <th scope="row">{{$index+1}}</th>
                                                         <th scope="row"><img class="table_img"
-                                                                src="../../../assets/{{sanPhamChiTiet.anhNoiBat}}"
+                                                                src="../../../assets/{{sanPhamChiTiet.duongDan}}"
                                                                 alt="Không có ảnh"></th>
                                                         <th scope="row">{{sanPhamChiTiet.tenSanPham}}
                                                             [{{sanPhamChiTiet.tenMauSac}}
@@ -119,22 +121,45 @@
                                                         <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
                                                         <th scope="row">{{sanPhamChiTiet.donGia | number}} VND</th>
                                                         <th scope="row">
-                                                            {{sanPhamChiTiet.daXoa?"Ngừng kinh
-                                                            Doanh":"Kinh Doanh"}}
+
+                                                            <p ng-class="{' text-g ': !sanPhamChiTiet.daXoa
+                                                            ,'text-glow':sanPhamChiTiet.daXoa}">
+                                                                {{sanPhamChiTiet.daXoa?"Ngừng kinh
+                                                                Doanh":"Đang Kinh Doanh"}}
+
+                                                            </p>
                                                         </th>
                                                         <th>
 
                                                             <a type="button" class="btn btn-warning "
                                                                 data-bs-dismiss="modal"
-                                                                ng-click="addSanPhamChiTiet(sanPhamChiTiet.idsanPhamChiTiet,$index)">Chọn</a>
+                                                                ng-click="addSanPhamChiTiet(sanPhamChiTiet.idSanPhamChiTiet,$index)">Chọn</a>
 
                                                         </th>
                                                     </tr>
                                                 </tbody>
                                             </table>
-
+                                            <nav aria-label="Page navigation example ">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item">
+                                                        <a class="page-link" ng-click="previousPage()"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">
+                                                                << </span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item" ng-repeat="page in totalPages track by $index"
+                                                        ng-click="changePage($index);">
+                                                        <a class="page-link">{{$index+1}}</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" ng-click="nextPage()">>></a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -269,10 +294,12 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-5">
+                                        <p>
+                                            <input type="text" name="" id="">
+                                        </p>
                                         <p>Tiền Hàng</p>
                                         <p>Phí Vận Chuyển</p>
                                         <p>Giảm Giá</p>
-                                        <p>Quyền Lợi Thành Viên</p>
                                         <p>Tổng Số Tiền</p>
 
                                     </div>
@@ -281,8 +308,11 @@
 
                                     </div>
                                     <div class="col-md-4">
+                                        <p>
+                                            <button class="btn btn-warning">Voucher</button>
+
+                                        </p>
                                         <p>{{tongTien | number }} VNĐ</p>
-                                        <p>?</p>
                                         <p>?</p>
                                         <p>?</p>
                                         <p>{{tongTien | number }} VNĐ</p>

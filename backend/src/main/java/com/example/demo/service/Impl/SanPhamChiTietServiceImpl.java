@@ -65,6 +65,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.getPage(pageable, id);
     }
 
+    @Override
+    public Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamChiTietRepository.getSanPhamBanHang(pageable);
+    }
+
 //    @Override
 //    public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
 //        Pageable pageable = PageRequest.of(pageNo, 10);
