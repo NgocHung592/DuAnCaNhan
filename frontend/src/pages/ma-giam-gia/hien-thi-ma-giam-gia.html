@@ -43,6 +43,7 @@
                 <label class="form-check-label">
                     Tiền mặt
                 </label>
+            <br>
                 <input type="radio" value="true" ng-model="detailProduct.hinhThucGiam"
                        ng-checked="detailProduct.hinhThucGiam=='1'" class="form-check-input">
                 <label class="form-check-label">
@@ -75,7 +76,7 @@
             <th>{{maGiamGia.tenKM}}</th>
             <th>
                 <p>
-                    {{maGiamGia.hinhThucGiam ? "Tiền mặt" : "Phần trăm"}}
+                    {{maGiamGia.hinhThucGiam =='0'? "Tiền mặt" : "Phần trăm"}}
                 </p>
                 </th>
             <th>{{maGiamGia.giaTriDonToiThieu}}</th>
@@ -85,7 +86,7 @@
             <th>{{maGiamGia.soLuong}}</th>
             <th>
             <p>
-                {{maGiamGia.trangThai ? "Sắp diễn ra" : "Đang diễn ra"}}
+                {{maGiamGia.trangThai =='1'? "Sắp diễn ra" : "Đang diễn ra"}}
             </p>
             </th>
             <th>

@@ -42,13 +42,13 @@
                             <div class="col-mb-12 row">
                                 <label class="col-sm-4 col-form-label">Hình Thức Giảm Giá:</label>
                                 <div class="col-sm-8">
-                                    <input type="radio" value="false"  ng-model="detailProduct.hinhThucGiam"
-                                           ng-checked="detailProduct.hinhThucGiam==false" class="form-check-input">
+                                    <input type="radio" value="0"  ng-model="detailProduct.hinhThucGiam"
+                                           ng-checked="detailProduct.hinhThucGiam=='0'" class="form-check-input">
                                     <label class="form-check-label">
                                         Tiền mặt
                                     </label>
-                                    <input type="radio" value="true" ng-model="detailProduct.hinhThucGiam"
-                                           ng-checked="detailProduct.hinhThucGiam==true" class="form-check-input">
+                                    <input type="radio" value="1" ng-model="detailProduct.hinhThucGiam"
+                                           ng-checked="detailProduct.hinhThucGiam=='1'" class="form-check-input">
                                     <label class="form-check-label">
                                         Phần trăm
                                     </label>
@@ -113,10 +113,10 @@
 
 
                                 <div class="col-sm-6">
-                                    <select class="form-select" aria-label="Default select example" id="inputTt" >
-                                        <option value="1" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='1'">Sắp diễn ra</option>
-                                        <option value="2" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='2'">Đang diễn ra</option>
-                                        <option value="3" ng-model="detailProduct.trangThai" ng-checked="maGiamGia.trangThai=='3'">Đã hết hạn</option>
+                                    <select class="form-select" aria-label="Default select example" id="inputTt"  ng-model="detailProduct.trangThai">
+                                        <option value="1" ng-checked="maGiamGia.trangThai=='1'">Sắp diễn ra</option>
+                                        <option value="2" ng-checked="maGiamGia.trangThai=='2'">Đang diễn ra</option>
+                                        <option value="3" ng-checked="maGiamGia.trangThai=='3'">Đã hết hạn</option>
                                     </select>
                                 </div>
                             </div>
