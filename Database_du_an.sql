@@ -256,14 +256,10 @@ Create table [lich_su_hoa_don](
     DEFAULT NEWID() PRIMARY KEY,
     noi_dung nvarchar(50),
     ngay_tao datetime,
-    ngay_sua datetime,
     nguoi_tao nvarchar(50),
-    nguoi_sua  nvarchar(50),
-    da_xoa bit,
     trang_thai_hoa_don int,
     hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
-    --nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id)
-    )
+  )
 
 Create table [hinh_thuc_thanh_toan](
     id UNIQUEIDENTIFIER
@@ -302,7 +298,6 @@ Create table  ma_giam_gia_chi_tiet(
         don_gia_sau_khi_giam decimal (20,0),
         ma_giam_gia_id  UNIQUEIDENTIFIER REFERENCES ma_giam_gia(id),
         hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
-
 )
 
 Create table [gio_hang](
