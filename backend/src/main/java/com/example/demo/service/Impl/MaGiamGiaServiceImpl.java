@@ -32,6 +32,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
             throw new Exception("Ma Giam Gia is already present!");
         }
         return maGiamGiaRepository.save(maGiamGia);
+
     }
 
     @Override
