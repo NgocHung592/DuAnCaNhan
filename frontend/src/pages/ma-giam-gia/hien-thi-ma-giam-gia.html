@@ -3,102 +3,103 @@
 <div class="card d-flex align-self-center  w-auto">
     <div class="card-header">
         <div class="row">
-        <div class="col-md-4 align-self-right">
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, tên"
-                       class="search-input" />
+            <div class="col-md-4 align-self-right">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <form>
+                        <input id="searchtxt" type="text" placeholder="Tìm kiếm theo mã, tên"
+                               class="search-input"/>
+                        <input type="submit" ng-hide="true" ng-click="searching($event)"/>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
+            </div>
+            <div class="col-md-4">
+                <a type="button" class="btn btn-primary" href="#/ma-giam-gia/add">Thêm mã</a>
             </div>
         </div>
-        <div class="col-md-4">
-
-            <a type="button" class="btn btn-warning" href="#/khuyenmai/lam-moi">Làm mới</a>
-        </div>
-        <div class="col-md-4">
-            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/add">Thêm mã</a>
-        </div>
-    </div>
     </div>
     <br>
     <br>
     <div class="card-body d-flex align-self-center w-auto">
         <div class="align-self-center w-auto">
             <div class="row">
-        <div class="col-md-6">
-        <label class="col-form-label">Trạng Thái Mã Giảm Giá:</label>
-        <div class="col-sm-4">
-            <select class="form-select" aria-label="Default select example" >
-                <option value="0">Sắp diễn ra</option>
-                <option value="1">Đang diễn ra</option>
-                <option value="2">Đã hết hạn</option>
-            </select>
-        </div>
-    </div>
-        <div class="col-md-6">
-        <label class="col-form-label">Hình Thức Giảm Giá:</label>
-        <div class="col-sm-4">
+                <div class="col-md-6">
+                    <label class="col-form-label">Trạng Thái Mã Giảm Giá:</label>
+                    <div class="col-sm-4">
+                        <select id="searchsel" class="form-select" aria-label="Default select example" >
+                            <option value="" selected disabled hidden>Default</option>
+                            <option value="1">Sắp diễn ra</option>
+                            <option value="2">Đang diễn ra</option>
+                            <option value="3">Đã hết hạn</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-form-label">Hình Thức Giảm Giá:</label>
+                    <div class="col-sm-4">
 
-                <input type="radio" value="false"  ng-model="detailProduct.hinhThucGiam"
-                       ng-checked="detailProduct.hinhThucGiam=='0'" class="form-check-input">
-                <label class="form-check-label">
-                    Tiền mặt
-                </label>
+                        <input name="searchtype" type="radio" value="0" class="form-check-input">
+                        <label class="form-check-label">
+                            Tiền mặt
+                        </label>
+                        <br>
+                        <input name="searchtype" type="radio" value="1" class="form-check-input">
+                        <label class="form-check-label">
+                            Phần trăm
+                        </label>
+
+                    </div>
+                </div>
+            </div>
             <br>
-                <input type="radio" value="true" ng-model="detailProduct.hinhThucGiam"
-                       ng-checked="detailProduct.hinhThucGiam=='1'" class="form-check-input">
-                <label class="form-check-label">
-                    Phần trăm
-                </label>
+            <br />
+            <table class="table table-light table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Mã</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Hình Thức </th>
+                    <th scope="col">GT Đơn Tối Thiểu</th>
+                    <th scope="col">Giảm Tối Đa</th>
+                    <th scope="col">Ngày bắt đầu</th>
+                    <th scope="col">Ngày kết thúc</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="maGiamGia in listMaGiamGia.content">
+                <tr ng-hide="(searchDat.search.length != 0) ? ((maGiamGia.ma.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : ((maGiamGia.tenKM.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : true)) : ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false))">
+                    <th>{{maGiamGia.ma}}</th>
+                    <th>{{maGiamGia.tenKM}}</th>
+                    <th>
+                        <p>
+                            {{maGiamGia.hinhThucGiam =='0'? "Tiền mặt" : "Phần trăm"}}
+                        </p>
+                    </th>
+                    <th>{{maGiamGia.giaTriDonToiThieu}}</th>
+                    <th>{{maGiamGia.giaTriGiamToiDa}}</th>
+                    <th>{{maGiamGia.ngayBatDau}}</th>
+                    <th>{{maGiamGia.ngayKetThuc}}</th>
+                    <th>{{maGiamGia.soLuong}}</th>
+                    <th>
+                        <p>
+                            {{maGiamGia.trangThai =='1'? "Sắp diễn ra" : (maGiamGia.trangThai =='2'? "Đang diễn ra" : "Đã hết hạn")}}
+                        </p>
+                    </th>
+                    <th>
+                        <a  href="{{maGiamGia.trangThai =='1'? '#ma-giam-gia/update/'+maGiamGia.id : '#ma-giam-gia/hienthi'}}">
+                            <i class="{{maGiamGia.trangThai =='1'? 'align-middle me-2 fas fa-fw fa-edit' : ''}}"></i>
+                        </a>
+                    </th>
 
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    </div>
-    <br>
-    <br />
-    <table class="table table-light table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Mã</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Hình Thức </th>
-            <th scope="col">GT Đơn Tối Thiểu</th>
-            <th scope="col">Giảm Tối Đa</th>
-            <th scope="col">Ngày bắt đầu</th>
-            <th scope="col">Ngày kết thúc</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Thao tác</th>
-        </tr>
-        </thead>
-        <tbody ng-repeat="maGiamGia in listMaGiamGia.content">
-        <tr>
-            <th>{{maGiamGia.ma}}</th>
-            <th>{{maGiamGia.tenKM}}</th>
-            <th>
-                <p>
-                    {{maGiamGia.hinhThucGiam =='0'? "Tiền mặt" : "Phần trăm"}}
-                </p>
-                </th>
-            <th>{{maGiamGia.giaTriDonToiThieu}}</th>
-            <th>{{maGiamGia.giaTriGiamToiDa}}</th>
-            <th>{{maGiamGia.ngayBatDau}}</th>
-            <th>{{maGiamGia.ngayKetThuc}}</th>
-            <th>{{maGiamGia.soLuong}}</th>
-            <th>
-            <p>
-                {{maGiamGia.trangThai =='1'? "Sắp diễn ra" : "Đang diễn ra"}}
-            </p>
-            </th>
-            <th>
-                <a  href="#ma-giam-gia/update/{{maGiamGia.id}}">
-                    <i class="align-middle me-2 fas fa-fw fa-edit"></i>
-                </a>
-            </th>
-
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-</div>
 </div>
