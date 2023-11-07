@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +21,8 @@ public class HoaTietServiceImpl implements HoaTietService {
 
     @Autowired
     private HoaTietRepository hoaTietRepository;
-
+    LocalDate now = LocalDate.now();
+    Date date=new Date();
     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
@@ -35,13 +38,13 @@ public class HoaTietServiceImpl implements HoaTietService {
 
     @Override
     public HoaTiet add(HoaTiet hoaTiet) {
-        if (hoaTiet.getTen().isBlank()){
+        if (hoaTiet.getTen().isBlank()) {
             return null;
         }
-        HoaTiet hoaTietSave=HoaTiet.builder()
+        HoaTiet hoaTietSave = HoaTiet.builder()
                 .ma(hoaTiet.getMa())
                 .ten(hoaTiet.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(hoaTiet.getNgayTao())
                 .nguoiTao("Hưng")
                 .daXoa(hoaTiet.getDaXoa())
                 .build();
@@ -50,9 +53,9 @@ public class HoaTietServiceImpl implements HoaTietService {
 
     @Override
     public HoaTiet update(HoaTiet hoaTiet, UUID id) {
-        Optional<HoaTiet> optionalHoaTiet=hoaTietRepository.findById(id);
-        if (optionalHoaTiet.isPresent()){
-            optionalHoaTiet.map(hoaTietUpdate->{
+        Optional<HoaTiet> optionalHoaTiet = hoaTietRepository.findById(id);
+        if (optionalHoaTiet.isPresent()) {
+            optionalHoaTiet.map(hoaTietUpdate -> {
                 hoaTietUpdate.setTen(hoaTiet.getTen());
                 hoaTietUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
                 hoaTietUpdate.setNguoiSua("Hưng");

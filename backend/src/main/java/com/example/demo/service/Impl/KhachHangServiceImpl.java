@@ -27,6 +27,13 @@ public class KhachHangServiceImpl implements KhachHangService {
         Pageable pageable = PageRequest.of(pageNo, 3);
         return khachHangRepository.getKhachHangAll(pageable);
     }
+
+    @Override
+    public Page<KhachHang> getKhachHangByTrangThai(Integer pageNo) {
+        Pageable pageable=PageRequest.of(pageNo,10);
+        return khachHangRepository.findAll(pageable);
+    }
+
     @Override
     public DiaChi add(KhachHangRequest khachHangRequest) {
         KhachHang khachHang=KhachHang.builder()
