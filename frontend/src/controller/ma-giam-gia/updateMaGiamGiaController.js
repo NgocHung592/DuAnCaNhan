@@ -11,14 +11,12 @@ window.updateMaGiamGiaController = function ($http, $scope, $routeParams) {
         ma: "",
         tenKM: "",
         hinhThucGiam: "",
-        giaTriGiam: "",
-        giaTriToiThieu: "",
-        giaTriToiDa: "",
+        trangThai: "",
+        soLuong:"",
+        giaTriDonToiThieu: "",
+        giaTriGiamToiDa: "",
         ngayBatDau: "",
         ngayKetThuc: "",
-        trangThai: "",
-
-
     };
 
     $http
