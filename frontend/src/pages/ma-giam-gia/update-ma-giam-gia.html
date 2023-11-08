@@ -16,11 +16,7 @@
                             <div class="col-mb-12 row" >
                                 <label for="inputMa" class="col-sm-4 col-form-label">Mã giảm giá:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputMa"  ng-model="detailProduct.ma">
-
-                                    <div class="invalid-feedback">
-                                        Please provide a valid zip.
-                                    </div>
+                                    <input type="text" class="form-control" id="inputMa"  ng-model="detailProduct.ma" disabled>
                                 </div>
                             </div>
                         </div>
@@ -32,6 +28,11 @@
                                 <label for="inputTen" class="col-sm-4 col-form-label">Tên mã:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="inputTen" ng-model="detailProduct.tenKM">
+                                    <span
+                                            ng-hide="showTen?true:false"
+                                            class="has-error" style="font-size: 70%"
+                                    >Tên mã sai định dạng
+                                </span>
                                 </div>
                             </div>
                         </div>
@@ -67,11 +68,21 @@
                             <div class="col-mb-12 row" >
                                 <div class ="col-sm-6">
                                     <input type="number" class="form-control" id="inputGTDToiThieu" ng-model="detailProduct.giaTriDonToiThieu">
+                                    <span
+                                        ng-hide="showTT?true:false"
+                                        class="has-error" style="font-size: 70%"
+                                >Vui lòng nhập giá trị
+                                </span>
                                 </div>
 
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control" id="inputGTD"ng-model="detailProduct.giaTriGiamToiDa">
+                                    <input type="number" class="form-control" id="inputGTD" ng-model="detailProduct.giaTriGiamToiDa">
+                                    <span
+                                            ng-hide="showTD?true:false"
+                                            class="has-error" style="font-size: 70%"
+                                    >Vui lòng nhập giá trị
+                                </span>
                                 </div>
                             </div>
 
@@ -88,10 +99,20 @@
                             </div>
                             <div class="col-mb-12 row" >
                                 <div class ="col-sm-6">
-                                    <input type="datetime-local"  onfocus="this.min=new Date().toISOString().split('T')[0]+'T00:00'"  class="form-control" id="inputNbd" ng-model="detailProduct.ngayBatDau">
+                                    <input type="datetime-local" onfocus="this.min=new Date().toISOString().split('T')[0]+'T00:00'"  class="form-control" id="inputNbd" ng-model="detailProduct.ngayBatDau">
+                                    <span
+                                            ng-hide="showBD?true:false"
+                                            class="has-error" style="font-size: 70%"
+                                    >Vui lòng nhập
+                                          </span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="datetime-local" class="form-control" id="inputNkt" ng-model="detailProduct.ngayKetThuc">
+                                    <input type="datetime-local" onfocus="this.min=new Date().toISOString().split('T')[0]+'T00:00'"  class="form-control" id="inputNkt" ng-model="detailProduct.ngayKetThuc">
+                                    <span
+                                            ng-hide="showKT?true:false"
+                                            class="has-error" style="font-size: 70%"
+                                    >Vui lòng nhập
+                                          </span>
                                 </div>
                             </div>
 
@@ -113,10 +134,10 @@
 
 
                                 <div class="col-sm-6">
-                                    <select class="form-select" aria-label="Default select example" id="inputTt"  ng-model="detailProduct.trangThai">
-                                        <option value="1" ng-checked="maGiamGia.trangThai=='1'">Sắp diễn ra</option>
-                                        <option value="2" ng-checked="maGiamGia.trangThai=='2'">Đang diễn ra</option>
-                                        <option value="3" ng-checked="maGiamGia.trangThai=='3'">Đã hết hạn</option>
+                                    <select class="form-select" aria-label="Default select example" id="inputTt" disabled>
+                                        <option value="1" {{detailProduct.trangThai == '1' ? "selected" : ""}}>Sắp diễn ra</option>
+                                        <option value="2" {{detailProduct.trangThai == '2' ? "selected" : ""}}>Đang diễn ra</option>
+                                        <option value="3" {{detailProduct.trangThai == '3' ? "selected" : ""}}>Đã hết hạn</option>
                                     </select>
                                 </div>
                             </div>
@@ -126,7 +147,7 @@
 
                         <br>
                         <div class="col-md-4">
-                            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/hienthi" ng-click="update(detailProduct.id)">Cập nhật mã</a>
+                            <a type="button" class="btn btn-primary" href="#/ma-giam-gia/hienthi" ng-click="update(detailProduct.id, $event)">Cập nhật mã</a>
                         </div>
 
                     </form>

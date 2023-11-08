@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.MaGiamGia;
 import com.example.demo.entity.MaGiamGiaChiTiet;
 import com.example.demo.service.MaGiamGiaChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
