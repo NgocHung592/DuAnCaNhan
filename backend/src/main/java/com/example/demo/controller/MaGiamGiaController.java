@@ -26,6 +26,7 @@ public class MaGiamGiaController {
 
     @PostMapping("add")
     public MaGiamGia post(@RequestBody MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception{
+        maGiamGia.setMa(maGiamGia.getMa().toUpperCase());
         return maGiamGiaService.add(maGiamGia);
     }
 

@@ -313,7 +313,7 @@ table {
 
 .owl-carousel .owl-item .owl-lazy:not([src]),
 .owl-carousel .owl-item .owl-lazy[src^=""] {
-    max-height: initial !important;
+    height: auto !important;
 }
 
 img.lazyload:not([src]) {
@@ -4974,7 +4974,7 @@ main {
     border: 1px solid var(--header-category-border);
     border-radius: 5px;
     text-align: center;
-    padding: 10px 10px;
+    padding: 20px 10px;
     display: -ms-flexbox;
     display: flex;
     -ms-align-items: center;

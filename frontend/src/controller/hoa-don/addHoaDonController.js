@@ -64,7 +64,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     };
     if ($scope.listHoaDon.length < 5) {
       $http.post(hoaDonAPI + "/add", $scope.formHoaDon).then(function () {
-        $scope.getList();
+        $scope.getListHoaDon();
       });
       $scope.message = "Tạo thành công";
       return true;
@@ -119,7 +119,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       )
       .then(function (response) {
         $scope.listHoaDonChiTiet = response.data.content;
-        console.log($scope.listHoaDonChiTiet);
         $scope.tongTien = $scope.listHoaDonChiTiet
           .filter((item) => item.maHoaDon === $scope.maHoaDon)
           .reduce((total, item) => total + item.thanhTien, 0);
@@ -136,23 +135,65 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
         $scope.getHoaDonChiTiet();
       });
   };
-
-  $scope.changeSoLuong = function (index, idHoaDonChiTiet) {
-    let item = $scope.listHoaDonChiTiet[index];
-    item.soLuong = $scope.listHoaDonChiTiet[index].soLuong;
-
-    item.thanhTien = item.soLuong * item.donGia;
-    $scope.hoaDonUpdate = {
-      soLuong: item.soLuong,
-      thanhTien: item.thanhTien,
-    };
+  $scope.changeSoLuong = function (index, idHoaDonChiTiet, idSanPhamChiTiet) {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    const toastTrigger = document.getElementById("liveToastBtn");
+    const toastLiveExample = document.getElementById("liveToast");
 
     $http
-      .put(hoaDonChiTietAPI + "/update/" + idHoaDonChiTiet, $scope.hoaDonUpdate)
-      .then(function () {});
-    $scope.tongTien = $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.maHoaDon)
-      .reduce((total, item) => total + item.thanhTien, 0);
+      .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
+      .then(function (response) {
+        $scope.detailSanPhamChiTiet = response.data;
+        let item = $scope.listHoaDonChiTiet[index];
+        if (item.soLuong == null) {
+          return;
+        } else if (item.soLuong <= $scope.detailSanPhamChiTiet.soLuong) {
+          if (toastTrigger) {
+            const toastBootstrap =
+              bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            toastBootstrap.show();
+          }
+          item.soLuong = $scope.listHoaDonChiTiet[index].soLuong;
+          item.thanhTien = item.soLuong * item.donGia;
+
+          $scope.hoaDonUpdate = {
+            soLuong: item.soLuong,
+            thanhTien: item.thanhTien,
+          };
+          $http
+            .put(
+              hoaDonChiTietAPI + "/update/" + idHoaDonChiTiet,
+              $scope.hoaDonUpdate
+            )
+            .then(function () {});
+          $scope.tongTien = $scope.listHoaDonChiTiet
+            .filter((item) => item.maHoaDon === $scope.maHoaDon)
+            .reduce((total, item) => total + item.thanhTien, 0);
+          $scope.message = "Cập nhật thành công ";
+          return;
+        } else {
+          if (toastTrigger) {
+            const toastBootstrap =
+              bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            toastBootstrap.show();
+          }
+          $scope.message =
+            "Chỉ còn " +
+            $scope.detailSanPhamChiTiet.soLuong +
+            " sản phẩm trong cửa hàng";
+          return;
+        }
+      });
   };
   $scope.xoaSanPhamGioHang = function (id) {
     $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
@@ -219,23 +260,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     }
   };
 
-  // $scope.changePage = function (index) {
-  //   $scope.currentPage = index;
-  //   $scope.getHoaDonChiTiet();
-  // };
-  // $scope.nextPage = function () {
-  //   let length = $scope.totalPages.length;
-  //   if ($scope.currentPage < length - 1) {
-  //     $scope.currentPage++;
-  //     $scope.getHoaDonChiTiet();
-  //   }
-  // };
-  // $scope.previousPage = function () {
-  //   if ($scope.currentPage >= 0) {
-  //     $scope.currentPage--;
-  //     $scope.getHoaDonChiTiet();
-  //   }
-  // };
   $scope.thanhToan = function () {
     let tenKhachHangMacDinh = document.getElementById("tenKhachHang").value;
     if ($scope.hoaDonThanhToan.tenKhachHang === "") {
@@ -256,14 +280,13 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     $scope.hoaDonThanhToan.tongTien = $scope.listHoaDonChiTiet
       .filter((item) => item.maHoaDon === $scope.maHoaDon)
       .reduce((total, item) => total + item.thanhTien, 0);
-    console.log();
     $http
       .put(
         hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
         $scope.hoaDonThanhToan
       )
       .then(function () {
-        $scope.getList();
+        $scope.getListHoaDon();
       });
     console.log($scope.hoaDonThanhToan);
   };
@@ -272,7 +295,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   if (toastTrigger) {
     const toastBootstrap =
       bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    // console.log(boostrap.Toast);
     toastTrigger.addEventListener("click", () => {
       toastBootstrap.show();
     });

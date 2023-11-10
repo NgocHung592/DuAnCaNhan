@@ -15,7 +15,7 @@ import java.util.UUID;
 public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UUID> {
 
     @Query(value = """
-            select hdct.id,hd.ma,ha.duong_dan,sp.ten as 'ten_san_pham',kt.ten as'ten_kich_thuoc',ms.ten as'ten_mau_sac',hdct.so_luong,hdct.don_gia,hdct.thanh_tien  from hoa_don_chi_tiet hdct
+            select hdct.id as'id_hoa_don_chi_tiet',spct.id as 'id_san_pham_chi_tiet',hd.ma,ha.duong_dan,sp.ten as 'ten_san_pham',kt.ten as'ten_kich_thuoc',ms.ten as'ten_mau_sac',hdct.so_luong,hdct.don_gia,hdct.thanh_tien  from hoa_don_chi_tiet hdct
             inner join hoa_don hd on hd.id = hdct.hoa_don_id
             inner join san_pham_chi_tiet spct on hdct.san_pham_chi_tiet_id = spct.id
             inner join san_pham sp on spct.san_pham_id = sp.id
