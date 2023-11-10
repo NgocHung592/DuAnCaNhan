@@ -40,6 +40,6 @@ public class MaGiamGiaChiTietImpl implements MaGiamGiaChiTietService {
     @Override
     public MaGiamGiaChiTiet detail(UUID id) {
 
-        return maGiamGiaChiTietRepositioy.findById(id).orElse(null);
+        return maGiamGiaChiTietRepositioy.findMaGiamGiaChiTietByMaGiamGia_Id(id).orElse(null);
     }
 }
