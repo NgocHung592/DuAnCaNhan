@@ -8,7 +8,7 @@
         <div class="card-body d-flex">
           <div class="align-self-center w-100">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <!-- <label
+              <label
                 for="file-upload"
                 class="custom-file-upload btn btn-primary"
                 style="
@@ -25,23 +25,13 @@
                 id="file-upload"
                 style="display: none"
                 onchange="angular.element(this).scope().import(this.files)"
-              /> -->
-              <a
-                type="button"
-                class="btn btn-success"
-                href="#khach-hang/add"
-                style="
-                  width: 100px;
-                  margin-right: 10px;
-                  height: 40px;
-                  font-size: 13px;
-                "
-              >
+              />
+              <a type="button" class="btn btn-success" href="#khach-hang/add">
                 Thêm mới
               </a>
             </div>
 
-            <!-- <div class="search-and-radio-container">
+            <div class="search-and-radio-container">
               <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
                 <input
@@ -57,7 +47,7 @@
                 <input
                   type="radio"
                   ng-model="selectedOption"
-                  ng-change="getNhanVien()"
+                  ng-change="getKhachHang()"
                   required
                   id="option-all"
                 />
@@ -82,7 +72,7 @@
                 />
                 <label for="option-inactive">Đã khóa</label>
               </div>
-            </div> -->
+            </div>
 
             <br />
 
@@ -95,9 +85,9 @@
                   <th scope="col">Tên khách hàng</th>
                   <th scope="col">Email</th>
                   <th scope="col">Số điện thoại</th>
-                  <th scope="col">Ngày tạo</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Hành Động</th>
+                  <th scope="col">Ngày tham gia</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Hành động</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,18 +95,17 @@
                   <th scope="row">{{$index+1}}</th>
                   <td>
                     <i
-                      ng-if="!kh.hinhanh"
+                      ng-if="!kh.hinhAnh"
                       style="font-size: 30px"
                       class="fas fa-user-circle"
                       aria-hidden="true"
                     ></i>
-                    <i
-                      ng-if="kh.hinhanh"
-                      ng-src="{{kh.hinhanh}}"
+                    <img
+                      ng-if="kh.hinhAnh"
+                      src="../../../assets/{{kh.hinhAnh}}"
                       alt="Employee Image"
-                      width="200"
-                      height="200"
-                    ></i>
+                      class="table_img"
+                    />
                   </td>
                   <th scope="row">{{kh.ma}}</th>
                   <th scope="row">{{kh.hoTen}}</th>
@@ -146,23 +135,38 @@
               </tbody>
             </table>
             <div class="no-data-message" ng-if="list_kh.content.length === 0">
-              KHÔNG CÓ DỮ LIỆU
+              Không tìm thấy dữ liệu phù hợp
             </div>
 
             <div class="row mt-4">
               <div class="col-md-12">
-                <nav aria-label="Page navigation example center">
+                <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        ng-click="previousPage()"
+                        aria-label="Previous"
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
                     <li
                       class="page-item"
-                      ng-repeat="page in totalPages track by $index"
-                      ng-click="changePage($index);"
+                      ng-repeat="page in getVisiblePages()"
+                      ng-class="{ 'active': page.active === 'active' }"
                     >
-                      <a class="page-link">{{$index+1}}</a>
+                      <a class="page-link" ng-click="changePage(page.page)"
+                        >{{ page.page }}</a
+                      >
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" ng-click="nextPage()"> &raquo; </a>
                     </li>
                   </ul>
                 </nav>
               </div>
+              <p>Tổng số trang: {{ totalPages.length }}</p>
             </div>
           </div>
         </div>
@@ -170,7 +174,6 @@
     </div>
   </div>
 </main>
-
 <style>
   .checkbox-container {
     display: flex;
@@ -199,7 +202,7 @@
 
   /* CSS cho phần header */
   .card-header {
-    background-color: #f11596;
+    background-color: #333032;
     color: #fff;
     text-align: center;
     padding: 20px;
@@ -234,7 +237,6 @@
     background-color: #f2f2f2;
   }
 
-  /* CSS cho phân trang */
   .pagination {
     margin: 0;
     padding: 0;
@@ -245,14 +247,6 @@
     display: inline-block;
     margin-right: 10px;
     cursor: pointer;
-  }
-
-  .page-link {
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
   }
 
   .page-link:hover {
@@ -300,7 +294,7 @@
 
   /* Thay đổi màu khi focus vào khung tìm kiếm */
   .search-container:focus-within {
-    border-color: #007bff;
+    border-color: #545556;
   }
 
   /* Ẩn radio buttons */
@@ -320,22 +314,22 @@
 
   /* Tô màu khi radio được chọn */
   .radio-container input[type="radio"]:checked + label {
-    background-color: #ff000d;
+    background-color: #726e6e;
     color: #fff;
-    border-color: #007bff;
+    border-color: #646667;
   }
 
   /* Thay đổi màu khi hover vào label */
   .radio-container label:hover {
-    background-color: #2200ff;
+    background-color: #ff0051;
     color: #fff;
   }
   .no-data-message {
     text-align: center; /* Căn giữa theo chiều ngang */
-    margin-top: 50px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
-    font-size: 100px; /* Tùy chỉnh kích thước chữ */
-    color: red; /* Tùy chỉnh màu sắc chữ */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Tạo hiệu ứng glow */
+    margin-top: 20px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
+    font-size: 20px; /* Tùy chỉnh kích thước chữ */
+    color: rgb(112, 111, 111); /* Tùy chỉnh màu sắc chữ */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng glow */
   }
   /* Ẩn trường input file gốc */
   input[type="file"] {
@@ -357,5 +351,10 @@
   /* Khi hover trên nút tải lên */
   .custom-file-upload:hover {
     background-color: #2980b9;
+  }
+  .table_img {
+    border-radius: 50%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
+    width: 40px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    height: 40px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
   }
 </style>

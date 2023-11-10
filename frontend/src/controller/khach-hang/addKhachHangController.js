@@ -14,20 +14,26 @@ window.addKhachHangController = function ($http, $scope, $rootScope) {
   $scope.list_KhachHang = [];
   $scope.form_kh = {
     ma: $scope.randoom,
-    ten: "",
+    hoten: "",
     email: "",
     gioitinh: "",
     ngaysinh: "",
+    anhdaidien: "",
     sodienthoai: "",
     matkhau: "123",
-    tinhThanhPho: "",
-    quanHuyen: "",
-    phuongXa: "",
+    tinhthanhpho: "",
+    quanhuyen: "",
+    phuongxa: "",
     ngaytao: date,
     mota: "",
     trangthai: 1,
   };
   $scope.addKhachHang = function () {
+    const hinhanh = document.getElementById("product-image");
+    console.log(hinhanh);
+    for (const image of hinhanh.files) {
+      $scope.form_kh.anhdaidien = image.name;
+    }
     console.log($scope.form_kh);
     var elem = document.getElementById("myBar");
     var width = 0;
@@ -41,17 +47,17 @@ window.addKhachHangController = function ($http, $scope, $rootScope) {
       }
     }
     if (
-      $scope.form_kh.ten != "" &&
+      $scope.form_kh.hoten != "" &&
       $scope.form_kh.email != "" &&
       $scope.form_kh.sodienthoai != "" &&
-      $scope.form_kh.tinhThanhPho != "" &&
-      $scope.form_kh.quanHuyen != "" &&
-      $scope.form_kh.phuongXa != "" &&
+      $scope.form_kh.tinhthanhpho != "" &&
+      $scope.form_kh.quanhuyen != "" &&
+      $scope.form_kh.phuongxa != "" &&
       $scope.form_kh.mota != ""
     ) {
       $http.post(khachHangAPI + "/add", $scope.form_kh).then(function () {
         $scope.message = "Thêm thành công";
-        console.log(from_kh);
+
         $scope.show = true;
         return true;
       });
@@ -118,9 +124,9 @@ window.addKhachHangController = function ($http, $scope, $rootScope) {
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_kh.tinhThanhPho = $("#city option:selected").text();
-      $scope.form_kh.quanHuyen = $("#district option:selected").text();
-      $scope.form_kh.phuongXa = $("#ward option:selected").text();
+      $scope.form_kh.tinhthanhpho = $("#city option:selected").text();
+      $scope.form_kh.quanhuyen = $("#district option:selected").text();
+      $scope.form_kh.phuongxa = $("#ward option:selected").text();
     }
   };
 

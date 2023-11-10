@@ -13,9 +13,9 @@ import java.util.Date;
 public class NhanVienRequest {
     private String ma;
 
-    private String ten;
+    private String hoten;
 
-    private String hinhanh;
+    private String anhdaidien;
 
     private Boolean gioitinh;
 
@@ -39,13 +39,13 @@ public class NhanVienRequest {
 
     private String trangthai;
 
-    private String idVaiTro;
+    private String chucVu;
 
     private String mota;
 
-    private String quanHuyen;
+    private String quanhuyen;
 
-    private String phuongXa;
+    private String phuongxa;
 
-    private String tinhThanhPho;
+    private String tinhthanhpho;
 }

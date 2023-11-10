@@ -39,20 +39,21 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien add(NhanVienRequest nhanVienRequest) {
-        NhanVien nhanVien=NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getIdVaiTro())).get()).ma(nhanVienRequest.getMa())
-                .hoten(nhanVienRequest.getTen())
+        NhanVien nhanVien=NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
+                .ma(nhanVienRequest.getMa())
+                .hoten(nhanVienRequest.getHoten())
                 .email(nhanVienRequest.getEmail())
                 .matkhau(nhanVienRequest.getMatkhau())
                 .sodienthoai(nhanVienRequest.getSodienthoai())
                 .gioitinh(nhanVienRequest.getGioitinh())
                 .ngaysinh(nhanVienRequest.getNgaysinh())
                 .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
-                .anhdaidien(nhanVienRequest.getHinhanh())
+                .anhdaidien(nhanVienRequest.getAnhdaidien())
                 .ngaytao(nhanVienRequest.getNgaytao())
                 .mota(nhanVienRequest.getMota())
-                .phuongxa(nhanVienRequest.getPhuongXa())
-                .quanhuyen(nhanVienRequest.getQuanHuyen())
-                .tinhthanhpho((nhanVienRequest.getTinhThanhPho()))
+                .phuongxa(nhanVienRequest.getPhuongxa())
+                .quanhuyen(nhanVienRequest.getQuanhuyen())
+                .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
                 .build();
         return nhanVienRepository.save(nhanVien);
     }
@@ -60,21 +61,23 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien update(NhanVienRequest nhanVienRequest, UUID id) {
-        NhanVien nhanVien=NhanVien.builder().id(id).chucVu(chucVuRepository.findById(getId(nhanVienRequest.getIdVaiTro())).get()).ma(nhanVienRequest.getMa())
-                .hoten(nhanVienRequest.getTen())
+        NhanVien nhanVien=NhanVien.builder().id(id)
+                .ma(nhanVienRequest.getMa())
+                .hoten(nhanVienRequest.getHoten())
+                .chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
+                .ngaytao(nhanVienRequest.getNgaytao())
                 .email(nhanVienRequest.getEmail())
                 .matkhau(nhanVienRequest.getMatkhau())
                 .sodienthoai(nhanVienRequest.getSodienthoai())
                 .gioitinh(nhanVienRequest.getGioitinh())
                 .ngaysinh(nhanVienRequest.getNgaysinh())
-                .ngaytao(nhanVienRequest.getNgaytao())
                 .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
-                .anhdaidien(nhanVienRequest.getHinhanh())
-                .ngaysua(new Timestamp(currentTimestampMillis))
+                .anhdaidien(nhanVienRequest.getAnhdaidien())
+                .ngaysua(nhanVienRequest.getNgaysua())
                 .mota(nhanVienRequest.getMota())
-                .phuongxa(nhanVienRequest.getPhuongXa())
-                .quanhuyen(nhanVienRequest.getQuanHuyen())
-                .tinhthanhpho((nhanVienRequest.getTinhThanhPho()))
+                .phuongxa(nhanVienRequest.getPhuongxa())
+                .quanhuyen(nhanVienRequest.getQuanhuyen())
+                .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
                 .build();
         return nhanVienRepository.save(nhanVien);
 
