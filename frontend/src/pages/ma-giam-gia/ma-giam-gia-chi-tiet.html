@@ -25,13 +25,21 @@
                                 <form>
                                     <input id="searchtxt" type="text" placeholder="Tìm kiếm theo mã, tên"
                                            class="search-input"/>
-                                    <input type="submit" ng-hide="true" ng-click="searching($event)"/>
                                 </form>
                             </div>
                         </div>
+                        <br>
                         <div class="col-md-4">
-                            Mã Giảm Giá:
-                            Tên Giảm Giá
+                            <label for="magiamgiact">Mã Giảm Giá:</label>
+                            <p>
+                                {{detailProduct.ma}}
+                            </p>
+                            <br>
+                            <label for="tengiamgiact">Tên Giảm Giá:</label>
+                            <p>
+                                {{detailProduct.tenKM}}
+                            </p>
+                            <br>
                         </div>
                         <div class="col-md-4">
 
@@ -58,8 +66,8 @@
                         <tbody ng-repeat="maGiamGiaCT in listMaGiamGiaCT.content">
                         <tr>
                             <th ></th>
-                            <th>{{maGiamGiaCT.idhd.ma}}</th>
-                            <th>{{maGiamGiaCT.idhd.trang_thai}</th>
+                            <th>{{maGiamGiaCT.maHoaDon}}</th>
+                            <th>{{maGiamGiaCT.trangThai}</th>
 
                             <th>{{maGiamGiaCT.dongia}}</th>
                             <th>{{maGiamGiaCT.dongiasaugiam}}</th>
@@ -67,7 +75,7 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
+
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-window.MaGiamGiaChiTietController = function ($http, $scope, $location) {
+window.MaGiamGiaChiTietController = function ($http, $scope, $routeParams) {
     $scope.listMaGiamGiaCT = [];
     $scope.currentPage = 0;
     $scope.totalPages = [];
@@ -8,7 +8,7 @@ window.MaGiamGiaChiTietController = function ($http, $scope, $location) {
         dongia:"",
         dongiasaugiam:"",
         idma: "",
-        idhoadon: "",
+        hoaDon: "",
 
 
     };
@@ -18,7 +18,23 @@ window.MaGiamGiaChiTietController = function ($http, $scope, $location) {
         .then(function (response) {
             if (response.status == 200) {
                 $scope.detailProduct = response.data;
-
+                if($scope.detailProduct.toString() === "") {
+                    $scope.detailProduct = {}
+                }
+                $http
+                    .get(magiamgiaAPI + "/detail/" + $routeParams.id).then(function (response2) {
+                    if (response2.status == 200) {
+                        $scope.detailProduct.ma = response2.data.ma;
+                        $scope.detailProduct.tenKM = response2.data.tenKM;
+                    }
+                });
+                $http
+                    .get(hoaDonAPI + "/detail/" + $scope.detailProduct.hoaDon).then(function (response2) {
+                    if (response2.status == 200) {
+                        $scope.detailProduct.maHoaDon = response2.data.ma;
+                        $scope.detailProduct.trangThai = response2.data.trangThai;
+                    }
+                });
                 //alert($scope.detailProduct.ngayKetThuc.split("+"));
 
             }

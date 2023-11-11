@@ -87,8 +87,8 @@
                 <tbody ng-repeat="maGiamGia in listMaGiamGia.content">
                 <tr ng-hide="(searchDat.search.length != 0) ? ((maGiamGia.ma.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : ((maGiamGia.tenKM.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : true)) : ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false))">
                     <th scope="col">
-                        <a href="#ma-giam-gia/ma-giam-gia-chi-tiet/detail/{{maGiamGia.id}}">
-                            <i class="align-middle me-2 fas fa-fw fa-info-circle"></i>
+                        <a href="{{maGiamGia.trangThai =='3'?'#ma-giam-gia/ma-giam-gia-chi-tiet/detail/'+maGiamGia.id : ''}}">
+                            <i class="{{maGiamGia.trangThai =='3'?'align-middle me-2 fas fa-fw fa-info-circle' : ''}}"></i>
                         </a>
 
                     </th>
@@ -118,6 +118,37 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a
+                                        class="page-link"
+                                        ng-click="previousPage()"
+                                        aria-label="Previous"
+                                >
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li
+                                    class="page-item"
+                                    ng-repeat="page in visiblePages"
+                                    ng-class="{ 'active': page.active === 'active' }"
+                            >
+                                <a class="page-link" ng-click="changePage(page.page - 1)"
+                                >{{ page.page }}</a
+                                >
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" ng-click="nextPage()"> &raquo; </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <p>Tổng số trang: {{ totalPages.length }}</p>
+            </div>
         </div>
     </div>
 </div>
