@@ -25,7 +25,7 @@
                         <form>
                             <input id="searchtxt" type="text" placeholder="Tìm kiếm theo mã, tên"
                                    class="search-input"/>
-                            <input type="submit" ng-hide="true" ng-click="searching($event)"/>
+
                         </form>
                     </div>
                 </div>
@@ -60,10 +60,17 @@
             </div>
 
             <br />
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-6"></div>
+            <div class="row" >
                 <div class="col-md-2">
+                    <span type="button" class="btn btn-secondary" ng-click="searching($event)">Tìm kiếm</span>
+                </div>
+                <div class="col-md-2">
+                    <span type="button" class="btn btn-success" href="#/ma-giam-gia/hien-thi">Làm mới</span>
+                </div>
+                <div class="col-md-6"></div>
+
+                <div class="col-md-2">
+
                     <a type="button" class="btn btn-primary" href="#/ma-giam-gia/add">Thêm mã</a>
                 </div>
             </div>
