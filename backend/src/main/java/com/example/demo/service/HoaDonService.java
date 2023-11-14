@@ -23,4 +23,7 @@ public interface HoaDonService {
     List<HoaDon> getExcel();
 
     Page<HoaDonRepone> getAlll(Integer pageNo);
+
+
+    Page<HoaDonRepone> getSearch(Integer pageNo, String serch);
 }

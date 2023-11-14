@@ -84,4 +84,10 @@ public class HoaDonServiceImpl implements HoaDonService{
         Pageable pageable = PageRequest.of(pageNo, 5);
         return hoaDonReponsitory.getPage(pageable);
     }
+
+    @Override
+    public Page<HoaDonRepone> getSearch(Integer pageNo, String seach) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        return hoaDonReponsitory.searchByKeyword(pageable,seach);
+    }
 }

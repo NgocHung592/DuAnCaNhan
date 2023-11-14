@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.response.HoaDonRepone;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,13 @@ public class HoaDonController {
 //        return hoaDonService.getAll(pageNo);
 //    }
 @GetMapping("hien-thi")
-public ResponseEntity getAlll(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo){
-    return new ResponseEntity(hoaDonService.getAlll(Integer.valueOf(pageNo)), HttpStatus.OK);
+public Page<HoaDonRepone> getAlll(@RequestParam(name = "pageNo",defaultValue = "0") Integer pageNo){
+    return hoaDonService.getAlll(pageNo);
 }
+    @GetMapping("/search")
+    public Page<HoaDonRepone> searchProductsByName(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search ) {
+        return hoaDonService.getSearch(pageNo,search);
+    }
     @GetMapping("get-list")
     public ResponseEntity getList() {
         return new ResponseEntity(hoaDonService.getList(), HttpStatus.OK);

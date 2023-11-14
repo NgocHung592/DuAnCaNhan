@@ -69,6 +69,8 @@ window.HoaDonController = function ($http, $scope, $location) {
   $scope.listLichSuHoaDon = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
+  $scope.searchKeyword = "";
+  $scope.selectedOption = "";
   $scope.getData = function () {
     $http
       .get(hoaDonAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -94,6 +96,23 @@ window.HoaDonController = function ($http, $scope, $location) {
       $scope.currentPage = index;
       $scope.getData();
     }
+  };
+  $scope.$watch("searchKeyword", function (newVal, oldVal) {
+    if (newVal !== oldVal) {
+      $http
+        .get(hoaDonAPI + "/search?search=" + $scope.searchKeyword)
+        .then(function (response) {
+          $scope.listHoaDon = response.data;
+          console.log("thanh cong", response.data);
+        });
+    }
+  });
+  $scope.searchTT = function () {
+    $http
+      .get(hoaDonAPI + "/hien-thiTT?search=" + $scope.selectedOption)
+      .then(function (response) {
+        $scope.listHoaDon = response.data;
+      });
   };
   //delete hoa don
   $scope.delete = function (id) {
