@@ -4,6 +4,7 @@ window.hienThiNhanVienController = function ($http, $scope) {
   $scope.selectedOption = "";
   $scope.currentPage = 0;
   $scope.totalPages = [];
+  $scope.maxVisiblePages = 3; // Số trang tối đa để hiển thị
   $scope.getNhanVien = function () {
     $http
       .get(nhanVienAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -14,19 +15,58 @@ window.hienThiNhanVienController = function ($http, $scope) {
       });
   };
   $scope.getNhanVien();
+
+  $scope.getVisiblePages = function () {
+    var totalPages = $scope.totalPages.length;
+
+    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    // Tạo danh sách trang hiển thị
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+
+    return visiblePages;
+  };
+
   $scope.changePage = function (index) {
-    if (index >= 0) {
+    if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
       $scope.getNhanVien();
     }
   };
-  $scope.nextPage = function (index) {
-    $scope.currentPage = index++;
+
+  $scope.nextPage = function () {
+    if ($scope.currentPage < $scope.totalPages.length - 1) {
+      $scope.currentPage++;
+      $scope.getNhanVien();
+    }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 1) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
+      $scope.getNhanVien();
     }
   };
   $scope.$watch("searchKeyword", function (newVal, oldVal) {

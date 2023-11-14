@@ -17,9 +17,11 @@ public class KhachHangRequest {
 
     private String ma;
 
-    private String ten;
+    private String hoten;
 
     private String email;
+
+    private String anhdaidien;
 
     private Boolean gioitinh;
 
@@ -44,9 +46,9 @@ public class KhachHangRequest {
 
     private String mota;
 
-    private String quanHuyen;
+    private String quanhuyen;
 
-    private String phuongXa;
+    private String phuongxa;
 
-    private String tinhThanhPho;
+    private String tinhthanhpho;
 }

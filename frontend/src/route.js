@@ -154,6 +154,10 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "ma-giam-gia/update-ma-giam-gia.html",
       controller: updateMaGiamGiaController,
     })
+      .when("/ma-giam-gia/ma-giam-gia-chi-tiet/detail/:id", {
+        templateUrl: "ma-giam-gia/ma-giam-gia-chi-tiet.html",
+        controller: MaGiamGiaChiTietController,
+      })
     .when("/ban-hang/tai-quay", {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",
       controller: addHoaDonController,

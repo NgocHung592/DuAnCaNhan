@@ -9,6 +9,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.*;
+import java.time.Instant;
+import java.util.ResourceBundle;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,7 +29,36 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     @Override
     public Page<MaGiamGia> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return maGiamGiaRepository.findAll(pageable);
+        Page<MaGiamGia> p = maGiamGiaRepository.findAll(pageable);
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+        for (MaGiamGia m : p) {
+            try {
+                if(m.getNgayBatDau().compareTo(timestamp) < 0) {
+                    if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
+                        if(m.getTrangThai() != 3) {
+                            m.setTrangThai(3);
+                            Connection conn = getConn();
+                            PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
+                            ps.setObject(1, m.getId());
+                            ps.executeUpdate();
+                            ps.close();
+                            conn.close();
+                        }
+                    } else {
+                        if(m.getTrangThai() != 2) {
+                            m.setTrangThai(2);
+                            Connection conn = getConn();
+                            PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
+                            ps.setObject(1, m.getId());
+                            ps.executeUpdate();
+                            ps.close();
+                            conn.close();
+                        }
+                    }
+                }
+            } catch(Exception e) {}
+        }
+        return p;
     }
 
     @Override
@@ -32,6 +68,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
             throw new Exception("Ma Giam Gia is already present!");
         }
         return maGiamGiaRepository.save(maGiamGia);
+
     }
 
     @Override
@@ -44,7 +81,49 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
 
     @Override
     public MaGiamGia detail(UUID id) {
-        return maGiamGiaRepository.findById(id).orElse(null);
+        MaGiamGia m = maGiamGiaRepository.findById(id).orElse(null);
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+        try {
+            if(m.getNgayBatDau().compareTo(timestamp) < 0) {
+                if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
+                    if(m.getTrangThai() != 3) {
+                        m.setTrangThai(3);
+                        Connection conn = getConn();
+                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
+                        ps.setObject(1, id);
+                        ps.executeUpdate();
+                        ps.close();
+                        conn.close();
+                    }
+                } else  {
+                    if(m.getTrangThai() != 2) {
+                        m.setTrangThai(2);
+                        Connection conn = getConn();
+                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
+                        ps.setObject(1, id);
+                        ps.executeUpdate();
+                        ps.close();
+                        conn.close();
+                    }
+                }
+            }
+        } catch(Exception e) {}
+        return m;
+    }
+
+    private Connection getConn() throws Exception {
+        ResourceBundle rb = ResourceBundle.getBundle("application");
+        String connectionString = rb.getString("spring.datasource.url");
+        String driverName = rb.getString("spring.datasource.driverClassName");
+        String username = rb.getString("spring.datasource.username");
+        String password = rb.getString("spring.datasource.password");
+        try {
+            Class.forName(driverName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Connection conn = DriverManager.getConnection(connectionString, username, password);
+        return conn;
     }
 
     //    @Override

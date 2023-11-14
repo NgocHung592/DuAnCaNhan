@@ -13,6 +13,9 @@ public interface KhachHangReponse {
 
     @Value("#{target.ma}")
     String getMa();
+  
+    @Value("#{target.anh_dai_dien}")
+    String getHinhAnh();
 
     @Value("#{target.ho_ten}")
     String getHoTen();

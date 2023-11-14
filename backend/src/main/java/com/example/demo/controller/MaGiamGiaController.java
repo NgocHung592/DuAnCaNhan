@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.MaGiamGia;
+import com.example.demo.entity.MaGiamGiaChiTiet;
+import com.example.demo.service.MaGiamGiaChiTietService;
 import com.example.demo.service.MaGiamGiaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ public class MaGiamGiaController {
 
     @Autowired
     private MaGiamGiaService maGiamGiaService;
-
+    @Autowired
+    private MaGiamGiaChiTietService maGiamGiaChiTietService;
     @GetMapping("hien-thi")
     public Page<MaGiamGia> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return maGiamGiaService.getAll(pageNo);
@@ -26,6 +29,7 @@ public class MaGiamGiaController {
 
     @PostMapping("add")
     public MaGiamGia post(@RequestBody MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception{
+        maGiamGia.setMa(maGiamGia.getMa().toUpperCase());
         return maGiamGiaService.add(maGiamGia);
     }
 
@@ -38,4 +42,6 @@ public class MaGiamGiaController {
     public MaGiamGia detail(@PathVariable("id") String id) {
         return maGiamGiaService.detail(UUID.fromString(id));
     }
+
+
 }
