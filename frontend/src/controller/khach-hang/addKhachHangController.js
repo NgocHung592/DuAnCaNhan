@@ -121,14 +121,13 @@ window.addKhachHangController = function (
       $http
         .post(khachHangAPI + "/add", $scope.form_kh)
         .then(function () {
-          $scope.message = "Thêm thành công";
+          alert("Thêm thành công");
           $location.path("/khach-hang/hien-thi");
-          $scope.show = true;
-
-          return true;
         })
-        .catch(function (e) {
-          event.preventDefault();
+        .catch(function (errorResponse) {
+          if (errorResponse && errorResponse.preventDefault) {
+            errorResponse.preventDefault();
+          }
           alert("Email hoặc số điện thoại đã tồn tại");
           $scope.show = true;
         });

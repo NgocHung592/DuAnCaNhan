@@ -118,11 +118,11 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
         .then(function () {
           alert("Thêm thành công");
           $location.path("/nhan-vien/hien-thi");
-          $scope.show = true;
-          return true;
         })
-        .catch(function (e) {
-          event.preventDefault();
+        .catch(function (errorResponse) {
+          if (errorResponse && errorResponse.preventDefault) {
+            errorResponse.preventDefault();
+          }
           alert("Email hoặc số điện thoại đã tồn tại");
           $scope.show = true;
         });
