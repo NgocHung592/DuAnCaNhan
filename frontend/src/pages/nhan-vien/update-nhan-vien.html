@@ -5,16 +5,32 @@
     border-radius: 50%; /* Làm cho nút tròn */
     overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
   }
+  .input-container {
+    position: relative;
+  }
+
+  .form-control {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc; /* Màu và độ dày của gạch chân mặc định */
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-bottom 0.3s; /* Hiệu ứng chuyển động khi thay đổi border-bottom */
+  }
+
+  .form-control:focus {
+    border-bottom: none; /* Loại bỏ gạch chân khi ô input được focus */
+  }
 
   .file-upload {
     width: 100%; /* Đảm bảo nút bên trong kích thước đúng */
     height: 100%;
-    border-radius: 50%;
+    border-radius: 100%;
   }
   .table_img {
-    border-radius: 30%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
-    width: 250px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
-    height: 250px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    border-radius: 100%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
+    width: 260px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    height: 297px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
   }
 </style>
 
@@ -104,6 +120,13 @@
                             ><span style="color: red">*</span> Tên nhân
                             viên</label
                           >
+                          <!-- <span
+                            ng-hide="showSdt?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Tên trống hoặc sai định dạng</span
+                          > -->
+
                           <input
                             type="text"
                             class="form-control"
@@ -113,6 +136,7 @@
                             required
                             name="tennv"
                           />
+
                           <label for="" class="col-sm-6 col-form-label"
                             >Chức vụ</label
                           >
@@ -249,13 +273,50 @@
                         >
                       </div>
                       <div class="col-mb-12 row">
-                        <div class="col-sm-12">
-                          <input
-                            type="text"
-                            class="form-control"
-                            ng-model="detailNhanVien.mota + '-' + detailNhanVien.phuongxa + '-' + detailNhanVien.quanhuyen + '-' + detailNhanVien.tinhthanhpho"
-                            name="mota"
-                          />
+                        <div class="col-sm-3">
+                          <div class="input-container">
+                            <input
+                              style="outline: none"
+                              type="text"
+                              class="form-control"
+                              ng-model="detailNhanVien.mota"
+                              name="mota"
+                              placeholder="Số nhà"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="input-container">
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailNhanVien.phuongxa"
+                              name="mota"
+                              placeholder="Phường xã"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="input-container">
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailNhanVien.quanhuyen"
+                              name="mota"
+                              placeholder="Quận huyện"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="input-container">
+                            <input
+                              type="text"
+                              class="form-control"
+                              ng-model="detailNhanVien.tinhthanhpho"
+                              name="mota"
+                              placeholder="Tỉnh thành phố"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -314,13 +375,13 @@
                       <a
                         type="button"
                         id="liveToastBtn"
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         ng-click="update(detailNhanVien.id)"
                         >Cập Nhật</a
                       >
                       <a
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-warning"
                         href="#nhan-vien/hien-thi"
                         >Quay lại</a
                       >

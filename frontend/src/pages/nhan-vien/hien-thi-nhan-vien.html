@@ -14,8 +14,8 @@
                 style="
                   width: 120px;
                   height: 40px;
-                  font-size: 13px;
-                  font-size: 13px;
+                  font-size: 12px;
+                  font-size: 12px;
                 "
               >
                 Thêm Excel
@@ -27,7 +27,7 @@
                 onchange="angular.element(this).scope().import(this.files)"
               />
 
-              <a type="button" class="btn btn-success" href="#nhan-vien/add">
+              <a type="button" class="btn btn-primary" href="#nhan-vien/add">
                 Thêm mới
               </a>
             </div>
@@ -82,7 +82,6 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Ảnh</th>
-                  <th scope="col">Mã nhân viên</th>
                   <th scope="col">Tên nhân viên</th>
                   <th scope="col">Email</th>
                   <th scope="col">Số điện thoại</th>
@@ -109,7 +108,6 @@
                       class="table_img"
                     />
                   </td>
-                  <th scope="row">{{nv.ma}}</th>
                   <th scope="row">{{nv.hoTen}}</th>
                   <th scope="row">{{nv.email}}</th>
                   <th scope="row">{{nv.soDienThoai}}</th>
@@ -204,8 +202,8 @@
 
   /* CSS cho phần header */
   .card-header {
-    background-color: #333032;
-    color: #fff;
+    background-color: #ffffff;
+    color: #1c1919;
     text-align: center;
     padding: 20px;
   }
@@ -252,7 +250,7 @@
   }
 
   .page-link:hover {
-    background-color: #0056b3;
+    background-color: #2e5075;
   }
 
   /* CSS cho ảnh nhân viên */
@@ -296,7 +294,7 @@
 
   /* Thay đổi màu khi focus vào khung tìm kiếm */
   .search-container:focus-within {
-    border-color: #545556;
+    border-color: #2563a1;
   }
 
   /* Ẩn radio buttons */
@@ -307,7 +305,7 @@
   /* Tạo sự tương tác với label */
   .radio-container label {
     padding: 5px 10px;
-    background-color: #f2f2f2;
+    background-color: #fdfdfd;
     border: 1px solid #ccc;
     border-radius: 20px;
     cursor: pointer;
@@ -316,14 +314,15 @@
 
   /* Tô màu khi radio được chọn */
   .radio-container input[type="radio"]:checked + label {
-    background-color: #726e6e;
+    border-color: #345679;
+
     color: #fff;
-    border-color: #646667;
+    border-color: #385d82;
   }
 
   /* Thay đổi màu khi hover vào label */
   .radio-container label:hover {
-    background-color: #ff0051;
+    border-color: #254362;
     color: #fff;
   }
   .no-data-message {
@@ -343,7 +342,7 @@
     display: inline-block;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: #3498db;
+    background-color: rgb(26, 208, 26);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -352,7 +351,7 @@
 
   /* Khi hover trên nút tải lên */
   .custom-file-upload:hover {
-    background-color: #2980b9;
+    background-color: rgb(26, 208, 26);
   }
   .table_img {
     border-radius: 50%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */

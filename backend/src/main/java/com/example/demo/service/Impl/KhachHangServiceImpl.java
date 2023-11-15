@@ -2,18 +2,23 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.KhachHang;
+import com.example.demo.entity.NhanVien;
 import com.example.demo.model.request.KhachHangRequest;
 import com.example.demo.model.response.KhachHangReponse;
 import com.example.demo.repository.DiaChiRepository;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.service.KhachHangService;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,6 +28,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Autowired
     private DiaChiRepository diaChiRepository;
     long currentTimestampMillis = System.currentTimeMillis();
+    @Autowired
+    private JavaMailSender javaMailSender;
+
 
     @Override
     public Page<KhachHangReponse> getAll(Integer pageNo) {
@@ -31,13 +39,15 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public Page<KhachHang> getKhachHangByTrangThai(Integer pageNo) {
-        Pageable pageable=PageRequest.of(pageNo,10);
-        return khachHangRepository.findAll(pageable);
-    }
-
-    @Override
-    public DiaChi add(KhachHangRequest khachHangRequest) {
+    public DiaChi add(KhachHangRequest khachHangRequest)throws Exception  {
+        Optional<KhachHang> emailnv= khachHangRepository.findKhachHangByEmail(khachHangRequest.getEmail());
+        Optional<KhachHang> sdtnv=khachHangRepository.findKhachHangBySodienthoai(khachHangRequest.getSodienthoai());
+        if (emailnv.isPresent()) {
+            throw new Exception("Email is already present!");
+        }
+        if(sdtnv.isPresent()){
+            throw new Exception("So dien thoai is already present!");
+        }
         KhachHang khachHang = KhachHang.builder()
                 .ma(khachHangRequest.getMa()).hoten(khachHangRequest.getHoten())
                 .email(khachHangRequest.getEmail())
@@ -49,6 +59,7 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .ngaytao(khachHangRequest.getNgaytao())
                 .trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         KhachHang KhachHangg = khachHangRepository.save(khachHang);
+        sendEmail(khachHang);
         DiaChi diaChi = DiaChi.builder().khachHang(KhachHangg)
                 .tinhthanhpho(khachHangRequest.getTinhthanhpho())
                 .phuongxa(khachHangRequest.getPhuongxa())
@@ -79,7 +90,15 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) {
+    public DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception {
+        Optional<KhachHang> emailnv= khachHangRepository.findKhachHangByEmailAndIdNot(khachHangRequest.getEmail(),id2);
+        Optional<KhachHang> sdtnv=khachHangRepository.findKhachHangBySodienthoaiAndIdNot(khachHangRequest.getSodienthoai(),id2);
+        if (emailnv.isPresent()) {
+            throw new Exception("Email is already present!");
+        }
+        if(sdtnv.isPresent()){
+            throw new Exception("So dien thoai is already present!");
+        }
         KhachHang khachHang = KhachHang.builder().id(id2)
                 .ma(khachHangRequest.getMa())
                 .anhdaidien(khachHangRequest.getAnhdaidien())
@@ -101,6 +120,25 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .mota(khachHangRequest.getMota())
                 .trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         return diaChiRepository.save(diaChi);
+    }
+    private void sendEmail(KhachHang khachHang) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(khachHang.getEmail());
+            helper.setSubject("Chào mừng bạn đến với công ty");
+            helper.setText("Xin chào " + khachHang.getHoten() + ",\n\n" +
+                    "Chúc mừng bạn đã trở thành khách hàng của công ty chúng tôi.\n" +
+                    "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +
+                    "Mã khách hàng: " + khachHang.getMa() + "\n" +
+                    "Mật khẩu: " + khachHang.getMatkhau() + "\n\n" +
+                    "Trân trọng,\n");
+
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();  // Handle exception appropriately
+        }
     }
 
     @Override

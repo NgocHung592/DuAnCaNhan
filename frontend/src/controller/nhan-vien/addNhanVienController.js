@@ -1,16 +1,26 @@
 window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
-  $scope.show = Boolean;
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
+  $scope.showTen = true;
+  $scope.showEmail = true;
+  $scope.showSdt = true;
+  $scope.showMota = true;
+  $scope.showT = true;
+  $scope.showP = true;
+  $scope.showQ = true;
+  $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
+  $scope.matkhau = generateRandomPassword();
+  function generateRandomPassword() {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@$!%*?&";
+    let password = "";
+
+    for (let i = 0; i < 12; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      password += characters.charAt(randomIndex);
+    }
+
+    return password;
   }
 
-  $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
   var date = new Date();
   $scope.form_nv = {
     ma: $scope.randoom,
@@ -20,7 +30,7 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
     ngaysinh: "",
     sodienthoai: "",
     anhdaidien: "",
-    matkhau: "123",
+    matkhau: $scope.matkhau,
     tinhthanhpho: "",
     quanhuyen: "",
     phuongxa: "",
@@ -29,53 +39,97 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
     chucVu: "Nhân viên",
     trangthai: 1,
   };
-  $scope.addNhanVien = function () {
+  $scope.addNhanVien = function (event) {
     const hinhanh = document.getElementById("product-image");
-    console.log(hinhanh);
     for (const image of hinhanh.files) {
       $scope.form_nv.anhdaidien = image.name;
     }
-    console.log($scope.form_nv);
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 15);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
+    let check = true;
+    $scope.showTen = true;
+    $scope.showEmail = true;
+    $scope.showSdt = true;
+    $scope.showMota = true;
+    $scope.showT = true;
+    $scope.showP = true;
+    $scope.showQ = true;
+    let hoten = $scope.form_nv.hoten;
+    let email = $scope.form_nv.email;
+    let mota = $scope.form_nv.mota;
+    let tinhthanhpho = $scope.form_nv.tinhthanhphone;
+    let phuongxa = $scope.form_nv.phuongxa;
+    let quanhuyen = $scope.form_nv.quanhuyen;
+
+    let sodienthoai = $scope.form_nv.sodienthoai;
+    const onlyLetters =
+      /^[a-zA-Z\s?áàảãạâấầẩẫậăắằẳẵặéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵY\s]*$/;
+    const emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const vietnamPhoneRegex =
+      /^(?:\+84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
+
+    if (
+      hoten.length == 0 ||
+      hoten.length > 100 ||
+      specialChars.test(hoten) ||
+      !onlyLetters.test(hoten)
+    ) {
+      $scope.showTen = false;
+
+      check = false;
+    }
+    if (!emailRegex.test(email)) {
+      console.log(email);
+      $scope.showEmail = false;
+
+      check = false;
     }
     if (
-      ($scope.form_nv.hoten === "",
-      $scope.form_nv.email === "",
-      $scope.form_nv.sodienthoai === "",
-      $scope.form_nv.tinhthanhpho === "",
-      $scope.form_nv.quanhuyen === "",
-      $scope.form_nv.phuongxa === "",
-      $scope.form_nv.mota === "")
+      sodienthoai.length == 0 ||
+      specialChars.test(sodienthoai) ||
+      !vietnamPhoneRegex.test(sodienthoai)
     ) {
-      $scope.message = "Thêm thất bại";
-      $scope.show = false;
-      return false;
+      $scope.showSdt = false;
+
+      check = false;
+    }
+    if (mota.length == 0 || mota.length > 100 || specialChars.test(mota)) {
+      $scope.showMota = false;
+
+      check = false;
+    }
+    if (tinhthanhpho == "") {
+      $scope.showT = false;
+
+      check = false;
+    }
+    if (quanhuyen == "") {
+      $scope.showQ = false;
+
+      check = false;
+    }
+    if (phuongxa == "") {
+      $scope.showP = false;
+
+      check = false;
+    }
+    if (check) {
+      $http
+        .post(nhanVienAPI + "/add", $scope.form_nv)
+        .then(function () {
+          alert("Thêm thành công");
+          $location.path("/nhan-vien/hien-thi");
+          $scope.show = true;
+          return true;
+        })
+        .catch(function (e) {
+          event.preventDefault();
+          alert("Email hoặc số điện thoại đã tồn tại");
+          $scope.show = true;
+        });
     } else {
-      $http.post(nhanVienAPI + "/add", $scope.form_nv).then(function () {
-        $scope.message = "Thêm thành công";
-        $scope.show = true;
-        return true;
-      });
+      event.preventDefault();
     }
   };
-  $scope.show = Boolean;
-
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
   const host = "https://provinces.open-api.vn/api/";
   var callAPI = (api) => {
     return axios.get(api).then((response) => {

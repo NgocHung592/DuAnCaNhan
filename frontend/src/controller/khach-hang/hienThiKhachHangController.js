@@ -101,16 +101,16 @@ window.hienThiKhachHangController = function (
         if (index > 1) {
           let nhanvien = {
             ma: row.getCell(1).value,
-            ten: row.getCell(2).value,
+            hoten: row.getCell(2).value,
             gioitinh: true && row.getCell(3).value,
             email: row.getCell(5).value,
             ngaysinh: row.getCell(6).value,
             sodienthoai: row.getCell(7).value,
             matkhau: "123",
             ngaytao: date,
-            tinhThanhPho: row.getCell(8).value,
-            quanHuyen: row.getCell(9).value,
-            phuongXa: row.getCell(10).value,
+            tinhthanhpho: row.getCell(8).value,
+            quanhuyen: row.getCell(9).value,
+            phuongxa: row.getCell(10).value,
             mota: row.getCell(11).value,
             trangthai: row.getCell(12).value,
           };

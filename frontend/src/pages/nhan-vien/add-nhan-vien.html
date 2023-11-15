@@ -11,6 +11,23 @@
     height: 100%;
     border-radius: 50%;
   }
+
+  .input-container {
+    position: relative;
+  }
+
+  .form-control {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc; /* Màu và độ dày của gạch chân mặc định */
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-bottom 0.3s; /* Hiệu ứng chuyển động khi thay đổi border-bottom */
+  }
+
+  .form-control:focus {
+    border-bottom: none; /* Loại bỏ gạch chân khi ô input được focus */
+  }
 </style>
 
 <main class="content">
@@ -39,33 +56,6 @@
                       </div>
                       <div class="col-mb-12 row">
                         <div class="col-sm-6">
-                          <div
-                            class="toast-container position-fixed top-0 end-0 p-3"
-                          >
-                            <div
-                              id="liveToast"
-                              class="toast"
-                              role="alert"
-                              aria-live="assertive"
-                              aria-atomic="true"
-                              data-bs-delay="1500"
-                            >
-                              <div class="toast-body">
-                                {{message}}
-                                <div id="myProgress">
-                                  <div id="myBar"></div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              id="liveToast"
-                              class="toast"
-                              role="alert"
-                              aria-live="assertive"
-                              aria-atomic="true"
-                              data-bs-delay="1500"
-                            ></div>
-                          </div>
                           <div class="uploadfile">
                             <section
                               class="p-4 d-flex justify-content-center w-100"
@@ -120,6 +110,12 @@
                             required
                             name="tennv"
                           />
+                          <span
+                            ng-hide="showTen?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Tên trống hoặc sai định dạng
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -147,6 +143,12 @@
                             name="email"
                             placeholder="Email"
                           />
+                          <span
+                            ng-hide="showEmail?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Email trống hoặc sai định dạng
+                          </span>
                         </div>
 
                         <div class="col-sm-6">
@@ -159,6 +161,12 @@
                             name="sdt"
                             placeholder="Số điện thoại"
                           />
+                          <span
+                            ng-hide="showSdt?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Số điện thoại trống hoặc sai định dạng
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -230,21 +238,45 @@
                             name="mota"
                             placeholder="Số nhà"
                           />
+                          <span
+                            ng-hide="showMota?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Số nhà trống, sai định dạng
+                          </span>
                         </div>
                         <div class="col-sm-3">
                           <select name="tt" id="city" class="form-control">
                             <option selected id="thanhpho"></option>
                           </select>
+                          <span
+                            ng-hide="showT?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Tỉnh thành phố trống
+                          </span>
                         </div>
                         <div class="col-sm-3">
                           <select class="form-control" id="district" name="qh">
                             <option value="" selected></option>
                           </select>
+                          <span
+                            ng-hide="showQ?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Quận huyện trống
+                          </span>
                         </div>
                         <div class="col-sm-3">
                           <select class="form-control" id="ward" name="px">
                             <option value="" selected></option>
                           </select>
+                          <span
+                            ng-hide="showP?true:false"
+                            class="has-error"
+                            style="font-size: 70%"
+                            >Phường xã trống
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -255,14 +287,14 @@
                       <a
                         type="button"
                         id="liveToastBtn"
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         ng-disabled="formAdd.$invalid"
                         ng-click="addNhanVien($event)"
                         >Thêm</a
                       >
                       <a
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-warning"
                         href="#nhan-vien/hien-thi"
                         >Quay lại</a
                       >

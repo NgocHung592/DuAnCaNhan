@@ -1,4 +1,9 @@
-window.updateKhachHangController = function ($http, $scope, $routeParams) {
+window.updateKhachHangController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location
+) {
   $http
     .get(khachHangAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
@@ -6,7 +11,8 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       console.log($scope.detailKhachHang);
     });
   var date = new Date();
-  $scope.update = function (id1, id2) {
+  $scope.update = function (id1, id2, event) {
+    let check = true;
     const hinhanh = document.getElementById("product-image");
     console.log(hinhanh);
     for (const image of hinhanh.files) {
@@ -30,11 +36,27 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       trangthai: $scope.detailKhachHang.khachHang.trangthai,
       mota: $scope.detailKhachHang.mota,
     };
-    $http
-      .put(khachHangAPI + "/update/" + id1 + "/" + id2, $scope.updateKhachHang)
-      .then(function () {
-        alert("Cập nhật thành công");
-      });
+    if (check) {
+      $http
+        .put(
+          khachHangAPI + "/update/" + id1 + "/" + id2,
+          $scope.updateKhachHang
+        )
+        .then(function () {
+          alert("Cập nhật thành công");
+          $location.path("/khach-hang/hien-thi");
+
+          return true;
+        })
+        .catch(function (errorResponse) {
+          if (errorResponse && errorResponse.preventDefault) {
+            errorResponse.preventDefault();
+          }
+          alert("Email hoặc số điện thoại đã tồn tại");
+        });
+    } else {
+      event.preventDefault();
+    }
   };
 
   $scope.show = Boolean;

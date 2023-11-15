@@ -11,6 +11,23 @@
     height: 100%;
     border-radius: 50%;
   }
+
+  .input-container {
+    position: relative;
+  }
+
+  .form-control {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc; /* Màu và độ dày của gạch chân mặc định */
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-bottom 0.3s; /* Hiệu ứng chuyển động khi thay đổi border-bottom */
+  }
+
+  .form-control:focus {
+    border-bottom: none; /* Loại bỏ gạch chân khi ô input được focus */
+  }
 </style>
 
 <main class="content">
@@ -39,25 +56,6 @@
                       </div>
                       <div class="col-mb-12 row">
                         <div class="col-sm-6">
-                          <div
-                            class="toast-container position-fixed top-0 end-0 p-3"
-                          >
-                            <div
-                              id="liveToast"
-                              class="toast"
-                              role="alert"
-                              aria-live="assertive"
-                              aria-atomic="true"
-                              data-bs-delay="1500"
-                            >
-                              <div class="toast-body">
-                                {{message}}
-                                <div id="myProgress">
-                                  <div id="myBar"></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                           <div class="uploadfile">
                             <section
                               class="p-4 d-flex justify-content-center w-100"
@@ -113,11 +111,11 @@
                             name="tennv"
                           />
                           <span
-                            ng-show="formAdd.tennv.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showTen?true:false"
                             class="has-error"
-                            >Tên khách hàng không được trống</span
-                          >
+                            style="font-size: 70%"
+                            >Tên trống hoặc sai định dạng
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -144,11 +142,11 @@
                             placeholder="Email"
                           />
                           <span
-                            ng-show="formAdd.email.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showEmail?true:false"
                             class="has-error"
-                            >Email không được trống</span
-                          >
+                            style="font-size: 70%"
+                            >Email trống hoặc sai định dạng
+                          </span>
                         </div>
 
                         <div class="col-sm-6">
@@ -162,11 +160,11 @@
                             placeholder="Số điện thoại"
                           />
                           <span
-                            ng-show="formAdd.sdt.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showSdt?true:false"
                             class="has-error"
-                            >Số điện thoại không được trống</span
-                          >
+                            style="font-size: 70%"
+                            >Số điện thoại trống hoặc sai định dạng
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -239,10 +237,10 @@
                             placeholder="Số nhà"
                           />
                           <span
-                            ng-show="formAdd.mota.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showMota?true:false"
                             class="has-error"
-                            >Vui lòng nhập
+                            style="font-size: 70%"
+                            >Số nhà trống, sai định dạng
                           </span>
                         </div>
                         <div class="col-sm-3">
@@ -250,10 +248,10 @@
                             <option selected id="thanhpho"></option>
                           </select>
                           <span
-                            ng-show="formAdd.tt.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showT?true:false"
                             class="has-error"
-                            >Vui lòng nhập
+                            style="font-size: 70%"
+                            >Tỉnh thành phố trống
                           </span>
                         </div>
                         <div class="col-sm-3">
@@ -261,10 +259,10 @@
                             <option value="" selected></option>
                           </select>
                           <span
-                            ng-show="formAdd.qh.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showQ?true:false"
                             class="has-error"
-                            >Vui lòng nhập
+                            style="font-size: 70%"
+                            >Quận huyện trống
                           </span>
                         </div>
                         <div class="col-sm-3">
@@ -272,10 +270,10 @@
                             <option value="" selected></option>
                           </select>
                           <span
-                            ng-show="formAdd.px.$invalid"
-                            ng-hide="show?true:false"
+                            ng-hide="showP?true:false"
                             class="has-error"
-                            >Vui lòng nhập
+                            style="font-size: 70%"
+                            >Phường xã trống
                           </span>
                         </div>
                       </div>
@@ -287,14 +285,14 @@
                       <a
                         type="button"
                         id="liveToastBtn"
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         ng-disabled="formAdd.$invalid"
                         ng-click="addKhachHang($event)"
                         >Thêm</a
                       >
                       <a
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-warning"
                         href="#khach-hang/hien-thi"
                         >Quay lại</a
                       >

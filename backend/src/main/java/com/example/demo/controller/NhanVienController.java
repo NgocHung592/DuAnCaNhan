@@ -4,6 +4,7 @@ import com.example.demo.entity.NhanVien;
 import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.service.NhanVienService;
+import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +38,16 @@ public class NhanVienController {
     }
 
     @PostMapping("add")
-    public NhanVien post(@RequestBody NhanVienRequest nhanVienRequest){
-        System.out.println(nhanVienRequest);
-        return nhanVienService.add(nhanVienRequest);
+    public NhanVien post(@RequestBody NhanVienRequest nhanVienRequest)throws Exception{
+        nhanVienRequest.setEmail(nhanVienRequest.getEmail());
+        nhanVienRequest.setSodienthoai(nhanVienRequest.getSodienthoai());
+        return nhanVienService.add(nhanVienRequest) ;
     }
     @PutMapping("update/{id}")
-    public NhanVien update(@RequestBody NhanVienRequest nhanVienRequest, @PathVariable("id") String id) {
+    public NhanVien update(@RequestBody NhanVienRequest nhanVienRequest, @PathVariable("id") String id) throws Exception{
+        nhanVienRequest.setEmail(nhanVienRequest.getEmail());
+        nhanVienRequest.setSodienthoai(nhanVienRequest.getSodienthoai());
+
         return nhanVienService.update(nhanVienRequest, UUID.fromString(id));
     }
 }

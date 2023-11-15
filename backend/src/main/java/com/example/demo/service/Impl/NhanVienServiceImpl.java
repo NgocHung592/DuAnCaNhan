@@ -7,16 +7,21 @@ import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.repository.ChucVuRepository;
 import com.example.demo.repository.NhanVienRepository;
 import com.example.demo.service.NhanVienService;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class NhanVienServiceImpl implements NhanVienService {
     @Autowired
@@ -24,6 +29,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Autowired
     private NhanVienRepository nhanVienRepository;
     long currentTimestampMillis = System.currentTimeMillis();
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     @Override
     public Page<NhanVienReponse> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
@@ -31,15 +39,23 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Page<NhanVienReponse> getAllTrangThai(Integer pageNo,String tt) {
+    public Page<NhanVienReponse> getAllTrangThai(Integer pageNo, String tt) {
         Pageable pageable = PageRequest.of(pageNo, 100);
-        return nhanVienRepository.getNhanVienTrangThai1(pageable,tt);
+        return nhanVienRepository.getNhanVienTrangThai1(pageable, tt);
     }
 
 
     @Override
-    public NhanVien add(NhanVienRequest nhanVienRequest) {
-        NhanVien nhanVien=NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
+    public NhanVien add(NhanVienRequest nhanVienRequest) throws Exception {
+        Optional<NhanVien> emailnv= nhanVienRepository.findNhanVienByEmail(nhanVienRequest.getEmail());
+        Optional<NhanVien> sdtnv=nhanVienRepository.findNhanVienBySodienthoai(nhanVienRequest.getSodienthoai());
+        if (emailnv.isPresent()) {
+            throw new Exception("Email is already present!");
+        }
+        if(sdtnv.isPresent()){
+            throw new Exception("So dien thoai is already present!");
+        }
+        NhanVien nhanVien = NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
                 .ma(nhanVienRequest.getMa())
                 .hoten(nhanVienRequest.getHoten())
                 .email(nhanVienRequest.getEmail())
@@ -55,13 +71,43 @@ public class NhanVienServiceImpl implements NhanVienService {
                 .quanhuyen(nhanVienRequest.getQuanhuyen())
                 .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
                 .build();
-        return nhanVienRepository.save(nhanVien);
+        nhanVienRepository.save(nhanVien);
+        sendEmail(nhanVien);
+        return nhanVien;
+    }
+
+    private void sendEmail(NhanVien nhanVien) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(nhanVien.getEmail());
+            helper.setSubject("Chào mừng bạn đến với công ty");
+            helper.setText("Xin chào " + nhanVien.getHoten() + ",\n\n" +
+                    "Chúc mừng bạn đã trở thành thành viên của công ty chúng tôi.\n" +
+                    "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +
+                    "Mã nhân viên: " + nhanVien.getMa() + "\n" +
+                    "Mật khẩu: " + nhanVien.getMatkhau() + "\n\n" +
+                    "Trân trọng,\n");
+
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();  // Handle exception appropriately
+        }
     }
 
 
     @Override
-    public NhanVien update(NhanVienRequest nhanVienRequest, UUID id) {
-        NhanVien nhanVien=NhanVien.builder().id(id)
+    public NhanVien update(NhanVienRequest nhanVienRequest, UUID id) throws Exception {
+        Optional<NhanVien> emailnv= nhanVienRepository.findNhanVienByEmailAndIdNot(nhanVienRequest.getEmail(),id);
+        Optional<NhanVien> sdtnv=nhanVienRepository.findNhanVienBySodienthoaiAndIdNot(nhanVienRequest.getSodienthoai(),id);
+        if (emailnv.isPresent()) {
+            throw new Exception("Email is already present!");
+        }
+        if(sdtnv.isPresent()){
+            throw new Exception("So dien thoai is already present!");
+        }
+        NhanVien nhanVien = NhanVien.builder().id(id)
                 .ma(nhanVienRequest.getMa())
                 .hoten(nhanVienRequest.getHoten())
                 .chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
@@ -84,9 +130,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Page<NhanVienReponse> getSearch( Integer pageNo,String seach) {
+    public Page<NhanVienReponse> getSearch(Integer pageNo, String seach) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return nhanVienRepository.searchByKeyword(pageable,seach);
+        return nhanVienRepository.searchByKeyword(pageable, seach);
     }
 
     @Override
@@ -94,7 +140,7 @@ public class NhanVienServiceImpl implements NhanVienService {
         return nhanVienRepository.findById(id).orElse(null);
     }
 
-    public UUID getId(String ten){
+    public UUID getId(String ten) {
         for (ChucVu chucVu : chucVuRepository.findAll()) {
             if (ten.equals(chucVu.getTen())) {
                 return chucVu.getId();

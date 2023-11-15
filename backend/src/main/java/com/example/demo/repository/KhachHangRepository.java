@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.KhachHang;
+import com.example.demo.entity.NhanVien;
 import com.example.demo.model.response.KhachHangReponse;
 import com.example.demo.model.response.NhanVienReponse;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -34,4 +36,8 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
             order by a.ngay_tao desc
             """, nativeQuery = true)
     Page<KhachHangReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
+    Optional<KhachHang> findKhachHangByEmail(String email);
+    Optional<KhachHang> findKhachHangBySodienthoai(String sdt);
+    Optional<KhachHang> findKhachHangByEmailAndIdNot(String email,UUID id);
+    Optional<KhachHang> findKhachHangBySodienthoaiAndIdNot(String sdt,UUID id);
 }

@@ -10,12 +10,12 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <label
                 for="file-upload"
-                class="custom-file-upload btn btn-primary"
+                class="custom-file-upload btn btn-success"
                 style="
                   width: 120px;
                   height: 40px;
-                  font-size: 13px;
-                  font-size: 13px;
+                  font-size: 12px;
+                  font-size: 12px;
                 "
               >
                 Thêm Excel
@@ -26,7 +26,7 @@
                 style="display: none"
                 onchange="angular.element(this).scope().import(this.files)"
               />
-              <a type="button" class="btn btn-success" href="#khach-hang/add">
+              <a type="button" class="btn btn-primary" href="#khach-hang/add">
                 Thêm mới
               </a>
             </div>
@@ -81,7 +81,7 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Ảnh</th>
-                  <th scope="col">Mã khách hàng</th>
+
                   <th scope="col">Tên khách hàng</th>
                   <th scope="col">Email</th>
                   <th scope="col">Số điện thoại</th>
@@ -107,7 +107,7 @@
                       class="table_img"
                     />
                   </td>
-                  <th scope="row">{{kh.ma}}</th>
+
                   <th scope="row">{{kh.hoTen}}</th>
                   <th scope="row">{{kh.email}}</th>
                   <th scope="row">{{kh.soDienThoai}}</th>
@@ -202,8 +202,8 @@
 
   /* CSS cho phần header */
   .card-header {
-    background-color: #333032;
-    color: #fff;
+    background-color: #ffffff;
+    color: #1c1919;
     text-align: center;
     padding: 20px;
   }
@@ -294,7 +294,7 @@
 
   /* Thay đổi màu khi focus vào khung tìm kiếm */
   .search-container:focus-within {
-    border-color: #545556;
+    border-color: #2563a1;
   }
 
   /* Ẩn radio buttons */
@@ -321,7 +321,7 @@
 
   /* Thay đổi màu khi hover vào label */
   .radio-container label:hover {
-    background-color: #ff0051;
+    border-color: #2563a1;
     color: #fff;
   }
   .no-data-message {
@@ -341,7 +341,7 @@
     display: inline-block;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: #3498db;
+    background-color: rgb(26, 208, 26);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -350,7 +350,7 @@
 
   /* Khi hover trên nút tải lên */
   .custom-file-upload:hover {
-    background-color: #2980b9;
+    background-color: rgb(26, 208, 26);
   }
   .table_img {
     border-radius: 50%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */

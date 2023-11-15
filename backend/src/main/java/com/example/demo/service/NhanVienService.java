@@ -13,8 +13,8 @@ import java.util.UUID;
 public interface NhanVienService {
     Page<NhanVienReponse> getAll(Integer pageNo);
     Page<NhanVienReponse> getAllTrangThai(Integer pageNo,String tt);
-    NhanVien add(NhanVienRequest nhanVienRequest);
-    NhanVien update(NhanVienRequest nhanVienRequest, UUID id);
+    NhanVien add(NhanVienRequest nhanVienRequest)throws Exception;
+    NhanVien update(NhanVienRequest nhanVienRequest, UUID id) throws Exception;
     Page<NhanVienReponse> getSearch(Integer pageNo,String serch);
     NhanVien detail(UUID id);
 }

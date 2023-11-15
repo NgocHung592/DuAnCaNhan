@@ -5,16 +5,32 @@
     border-radius: 50%; /* Làm cho nút tròn */
     overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
   }
+  .input-container {
+    position: relative;
+  }
+
+  .form-control {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc; /* Màu và độ dày của gạch chân mặc định */
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-bottom 0.3s; /* Hiệu ứng chuyển động khi thay đổi border-bottom */
+  }
+
+  .form-control:focus {
+    border-bottom: none; /* Loại bỏ gạch chân khi ô input được focus */
+  }
 
   .file-upload {
     width: 100%; /* Đảm bảo nút bên trong kích thước đúng */
     height: 100%;
-    border-radius: 50%;
+    border-radius: 100%;
   }
   .table_img {
-    border-radius: 30%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
-    width: 250px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
-    height: 250px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    border-radius: 100%; /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
+    width: 260px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    height: 297px; /* Điều chỉnh kích thước theo nhu cầu của bạn */
   }
 </style>
 
@@ -391,7 +407,7 @@
                                     >
                                       <a
                                         type="button"
-                                        class="btn btn-primary"
+                                        class="btn btn-success"
                                         id="liveToastBtn"
                                         data-bs-dismiss="modal"
                                         ng-click="addDiaChi($event)"
@@ -413,21 +429,21 @@
                       <a
                         type="button"
                         id="liveToastBtn"
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         ng-click="update(detailKhachHang.id,detailKhachHang.khachHang.id)"
                         >Cập Nhật</a
                       >
                       <a
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-secondary"
                         data-bs-toggle="modal"
                         data-bs-target="#adddc"
                         >Thêm địa chỉ</a
                       >
                       <a
                         type="button"
-                        class="btn btn-primary"
-                        href="#khach_hang/hien-thi"
+                        class="btn btn-warning"
+                        href="#khach-hang/hien-thi"
                         >Quay lại</a
                       >
                     </div>

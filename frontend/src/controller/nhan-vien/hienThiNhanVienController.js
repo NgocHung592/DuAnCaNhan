@@ -1,4 +1,4 @@
-window.hienThiNhanVienController = function ($http, $scope) {
+window.hienThiNhanVienController = function ($http, $scope, $location) {
   $scope.list_nv = [];
   $scope.searchKeyword = "";
   $scope.selectedOption = "";
@@ -98,22 +98,22 @@ window.hienThiNhanVienController = function ($http, $scope) {
         if (index > 1) {
           let nhanvien = {
             ma: row.getCell(1).value,
-            ten: row.getCell(2).value,
+            hoten: row.getCell(2).value,
             gioitinh: true && row.getCell(3).value,
-            idVaiTro: row.getCell(4).value,
+            chucVu: row.getCell(4).value,
             email: row.getCell(5).value,
             ngaysinh: row.getCell(6).value,
             sodienthoai: row.getCell(7).value,
             matkhau: "123",
             ngaytao: date,
-            tinhThanhPho: row.getCell(8).value,
-            quanHuyen: row.getCell(9).value,
-            phuongXa: row.getCell(10).value,
+            tinhthanhpho: row.getCell(8).value,
+            quanhuyen: row.getCell(9).value,
+            phuongxa: row.getCell(10).value,
             mota: row.getCell(11).value,
             trangthai: row.getCell(12).value,
           };
           $http.post(nhanVienAPI + "/add", nhanvien).then(function () {
-            alert("Thêm thành công");
+            $location.path("/nhan-vien/hien-thi");
           });
         }
       });
