@@ -71,6 +71,10 @@ window.addSanPhamController = function ($http, $scope, $location) {
   };
 
   $scope.addKichThuoc = function (index) {
+    $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
+      $location.path("/san-pham/add");
+    });
+    console.log($scope.listKichThuocTrangThai);
     $scope.listKichThuocTrangThai[index].checked =
       !$scope.listKichThuocTrangThai[index].checked;
     if ($scope.listKichThuocTrangThai[index].checked) {
