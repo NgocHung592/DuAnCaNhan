@@ -3,6 +3,14 @@
     width: 90px;
 }
 
+.table thead tr th {
+    text-align: center;
+}
+
+.table tbody tr th {
+    text-align: center;
+}
+
 .custom-table {
     text-align: center;
 }
@@ -285,4 +293,15 @@ img.employee-image {
     text-align: center;
     padding: 10px 0;
     background-color: #ccc;
+}
+
+.anh_san_pham {
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+}
+
+.load_img {
+    text-align: center;
+
 }

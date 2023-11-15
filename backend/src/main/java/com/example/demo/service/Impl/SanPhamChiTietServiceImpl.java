@@ -56,9 +56,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Autowired
     private HinhAnhRepository hinhAnhRepository;
 
-
-    long currentTimestampMillis = System.currentTimeMillis();
-
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id) {
         Pageable pageable = PageRequest.of(pageNo, 10);
@@ -70,12 +67,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamChiTietRepository.getSanPhamBanHang(pageable);
     }
-
-//    @Override
-//    public Page<SanPhamChiTiet> getAllSanPhamChiTietById(UUID id, Integer pageNo) {
-//        Pageable pageable = PageRequest.of(pageNo, 10);
-//        return sanPhamChiTietRepository.getAllSanPhamChiTietById(id, pageable);
-//    }
 
     @Override
     public SanPhamChiTiet getOne(UUID id) {
@@ -92,7 +83,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
-                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
                         .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
@@ -108,7 +99,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .ma("anh " + randomNumber)
                         .ten("anh " + randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
-                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
                         .sanPhamChiTiet(sanPhamChiTiet)
                         .build();
@@ -119,7 +110,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .ma(sanPhamChiTietRequest.getMaSanPham())
                         .ten(sanPhamChiTietRequest.getTenSanPham())
                         .moTa(sanPhamChiTietRequest.getMoTa())
-                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .build();
@@ -129,7 +120,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
-                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
                         .sanPham(sanPham)
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
@@ -146,7 +137,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .ma("anh " + randomNumber)
                         .ten("anh " + randomNumber)
                         .duong_dan(sanPhamChiTietRequest.getUrlImage())
-                        .ngayTao(new Timestamp(currentTimestampMillis))
+                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
                         .sanPhamChiTiet(sanPhamChiTiet)
                         .build();
@@ -163,7 +154,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         optional.map(sanPhamChiTietUpdate -> {
             sanPhamChiTietUpdate.setSoLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()));
             sanPhamChiTietUpdate.setDonGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()));
-            sanPhamChiTietUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+            sanPhamChiTietUpdate.setNgaySua(sanPhamChiTietRequest.getNgaySua());
             sanPhamChiTietUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
             sanPhamChiTietUpdate.setDaXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()));
             sanPhamChiTietUpdate.setMauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get());
@@ -177,7 +168,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         }).orElse(null);
         Optional<HinhAnh> hinhAnh = hinhAnhRepository.findHinhAnh(id);
         hinhAnh.map(hinhAnhUpdate -> {
-            hinhAnhUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+            hinhAnhUpdate.setNgaySua(sanPhamChiTietRequest.getNgaySua());
             hinhAnhUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
             hinhAnhUpdate.setDuong_dan(sanPhamChiTietRequest.getUrlImage());
             return hinhAnhRepository.save(hinhAnhUpdate);

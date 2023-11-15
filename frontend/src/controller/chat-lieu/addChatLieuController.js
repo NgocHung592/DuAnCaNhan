@@ -14,6 +14,7 @@ window.addChatLieuController = function ($http, $scope, $location) {
   $scope.formChatLieu = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

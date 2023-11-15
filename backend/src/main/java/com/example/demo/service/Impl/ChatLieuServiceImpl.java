@@ -19,7 +19,6 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     @Autowired
     private ChatLieuRepository chatLieuRepository;
 
-     long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<ChatLieu> getAll(Integer pageNo) {
@@ -40,7 +39,7 @@ public class ChatLieuServiceImpl implements ChatLieuService {
         ChatLieu chatLieuSave= ChatLieu.builder()
                 .ma(chatLieu.getMa())
                 .ten(chatLieu.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(chatLieu.getNgayTao())
                 .nguoiTao("Hưng")
                 .daXoa(chatLieu.getDaXoa())
                 .build();
@@ -53,7 +52,7 @@ public class ChatLieuServiceImpl implements ChatLieuService {
         if (optional.isPresent()){
         optional.map(chatLieuUpdte->{
             chatLieuUpdte.setTen(chatLieu.getTen());
-            chatLieuUpdte.setNgaySua(new Timestamp(currentTimestampMillis));
+            chatLieuUpdte.setNgaySua(chatLieu.getNgaySua());
             chatLieuUpdte.setNguoiSua("Hưng");
             chatLieuUpdte.setDaXoa(chatLieu.getDaXoa());
             return  chatLieuRepository.save(chatLieuUpdte);

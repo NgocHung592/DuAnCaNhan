@@ -48,7 +48,8 @@
                                         <tr>
                                             <th scope="row">{{$index+1}}</th>
                                             <th scope="row"><img class="table_img"
-                                                    src="../../../assets/{{hoaDonChiTiet.duongDan}}" alt="Không có ảnh">
+                                                    src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
+                                                    alt="Không có ảnh">
                                             </th>
                                             <th scope="row">{{hoaDonChiTiet.tenSanPham}} [ {{hoaDonChiTiet.tenMauSac}} -
                                                 {{hoaDonChiTiet.tenKichThuoc}} ]</th>
@@ -74,7 +75,7 @@
                                 <div class="" ng-if="listHoaDonChiTiet.length === 0">
                                     <!-- Hiện không có sản phẩm nào trong giỏ hàng -->
                                 </div>
-                                <nav aria-label="Page navigation example ">
+                                <!-- <nav aria-label="Page navigation example ">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item">
                                             <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -90,7 +91,7 @@
                                             <a class="page-link" ng-click="nextPage()">>></a>
                                         </li>
                                     </ul>
-                                </nav>
+                                </nav> -->
                             </div>
 
                         </div>
@@ -117,7 +118,7 @@
                                                     <tr>
                                                         <th scope="row">{{$index+1}}</th>
                                                         <th scope="row"><img class="table_img"
-                                                                src="../../../assets/{{sanPhamChiTiet.duongDan}}"
+                                                                src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
                                                                 alt="Không có ảnh"></th>
                                                         <th scope="row">{{sanPhamChiTiet.tenSanPham}}
                                                             [{{sanPhamChiTiet.tenMauSac}}
@@ -180,7 +181,7 @@
                         <h5>Khách Hàng</h5>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addTaiKhoan">Chọn khách hàng</a>
+                                ng-click="getKhachHangByTrangThai()" data-bs-target="#addTaiKhoan">Chọn khách hàng</a>
                         </div>
                         <hr>
                         <div class="row" ng-if="khachHangDefault">
@@ -197,7 +198,7 @@
                             <div class="col-md-4">
                                 <p> Tên Khách Hàng</p>
                                 <p> Tên Tài Khoản</p>
-                                <p>Email</p>
+                                <p> Email</p>
                             </div>
                             <div class="col-md-4">
                                 <p></p>
@@ -213,17 +214,51 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <div class="modal fade" id="addTaiKhoan" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
                     <div class="modal-content">
                         <div class="modal-body">
                             <h4>Danh sách khách hàng</h4>
-                            <table>
+                            <div class="row p-3">
+                                <div class="search-container col-md-5">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" ng-model="searchKeyword"
+                                        placeholder="Tìm kiếm sản phẩm theo mã, tên" ng-change="search()"
+                                        class="search-input" />
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ảnh </th>
+                                        <th scope="col">Mã Khách Hàng</th>
+                                        <th scope="col">Tên Khách Hàng</th>
+                                        <th scope="col">Số Điện Thoại</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Giới Tính</th>
+                                        <th scope="col">Thao Tác</th>
 
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="khachHang in listKhachHang">
+                                    <tr>
+                                        <th scope="row">{{$index+1}}</th>
+                                        <th>
+                                            <img src="../../../assets/{{khachHang.hinhAnh}}" alt="">
+                                        </th>
+                                        <th scope="row">{{khachHang.ma}}</th>
+                                        <th scope="row">{{khachHang.hoten}}</th>
+                                        <th scope="row">{{khachHang.sodienthoai}}</th>
+                                        <th scope="row">{{khachHang.email}}</th>
+                                        <th scope="row">{{khachHang.gioitinh ?'Nam':'Nữ'}} </th>
+
+                                        <th>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                ng-click="addKhachHang($event,khachHang.id)">Chọn</button>
+                                        </th>
+                                    </tr>
+                                </tbody>
                             </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                ng-click="addKhachHang($event)">Thêm</button>
                         </div>
                     </div>
                 </div>
@@ -236,7 +271,6 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h5>Khách Hàng</h5>
-
                         <hr>
                         <div class="row">
                             <div class="col-md-7">
@@ -293,17 +327,21 @@
                             </div>
                             <div class="col-md-5">
                                 <h4>Thông Tin Thanh Toán</h4>
+
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" ng-model="show"
                                         id="flexSwitchCheckDefault" ng-click="giaoHang()">
                                     <label class="form-check-label" for="flexSwitchCheckDefault">Giao Hàng</label>
                                 </div>
+
+                                <div>
+                                    <input type="text" placeholder="Mã Giảm Giá">
+                                    <button class="btn btn-warning">Chọn Mã Giảm Giá</button>
+                                </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <p>
-                                            <input type="text" name="" id="">
-                                        </p>
+
                                         <p>Tiền Hàng</p>
                                         <p>Phí Vận Chuyển</p>
                                         <p>Giảm Giá</p>
@@ -315,10 +353,6 @@
 
                                     </div>
                                     <div class="col-md-4">
-                                        <p>
-                                            <button class="btn btn-warning">Voucher</button>
-
-                                        </p>
                                         <p>{{tongTien | number }} VNĐ</p>
                                         <p>?</p>
                                         <p>?</p>

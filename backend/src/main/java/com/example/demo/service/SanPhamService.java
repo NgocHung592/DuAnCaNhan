@@ -16,7 +16,6 @@ public interface SanPhamService {
 
     Optional<SanPham> findbyName(String name);
 
-    SanPham add(SanPham sanPham);
 
     SanPham update(SanPham sanPham, UUID id);
 

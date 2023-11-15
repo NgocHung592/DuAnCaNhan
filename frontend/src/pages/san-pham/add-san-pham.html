@@ -258,7 +258,58 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3"></div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <div class="modal fade" id="addKichThuoc" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <h4>Kích Thước</h4>
+                                                    <form>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tên kích thước</label>
+                                                            <input type="text" class="form-control"
+                                                                ng-model="formTayAo.ten">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-bs-target="#addSizeAndQuantity" data-bs-toggle="modal"
+                                                    ng-click="addTayAo($event)">Thêm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <div class="modal fade" id="addMauSac" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <h4>Màu Sắc</h4>
+                                                    <form>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tên màu sắc</label>
+                                                            <input type="text" class="form-control"
+                                                                ng-model="formTayAo.ten">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-bs-target="#addSizeAndQuantity" data-bs-toggle="modal"
+                                                    ng-click="addTayAo($event)">Thêm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -282,39 +333,33 @@
                                                         <label class="form-label ">Kích
                                                             Thước</label>
                                                         <div>
-                                                            <span ng-repeat="kichThuoc in listKichThuocTrangThai">
+                                                            <span ng-repeat="kichThuoc in listKichThuocTrangThai"
+                                                                class="p-2">
                                                                 <input type="checkbox" ng-model="options[$index]"
                                                                     ng-value="kichThuoc"
                                                                     ng-change="addKichThuoc($index)">
                                                                 <label>{{kichThuoc.ten}}</label>
                                                             </span>
+                                                            <a data-bs-toggle="modal" data-bs-target="#addKichThuoc"
+                                                                data-bs-toggle="modal">
+                                                                <i class="fa-sharp fa-solid fa-circle-plus fa-xl"
+                                                                    style="color: #1862e2; padding-top: 20px;"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-2">
-                                                        <a data-bs-toggle="modal" data-bs-target="#addKichThuoc">
-                                                            <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
-                                                                style="color: #1862e2; padding-top: 20px;"></i>
-                                                        </a>
-                                                    </div>
-
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-10">
                                                         <label class="form-label ">Màu Sắc</label>
                                                         <div>
-                                                            <span ng-repeat="mauSac in listMauSacTrangThai">
+                                                            <span ng-repeat="mauSac in listMauSacTrangThai" class="p-2">
                                                                 <input type="checkbox" ng-model="options[$index]"
                                                                     ng-value="mauSac" ng-change="addMauSac($index)">
                                                                 <label>{{mauSac.ten}}</label>
                                                             </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="col-md-2"> <a data-bs-toggle="modal"
-                                                                data-bs-target="#addMauSac">
-                                                                <i class="fa-sharp fa-solid fa-circle-plus fa-2xl"
-                                                                    style="color: #1862e2; padding-top: 50px;"></i>
+                                                            <a data-bs-toggle="modal" data-bs-target="#addMauSac">
+                                                                <i class="fa-sharp fa-solid fa-circle-plus fa-xl"
+                                                                    style="color: #1862e2; padding-top: 20px;"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -333,40 +378,39 @@
 
                         <div ng-repeat="(color, products) in  groupedProducts">
                             <p class="san-pham-cung-mau">Các sản phẩm màu {{color}}</p>
-                            <table class="table table-striped">
+                            <table class="table table-striped" style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Kích Thước</th>
-                                        <th scope="col">Màu Sắc</th>
-                                        <th scope="col">Số Lượng</th>
-                                        <th scope="col">Đơn Giá</th>
-                                        <th scope="col">Ảnh</th>
-                                        <th scope="col">Thao Tác</th>
+                                        <th style="text-align: center;">#</th>
+                                        <th style="text-align: center;">Kích Thước</th>
+                                        <th style="text-align: center;">Màu Sắc</th>
+                                        <th style="text-align: center;">Số Lượng</th>
+                                        <th style="text-align: center;">Đơn Giá</th>
+                                        <th style="text-align: center;">Ảnh</th>
+                                        <th style="text-align: center;">Thao Tác</th>
                                     </tr>
                                 </thead>
                                 <tbody ng-repeat="product in products track by $index">
                                     <tr>
-                                        <td>{{$index+1}}</td>
-                                        <td>{{product.tenKichThuoc}}</td>
-                                        <td>{{product.tenMauSac}}</td>
+                                        <td style="text-align: center;">{{$index+1}}</td>
+                                        <td style="text-align: center;">{{product.tenKichThuoc}}</td>
+                                        <td style="text-align: center;">{{product.tenMauSac}}</td>
                                         <td class="align-middle">
-                                            <div class="d-flex flex-row">
-                                                <input type="text" ng-model="product.soLuong"
-                                                    class="form-control form-control-sm"
-                                                    style="width: 70px; height: 30px;" />
-                                            </div>
+                                            <input type="text" ng-model="product.soLuong"
+                                                class="form-control form-control-sm"
+                                                style="width: 70px; height: 30px;" />
                                         </td>
                                         <td> <input type="text" ng-model="product.gia"
                                                 class="form-control form-control-sm"
                                                 style="width: 100px; height: 30px;" />
                                         </td>
-                                        <td>
-                                            <a data-bs-toggle="modal" data-bs-target="#addAnh">
-                                                <i class="fa-solid fa-image fa-2xl"></i>
-                                            </a>
+                                        <td style="text-align: center;">
+                                            <input type="file" class="file-upload-input" id="product-image"
+                                                ng-model="product.urlImage" style="display: none;">
+                                            <i ng-click="selectFile(product.tenMauSac,$index)"
+                                                class="fa-solid fa-image fa-2xl"></i>
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <a ng-click="removeSize(product.tenMauSac,$index)">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
@@ -374,42 +418,13 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <div class="modal fade" id="addAnh" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="bg-white border rounded-5">
-                                                <div class="uploadfile">
-                                                    <section class="p-4 d-flex justify-content-center w-100">
-                                                        <div class="file-upload-wrapper">
-                                                            <div class="file-upload">
-                                                                <div class="file-upload-message"><i
-                                                                        class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
-                                                                    <p class="file-upload-default-message">
-                                                                        Upload file</p>
-                                                                </div>
-                                                                <div class="file-upload-mask"></div>
-                                                                <ul class="file-upload-errors"></ul>
-                                                                <input type="file" multiple class="file-upload-input"
-                                                                    id="product-image"
-                                                                    data-mdb-file-upload="file-upload"
-                                                                    ng-model="product.urlImage">
-                                                                <div class="file-upload-previews"></div>
-
-                                                            </div>
-                                                        </div>
-                                                    </section>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="load_img">
+                                <!-- <img ng-repeat="product in products"
+                                    src="../../../assets/anh-san-pham/{{product.urlImage}}" class="anh_san_pham" alt=""> -->
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <div class="modal fade" id="addAnh" tabindex="-1" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -440,7 +455,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class=align-middle>
                             <button type="button" class="btn btn-primary align-middle" data-bs-toggle="modal"
                                 data-bs-target="#addSizeAndQuantity">
@@ -463,3 +478,8 @@
                 </div>
             </div>
 </main>
+<style>
+    th td {
+        text-align: center;
+    }
+</style>

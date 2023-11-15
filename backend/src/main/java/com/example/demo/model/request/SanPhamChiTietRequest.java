@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+ import java.sql.Timestamp;
  import java.util.List;
  import java.util.UUID;
 
@@ -19,6 +20,10 @@ public class SanPhamChiTietRequest {
     private String tenSanPham;
 
     private Double donGia;
+
+    private Timestamp ngayTao;
+
+    private Timestamp ngaySua;
 
     private String soLuong;
 
@@ -45,7 +50,5 @@ public class SanPhamChiTietRequest {
     private String tenKichThuoc;
 
     private String tenMauSac;
-
-
 
 }

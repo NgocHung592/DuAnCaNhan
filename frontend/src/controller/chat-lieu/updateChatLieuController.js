@@ -35,8 +35,13 @@ window.updateChatLieuController = function (
     if ($scope.formChatLieu.ten === "") {
       $scope.message = "Tên Chất Liệu Không Được Trống";
     } else {
+      $scope.updateChatLieu = {
+        ten: $scope.formChatLieu.ten,
+        ngaySua: new Date(),
+        daXoa: $scope.formChatLieu.daXoa,
+      };
       $http
-        .put(chatLieuAPI + "/update/" + id, $scope.formChatLieu)
+        .put(chatLieuAPI + "/update/" + id, $scope.updateChatLieu)
         .then(function () {
           $location.path("/chat-lieu/hien-thi");
         });

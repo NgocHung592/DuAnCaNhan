@@ -51,10 +51,15 @@ window.hienThiSanPhamChiTietController = function (
     }
   };
   $scope.updateSanPham = function (e, id) {
-    console.log($scope.detailSanPham);
     e.preventDefault();
+    $scope.sanPhamUpdate = {
+      ten: $scope.detailSanPham.ten,
+      moTa: $scope.detailSanPham.moTa,
+      ngaySua: new Date(),
+      daXoa: $scope.detailSanPham.daXoa,
+    };
     $http
-      .put(sanPhamAPI + "/update/" + id, $scope.detailSanPham)
+      .put(sanPhamAPI + "/update/" + id, $scope.sanPhamUpdate)
       .then(function () {
         $scope.getSanPhamChiTiet();
       });
@@ -80,10 +85,9 @@ window.hienThiSanPhamChiTietController = function (
         soLuong: $scope.detailSanPhamChiTiet.soLuong,
         donGia: $scope.detailSanPhamChiTiet.donGia,
         daXoa: $scope.detailSanPhamChiTiet.daXoa,
+        ngaySua: new Date(),
         urlImage: file.name,
       };
-      console.log($scope.updateSanPhamChiTiet);
-      console.log($scope.detailSanPhamChiTiet);
       $http
         .put(sanPhamChiTietAPI + "/update/" + id, $scope.updateSanPhamChiTiet)
         .then(function () {

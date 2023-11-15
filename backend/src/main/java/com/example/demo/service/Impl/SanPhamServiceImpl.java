@@ -53,22 +53,6 @@ public class SanPhamServiceImpl implements SanPhamService {
 
 
     @Override
-    public SanPham add(SanPham sanPham) {
-        if (sanPham.getMa().isBlank() || sanPham.getTen().isBlank() || sanPham.getMoTa().isBlank()) {
-            return null;
-        }
-        SanPham sanPhamSave = SanPham.builder()
-                .ma(sanPham.getMa())
-                .ten(sanPham.getTen())
-                .moTa(sanPham.getMoTa())
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
-                .daXoa(sanPham.getDaXoa())
-                .build();
-        return sanPhamRepository.save(sanPhamSave);
-    }
-
-    @Override
     public SanPham update(SanPham sanPham, UUID id) {
         Optional<SanPham> optional=sanPhamRepository.findById(id);
         if (optional.isPresent()){
@@ -76,7 +60,7 @@ public class SanPhamServiceImpl implements SanPhamService {
                 sanPhamUpdate.setTen(sanPham.getTen());
                 sanPhamUpdate.setMoTa(sanPham.getMoTa());
                 sanPhamUpdate.setDaXoa(sanPham.getDaXoa());
-                sanPhamUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                sanPhamUpdate.setNgaySua(sanPham.getNgaySua());
                 sanPhamUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
                 return sanPhamRepository.save(sanPhamUpdate);
             }).orElse(null);

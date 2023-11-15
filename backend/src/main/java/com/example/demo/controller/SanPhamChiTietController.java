@@ -47,7 +47,6 @@ public class SanPhamChiTietController {
 
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest, @PathVariable("id") String id) {
-        System.out.println(sanPhamChiTietRequest + id);
         return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
     }
 

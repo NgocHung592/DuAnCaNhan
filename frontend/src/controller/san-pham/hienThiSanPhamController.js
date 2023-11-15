@@ -3,6 +3,7 @@ window.hienThiSanPhamController = function ($http, $scope) {
   $scope.listSanPham = [];
   $scope.totalPages = [];
   $scope.selectOption = "";
+
   $scope.getSanPham = function () {
     $http
       .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.currentPage)

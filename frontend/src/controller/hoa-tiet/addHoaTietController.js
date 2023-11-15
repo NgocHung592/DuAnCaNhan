@@ -13,6 +13,7 @@ window.addHoaTietController = function ($http, $scope, $location) {
   $scope.formHoaTiet = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

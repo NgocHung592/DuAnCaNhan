@@ -5,6 +5,7 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.sizeAndQuantitys = [];
   $scope.colors = [];
   $scope.sizeAndColors = [];
+  $scope.newSizeAndColors = [];
 
   $scope.currentPage = 0;
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
@@ -30,6 +31,45 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.color = {
     tenMauSac: "",
   };
+  $scope.selectedFiles = [];
+
+  $scope.selectFile = function (tenMauSac, index) {
+    var productImageInput = document.getElementById("product-image");
+
+    // Loại bỏ sự kiện "change" hiện tại
+    // productImageInput.removeEventListener("change", handleImageChange);
+
+    productImageInput.click();
+
+    // Thêm sự kiện "change" mới cho sản phẩm mới
+    productImageInput.addEventListener("change", handleImageChange);
+
+    function handleImageChange(event) {
+      $scope.$apply(function () {
+        var selectedFiles = event.target.files;
+        console.log(selectedFiles);
+        if (
+          $scope.groupedProducts[tenMauSac] &&
+          $scope.groupedProducts[tenMauSac].length > index
+        ) {
+          var product = $scope.groupedProducts[tenMauSac];
+          console.log(product);
+          product.forEach((product) => {
+            for (const file of selectedFiles) {
+              var newProduct = Object.assign({}, product);
+              newProduct.urlImage = file.name;
+              $scope.newSizeAndColors.push(newProduct);
+              return;
+            }
+          });
+        }
+      });
+
+      // Loại bỏ sự kiện "change" sau khi đã xử lý
+      productImageInput.removeEventListener("change", handleImageChange);
+    }
+  };
+
   $scope.addKichThuoc = function (index) {
     $scope.listKichThuocTrangThai[index].checked =
       !$scope.listKichThuocTrangThai[index].checked;
@@ -72,6 +112,7 @@ window.addSanPhamController = function ($http, $scope, $location) {
           tenMauSac: color.tenMauSac,
           soLuong: size.soLuong,
           gia: size.gia,
+          urlImage: "",
         };
         let newSizeAndColor = angular.copy($scope.sizeAndColor);
         let exists = false;
@@ -99,9 +140,19 @@ window.addSanPhamController = function ($http, $scope, $location) {
         });
       });
     });
-    console.log($scope.groupedProducts);
   };
-
+  $scope.themAnh = function () {
+    // const inputElement = document.getElementById("product-image");
+    // const selectedFiles = inputElement.files;
+    // for (const file of selectedFiles) {
+    //   $scope.sizeAndColors.forEach((product) => {
+    //     if ($scope.groupedProducts[product.tenMauSac]) {
+    //       $scope.groupedProducts[product.tenMauSac].urlImage = [file.name];
+    //     }
+    //   });
+    // }
+    // console.log($scope.groupedProducts);
+  };
   $scope.removeSize = function (tenMauSac, index) {
     if (
       $scope.groupedProducts[tenMauSac] &&
@@ -111,56 +162,31 @@ window.addSanPhamController = function ($http, $scope, $location) {
       console.log($scope.groupedProducts);
     }
   };
-
   $scope.saveProduct = function (event) {
     event.preventDefault();
-    let productImages = document.getElementById("product-image");
-    console.log(productImages);
-    $scope.allProducts = [];
 
-    for (const key in $scope.groupedProducts) {
-      if ($scope.groupedProducts.hasOwnProperty(key)) {
-        const productsInGroup = $scope.groupedProducts[key];
-        $scope.allProducts = $scope.allProducts.concat(productsInGroup);
-      }
-    }
-    console.log($scope.allProducts);
+    console.log($scope.newSizeAndColors);
 
-    for (const file of productImages.files) {
-      $scope.allProducts.forEach((sizeAndColor) => {
-        const newProductDetail = {
-          maSanPham: $scope.product.maSanPham,
-          tenSanPham: $scope.product.tenSanPham,
-          moTa: $scope.product.moTa,
-          idPhongCach: $scope.product.idPhongCach,
-          idChatLieu: $scope.product.idChatLieu,
-          idHoaTiet: $scope.product.idHoaTiet,
-          idCoAo: $scope.product.idCoAo,
-          idTayAo: $scope.product.idTayAo,
-          tenKichThuoc: sizeAndColor.tenKichThuoc,
-          tenMauSac: sizeAndColor.tenMauSac,
-          soLuong: sizeAndColor.soLuong,
-          donGia: sizeAndColor.gia,
-          urlImage: file.name, // Set the image name based on the selected file
-          daXoa: $scope.product.daXoa,
-        };
-        let exists = false;
-        for (let i = 0; i < $scope.productDetails.length; i++) {
-          const existingItem = $scope.productDetails[i];
-
-          if (angular.equals(existingItem, newProductDetail)) {
-            exists = true;
-            break;
-          }
-        }
-
-        if (exists) {
-          // Handle the case where the product detail already exists.
-        } else {
-          $scope.productDetails.push(newProductDetail);
-        }
-      });
-    }
+    $scope.newSizeAndColors.forEach((sizeAndColor) => {
+      const newProductDetail = {
+        maSanPham: $scope.product.maSanPham,
+        tenSanPham: $scope.product.tenSanPham,
+        moTa: $scope.product.moTa,
+        idPhongCach: $scope.product.idPhongCach,
+        idChatLieu: $scope.product.idChatLieu,
+        idHoaTiet: $scope.product.idHoaTiet,
+        idCoAo: $scope.product.idCoAo,
+        idTayAo: $scope.product.idTayAo,
+        tenKichThuoc: sizeAndColor.tenKichThuoc,
+        tenMauSac: sizeAndColor.tenMauSac,
+        soLuong: sizeAndColor.soLuong,
+        donGia: sizeAndColor.gia,
+        urlImage: sizeAndColor.urlImage,
+        ngayTao: new Date(),
+        daXoa: $scope.product.daXoa,
+      };
+      $scope.productDetails.push(newProductDetail);
+    });
 
     console.log($scope.productDetails);
 

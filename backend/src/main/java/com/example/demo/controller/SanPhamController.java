@@ -45,11 +45,6 @@ public class SanPhamController {
         return new ResponseEntity(sanPhamService.findbyName(name), HttpStatus.OK);
     }
 
-    @PostMapping("add")
-    public ResponseEntity add(@RequestBody SanPham sanPham) {
-        return new ResponseEntity(sanPhamService.add(sanPham), HttpStatus.OK);
-    }
-
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody  SanPham sanPham, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);

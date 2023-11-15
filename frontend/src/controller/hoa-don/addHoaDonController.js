@@ -7,6 +7,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
   $scope.listHoaDonChiTiet = [];
+  $scope.listKhachHang = [];
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
@@ -224,9 +225,14 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
       axios.get(api).then(function (response) {
         $scope.districtOptions = response.data.districts;
+
         printResult();
       });
     }
+    $scope.formDiaChi.quanHuyen = null; // Đặt lại quận/huyện khi tỉnh/thành phố thay đổi.
+    $scope.formDiaChi.phuongXa = null;
+    $scope.districtOptions = [];
+    $scope.wardOptions = [];
   };
   $scope.onDistrictChange = () => {
     const selectedDistrictCode = $scope.formDiaChi.quanHuyen;
@@ -237,6 +243,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
         printResult();
       });
     }
+    $scope.formDiaChi.phuongXa = null;
+    $scope.wardOptions = [];
   };
   $scope.onWardChange = () => {
     printResult();
@@ -288,7 +296,14 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       .then(function () {
         $scope.getListHoaDon();
       });
-    console.log($scope.hoaDonThanhToan);
+  };
+  $scope.getKhachHangByTrangThai = function () {
+    $http
+      .get(khachHangAPI + "/trang-thai?pageNo=" + $scope.currentPage)
+      .then(function (response) {
+        $scope.listKhachHang = response.data.content;
+        console.log($scope.listKhachHang);
+      });
   };
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
