@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ma_giam_gia")
+@Table(name = "ma_giam_gia_chi_tiet")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

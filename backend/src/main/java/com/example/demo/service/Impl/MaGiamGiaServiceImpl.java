@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.ResourceBundle;
 
 import java.sql.Connection;
@@ -29,11 +30,11 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     public Page<MaGiamGia> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         Page<MaGiamGia> p = maGiamGiaRepository.findAll(pageable);
-        Date timestamp = new Date(System.currentTimeMillis());
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
         for (MaGiamGia m : p) {
             try {
-                if(m.getNgayBatDau().getTime() < timestamp.getTime()) {
-                    if(m.getNgayKetThuc().getTime() < timestamp.getTime()) {
+                if(m.getNgayBatDau().compareTo(timestamp) < 0) {
+                    if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
                         if(m.getTrangThai() != 3) {
                             m.setTrangThai(3);
                             Connection conn = getConn();
@@ -81,10 +82,10 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     @Override
     public MaGiamGia detail(UUID id) {
         MaGiamGia m = maGiamGiaRepository.findById(id).orElse(null);
-        Date timestamp = new Date(System.currentTimeMillis());
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
         try {
-            if(m.getNgayBatDau().getTime() < timestamp.getTime()) {
-                if(m.getNgayKetThuc().getTime() < timestamp.getTime()) {
+            if(m.getNgayBatDau().compareTo(timestamp) < 0) {
+                if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
                     if(m.getTrangThai() != 3) {
                         m.setTrangThai(3);
                         Connection conn = getConn();

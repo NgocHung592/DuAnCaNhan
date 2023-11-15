@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -45,16 +45,16 @@ public class MaGiamGia {
     private BigDecimal giaTriGiamToiDa;
 
     @Column(name = "ngay_bat_dau")
-    private Date ngayBatDau;
+    private Timestamp ngayBatDau;
 
     @Column(name = "ngay_ket_thuc")
-    private Date ngayKetThuc;
+    private Timestamp ngayKetThuc;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao = new Date().toInstant();
+    private Instant ngayTao = new java.util.Date().toInstant();
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua = new Date().toInstant();
+    private Instant ngaySua = new java.util.Date().toInstant();
 
     @Column(name = "nguoi_tao")
     private String nguoiTao;

@@ -29,8 +29,14 @@ public class HoaDon {
     @Column(name = "ma")
     private String ma;
 
+    @Column(name = "ten_khach_hang")
+    private String tenKhachHang;
+
     @Column(name = "loai_hoa_don")
     private String loai_hoa_don;
+
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
 
     @Column(name = "ngay_dat_hang")
     private Timestamp ngayDatHang;
@@ -50,9 +56,6 @@ public class HoaDon {
     @Column(name = "ngay_nhan_duoc_hang")
     private Timestamp ngayNhanDuocHang;
 
-    @Column(name = "ten_khach_hang")
-    private String tenKhachHang;
-
     @Column(name = "dia_chi_khach_hang")
     private String diaChiKhachHang;
 
@@ -71,12 +74,17 @@ public class HoaDon {
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
 
-    @Column(name = "ngay_tao")
-    private Timestamp ngayTao;
-
     @Column(name = "nguoi_tao")
     private String nguoiTao;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "khach_hang_id", referencedColumnName = "id")
+    private KhachHang khachHang;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nhan_vien_id", referencedColumnName = "id")
+    private NhanVien nhanVien;
 }

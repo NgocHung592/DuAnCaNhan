@@ -12,29 +12,28 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
 
   $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
   var date = new Date();
-  $scope.list_NhanVien = [];
   $scope.form_nv = {
     ma: $scope.randoom,
-    ten: "",
+    hoten: "",
     email: "",
     gioitinh: "",
     ngaysinh: "",
     sodienthoai: "",
-    hinhanh: "",
+    anhdaidien: "",
     matkhau: "123",
-    tinhThanhPho: "",
-    quanHuyen: "",
-    phuongXa: "",
+    tinhthanhpho: "",
+    quanhuyen: "",
+    phuongxa: "",
     ngaytao: date,
     mota: "",
-    idVaiTro: "Nhân viên",
+    chucVu: "Nhân viên",
     trangthai: 1,
   };
   $scope.addNhanVien = function () {
     const hinhanh = document.getElementById("product-image");
     console.log(hinhanh);
     for (const image of hinhanh.files) {
-      $scope.form_nv.hinhanh = image.name;
+      $scope.form_nv.anhdaidien = image.name;
     }
     console.log($scope.form_nv);
     var elem = document.getElementById("myBar");
@@ -49,24 +48,23 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
       }
     }
     if (
-      $scope.form_nv.ten != "" &&
-      $scope.form_nv.email != "" &&
-      $scope.form_nv.sodienthoai != "" &&
-      $scope.form_nv.tinhThanhPho != "" &&
-      $scope.form_nv.quanHuyen != "" &&
-      $scope.form_nv.phuongXa != "" &&
-      $scope.form_nv.mota != ""
+      ($scope.form_nv.hoten === "",
+      $scope.form_nv.email === "",
+      $scope.form_nv.sodienthoai === "",
+      $scope.form_nv.tinhthanhpho === "",
+      $scope.form_nv.quanhuyen === "",
+      $scope.form_nv.phuongxa === "",
+      $scope.form_nv.mota === "")
     ) {
-      $http.post(nhanVienAPI + "/add", $scope.form_nv).then(function () {
-        $scope.message = "Thêm thành công";
-        $scope.show = true;
-        $location.path("/nhan-vien/hien-thi");
-        return true;
-      });
-    } else {
       $scope.message = "Thêm thất bại";
       $scope.show = false;
       return false;
+    } else {
+      $http.post(nhanVienAPI + "/add", $scope.form_nv).then(function () {
+        $scope.message = "Thêm thành công";
+        $scope.show = true;
+        return true;
+      });
     }
   };
   $scope.show = Boolean;
@@ -97,7 +95,7 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
   };
 
   var renderData = (array, select) => {
-    let row = ' <option disable value="">Chọn</option>';
+    let row = ' <option disable value="">Mời chọn</option>';
     array.forEach((element) => {
       row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`;
     });
@@ -126,9 +124,9 @@ window.addNhanVienController = function ($http, $scope, $rootScope, $location) {
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_nv.tinhThanhPho = $("#city option:selected").text();
-      $scope.form_nv.quanHuyen = $("#district option:selected").text();
-      $scope.form_nv.phuongXa = $("#ward option:selected").text();
+      $scope.form_nv.tinhthanhpho = $("#city option:selected").text();
+      $scope.form_nv.quanhuyen = $("#district option:selected").text();
+      $scope.form_nv.phuongxa = $("#ward option:selected").text();
     }
   };
 };

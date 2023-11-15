@@ -28,17 +28,20 @@ public class HinhThucThanhToan {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "noi_dung")
-    private String noi_dung;
+    @Column(name = "ten")
+    private String ten;
+
+    @Column(name = "mo_ta")
+    private String moTa;
 
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
 
-    @Column(name = "nguoi_tao")
-    private String nguoi_tao;
+    @Column(name = "trang_thai")
+    private Integer trangThai;
 
-    @Column(name = "trang_thai_hoa_don")
-    private Integer trangThaiHoaDon;
+    @Column(name = "ghi_chu")
+    private String ghiChu;
 
     @ManyToOne
     @JoinColumn(name = "hoa_don_id",referencedColumnName = "id")

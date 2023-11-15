@@ -21,14 +21,14 @@ public class LichSuHoaDon {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "ngay_sua")
-    private Timestamp ngay_sua;
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
 
-    @Column(name = "nguoi_sua")
-    private String nguoi_sua;
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
 
     @Column(name = "noi_dung")
-    private String noi_dung;
+    private String noiDung;
 
     @Column(name = "trang_thai_hoa_don")
     private Integer trangThai;

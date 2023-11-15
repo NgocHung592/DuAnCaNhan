@@ -5,19 +5,27 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       $scope.detailKhachHang = response.data;
       console.log($scope.detailKhachHang);
     });
-
+  var date = new Date();
   $scope.update = function (id1, id2) {
+    const hinhanh = document.getElementById("product-image");
+    console.log(hinhanh);
+    for (const image of hinhanh.files) {
+      $scope.detailKhachHang.khachHang.anhdaidien = image.name;
+    }
     $scope.updateKhachHang = {
       ma: $scope.detailKhachHang.khachHang.ma,
-      ten: $scope.detailKhachHang.khachHang.hoten,
+      hoten: $scope.detailKhachHang.khachHang.hoten,
       email: $scope.detailKhachHang.khachHang.email,
       gioitinh: $scope.detailKhachHang.khachHang.gioitinh,
       ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
+      matkhau: $scope.detailKhachHang.khachHang.matkhau,
+      anhdaidien: $scope.detailKhachHang.khachHang.anhdaidien,
       sodienthoai: $scope.detailKhachHang.khachHang.sodienthoai,
       ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
-      tinhThanhPho: $scope.detailKhachHang.tinhthanhpho,
-      quanHuyen: $scope.detailKhachHang.quanhuyen,
-      phuongXa: $scope.detailKhachHang.phuongxa,
+      tinhthanhpho: $scope.detailKhachHang.tinhthanhpho,
+      quanhuyen: $scope.detailKhachHang.quanhuyen,
+      phuongxa: $scope.detailKhachHang.phuongxa,
+      ngaysua: ($scope.detailKhachHang.khachHang.ngaysua = date),
       ngaytao: $scope.detailKhachHang.khachHang.ngaytao,
       trangthai: $scope.detailKhachHang.khachHang.trangthai,
       mota: $scope.detailKhachHang.mota,
@@ -41,9 +49,9 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
   }
   var date = new Date();
   $scope.form_dc = {
-    tinhThanhPho: "",
-    quanHuyen: "",
-    phuongXa: "",
+    tinhthanhpho: "",
+    quanhuyen: "",
+    phuongxa: "",
     ngaytao: date,
     mota: "",
     trangthai: 1,
@@ -62,9 +70,9 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       }
     }
     if (
-      $scope.form_dc.tinhThanhPho != "" &&
-      $scope.form_dc.quanHuyen != "" &&
-      $scope.form_dc.phuongXa != "" &&
+      $scope.form_dc.tinhthanhpho != "" &&
+      $scope.form_dc.quanhuyen != "" &&
+      $scope.form_dc.phuongxa != "" &&
       $scope.form_dc.mota != ""
     ) {
       $http
@@ -112,7 +120,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
   };
 
   var renderData = (array, select) => {
-    let row = ' <option disable value="">Chọn</option>';
+    let row = ' <option disable value="">Mời chọn</option>';
     array.forEach((element) => {
       row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`;
     });
@@ -141,9 +149,9 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_dc.tinhThanhPho = $("#city option:selected").text();
-      $scope.form_dc.quanHuyen = $("#district option:selected").text();
-      $scope.form_dc.phuongXa = $("#ward option:selected").text();
+      $scope.form_dc.tinhthanhpho = $("#city option:selected").text();
+      $scope.form_dc.quanhuyen = $("#district option:selected").text();
+      $scope.form_dc.phuongxa = $("#ward option:selected").text();
     }
   };
 };

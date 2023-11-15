@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/ma-giam-gia-chi-tiet/")
+@RequestMapping("/ma-giam-gia/ma-giam-gia-chi-tiet/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class MaGiamGiaChiTietController {
     @Autowired
