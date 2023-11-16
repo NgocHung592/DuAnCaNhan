@@ -32,8 +32,14 @@ window.updateMauSacController = function (
     let color = colorStr.slice(1, 7);
     $http.get(api_url + "/id?hex=" + color).then(function (response) {
       $scope.formMauSac.ten = response.data.name.value;
+      $scope.updateMauSac = {
+        ma: $scope.formMauSac.ma,
+        ten: $scope.formMauSac.ten,
+        ngaySua: new Date(),
+        daXoa: $scope.formMauSac.daXoa,
+      };
       $http
-        .put(mauSacAPI + "/update/" + id, $scope.formMauSac)
+        .put(mauSacAPI + "/update/" + id, $scope.updateMauSac)
         .then(function () {
           $location.path("/mau-sac/hien-thi");
         });

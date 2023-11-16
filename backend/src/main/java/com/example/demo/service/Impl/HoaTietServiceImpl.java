@@ -21,13 +21,10 @@ public class HoaTietServiceImpl implements HoaTietService {
 
     @Autowired
     private HoaTietRepository hoaTietRepository;
-    LocalDate now = LocalDate.now();
-    Date date=new Date();
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<HoaTiet> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return hoaTietRepository.getAll(pageable);
     }
 
@@ -57,7 +54,7 @@ public class HoaTietServiceImpl implements HoaTietService {
         if (optionalHoaTiet.isPresent()) {
             optionalHoaTiet.map(hoaTietUpdate -> {
                 hoaTietUpdate.setTen(hoaTiet.getTen());
-                hoaTietUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                hoaTietUpdate.setNgaySua(hoaTiet.getNgaySua());
                 hoaTietUpdate.setNguoiSua("Hưng");
                 hoaTietUpdate.setDaXoa(hoaTiet.getDaXoa());
                 return hoaTietRepository.save(hoaTietUpdate);

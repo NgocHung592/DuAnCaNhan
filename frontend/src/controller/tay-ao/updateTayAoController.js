@@ -42,9 +42,16 @@ window.updateTayAoController = function (
       $scope.message = "Tên tay áo không được trống";
       return;
     } else {
-      $http.put(tayAoAPI + "/update/" + id, $scope.formTayAo).then(function () {
-        $location.path("/tay-ao/hien-thi");
-      });
+      $scope.updateTayAo = {
+        ten: $scope.formTayAo.ten,
+        ngaySua: new Date(),
+        daXoa: $scope.formTayAo.daXoa,
+      };
+      $http
+        .put(tayAoAPI + "/update/" + id, $scope.updateTayAo)
+        .then(function () {
+          $location.path("/tay-ao/hien-thi");
+        });
     }
   };
 };

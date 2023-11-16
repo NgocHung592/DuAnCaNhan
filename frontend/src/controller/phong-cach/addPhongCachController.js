@@ -13,6 +13,7 @@ window.addPhongCachController = function ($http, $scope, $location) {
   $scope.formPhongCach = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

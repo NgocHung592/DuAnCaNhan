@@ -13,6 +13,7 @@ window.addCoAoController = function ($http, $scope, $location) {
   $scope.formCoAo = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

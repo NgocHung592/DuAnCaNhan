@@ -19,7 +19,6 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Autowired
     private PhongCachRepository phongCachRepository;
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<PhongCach> getAll(Integer pageNo) {
@@ -42,7 +41,7 @@ public class PhongCachServiceImpl implements PhongCachService {
         PhongCach phongCachSave= PhongCach.builder()
                 .ma(phongCach.getMa())
                 .ten(phongCach.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(phongCach.getNgayTao())
                 .nguoiTao("Hưng")
                 .daXoa(phongCach.getDaXoa())
                 .build();
@@ -55,7 +54,7 @@ public class PhongCachServiceImpl implements PhongCachService {
         if (optionalPhongCach.isPresent()){
             optionalPhongCach.map(phongCachUpdate->{
                 phongCachUpdate.setTen(phongCach.getTen());
-                phongCachUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                phongCachUpdate.setNgaySua(phongCach.getNgaySua());
                 phongCachUpdate.setNguoiSua("Hưng");
                 phongCachUpdate.setDaXoa(phongCach.getDaXoa());
                 return phongCachRepository.save(phongCachUpdate);

@@ -19,7 +19,6 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Autowired
     private MauSacRepository mauSacRepository;
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<MauSac> getAll(Integer pageNo) {
@@ -43,7 +42,7 @@ public class MauSacServiceImpl implements MauSacService {
                 .ma(mauSac.getMa())
                 .ten(mauSac.getTen())
                 .daXoa(mauSac.getDaXoa())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(mauSac.getNgayTao())
                 .nguoiTao("Hưng")
                 .build();
         return mauSacRepository.save(mauSacSave);
@@ -56,7 +55,7 @@ public class MauSacServiceImpl implements MauSacService {
             optional.map(mauSacUpdate->{
                 mauSacUpdate.setMa(mauSac.getMa());
                 mauSacUpdate.setTen(mauSac.getTen());
-                mauSacUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                mauSacUpdate.setNgaySua(mauSac.getNgaySua());
                 mauSacUpdate.setNguoiSua("Hưng");
                 mauSacUpdate.setDaXoa(mauSac.getDaXoa());
                 return mauSacRepository.save(mauSacUpdate);

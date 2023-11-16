@@ -21,7 +21,6 @@ public class CoAoServiceImpl implements CoAoService {
     @Autowired
     private CoAoRepository coAoRepository;
 
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<CoAo> getAll(Integer pageNo) {
@@ -42,7 +41,7 @@ public class CoAoServiceImpl implements CoAoService {
         CoAo coAoSave= CoAo.builder()
                 .ma(coAo.getMa())
                 .ten(coAo.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(coAo.getNgayTao())
                 .nguoiTao("Hưng")
                 .daXoa(coAo.getDaXoa())
                 .build();
@@ -56,7 +55,7 @@ public class CoAoServiceImpl implements CoAoService {
             optionalCoAo.map(coAoUpdate->{
                 coAoUpdate.setTen(coAoUpdate.getTen());
                 coAoUpdate.setNguoiSua("Hưng");
-                coAoUpdate.setNgaySua(new Timestamp((currentTimestampMillis)));
+                coAoUpdate.setNgaySua(coAo.getNgaySua());
                 coAoUpdate.setDaXoa(coAo.getDaXoa());
                 return coAoRepository.save(coAoUpdate);
 

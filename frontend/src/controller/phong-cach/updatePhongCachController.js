@@ -37,8 +37,13 @@ window.updatePhongCachController = function (
       $scope.message = "Tên phong cách không được để trống ";
       return;
     }
+    $scope.updatePhongCach = {
+      ten: $scope.formPhongCach.ten,
+      ngaySua: new Date(),
+      daXoa: $scope.formPhongCach.daXoa,
+    };
     $http
-      .put(phongCachAPI + "/update/" + idPhongCach, $scope.formPhongCach)
+      .put(phongCachAPI + "/update/" + idPhongCach, $scope.updatePhongCach)
       .then(function () {
         $location.path("/phong-cach/hien-thi");
       });
