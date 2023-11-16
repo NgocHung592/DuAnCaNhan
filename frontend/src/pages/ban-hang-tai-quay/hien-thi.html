@@ -181,7 +181,8 @@
                         <h5>Khách Hàng</h5>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                ng-click="getKhachHangByTrangThai()" data-bs-target="#addTaiKhoan">Chọn khách hàng</a>
+                                ng-click="getKhachHangByTrangThai($event)" data-bs-target="#addTaiKhoan">Chọn khách
+                                hàng</a>
                         </div>
                         <hr>
                         <div class="row" ng-if="khachHangDefault">
@@ -196,15 +197,13 @@
                         </div>
                         <div class="row" ng-if="chonKhachHang">
                             <div class="col-md-4">
-                                <p> Tên Khách Hàng</p>
-                                <p> Tên Tài Khoản</p>
-                                <p> Email</p>
+                                Tên Khách Hàng
                             </div>
                             <div class="col-md-4">
-                                <p></p>
-                                <p></p>
-                                <p></p>
-
+                                <span>
+                                    <input disabled ng-model="detailKhachHang.khachHang.hoten" style="border: none"
+                                        type="text">
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -240,17 +239,18 @@
 
                                     </tr>
                                 </thead>
-                                <tbody ng-repeat="khachHang in listKhachHang">
+                                <tbody ng-repeat="khachHang in listKhachHang.content">
                                     <tr>
                                         <th scope="row">{{$index+1}}</th>
                                         <th>
-                                            <img src="../../../assets/{{khachHang.hinhAnh}}" alt="">
+                                            <img class="table_img"
+                                                src="../../../assets/anh-nguoi-dung/{{khachHang.hinhAnh}}" alt="">
                                         </th>
                                         <th scope="row">{{khachHang.ma}}</th>
-                                        <th scope="row">{{khachHang.hoten}}</th>
-                                        <th scope="row">{{khachHang.sodienthoai}}</th>
+                                        <th scope="row">{{khachHang.hoTen}}</th>
+                                        <th scope="row">{{khachHang.soDienThoai}}</th>
                                         <th scope="row">{{khachHang.email}}</th>
-                                        <th scope="row">{{khachHang.gioitinh ?'Nam':'Nữ'}} </th>
+                                        <th scope="row">{{khachHang.gioiTinh ?'Nam':'Nữ'}} </th>
 
                                         <th>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
@@ -284,42 +284,51 @@
                                         <input type="text" class="form-control"
                                             ng-model="hoaDonThanhToan.soDienThoaiKhachHang">
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Số nhà, ngõ</label>
-                                        <input type="text" class="form-control" ng-model="formHoaDon.soNha">
+                                    <div class="mb-3" ng-if="diaChiMacDinh">
+                                        <label class="form-label">Địa chỉ mặc định</label>
+                                        <input type="text" class="form-control" ng-model="diaChiMacDinh">
+                                        <button class="btn btn-primary mt-3" ng-click="addDiaChi()">Thêm địa
+                                            chỉ</button>
+                                        <button class="btn btn-primary mt-3">Địa chỉ có sẵn</button>
                                     </div>
+                                    <div ng-if="diaChiMoi">
+                                        <div class="mb-3">
+                                            <label class="form-label">Số nhà, ngõ</label>
+                                            <input type="text" class="form-control" ng-model="formHoaDon.soNha">
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label class="form-label">Tỉnh / Thành Phố</label>
-                                            <select ng-model="formDiaChi.tinhThanhPho" ng-click="onCityChange()"
-                                                class="form-control">
-                                                <option hidden selected value="">Tỉnh / Thành Phố</option>
-                                                <option ng-repeat="city in cityOptions" value="{{city.code}}">
-                                                    {{city.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Quận / Huyện</label>
-                                            <select ng-model="formDiaChi.quanHuyen" ng-click="onDistrictChange()"
-                                                class="form-control">
-                                                <option hidden selected value="">Quận / Huyện</option>
-                                                <option ng-repeat="district in districtOptions"
-                                                    value="{{district.code}}">
-                                                    {{district.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Phường / Xã </label>
-                                            <select ng-model="formDiaChi.phuongXa" ng-click="onWardChange()"
-                                                class="form-control">
-                                                <option hidden selected value="">Phường / Xã</option>
-                                                <option ng-repeat="ward in wardOptions" value="{{ward.code}}">
-                                                    {{ward.name}}
-                                                </option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Tỉnh / Thành Phố</label>
+                                                <select ng-model="formDiaChi.tinhThanhPho" ng-click="onCityChange()"
+                                                    class="form-control">
+                                                    <option hidden selected value="">Tỉnh / Thành Phố</option>
+                                                    <option ng-repeat="city in cityOptions" value="{{city.code}}">
+                                                        {{city.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Quận / Huyện</label>
+                                                <select ng-model="formDiaChi.quanHuyen" ng-click="onDistrictChange()"
+                                                    class="form-control">
+                                                    <option hidden selected value="">Quận / Huyện</option>
+                                                    <option ng-repeat="district in districtOptions"
+                                                        value="{{district.code}}">
+                                                        {{district.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Phường / Xã </label>
+                                                <select ng-model="formDiaChi.phuongXa" ng-click="onWardChange()"
+                                                    class="form-control">
+                                                    <option hidden selected value="">Phường / Xã</option>
+                                                    <option ng-repeat="ward in wardOptions" value="{{ward.code}}">
+                                                        {{ward.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -334,9 +343,14 @@
                                     <label class="form-check-label" for="flexSwitchCheckDefault">Giao Hàng</label>
                                 </div>
 
-                                <div>
-                                    <input type="text" placeholder="Mã Giảm Giá">
-                                    <button class="btn btn-warning">Chọn Mã Giảm Giá</button>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" placeholder="Mã Giảm Giá" disabled>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-warning">Chọn Mã Giảm Giá</button>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="row">
