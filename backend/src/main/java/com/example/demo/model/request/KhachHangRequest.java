@@ -43,7 +43,6 @@ public class KhachHangRequest {
     private String trangthai;
 
 
-
     private String mota;
 
     private String quanhuyen;

@@ -4,9 +4,10 @@ window.addKichThuocController = function ($http, $scope, $location) {
   $scope.formKichThuoc = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
-
+  console.log($scope.formKichThuoc);
   $scope.add = function (e) {
     e.preventDefault();
     let elem = document.getElementById("myBar");

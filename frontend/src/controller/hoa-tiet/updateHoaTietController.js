@@ -36,8 +36,13 @@ window.updateHoaTietController = function (
       $scope.message = "Tên họa tiết không được trống";
       return null;
     } else {
+      $scope.updateHoaTiet = {
+        ten: $scope.formHoaTiet.ten,
+        ngaySua: new Date(),
+        daXoa: $scope.formHoaTiet.daXoa,
+      };
       $http
-        .put(hoaTietAPI + "/update/" + idHoaTiet, $scope.formHoaTiet)
+        .put(hoaTietAPI + "/update/" + idHoaTiet, $scope.updateHoaTiet)
         .then(function () {
           $location.path("/hoa-tiet/hien-thi");
         });

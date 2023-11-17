@@ -44,6 +44,6 @@ public class HinhThucThanhToan {
     private String ghiChu;
 
     @ManyToOne
-    @JoinColumn(name = "hoa_don_id",referencedColumnName = "id")
+    @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
 }

@@ -22,13 +22,14 @@ public class MaGiamGiaController {
     private MaGiamGiaService maGiamGiaService;
     @Autowired
     private MaGiamGiaChiTietService maGiamGiaChiTietService;
+
     @GetMapping("hien-thi")
     public Page<MaGiamGia> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return maGiamGiaService.getAll(pageNo);
     }
 
     @PostMapping("add")
-    public MaGiamGia post(@RequestBody MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception{
+    public MaGiamGia post(@RequestBody MaGiamGia maGiamGia, BindingResult result, Model model) throws Exception {
         maGiamGia.setMa(maGiamGia.getMa().toUpperCase());
         return maGiamGiaService.add(maGiamGia);
     }
@@ -43,5 +44,8 @@ public class MaGiamGiaController {
         return maGiamGiaService.detail(UUID.fromString(id));
     }
 
-
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable("id") String id) {
+        maGiamGiaService.delete(UUID.fromString(id));
+    }
 }

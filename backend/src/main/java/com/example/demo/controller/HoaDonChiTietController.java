@@ -20,8 +20,8 @@ public class HoaDonChiTietController {
     private HoaDonChiTietService hoaDonChiTietService;
 
     @GetMapping("hien-thi/{ma}")
-    public ResponseEntity hienThiGioHang(@RequestParam(value = "pageN",defaultValue = "0") String pageNo,@PathVariable("ma") String ma) {
-        return new ResponseEntity(hoaDonChiTietService.getGioHang(Integer.valueOf(pageNo),ma),HttpStatus.OK);
+    public ResponseEntity hienThiGioHang(@RequestParam(value = "pageN", defaultValue = "0") String pageNo, @PathVariable("ma") String ma) {
+        return new ResponseEntity(hoaDonChiTietService.getGioHang(Integer.valueOf(pageNo), ma), HttpStatus.OK);
     }
 
 //    @GetMapping("detail/{id}")
@@ -36,7 +36,7 @@ public class HoaDonChiTietController {
 
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody HoaDonChiTietRequest hoaDonChiTietRequest, @PathVariable("id") String id) {
-        return new ResponseEntity(hoaDonChiTietService.update(hoaDonChiTietRequest, UUID.fromString(id)),HttpStatus.OK);
+        return new ResponseEntity(hoaDonChiTietService.update(hoaDonChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

@@ -259,11 +259,12 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.getTayAoTrangThai();
 
   //add nhanh thuoc tinh
-  $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
+  $scope.randoomCL = "CL" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formChatLieu = {
-    ma: $scope.randoom,
+    ma: $scope.randoomCL,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
   $scope.addChatLieu = function () {
@@ -271,50 +272,87 @@ window.addSanPhamController = function ($http, $scope, $location) {
       $scope.getChatLieuTrangThai();
     });
   };
-  $scope.randoom = "PC" + Math.floor(Math.random() * 10000) + 1;
+
+  $scope.randoomPC = "PC" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formPhongCach = {
-    ma: $scope.randoom,
+    ma: $scope.randoomPC,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
-
   $scope.addPhongCach = function () {
     $http.post(phongCachAPI + "/add", $scope.formPhongCach).then(function () {
       $scope.getPhongCachTrangThai();
     });
   };
+  $scope.randoomHT = "HT" + Math.floor(Math.random() * 10000) + 1;
+
   $scope.formHoaTiet = {
-    ma: $scope.randoom,
+    ma: $scope.randoomHT,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
-
   $scope.addHoaTiet = function () {
     $http.post(hoaTietAPI + "/add", $scope.formHoaTiet).then(function () {
       $scope.getHoaTietTrangThai();
     });
   };
+  $scope.randoomCA = "CA" + Math.floor(Math.random() * 10000) + 1;
+
   $scope.formCoAo = {
-    ma: $scope.randoom,
+    ma: $scope.randoomCA,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
-
   $scope.addCoAo = function () {
     $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
       $scope.getCoAoTrangThai();
     });
   };
+  $scope.randoomTA = "TA" + Math.floor(Math.random() * 10000) + 1;
+
   $scope.formTayAo = {
-    ma: $scope.randoom,
+    ma: $scope.randoomTA,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
-
   $scope.addTayAo = function () {
     $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
       $scope.getTayAoTrangThai();
+    });
+  };
+  $scope.randoomKT = "KT" + Math.floor(Math.random() * 10000) + 1;
+
+  $scope.formKichThuoc = {
+    ma: $scope.randoomKT,
+    ten: "",
+    ngayTao: new Date(),
+    daXoa: false,
+  };
+  $scope.addNewKichThuoc = function () {
+    $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
+      $scope.getKichThuocTrangThai();
+    });
+  };
+  $scope.formMauSac = {
+    ma: "",
+    ten: "",
+    ngayTao: new Date(),
+    daXoa: false,
+  };
+  $scope.addNewMauSac = function () {
+    let colorStr = document.getElementById("color").value;
+    let color = colorStr.slice(1, 7);
+
+    $http.get(api_url + "/id?hex=" + color).then(function (response) {
+      $scope.formMauSac.ten = response.data.name.value;
+      $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
+        $scope.getMauSacTrangThai();
+      });
     });
   };
 

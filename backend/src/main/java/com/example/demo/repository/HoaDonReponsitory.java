@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface HoaDonReponsitory extends JpaRepository<HoaDon , UUID> {
+public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 
     @Query("select hd from HoaDon hd where hd.trangThai=0 order by hd.ngayTao desc ")
     List<HoaDon> getHoaDonCho();
@@ -35,6 +35,5 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon , UUID> {
             select  hd.id, hd.ma, hd.ten_khach_hang, hd.loai_hoa_don, hd.tong_tien, hd.trang_thai, hd.ngay_dat_hang , hd.ngay_tao from  hoa_don hd  where
                                                                 hd.ma like %:search% or hd.ten_khach_hang like %:search% or hd.loai_hoa_don like %:search% or hd.tong_tien like %:search%
                                                                 order by hd.ngay_tao desc """, nativeQuery = true)
-
     Page<HoaDonRepone> searchByKeyword(Pageable pageable, @Param("search") String search);
 }

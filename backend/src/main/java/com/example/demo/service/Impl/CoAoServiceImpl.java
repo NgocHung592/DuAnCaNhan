@@ -21,11 +21,10 @@ public class CoAoServiceImpl implements CoAoService {
     @Autowired
     private CoAoRepository coAoRepository;
 
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<CoAo> getAll(Integer pageNo) {
-        Pageable pageable= PageRequest.of(pageNo,10);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return coAoRepository.getAll(pageable);
     }
 
@@ -36,13 +35,13 @@ public class CoAoServiceImpl implements CoAoService {
 
     @Override
     public CoAo add(CoAo coAo) {
-        if(coAo.getMa().isBlank() || coAo.getTen().isBlank() ){
+        if (coAo.getMa().isBlank() || coAo.getTen().isBlank()) {
             return null;
         }
-        CoAo coAoSave= CoAo.builder()
+        CoAo coAoSave = CoAo.builder()
                 .ma(coAo.getMa())
                 .ten(coAo.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(coAo.getNgayTao())
                 .nguoiTao("Hưng")
                 .daXoa(coAo.getDaXoa())
                 .build();
@@ -51,12 +50,12 @@ public class CoAoServiceImpl implements CoAoService {
 
     @Override
     public CoAo update(CoAo coAo, UUID id) {
-        Optional<CoAo> optionalCoAo=coAoRepository.findById(id);
-        if (optionalCoAo.isPresent()){
-            optionalCoAo.map(coAoUpdate->{
+        Optional<CoAo> optionalCoAo = coAoRepository.findById(id);
+        if (optionalCoAo.isPresent()) {
+            optionalCoAo.map(coAoUpdate -> {
                 coAoUpdate.setTen(coAoUpdate.getTen());
                 coAoUpdate.setNguoiSua("Hưng");
-                coAoUpdate.setNgaySua(new Timestamp((currentTimestampMillis)));
+                coAoUpdate.setNgaySua(coAo.getNgaySua());
                 coAoUpdate.setDaXoa(coAo.getDaXoa());
                 return coAoRepository.save(coAoUpdate);
 

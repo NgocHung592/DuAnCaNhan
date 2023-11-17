@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @Service
 public class TayAoServiceImpl implements TayAoService {
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Autowired
     private TayAoRepository tayAoRepository;
@@ -41,8 +40,8 @@ public class TayAoServiceImpl implements TayAoService {
         TayAo tayAoSave = TayAo.builder()
                 .ma(tayAo.getMa())
                 .ten(tayAo.getTen())
-                .ngayTao(new Timestamp(currentTimestampMillis))
-                .nguoiTao(null)
+                .ngayTao(tayAo.getNgayTao())
+                .nguoiTao("Hưng")
                 .daXoa(tayAo.getDaXoa())
                 .build();
         return tayAoRepository.save(tayAoSave);
@@ -51,14 +50,11 @@ public class TayAoServiceImpl implements TayAoService {
 
     @Override
     public TayAo update(TayAo tayAo, UUID id) {
-        if (tayAo.getMa().isBlank() || tayAo.getTen().isBlank()) {
-            return null;
-        }
-        Optional<TayAo> optionalTayAo=tayAoRepository.findById(id);
+        Optional<TayAo> optionalTayAo = tayAoRepository.findById(id);
         if (optionalTayAo.isPresent()) {
-            optionalTayAo.map(tayAoUpdate->{
+            optionalTayAo.map(tayAoUpdate -> {
                 tayAoUpdate.setTen(tayAo.getTen());
-                tayAoUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                tayAoUpdate.setNgaySua(tayAo.getNgaySua());
                 tayAoUpdate.setNguoiSua("Hưng");
                 tayAoUpdate.setDaXoa(tayAo.getDaXoa());
                 return tayAoRepository.save(tayAoUpdate);

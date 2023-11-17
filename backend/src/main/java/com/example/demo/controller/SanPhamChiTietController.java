@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.request.SanPhamChiTietRequest;
+import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.service.SanPhamChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,11 @@ public class SanPhamChiTietController {
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
+    }
+
+    @PutMapping("update-so-luong")
+    public ResponseEntity update(@RequestBody List<UpdateSanPham> updateSanPhams) {
+        return new ResponseEntity(sanPhamChiTietService.updateSoLuong(updateSanPhams), HttpStatus.OK);
     }
 
 }

@@ -19,7 +19,6 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Autowired
     private KichThuocRepository kichThuocRepository;
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<KichThuoc> getAll(Integer pageNo) {
@@ -34,11 +33,11 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public KichThuoc add(KichThuoc kichThuoc) {
-        KichThuoc kichThuocSave= KichThuoc.builder()
+        KichThuoc kichThuocSave = KichThuoc.builder()
                 .ma(kichThuoc.getMa())
                 .ten(kichThuoc.getTen())
                 .nguoiTao("Hưng")
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(kichThuoc.getNgayTao())
                 .daXoa(kichThuoc.getDaXoa())
                 .build();
         return kichThuocRepository.save(kichThuocSave);
@@ -50,7 +49,7 @@ public class KichThuocServiceImpl implements KichThuocService {
         if (optional.isPresent()) {
             optional.map(kichThuocUpdate -> {
                 kichThuocUpdate.setTen(kichThuoc.getTen());
-                kichThuocUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                kichThuocUpdate.setNgaySua(kichThuoc.getNgaySua());
                 kichThuocUpdate.setNguoiSua("Hưng");
                 kichThuocUpdate.setDaXoa(kichThuoc.getDaXoa());
                 return kichThuocRepository.save(kichThuocUpdate);

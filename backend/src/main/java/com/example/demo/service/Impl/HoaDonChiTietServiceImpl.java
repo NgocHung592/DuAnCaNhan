@@ -30,9 +30,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
 
     @Override
-    public Page<HoaDonChiTietReponse> getGioHang(Integer pageNo,String ma) {
-        Pageable pageable=PageRequest.of(pageNo,5);
-        return hoaDonChiTietRepository.getGioHang(pageable,ma);
+    public Page<HoaDonChiTietReponse> getGioHang(Integer pageNo, String ma) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        return hoaDonChiTietRepository.getGioHang(pageable, ma);
     }
 
     @Override
@@ -50,11 +50,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public HoaDonChiTiet update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
         Optional<HoaDonChiTiet> optional = hoaDonChiTietRepository.findById(id);
-            return optional.map(o -> {
-                o.setSoLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()));
-                o.setThanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()));
-                return hoaDonChiTietRepository.save(o);
-            }).orElse(null);
+        return optional.map(o -> {
+            o.setSoLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()));
+            o.setThanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()));
+            return hoaDonChiTietRepository.save(o);
+        }).orElse(null);
     }
 
 //    @Override

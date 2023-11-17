@@ -34,7 +34,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             group by sp.id,sp.ma,sp.ten, sp.mo_ta,sp.da_xoa ,sp.ngay_tao
             order by sp.ngay_tao desc
             """, nativeQuery = true)
-    Page<SanPhamReponse> loc(Pageable pageable,String trangThai);
+    Page<SanPhamReponse> loc(Pageable pageable, String trangThai);
 
 
     @Query(value = """
@@ -44,7 +44,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             group by sp.id,sp.ma,sp.ten, sp.mo_ta,sp.da_xoa ,sp.ngay_tao
             order by sp.ngay_tao desc
             """, nativeQuery = true)
-    Page<SanPhamReponse> search (Pageable pageable,@Param("key") String keyword);
+    Page<SanPhamReponse> search(Pageable pageable, @Param("key") String keyword);
 
     Optional<SanPham> findByTen(String ten);
 }

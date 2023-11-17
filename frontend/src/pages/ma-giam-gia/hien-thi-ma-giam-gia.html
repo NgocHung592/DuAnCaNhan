@@ -83,7 +83,7 @@
                     <th scope="col">Tên</th>
                     <th scope="col">Hình Thức </th>
                     <th scope="col">GT Đơn Tối Thiểu</th>
-                    <th scope="col">Giảm Tối Đa</th>
+                    <th scope="col">Giá trị giảm</th>
                     <th scope="col">Ngày bắt đầu</th>
                     <th scope="col">Ngày kết thúc</th>
                     <th scope="col">Số lượng</th>
@@ -106,15 +106,16 @@
                             {{maGiamGia.hinhThucGiam =='0'? "Tiền mặt" : "Phần trăm"}}
                         </p>
                     </th>
-                    <th>{{maGiamGia.giaTriDonToiThieu}}</th>
+                    <th>{{maGiamGia.giaTriDonToiThieu}} VND</th>
                     <th>{{maGiamGia.giaTriGiamToiDa}}</th>
                     <th>{{maGiamGia.ngayBatDau | date: 'dd/MM/yyyy hh:mm a'}}</th>
                     <th>{{maGiamGia.ngayKetThuc | date: 'dd/MM/yyyy hh:mm a'}}</th>
                     <th>{{maGiamGia.soLuong}}</th>
                     <th>
-                        <p>
-                            {{maGiamGia.trangThai =='1'? "Sắp diễn ra" : (maGiamGia.trangThai =='2'? "Đang diễn ra" : "Đã hết hạn")}}
-                        </p>
+
+                        <p class="text-success" ng-if="maGiamGia.trangThai =='1'" >Sắp diễn ra</p>
+                        <p class="text-warning" ng-if="maGiamGia.trangThai =='2'" >Đang diễn ra</p>
+                        <p class="text-danger" ng-if="maGiamGia.trangThai =='3'" >Đã hết hạn</p>
                     </th>
                     <th>
                         <a  href="{{maGiamGia.trangThai =='1'? '#ma-giam-gia/update/'+maGiamGia.id : '#ma-giam-gia/hienthi'}}">

@@ -6,6 +6,7 @@ import com.example.demo.entity.MauSac;
 import com.example.demo.entity.SanPham;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
+import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.repository.CoAoRepository;
@@ -173,6 +174,22 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             hinhAnhUpdate.setDuong_dan(sanPhamChiTietRequest.getUrlImage());
             return hinhAnhRepository.save(hinhAnhUpdate);
         }).orElse(null);
+        return null;
+    }
+
+    @Override
+    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
+        updateSanPhams.forEach(sanPham -> {
+            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
+            if (optional.isPresent()) {
+                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
+                optional.map(sanPhamChiTiet -> {
+                    sanPhamChiTiet.setSoLuong(soLuongNew);
+                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
+                }).orElse(null);
+            }
+        });
+
         return null;
     }
 

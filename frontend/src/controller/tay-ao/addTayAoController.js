@@ -13,6 +13,7 @@ window.addTayAoController = function ($http, $scope, $location) {
   $scope.formTayAo = {
     ma: $scope.randoom,
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

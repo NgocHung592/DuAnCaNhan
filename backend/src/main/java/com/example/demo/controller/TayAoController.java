@@ -45,12 +45,12 @@ public class TayAoController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody TayAo tayAo) {
-        return new ResponseEntity(tayAoService.add(tayAo),HttpStatus.OK);
+        return new ResponseEntity(tayAoService.add(tayAo), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody TayAo tayAo, @PathVariable("id") String id) {
-        return new ResponseEntity(tayAoService.update(tayAo, UUID.fromString(id)),HttpStatus.OK);
+        return new ResponseEntity(tayAoService.update(tayAo, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

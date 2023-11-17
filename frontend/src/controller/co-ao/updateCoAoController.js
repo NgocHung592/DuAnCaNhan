@@ -42,7 +42,12 @@ window.updateCoAoController = function (
       $scope.message = "Tên cổ áo không được để trống";
       return;
     }
-    $http.put(coAoAPI + "/update/" + id, $scope.formCoAo).then(function () {
+    $scope.updateCoAo = {
+      ten: $scope.formCoAo.ten,
+      ngaySua: new Date(),
+      daXoa: $scope.formCoAo.daXoa,
+    };
+    $http.put(coAoAPI + "/update/" + id, $scope.updateCoAo).then(function () {
       $location.path("/co-ao/hien-thi");
     });
   };

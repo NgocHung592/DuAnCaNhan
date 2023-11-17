@@ -23,5 +23,5 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
             inner join hinh_anh ha on spct.id = ha.chi_tiet_san_pham_id
             where hd.ma=?1
             """, nativeQuery = true)
-    Page<HoaDonChiTietReponse> getGioHang(Pageable pageable,String ma);
+    Page<HoaDonChiTietReponse> getGioHang(Pageable pageable, String ma);
 }

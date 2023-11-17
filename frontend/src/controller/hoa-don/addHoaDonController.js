@@ -12,7 +12,20 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   $scope.districtOptions = [];
   $scope.wardOptions = [];
   $scope.filter;
+  $scope.khachHangDefault = true;
+  $scope.chonKhachHang = false;
+  $scope.diaChiMoi = true;
+  $scope.diaChiMacDinh = false;
+  $scope.show = false;
 
+  $scope.detailKhachHang = {
+    id: "",
+    hinhAnh: "",
+    tenKhachHang: "",
+    soDienThoai: "",
+    email: "",
+    gioiTinh: "",
+  };
   $scope.formHoaDonChiTiet = {
     idHoaDon: "",
     idSanPhamChiTiet: "",
@@ -33,6 +46,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   };
   $scope.hoaDonThanhToan = {
     tenKhachHang: "",
+    soDienThoaiKhachHang: "",
     diaChiKhachHang: "",
     tongTien: "",
     trangThai: 1,
@@ -86,7 +100,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;
-      $scope.getChatLieu();
+      $scope.getSanPhamChiTiet();
     }
   };
 
@@ -94,14 +108,14 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     let length = $scope.totalPages.length;
     if ($scope.currentPage < length - 1) {
       $scope.currentPage++;
-      $scope.getChatLieu();
+      $scope.getSanPhamChiTiet();
     }
   };
 
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
-      $scope.getChatLieu();
+      $scope.getSanPhamChiTiet();
     }
   };
   $scope.getIdHoaDon = function (idHoaDon, maHoaDon) {
@@ -201,12 +215,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       $scope.getHoaDonChiTiet();
     });
   };
-  $scope.khachHangDefault = true;
-  $scope.show = false;
-  $scope.addKhachHang = function () {
-    $scope.khachHangDefault = false;
-    $scope.chonKhachHang = true;
-  };
 
   $scope.giaoHang = function () {
     $scope.show = !$scope.show;
@@ -270,10 +278,12 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
 
   $scope.thanhToan = function () {
     let tenKhachHangMacDinh = document.getElementById("tenKhachHang").value;
-    if ($scope.hoaDonThanhToan.tenKhachHang === "") {
+    if ($scope.hoaDonThanhToan.tenKhachHang == "") {
       $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
       $scope.hoaDonThanhToan.diaChi = "";
     } else {
+      $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
+
       $scope.hoaDonThanhToan.diaChiKhachHang =
         $scope.formHoaDon.soNha +
         ", " +
@@ -296,14 +306,56 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       .then(function () {
         $scope.getListHoaDon();
       });
-  };
-  $scope.getKhachHangByTrangThai = function () {
     $http
-      .get(khachHangAPI + "/trang-thai?pageNo=" + $scope.currentPage)
+      .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
+      .then(function () {});
+  };
+  $scope.getKhachHangByTrangThai = function (e) {
+    e.preventDefault();
+    $http
+      .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listKhachHang = response.data.content;
+        $scope.listKhachHang = response.data;
         console.log($scope.listKhachHang);
       });
+  };
+  $scope.addKhachHang = function (e, id) {
+    $scope.khachHangDefault = false;
+    $scope.chonKhachHang = true;
+    $scope.diaChiMoi = false;
+    $scope.diaChiMacDinh = true;
+    e.preventDefault();
+
+    $http.get(khachHangAPI + "/detail/" + id).then(function (response) {
+      $scope.detailKhachHang = response.data;
+      console.log($scope.detailKhachHang);
+      $scope.hoaDonThanhToan.tenKhachHang =
+        $scope.detailKhachHang.khachHang.hoten;
+      $scope.hoaDonThanhToan.soDienThoaiKhachHang =
+        $scope.detailKhachHang.khachHang.sodienthoai;
+      $scope.diaChiMacDinh =
+        $scope.detailKhachHang.mota +
+        " - " +
+        $scope.detailKhachHang.phuongxa +
+        " - " +
+        $scope.detailKhachHang.quanhuyen +
+        " - " +
+        $scope.detailKhachHang.tinhthanhpho;
+      console.log($scope.hoaDonThanhToan);
+    });
+  };
+  $scope.$watch("searchKeyword", function (newVal, oldVal) {
+    if (newVal !== oldVal) {
+      $http
+        .get(khachHangAPI + "/search?search=" + $scope.searchKeyword)
+        .then(function (response) {
+          $scope.listKhachHang = response.data;
+        });
+    }
+  });
+  $scope.addDiaChi = function () {
+    $scope.diaChiMoi = true;
+    $scope.diaChiMacDinh = false;
   };
   const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");

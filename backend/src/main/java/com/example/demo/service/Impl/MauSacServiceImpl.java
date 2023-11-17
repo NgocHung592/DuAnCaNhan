@@ -19,7 +19,6 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Autowired
     private MauSacRepository mauSacRepository;
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<MauSac> getAll(Integer pageNo) {
@@ -39,11 +38,11 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac add(MauSac mauSac) {
-        MauSac mauSacSave= MauSac.builder()
+        MauSac mauSacSave = MauSac.builder()
                 .ma(mauSac.getMa())
                 .ten(mauSac.getTen())
                 .daXoa(mauSac.getDaXoa())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(mauSac.getNgayTao())
                 .nguoiTao("Hưng")
                 .build();
         return mauSacRepository.save(mauSacSave);
@@ -51,18 +50,18 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac update(MauSac mauSac, UUID id) {
-        Optional<MauSac> optional=mauSacRepository.findById(id);
-        if (optional.isPresent()){
-            optional.map(mauSacUpdate->{
+        Optional<MauSac> optional = mauSacRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(mauSacUpdate -> {
                 mauSacUpdate.setMa(mauSac.getMa());
                 mauSacUpdate.setTen(mauSac.getTen());
-                mauSacUpdate.setNgaySua(new Timestamp(currentTimestampMillis));
+                mauSacUpdate.setNgaySua(mauSac.getNgaySua());
                 mauSacUpdate.setNguoiSua("Hưng");
                 mauSacUpdate.setDaXoa(mauSac.getDaXoa());
                 return mauSacRepository.save(mauSacUpdate);
             }).orElse(null);
         }
-      return null;
+        return null;
     }
 
     @Override

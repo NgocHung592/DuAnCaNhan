@@ -23,7 +23,7 @@ public class MaGiamGiaChiTietController {
     }
 
     @PostMapping("add")
-    public MaGiamGiaChiTiet post(@RequestBody MaGiamGiaChiTiet maGiamGiaChiTiet, BindingResult result, Model model) throws Exception{
+    public MaGiamGiaChiTiet post(@RequestBody MaGiamGiaChiTiet maGiamGiaChiTiet, BindingResult result, Model model) throws Exception {
         return maGiamGiaChiTietService.add(maGiamGiaChiTiet);
     }
 

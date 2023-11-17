@@ -11,6 +11,7 @@ window.addMauSacController = function ($http, $scope, $location) {
   $scope.formMauSac = {
     ma: "",
     ten: "",
+    ngayTao: new Date(),
     daXoa: false,
   };
 

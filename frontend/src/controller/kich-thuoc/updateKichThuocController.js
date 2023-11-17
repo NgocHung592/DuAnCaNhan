@@ -36,8 +36,13 @@ window.updateKichThuocController = function (
       $scope.message = "Tên kích thước không được trống";
       return;
     } else {
+      $scope.updateKichThuoc = {
+        ten: $scope.formKichThuoc.ten,
+        ngaySua: new Date(),
+        daXoa: $scope.formKichThuoc.daXoa,
+      };
       $http
-        .put(kichThuocAPI + "/update/" + idKichThuoc, $scope.formKichThuoc)
+        .put(kichThuocAPI + "/update/" + idKichThuoc, $scope.updateKichThuoc)
         .then(function () {
           $location.path("/kich-thuoc/hien-thi");
         });
