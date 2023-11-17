@@ -209,7 +209,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
           return;
         }
       });
-    chonKhachHangaddKhachHang;
   };
   $scope.xoaSanPhamGioHang = function (id) {
     $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
@@ -279,10 +278,12 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
 
   $scope.thanhToan = function () {
     let tenKhachHangMacDinh = document.getElementById("tenKhachHang").value;
-    if ($scope.hoaDonThanhToan.tenKhachHang === "") {
+    if ($scope.hoaDonThanhToan.tenKhachHang == "") {
       $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
       $scope.hoaDonThanhToan.diaChi = "";
     } else {
+      $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
+
       $scope.hoaDonThanhToan.diaChiKhachHang =
         $scope.formHoaDon.soNha +
         ", " +
@@ -297,7 +298,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
     $scope.hoaDonThanhToan.tongTien = $scope.listHoaDonChiTiet
       .filter((item) => item.maHoaDon === $scope.maHoaDon)
       .reduce((total, item) => total + item.thanhTien, 0);
-    console.log($scope.hoaDonThanhToan);
     $http
       .put(
         hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -306,6 +306,9 @@ window.addHoaDonController = function ($http, $scope, $routeParams) {
       .then(function () {
         $scope.getListHoaDon();
       });
+    $http
+      .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
+      .then(function () {});
   };
   $scope.getKhachHangByTrangThai = function (e) {
     e.preventDefault();

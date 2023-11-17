@@ -6,7 +6,7 @@
                     <div class="align-self-center w-100">
                         <h4>BÁN HÀNG TẠI QUẦY</h4>
                         <ul class="nav nav-tabs pb-4" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation" ng-repeat="hoaDon in listHoaDon | filter: 0">
+                            <li class="nav-item" role="presentation" ng-repeat="hoaDon in listHoaDon">
                                 <button class="nav-link" id="{{hoaDon.ma}}" data-bs-toggle="tab"
                                     data-bs-target="#{{hoaDon.ma}}*" type="button" role="tab"
                                     ng-click="getIdHoaDon(hoaDon.id,hoaDon.ma)" aria-controls="{{hoaDon.ma}}"
@@ -201,8 +201,8 @@
                             </div>
                             <div class="col-md-4">
                                 <span>
-                                    <input disabled ng-model="detailKhachHang.khachHang.hoten" style="border: none"
-                                        type="text">
+                                    <input disabled id="tenKhachHang" value="{{detailKhachHang.khachHang.hoten}}"
+                                        style="border: none" type="text">
                                 </span>
                             </div>
                         </div>

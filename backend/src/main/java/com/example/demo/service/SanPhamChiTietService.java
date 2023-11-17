@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
+import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import org.springframework.data.domain.Page;
 
@@ -19,6 +20,8 @@ public interface SanPhamChiTietService {
     List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);
 
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
+
+    SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
 
 
 }
