@@ -113,6 +113,11 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
         return m;
     }
 
+    @Override
+    public void delete(UUID id) {
+        maGiamGiaRepository.deleteById(id);
+    }
+
     private Connection getConn() throws Exception {
         ResourceBundle rb = ResourceBundle.getBundle("application");
         String connectionString = rb.getString("spring.datasource.url");

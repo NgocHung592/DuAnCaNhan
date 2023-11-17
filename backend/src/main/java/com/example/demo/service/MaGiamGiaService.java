@@ -13,4 +13,5 @@ public interface MaGiamGiaService {
     MaGiamGia update(MaGiamGia khuyenMai, UUID id);
 
     MaGiamGia detail(UUID id);
+    void delete(UUID id);
 }

@@ -44,5 +44,8 @@ public class MaGiamGiaController {
         return maGiamGiaService.detail(UUID.fromString(id));
     }
 
-
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable("id") String id) {
+        maGiamGiaService.delete(UUID.fromString(id));
+    }
 }
