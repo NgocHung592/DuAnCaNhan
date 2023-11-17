@@ -5,6 +5,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when("/trang-chu", {
       templateUrl: "ban-hang-online/trang-chu.html",
+      controller: trangChuController,
     })
     .when("/tat-ca-san-pham", {
       templateUrl: "ban-hang-online/tat-ca-san-pham.html",

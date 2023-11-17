@@ -23,6 +23,7 @@ window.hienThiSanPhamChiTietController = function (
       )
       .then(function (response) {
         $scope.listSanPhamChiTiet = response.data;
+        console.log($scope.listSanPhamChiTiet);
         $scope.totalPages = new Array(response.data.totalPages);
       });
     $http
