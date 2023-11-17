@@ -33,9 +33,9 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
         java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
         for (MaGiamGia m : p) {
             try {
-                if(m.getNgayBatDau().compareTo(timestamp) < 0) {
-                    if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
-                        if(m.getTrangThai() != 3) {
+                if (m.getNgayBatDau().compareTo(timestamp) < 0) {
+                    if (m.getNgayKetThuc().compareTo(timestamp) < 0) {
+                        if (m.getTrangThai() != 3) {
                             m.setTrangThai(3);
                             Connection conn = getConn();
                             PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
@@ -45,7 +45,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
                             conn.close();
                         }
                     } else {
-                        if(m.getTrangThai() != 2) {
+                        if (m.getTrangThai() != 2) {
                             m.setTrangThai(2);
                             Connection conn = getConn();
                             PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
@@ -56,7 +56,8 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
                         }
                     }
                 }
-            } catch(Exception e) {}
+            } catch (Exception e) {
+            }
         }
         return p;
     }
@@ -84,9 +85,9 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
         MaGiamGia m = maGiamGiaRepository.findById(id).orElse(null);
         java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
         try {
-            if(m.getNgayBatDau().compareTo(timestamp) < 0) {
-                if(m.getNgayKetThuc().compareTo(timestamp) < 0) {
-                    if(m.getTrangThai() != 3) {
+            if (m.getNgayBatDau().compareTo(timestamp) < 0) {
+                if (m.getNgayKetThuc().compareTo(timestamp) < 0) {
+                    if (m.getTrangThai() != 3) {
                         m.setTrangThai(3);
                         Connection conn = getConn();
                         PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
@@ -95,8 +96,8 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
                         ps.close();
                         conn.close();
                     }
-                } else  {
-                    if(m.getTrangThai() != 2) {
+                } else {
+                    if (m.getTrangThai() != 2) {
                         m.setTrangThai(2);
                         Connection conn = getConn();
                         PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
@@ -107,7 +108,8 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
                     }
                 }
             }
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
         return m;
     }
 

@@ -40,25 +40,27 @@ public class SanPhamController {
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
+
     @GetMapping("find/{name}")
     public ResponseEntity find(@PathVariable("name") String name) {
         return new ResponseEntity(sanPhamService.findbyName(name), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity update(@RequestBody  SanPham sanPham, @PathVariable("id") String id) {
+    public ResponseEntity update(@RequestBody SanPham sanPham, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamService.update(sanPham, UUID.fromString(id)), HttpStatus.OK);
     }
 
-   @GetMapping("/loc")
-    public ResponseEntity loc(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
-                              @RequestParam(name = "loc") String loc){
-        return new ResponseEntity(sanPhamService.loc(Integer.valueOf(pageNo),loc),HttpStatus.OK);
-   }
+    @GetMapping("/loc")
+    public ResponseEntity loc(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                              @RequestParam(name = "loc") String loc) {
+        return new ResponseEntity(sanPhamService.loc(Integer.valueOf(pageNo), loc), HttpStatus.OK);
+    }
+
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam(name = "pageNo",defaultValue = "0") String pageNo,
-                              @RequestParam(name = "keyword") String keyword){
-        return new ResponseEntity(sanPhamService.search(Integer.valueOf(pageNo),keyword),HttpStatus.OK);
+    public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                                 @RequestParam(name = "keyword") String keyword) {
+        return new ResponseEntity(sanPhamService.search(Integer.valueOf(pageNo), keyword), HttpStatus.OK);
     }
 }
 

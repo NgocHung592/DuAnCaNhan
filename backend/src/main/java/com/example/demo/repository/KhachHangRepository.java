@@ -36,8 +36,12 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
             order by a.ngay_tao desc
             """, nativeQuery = true)
     Page<KhachHangReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
+
     Optional<KhachHang> findKhachHangByEmail(String email);
+
     Optional<KhachHang> findKhachHangBySodienthoai(String sdt);
-    Optional<KhachHang> findKhachHangByEmailAndIdNot(String email,UUID id);
-    Optional<KhachHang> findKhachHangBySodienthoaiAndIdNot(String sdt,UUID id);
+
+    Optional<KhachHang> findKhachHangByEmailAndIdNot(String email, UUID id);
+
+    Optional<KhachHang> findKhachHangBySodienthoaiAndIdNot(String sdt, UUID id);
 }

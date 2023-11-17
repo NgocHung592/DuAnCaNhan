@@ -33,7 +33,7 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public KichThuoc add(KichThuoc kichThuoc) {
-        KichThuoc kichThuocSave= KichThuoc.builder()
+        KichThuoc kichThuocSave = KichThuoc.builder()
                 .ma(kichThuoc.getMa())
                 .ten(kichThuoc.getTen())
                 .nguoiTao("Hưng")

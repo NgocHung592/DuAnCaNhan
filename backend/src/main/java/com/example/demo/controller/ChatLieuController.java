@@ -45,12 +45,12 @@ public class ChatLieuController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody ChatLieu chatLieu) {
-        return new ResponseEntity(chatLieuService.add(chatLieu),HttpStatus.OK);
+        return new ResponseEntity(chatLieuService.add(chatLieu), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody ChatLieu chatLieu, @PathVariable("id") String id) {
-        return new ResponseEntity(chatLieuService.update(chatLieu, UUID.fromString(id)),HttpStatus.OK);
+        return new ResponseEntity(chatLieuService.update(chatLieu, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

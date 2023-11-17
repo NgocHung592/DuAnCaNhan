@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/phong-cach/")
-@CrossOrigin(origins = "*",maxAge = 4800,allowCredentials = "false")
+@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false")
 public class PhongCachController {
 
     @Autowired

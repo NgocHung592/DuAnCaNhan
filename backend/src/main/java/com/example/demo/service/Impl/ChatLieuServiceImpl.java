@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class ChatLieuServiceImpl implements ChatLieuService {
 
@@ -33,10 +34,10 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu add(ChatLieu chatLieu) {
-        if(chatLieu.getMa().isBlank() || chatLieu.getTen().isBlank()){
+        if (chatLieu.getMa().isBlank() || chatLieu.getTen().isBlank()) {
             return null;
         }
-        ChatLieu chatLieuSave= ChatLieu.builder()
+        ChatLieu chatLieuSave = ChatLieu.builder()
                 .ma(chatLieu.getMa())
                 .ten(chatLieu.getTen())
                 .ngayTao(chatLieu.getNgayTao())
@@ -48,18 +49,18 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu update(ChatLieu chatLieu, UUID id) {
-        Optional<ChatLieu> optional=chatLieuRepository.findById(id);
-        if (optional.isPresent()){
-        optional.map(chatLieuUpdte->{
-            chatLieuUpdte.setTen(chatLieu.getTen());
-            chatLieuUpdte.setNgaySua(chatLieu.getNgaySua());
-            chatLieuUpdte.setNguoiSua("Hưng");
-            chatLieuUpdte.setDaXoa(chatLieu.getDaXoa());
-            return  chatLieuRepository.save(chatLieuUpdte);
-        }).orElse(null);
+        Optional<ChatLieu> optional = chatLieuRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(chatLieuUpdte -> {
+                chatLieuUpdte.setTen(chatLieu.getTen());
+                chatLieuUpdte.setNgaySua(chatLieu.getNgaySua());
+                chatLieuUpdte.setNguoiSua("Hưng");
+                chatLieuUpdte.setDaXoa(chatLieu.getDaXoa());
+                return chatLieuRepository.save(chatLieuUpdte);
+            }).orElse(null);
         }
 
-       return null;
+        return null;
     }
 
     @Override

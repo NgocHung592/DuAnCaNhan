@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class HoaDonServiceImpl implements HoaDonService{
+public class HoaDonServiceImpl implements HoaDonService {
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
     long currentTimestampMillis = System.currentTimeMillis();
@@ -35,7 +35,7 @@ public class HoaDonServiceImpl implements HoaDonService{
 
     @Override
     public HoaDon add(HoaDon hoaDon) {
-        HoaDon hoaDonSave= HoaDon.builder()
+        HoaDon hoaDonSave = HoaDon.builder()
                 .ma(hoaDon.getMa())
                 .ngayTao(new Timestamp(currentTimestampMillis))
                 .loai_hoa_don("Tại quầy")
@@ -47,8 +47,8 @@ public class HoaDonServiceImpl implements HoaDonService{
 
     @Override
     public HoaDon update(HoaDon hoaDon, UUID id) {
-       Optional<HoaDon> optional=hoaDonReponsitory.findById(id);
-        return optional.map(o->{
+        Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
+        return optional.map(o -> {
             o.setTrangThai(1);
             o.setTenKhachHang(hoaDon.getTenKhachHang());
             o.setDiaChiKhachHang(hoaDon.getDiaChiKhachHang());
@@ -66,12 +66,12 @@ public class HoaDonServiceImpl implements HoaDonService{
 
     @Override
     public HoaDon delete(UUID id) {
-        Optional<HoaDon> optional=hoaDonReponsitory.findById(id);
+        Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
 
-        return optional.map(hoaDon ->{
-                    hoaDonReponsitory.delete(hoaDon);
-                    return hoaDon;
-                }).orElse(null);
+        return optional.map(hoaDon -> {
+            hoaDonReponsitory.delete(hoaDon);
+            return hoaDon;
+        }).orElse(null);
     }
 
     @Override
@@ -88,6 +88,6 @@ public class HoaDonServiceImpl implements HoaDonService{
     @Override
     public Page<HoaDonRepone> getSearch(Integer pageNo, String seach) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return hoaDonReponsitory.searchByKeyword(pageable,seach);
+        return hoaDonReponsitory.searchByKeyword(pageable, seach);
     }
 }

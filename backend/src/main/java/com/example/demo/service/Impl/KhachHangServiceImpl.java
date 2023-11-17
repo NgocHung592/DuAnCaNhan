@@ -39,13 +39,13 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public DiaChi add(KhachHangRequest khachHangRequest)throws Exception  {
-        Optional<KhachHang> emailnv= khachHangRepository.findKhachHangByEmail(khachHangRequest.getEmail());
-        Optional<KhachHang> sdtnv=khachHangRepository.findKhachHangBySodienthoai(khachHangRequest.getSodienthoai());
+    public DiaChi add(KhachHangRequest khachHangRequest) throws Exception {
+        Optional<KhachHang> emailnv = khachHangRepository.findKhachHangByEmail(khachHangRequest.getEmail());
+        Optional<KhachHang> sdtnv = khachHangRepository.findKhachHangBySodienthoai(khachHangRequest.getSodienthoai());
         if (emailnv.isPresent()) {
             throw new Exception("Email is already present!");
         }
-        if(sdtnv.isPresent()){
+        if (sdtnv.isPresent()) {
             throw new Exception("So dien thoai is already present!");
         }
         KhachHang khachHang = KhachHang.builder()
@@ -91,12 +91,12 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception {
-        Optional<KhachHang> emailnv= khachHangRepository.findKhachHangByEmailAndIdNot(khachHangRequest.getEmail(),id2);
-        Optional<KhachHang> sdtnv=khachHangRepository.findKhachHangBySodienthoaiAndIdNot(khachHangRequest.getSodienthoai(),id2);
+        Optional<KhachHang> emailnv = khachHangRepository.findKhachHangByEmailAndIdNot(khachHangRequest.getEmail(), id2);
+        Optional<KhachHang> sdtnv = khachHangRepository.findKhachHangBySodienthoaiAndIdNot(khachHangRequest.getSodienthoai(), id2);
         if (emailnv.isPresent()) {
             throw new Exception("Email is already present!");
         }
-        if(sdtnv.isPresent()){
+        if (sdtnv.isPresent()) {
             throw new Exception("So dien thoai is already present!");
         }
         KhachHang khachHang = KhachHang.builder().id(id2)
@@ -121,6 +121,7 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
         return diaChiRepository.save(diaChi);
     }
+
     private void sendEmail(KhachHang khachHang) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();

@@ -30,15 +30,15 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
-    public Page<SanPhamReponse> loc(Integer pageNo,String trangThai) {
-        Pageable pageable=PageRequest.of(pageNo,10);
-        return sanPhamRepository.loc(pageable,trangThai);
+    public Page<SanPhamReponse> loc(Integer pageNo, String trangThai) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamRepository.loc(pageable, trangThai);
     }
 
     @Override
     public Page<SanPhamReponse> search(Integer pageNo, String keyword) {
-          Pageable pageable=PageRequest.of(pageNo,10);
-        return sanPhamRepository.search(pageable,keyword);
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamRepository.search(pageable, keyword);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
-        Optional<SanPham> optional=sanPhamRepository.findById(id);
-        if (optional.isPresent()){
-            optional.map(sanPhamUpdate->{
+        Optional<SanPham> optional = sanPhamRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(sanPhamUpdate -> {
                 sanPhamUpdate.setTen(sanPham.getTen());
                 sanPhamUpdate.setMoTa(sanPham.getMoTa());
                 sanPhamUpdate.setDaXoa(sanPham.getDaXoa());
@@ -65,7 +65,7 @@ public class SanPhamServiceImpl implements SanPhamService {
                 return sanPhamRepository.save(sanPhamUpdate);
             }).orElse(null);
         }
-       return null;
+        return null;
     }
 
     @Override

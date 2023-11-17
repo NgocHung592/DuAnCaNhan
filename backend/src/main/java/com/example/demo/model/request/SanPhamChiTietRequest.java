@@ -1,13 +1,13 @@
 package com.example.demo.model.request;
 
- import lombok.Builder;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
- import java.sql.Timestamp;
- import java.util.List;
- import java.util.UUID;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter

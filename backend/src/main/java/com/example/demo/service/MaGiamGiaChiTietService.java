@@ -7,7 +7,10 @@ import java.util.UUID;
 
 public interface MaGiamGiaChiTietService {
     Page<MaGiamGiaChiTiet> getAll(Integer pageNo);
+
     MaGiamGiaChiTiet add(MaGiamGiaChiTiet maGiamGiaChiTiet) throws Exception;
+
     MaGiamGiaChiTiet update(MaGiamGiaChiTiet maGiamGiaChiTiet, UUID id);
+
     MaGiamGiaChiTiet detail(UUID id);
 }

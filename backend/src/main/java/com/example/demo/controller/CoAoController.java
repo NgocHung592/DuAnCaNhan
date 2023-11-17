@@ -45,12 +45,12 @@ public class CoAoController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody CoAo coAo) {
-        return new ResponseEntity(coAoService.add(coAo),HttpStatus.OK);
+        return new ResponseEntity(coAoService.add(coAo), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody CoAo coAo, @PathVariable("id") String id) {
-        return new ResponseEntity(coAoService.update(coAo, UUID.fromString(id)),HttpStatus.OK);
+        return new ResponseEntity(coAoService.update(coAo, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

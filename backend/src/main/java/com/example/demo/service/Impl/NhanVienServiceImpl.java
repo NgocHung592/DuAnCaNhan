@@ -47,12 +47,12 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien add(NhanVienRequest nhanVienRequest) throws Exception {
-        Optional<NhanVien> emailnv= nhanVienRepository.findNhanVienByEmail(nhanVienRequest.getEmail());
-        Optional<NhanVien> sdtnv=nhanVienRepository.findNhanVienBySodienthoai(nhanVienRequest.getSodienthoai());
+        Optional<NhanVien> emailnv = nhanVienRepository.findNhanVienByEmail(nhanVienRequest.getEmail());
+        Optional<NhanVien> sdtnv = nhanVienRepository.findNhanVienBySodienthoai(nhanVienRequest.getSodienthoai());
         if (emailnv.isPresent()) {
             throw new Exception("Email is already present!");
         }
-        if(sdtnv.isPresent()){
+        if (sdtnv.isPresent()) {
             throw new Exception("So dien thoai is already present!");
         }
         NhanVien nhanVien = NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
@@ -99,12 +99,12 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien update(NhanVienRequest nhanVienRequest, UUID id) throws Exception {
-        Optional<NhanVien> emailnv= nhanVienRepository.findNhanVienByEmailAndIdNot(nhanVienRequest.getEmail(),id);
-        Optional<NhanVien> sdtnv=nhanVienRepository.findNhanVienBySodienthoaiAndIdNot(nhanVienRequest.getSodienthoai(),id);
+        Optional<NhanVien> emailnv = nhanVienRepository.findNhanVienByEmailAndIdNot(nhanVienRequest.getEmail(), id);
+        Optional<NhanVien> sdtnv = nhanVienRepository.findNhanVienBySodienthoaiAndIdNot(nhanVienRequest.getSodienthoai(), id);
         if (emailnv.isPresent()) {
             throw new Exception("Email is already present!");
         }
-        if(sdtnv.isPresent()){
+        if (sdtnv.isPresent()) {
             throw new Exception("So dien thoai is already present!");
         }
         NhanVien nhanVien = NhanVien.builder().id(id)

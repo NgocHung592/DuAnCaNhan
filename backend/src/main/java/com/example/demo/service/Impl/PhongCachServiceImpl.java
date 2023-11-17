@@ -22,7 +22,7 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Override
     public Page<PhongCach> getAll(Integer pageNo) {
-        Pageable pageable= PageRequest.of(pageNo,10);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return phongCachRepository.getAll(pageable);
     }
 
@@ -38,7 +38,7 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Override
     public PhongCach add(PhongCach phongCach) {
-        PhongCach phongCachSave= PhongCach.builder()
+        PhongCach phongCachSave = PhongCach.builder()
                 .ma(phongCach.getMa())
                 .ten(phongCach.getTen())
                 .ngayTao(phongCach.getNgayTao())
@@ -50,9 +50,9 @@ public class PhongCachServiceImpl implements PhongCachService {
 
     @Override
     public PhongCach update(PhongCach phongCach, UUID id) {
-        Optional<PhongCach> optionalPhongCach=phongCachRepository.findById(id);
-        if (optionalPhongCach.isPresent()){
-            optionalPhongCach.map(phongCachUpdate->{
+        Optional<PhongCach> optionalPhongCach = phongCachRepository.findById(id);
+        if (optionalPhongCach.isPresent()) {
+            optionalPhongCach.map(phongCachUpdate -> {
                 phongCachUpdate.setTen(phongCach.getTen());
                 phongCachUpdate.setNgaySua(phongCach.getNgaySua());
                 phongCachUpdate.setNguoiSua("Hưng");

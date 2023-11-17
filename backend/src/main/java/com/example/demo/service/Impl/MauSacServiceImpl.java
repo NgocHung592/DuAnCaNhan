@@ -38,7 +38,7 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac add(MauSac mauSac) {
-        MauSac mauSacSave= MauSac.builder()
+        MauSac mauSacSave = MauSac.builder()
                 .ma(mauSac.getMa())
                 .ten(mauSac.getTen())
                 .daXoa(mauSac.getDaXoa())
@@ -50,9 +50,9 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSac update(MauSac mauSac, UUID id) {
-        Optional<MauSac> optional=mauSacRepository.findById(id);
-        if (optional.isPresent()){
-            optional.map(mauSacUpdate->{
+        Optional<MauSac> optional = mauSacRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(mauSacUpdate -> {
                 mauSacUpdate.setMa(mauSac.getMa());
                 mauSacUpdate.setTen(mauSac.getTen());
                 mauSacUpdate.setNgaySua(mauSac.getNgaySua());
@@ -61,7 +61,7 @@ public class MauSacServiceImpl implements MauSacService {
                 return mauSacRepository.save(mauSacUpdate);
             }).orElse(null);
         }
-      return null;
+        return null;
     }
 
     @Override

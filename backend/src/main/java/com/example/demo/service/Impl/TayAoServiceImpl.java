@@ -50,9 +50,9 @@ public class TayAoServiceImpl implements TayAoService {
 
     @Override
     public TayAo update(TayAo tayAo, UUID id) {
-        Optional<TayAo> optionalTayAo=tayAoRepository.findById(id);
+        Optional<TayAo> optionalTayAo = tayAoRepository.findById(id);
         if (optionalTayAo.isPresent()) {
-            optionalTayAo.map(tayAoUpdate->{
+            optionalTayAo.map(tayAoUpdate -> {
                 tayAoUpdate.setTen(tayAo.getTen());
                 tayAoUpdate.setNgaySua(tayAo.getNgaySua());
                 tayAoUpdate.setNguoiSua("Hưng");

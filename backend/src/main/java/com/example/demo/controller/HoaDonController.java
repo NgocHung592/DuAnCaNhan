@@ -17,18 +17,21 @@ import java.util.UUID;
 public class HoaDonController {
     @Autowired
     private HoaDonService hoaDonService;
-//    @GetMapping("hien-thi")
+
+    //    @GetMapping("hien-thi")
 //    public Page<HoaDon> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
 //        return hoaDonService.getAll(pageNo);
 //    }
-@GetMapping("hien-thi")
-public Page<HoaDonRepone> getAlll(@RequestParam(name = "pageNo",defaultValue = "0") Integer pageNo){
-    return hoaDonService.getAlll(pageNo);
-}
-    @GetMapping("/search")
-    public Page<HoaDonRepone> searchProductsByName(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search ) {
-        return hoaDonService.getSearch(pageNo,search);
+    @GetMapping("hien-thi")
+    public Page<HoaDonRepone> getAlll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return hoaDonService.getAlll(pageNo);
     }
+
+    @GetMapping("/search")
+    public Page<HoaDonRepone> searchProductsByName(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search) {
+        return hoaDonService.getSearch(pageNo, search);
+    }
+
     @GetMapping("get-list")
     public ResponseEntity getList() {
         return new ResponseEntity(hoaDonService.getList(), HttpStatus.OK);
@@ -48,8 +51,9 @@ public Page<HoaDonRepone> getAlll(@RequestParam(name = "pageNo",defaultValue = "
     public HoaDon update(@RequestBody HoaDon hoaDon, @PathVariable("id") String id) {
         return hoaDonService.update(hoaDon, UUID.fromString(id));
     }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity delete(@PathVariable("id") String id) {
-        return new ResponseEntity(hoaDonService.delete(UUID.fromString(id)),HttpStatus.OK);
+        return new ResponseEntity(hoaDonService.delete(UUID.fromString(id)), HttpStatus.OK);
     }
 }

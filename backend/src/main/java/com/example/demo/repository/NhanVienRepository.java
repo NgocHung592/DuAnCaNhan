@@ -35,9 +35,13 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
                                                     a.ma like %:search% or a.ho_ten like %:search% or a.email like %:search% or a.so_dien_thoai like %:search%
                                                     order by a.ngay_tao desc """, nativeQuery = true)
     Page<NhanVienReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
+
     Optional<NhanVien> findNhanVienByEmail(String email);
+
     Optional<NhanVien> findNhanVienBySodienthoai(String sdt);
-    Optional<NhanVien> findNhanVienByEmailAndIdNot(String email,UUID id );
+
+    Optional<NhanVien> findNhanVienByEmailAndIdNot(String email, UUID id);
+
     Optional<NhanVien> findNhanVienBySodienthoaiAndIdNot(String sodienthoai, UUID id);
 
 
