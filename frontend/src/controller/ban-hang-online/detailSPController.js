@@ -1,4 +1,4 @@
-window.detaiSPController = function ($http, $scope, $location) {
+window.detailSPController = function ($http, $scope, $location) {
     $scope.totalPages = [];
     $scope.products = [];
     $scope.productDetails = [];

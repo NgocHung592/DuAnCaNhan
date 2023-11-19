@@ -4,23 +4,41 @@ window.trangChuController = function (
     $routeParams
 ) {
     $scope.listSanPhamChiTiet = [];
+    $scope.listSanPham = [];
     $scope.detailSanPham = {
         id: "",
         ten: "",
         moTa: "",
         daXoa: Boolean,
     };
-    $scope.getSanPhamChiTiet = function () {
+    $scope.detailMauSac = {
+        id: "",
+        tenMauSac: "",
+        daXoa: Boolean,
+    };
+    $scope.detailKichThuoc = {
+        id: "",
+        tenKichThuoc: "",
+        daXoa: Boolean,
+    };
+    $scope.getSanPham = function () {
         $http
             .get(
-                sanPhamChiTietAPI +
+                sanPhamAPI +
                 "/hien-thi"
             )
+
+
             .then(function (response) {
-                $scope.listSanPhamChiTiet = response.data;
-                console.log($scope.listSanPhamChiTiet);
-                $scope.totalPages = new Array(response.data.totalPages);
+                $scope.listSanPham = response.data;
+
+                $scope.listSanPhamChiTiet.forEach(function (detail) {
+                        $scope.listSanPhamChiTiet[detail.idsanpham] = detail;
+                        console.log(detail)
+                    });
             });
     };
-    $scope.getSanPhamChiTiet();
+    $scope.getSanPham();
+
+
 };

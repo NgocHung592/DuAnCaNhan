@@ -36,17 +36,16 @@
             <div class="section-content ">
                 <div class="wraplist-products">
                     <div class="listProduct-row listProduct-resize-1">
-                        <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content" data-id="1114414061">
+                        <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="sanPham in listSanPham.content " data-id="1114414061">
                             <div class="product-inner product-resize ">
                                 <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-36%</span></div>
                                     <div class="product--image image-resize">
                                         <div class="product--image__inner">
                                             <div class="prod-img first-image">
                                                 <picture>
 
                                                     <img class=" img-loop "
-                                                         src="../../../frontend/assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}">
+                                                         src="../../../frontend/assets/anh-san-pham/{{sanPham.duongDan}}">
                                                 </picture>
                                             </div>
                                             <div class="prod-img second-image hovered-img hidden-xs">
@@ -62,8 +61,8 @@
 
                                 </div>
                                 <div class="proloop-detail">
-                                    <h3><a href="#/product" class=" quickview-product "
-                                            data-handle="/products/hoodie-zip-boxy-8yo-monogram">{{sanPhamChiTiet.tenSanPham}}</a></h3>
+                                    <h3><a href="#/detail/{{sanPham.id}}" class=" quickview-product "
+                                            data-handle="/products/hoodie-zip-boxy-8yo-monogram">{{sanPham.tenSanPham}}</a></h3>
                                     <p class="proloop--price">
                                         <span class="price">Giá : {{sanPhamChiTiet.donGia}}₫</span>
 

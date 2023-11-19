@@ -18,7 +18,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/product", {
       templateUrl: "ban-hang-online/detail-product.html",
-      controller: detaiSPController,
+      // controller: detailSPController,
     })
     .when("/gio-hang", {
       templateUrl: "ban-hang-online/gio-hang.html",
