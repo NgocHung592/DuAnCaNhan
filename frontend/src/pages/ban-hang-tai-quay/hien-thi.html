@@ -72,26 +72,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="" ng-if="listHoaDonChiTiet.length === 0">
-                                    <!-- Hiện không có sản phẩm nào trong giỏ hàng -->
-                                </div>
-                                <!-- <nav aria-label="Page navigation example ">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item">
-                                            <a class="page-link" ng-click="previousPage()" aria-label="Previous">
-                                                <span aria-hidden="true">
-                                                    << </span>
-                                            </a>
-                                        </li>
-                                        <li class="page-item" ng-repeat="page in totalPages track by $index"
-                                            ng-click="changePage($index);">
-                                            <a class="page-link">{{$index+1}}</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" ng-click="nextPage()">>></a>
-                                        </li>
-                                    </ul>
-                                </nav> -->
+                                <!-- <div class="" ng-if="listHoaDonChiTiet.length === 0">
+                                    <p class="justify-content-center"> Hiện không có sản phẩm nào trong giỏ hàng</p>
+                                </div> -->
                             </div>
 
                         </div>
@@ -342,10 +325,10 @@
                                         id="flexSwitchCheckDefault" ng-click="giaoHang()">
                                     <label class="form-check-label" for="flexSwitchCheckDefault">Giao Hàng</label>
                                 </div>
-
+                                <br>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" placeholder="Mã Giảm Giá" disabled>
+                                        <input type="text" class="form-control" placeholder="Mã Giảm Giá" disabled>
 
                                     </div>
                                     <div class="col-md-6">

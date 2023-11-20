@@ -6,6 +6,7 @@ window.hienThiSanPhamChiTietController = function (
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
+  $scope.urlImage = "";
   $scope.detailSanPham = {
     id: "",
     ten: "",
@@ -67,14 +68,21 @@ window.hienThiSanPhamChiTietController = function (
   };
   $scope.detailSanPhamChiTietF = function (e, id) {
     e.preventDefault();
+
     $http.get(sanPhamChiTietAPI + "/detail/" + id).then(function (response) {
       $scope.detailSanPhamChiTiet = response.data;
+      console.log($scope.detailSanPhamChiTiet);
     });
   };
-  $scope.updateSanPhamChiTiet = function (e, id) {
+  $scope.updateSanPhamChiTietF = function (e, id) {
     e.preventDefault();
     let productImages = document.getElementById("urlImage");
     for (const file of productImages.files) {
+      $scope.urlImage = file.name;
+    }
+    if ($scope.urlImage == "") {
+      $scope.urlImage = $scope.detailSanPhamChiTiet.urlImage;
+    } else {
       $scope.updateSanPhamChiTiet = {
         idMauSac: $scope.detailSanPhamChiTiet.mauSac.id,
         idKichThuoc: $scope.detailSanPhamChiTiet.kichThuoc.id,
@@ -86,8 +94,8 @@ window.hienThiSanPhamChiTietController = function (
         soLuong: $scope.detailSanPhamChiTiet.soLuong,
         donGia: $scope.detailSanPhamChiTiet.donGia,
         daXoa: $scope.detailSanPhamChiTiet.daXoa,
+        urlImage: $scope.urlImage,
         ngaySua: new Date(),
-        urlImage: file.name,
       };
       $http
         .put(sanPhamChiTietAPI + "/update/" + id, $scope.updateSanPhamChiTiet)

@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.SanPham;
+import com.example.demo.model.response.SanPhamMoi;
 import com.example.demo.model.response.SanPhamReponse;
 import com.example.demo.repository.SanPhamRepository;
 import com.example.demo.service.SanPhamService;
@@ -21,7 +22,6 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
 
-    long currentTimestampMillis = System.currentTimeMillis();
 
     @Override
     public Page<SanPhamReponse> getAll(Integer pageNo) {
@@ -39,6 +39,11 @@ public class SanPhamServiceImpl implements SanPhamService {
     public Page<SanPhamReponse> search(Integer pageNo, String keyword) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamRepository.search(pageable, keyword);
+    }
+
+    @Override
+    public List<SanPhamMoi> topSanPhamMoi() {
+        return sanPhamRepository.topSanPhamMoi();
     }
 
     @Override

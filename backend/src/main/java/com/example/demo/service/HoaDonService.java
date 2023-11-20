@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.HoaDonRepone;
 import org.springframework.data.domain.Page;
 
@@ -14,7 +15,7 @@ public interface HoaDonService {
 
     HoaDon add(HoaDon hoaDon);
 
-    HoaDon update(HoaDon hoaDon, UUID id);
+    HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
     HoaDon detail(UUID id);
 

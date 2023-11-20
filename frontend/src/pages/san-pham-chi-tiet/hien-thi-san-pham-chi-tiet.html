@@ -77,11 +77,6 @@
                                     <th>Tên Sản Phẩm</th>
                                     <th>Số Lượng</th>
                                     <th>Đơn Giá</th>
-                                    <!-- <th>Chất Liệu</th>
-                                    <th>Phong Cách</th>
-                                    <th>Họa Tiết</th>
-                                    <th>Tay Áo</th>
-                                    <th>Cổ Áo</th> -->
                                     <th>Trạng Thái</th>
                                     <th>Thao Tác</th>
                                 </tr>
@@ -90,17 +85,13 @@
                                 <tr>
                                     <th>{{$index+1}}</th>
                                     <th><img class="table_img"
-                                            src="../../../frontend/assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
+                                            src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
                                             alt="Không có ảnh"></th>
                                     <th>{{sanPhamChiTiet.tenSanPham}} [{{sanPhamChiTiet.tenKichThuoc}} -
                                         {{sanPhamChiTiet.tenMauSac}}]</th>
                                     <th>{{sanPhamChiTiet.soLuong}}</th>
                                     <th>{{sanPhamChiTiet.donGia | number}} VND</th>
-                                    <!-- <th>{{sanPhamChiTiet.tenChatLieu}}</th>
-                                    <th>{{sanPhamChiTiet.tenPhongCach}}</th>
-                                    <th>{{sanPhamChiTiet.tenHoaTiet}}</th>
-                                    <th>{{sanPhamChiTiet.tenTayAo}}</th>
-                                    <th>{{sanPhamChiTiet.tenCoAo}}</th> -->
+
                                     <th ng-class="{' text-g ': !sanPhamChiTiet.daXoa
                                     ,'text-glow':sanPhamChiTiet.daXoa}">
                                         {{sanPhamChiTiet.daXoa?"Ngừng kinh
@@ -211,7 +202,8 @@
                                                     </div>
                                                     <div class="col-md-12 mb-3">
                                                         <label class="form-label">Hình Ảnh</label>
-                                                        <input type="file" class="form-control" id="urlImage">
+                                                        <input type="file" class="form-control"
+                                                            ng-model="detailSanPhamChiTiet.urlImage" id="urlImage">
                                                     </div>
                                                     <div class="mb-3" class="form-check">
                                                         <label class="form-label">Trạng Thái</label><br>
@@ -233,7 +225,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-warning"
                                                             data-bs-dismiss="modal" id="liveToastBtn"
-                                                            ng-click="updateSanPhamChiTiet($event,detailSanPhamChiTiet.id)">Cập
+                                                            ng-click="updateSanPhamChiTietF($event,detailSanPhamChiTiet.id)">Cập
                                                             Nhật</button>
                                                     </div>
                                                 </form>

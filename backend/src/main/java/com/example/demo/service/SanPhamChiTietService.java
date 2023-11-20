@@ -13,6 +13,7 @@ public interface SanPhamChiTietService {
 
     Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id);
 
+
     Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo);
 
     SanPhamChiTiet getOne(UUID id);

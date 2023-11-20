@@ -1,34 +1,16 @@
 package com.example.demo.model.response;
 
+
 import org.springframework.beans.factory.annotation.Value;
 
-import java.math.BigDecimal;
 
-public interface SanPhamChiTietResponse {
+public interface SanPhamMoi {
 
     @Value("#{target.id_san_pham}")
     String getIdSanPham();
 
-    @Value("#{target.id_san_pham_chi_tiet}")
-    String getIdSanPhamChiTiet();
-
-    @Value("#{target.hinh_anh}")
-    String getDuongDan();
-
     @Value("#{target.ten_san_pham}")
     String getTenSanPham();
-
-    @Value("#{target.so_luong}")
-    Integer getSoLuong();
-
-    @Value("#{target.don_gia}")
-    BigDecimal getDonGia();
-
-    @Value("#{target.ten_kich_thuoc}")
-    String getTenKichThuoc();
-
-    @Value("#{target.ten_mau_sac}")
-    String getTenMauSac();
 
     @Value("#{target.ten_chat_lieu}")
     String getTenChatLieu();
@@ -45,6 +27,12 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.ten_co_ao}")
     String getTenCoAo();
 
-    @Value("#{target.da_xoa}")
-    Boolean getDaXoa();
+    @Value("#{target.hinh_anh}")
+    String getHinhAnh();
+
+    @Value("#{target.gia_min}")
+    Double getGiaMin();
+
+    @Value("#{target.gia_max}")
+    Double getGiaMax();
 }

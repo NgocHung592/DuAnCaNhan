@@ -71,10 +71,6 @@ window.addSanPhamController = function ($http, $scope, $location) {
   };
 
   $scope.addKichThuoc = function (index) {
-    $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
-      $location.path("/san-pham/add");
-    });
-    console.log($scope.listKichThuocTrangThai);
     $scope.listKichThuocTrangThai[index].checked =
       !$scope.listKichThuocTrangThai[index].checked;
     if ($scope.listKichThuocTrangThai[index].checked) {
@@ -144,18 +140,6 @@ window.addSanPhamController = function ($http, $scope, $location) {
         });
       });
     });
-  };
-  $scope.themAnh = function () {
-    // const inputElement = document.getElementById("product-image");
-    // const selectedFiles = inputElement.files;
-    // for (const file of selectedFiles) {
-    //   $scope.sizeAndColors.forEach((product) => {
-    //     if ($scope.groupedProducts[product.tenMauSac]) {
-    //       $scope.groupedProducts[product.tenMauSac].urlImage = [file.name];
-    //     }
-    //   });
-    // }
-    // console.log($scope.groupedProducts);
   };
   $scope.removeSize = function (tenMauSac, index) {
     if (
@@ -334,9 +318,14 @@ window.addSanPhamController = function ($http, $scope, $location) {
     daXoa: false,
   };
   $scope.addNewKichThuoc = function () {
-    $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
-      $scope.getKichThuocTrangThai();
-    });
+    console.log("a");
+    if ($scope.formKichThuoc.ten === "") {
+      return;
+    } else {
+      $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
+        $scope.getKichThuocTrangThai();
+      });
+    }
   };
   $scope.formMauSac = {
     ma: "",

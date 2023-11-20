@@ -63,6 +63,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.getPage(pageable, id);
     }
 
+
+
     @Override
     public Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
@@ -76,8 +78,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
     @Override
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
-        Random random = new Random();
-        int randomNumber = random.nextInt();
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
             if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
@@ -86,6 +86,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
+                        .urlImage(sanPhamChiTietRequest.getUrlImage())
                         .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
                         .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
@@ -95,16 +96,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-                SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
-                HinhAnh hinhAnhSave = HinhAnh.builder()
-                        .ma("anh " + randomNumber)
-                        .ten("anh " + randomNumber)
-                        .duong_dan(sanPhamChiTietRequest.getUrlImage())
-                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
-                        .nguoiTao("Hưng")
-                        .sanPhamChiTiet(sanPhamChiTiet)
-                        .build();
-                hinhAnhRepository.save(hinhAnhSave);
+                sanPhamChiTietRepository.save(sanPhamChiTietSave);
                 return;
             } else {
                 SanPham sanPhamSave = SanPham.builder()
@@ -123,6 +115,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .ngayTao(sanPhamChiTietRequest.getNgayTao())
                         .nguoiTao("Hưng")
+                        .urlImage(sanPhamChiTietRequest.getUrlImage())
                         .sanPham(sanPham)
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
                         .mauSac(mauSacRepository.findById(getIdMauSac(sanPhamChiTietRequest.getTenMauSac())).get())
@@ -132,17 +125,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .tayAo(tayAoRepository.findById(sanPhamChiTietRequest.getIdTayAo()).get())
                         .hoaTiet(hoaTietRepository.findById(sanPhamChiTietRequest.getIdHoaTiet()).get())
                         .build();
-                SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.save(sanPhamChiTietSave);
-
-                HinhAnh hinhAnhSave = HinhAnh.builder()
-                        .ma("anh " + randomNumber)
-                        .ten("anh " + randomNumber)
-                        .duong_dan(sanPhamChiTietRequest.getUrlImage())
-                        .ngayTao(sanPhamChiTietRequest.getNgayTao())
-                        .nguoiTao("Hưng")
-                        .sanPhamChiTiet(sanPhamChiTiet)
-                        .build();
-                hinhAnhRepository.save(hinhAnhSave);
+                sanPhamChiTietRepository.save(sanPhamChiTietSave);
                 return;
             }
         });
@@ -157,6 +140,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             sanPhamChiTietUpdate.setDonGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()));
             sanPhamChiTietUpdate.setNgaySua(sanPhamChiTietRequest.getNgaySua());
             sanPhamChiTietUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+            sanPhamChiTietUpdate.setUrlImage(sanPhamChiTietRequest.getUrlImage());
             sanPhamChiTietUpdate.setDaXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()));
             sanPhamChiTietUpdate.setMauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get());
             sanPhamChiTietUpdate.setKichThuoc(kichThuocRepository.findById(sanPhamChiTietRequest.getIdKichThuoc()).get());
@@ -167,13 +151,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             sanPhamChiTietUpdate.setCoAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get());
             return sanPhamChiTietRepository.save(sanPhamChiTietUpdate);
         }).orElse(null);
-        Optional<HinhAnh> hinhAnh = hinhAnhRepository.findHinhAnh(id);
-        hinhAnh.map(hinhAnhUpdate -> {
-            hinhAnhUpdate.setNgaySua(sanPhamChiTietRequest.getNgaySua());
-            hinhAnhUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
-            hinhAnhUpdate.setDuong_dan(sanPhamChiTietRequest.getUrlImage());
-            return hinhAnhRepository.save(hinhAnhUpdate);
-        }).orElse(null);
+
         return null;
     }
 
@@ -183,10 +161,13 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
             if (optional.isPresent()) {
                 Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-                optional.map(sanPhamChiTiet -> {
-                    sanPhamChiTiet.setSoLuong(soLuongNew);
-                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
-                }).orElse(null);
+                if (soLuongNew == 0) {
+                    optional.map(sanPhamChiTiet -> {
+                        sanPhamChiTiet.setSoLuong(soLuongNew);
+                        sanPhamChiTiet.setDaXoa(true);
+                        return sanPhamChiTietRepository.save(sanPhamChiTiet);
+                    }).orElse(null);
+                }
             }
         });
 

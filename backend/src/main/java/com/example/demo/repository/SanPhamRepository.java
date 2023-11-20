@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.SanPham;
+import com.example.demo.model.response.SanPhamMoi;
 import com.example.demo.model.response.SanPhamReponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,4 +48,18 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     Page<SanPhamReponse> search(Pageable pageable, @Param("key") String keyword);
 
     Optional<SanPham> findByTen(String ten);
+
+    @Query(value = """
+            select top (8) sp.id as'id_san_pham', sp.ten as'ten_san_pham',cl.ten as'ten_chat_lieu',pc.ten as'ten_phong_cach',ht.ten as'ten_hoa_tiet',ta.ten as'ten_tay_ao',ca.ten as'ten_co_ao', spct.hinh_anh as'hinh_anh', min(spct.don_gia) as'gia_min', max(spct.don_gia) as'gia_max'
+            from san_pham sp
+                     inner join san_pham_chi_tiet spct on sp.id = spct.san_pham_id
+                     inner join chat_lieu cl on cl.id = spct.chat_lieu_id
+                     inner join phong_cach pc on spct.phong_cach_id = pc.id
+                     inner join hoa_tiet ht on spct.hoa_tiet_id = ht.id
+                     inner join tay_ao ta on ta.id = spct.tay_ao_id
+                     inner join co_ao ca on spct.co_ao_id = ca.id
+            group by sp.id, sp.ten, spct.hinh_anh, sp.ngay_tao,cl.ten,pc.ten,ht.ten,ta.ten,ca.ten
+            order by sp.ngay_tao desc
+            """, nativeQuery = true)
+    List<SanPhamMoi> topSanPhamMoi();
 }

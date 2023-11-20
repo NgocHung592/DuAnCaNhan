@@ -15,7 +15,7 @@ public interface HoaDonChiTietReponse {
     @Value("#{target.ma}")
     String getMaHoaDon();
 
-    @Value("#{target.duong_dan}")
+    @Value("#{target.hinh_anh}")
     String getDuongDan();
 
     @Value("#{target.ten_san_pham}")

@@ -1,8 +1,10 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.HoaDonRepone;
 import com.example.demo.repository.HoaDonReponsitory;
+import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,8 @@ import java.util.UUID;
 public class HoaDonServiceImpl implements HoaDonService {
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
-    long currentTimestampMillis = System.currentTimeMillis();
+    @Autowired
+    private KhachHangRepository khachHangRepository;
 
     @Override
     public Page<HoaDon> getAll(Integer pageNo) {
@@ -37,7 +40,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon add(HoaDon hoaDon) {
         HoaDon hoaDonSave = HoaDon.builder()
                 .ma(hoaDon.getMa())
-                .ngayTao(new Timestamp(currentTimestampMillis))
+                .ngayTao(hoaDon.getNgayTao())
                 .loai_hoa_don("Tại quầy")
                 .nguoiTao("Hưng")
                 .trangThai(hoaDon.getTrangThai())
@@ -46,15 +49,16 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon update(HoaDon hoaDon, UUID id) {
+    public HoaDon update(HoaDonRequest hoaDonRequest, UUID id) {
         Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
         return optional.map(o -> {
             o.setTrangThai(1);
-            o.setTenKhachHang(hoaDon.getTenKhachHang());
-            o.setDiaChiKhachHang(hoaDon.getDiaChiKhachHang());
-            o.setSoDienThoaiKhachHang(hoaDon.getSoDienThoaiKhachHang());
-            o.setNgayThanhToan(new Timestamp(currentTimestampMillis));
-            o.setTongTien(hoaDon.getTongTien());
+            o.setTenKhachHang(hoaDonRequest.getTenKhachHang());
+            o.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
+            o.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
+            o.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+            o.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+            o.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
             return hoaDonReponsitory.save(o);
         }).orElse(null);
     }

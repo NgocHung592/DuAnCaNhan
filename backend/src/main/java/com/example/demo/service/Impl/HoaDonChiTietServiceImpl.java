@@ -48,7 +48,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
+    public HoaDonChiTiet  update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
         Optional<HoaDonChiTiet> optional = hoaDonChiTietRepository.findById(id);
         return optional.map(o -> {
             o.setSoLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()));

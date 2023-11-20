@@ -6578,6 +6578,14 @@ main {
     display: none;
 }
 
+.select-swap .n-sd .swatch-element .m .variant-1:checked+label.sd {
+    /* Định dạng khi màu sắc được chọn */
+    /* Ví dụ: */
+    border: 2px solid red;
+    background-color: lightgray;
+    /* Thêm các thuộc tính CSS khác tùy thuộc vào yêu cầu của bạn */
+}
+
 .productToolbar-addcart .product-actions {
     display: -webkit-box;
     display: -ms-flexbox;

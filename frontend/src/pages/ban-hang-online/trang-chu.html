@@ -8,13 +8,13 @@
                             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" data-bs-interval="1000">
-                                        <img src="../../../frontend/assets/anh-banner/b16.jpg" class="d-block w-100" alt="...">
+                                        <img src="../../../assets/anh-banner/b16.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item" data-bs-interval="1000">
-                                        <img src="../../../frontend/assets/anh-banner/b17.jpg" class="d-block w-100" alt="...">
+                                        <img src="../../../assets/anh-banner/b17.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item" data-bs-interval="1000">
-                                        <img src="../../../frontend/assets/anh-banner/b18.jpg" class="d-block w-100" alt="...">
+                                        <img src="../../../assets/anh-banner/b18.jpg" class="d-block w-100" alt="...">
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
         <div class="container">
             <div class="section-heading text-center">
                 <h2 class="hTitle">
-                    <a >
+                    <a>
                         SẢN PHẨM MỚI TINH
                     </a>
                 </h2>
@@ -36,43 +36,44 @@
             <div class="section-content ">
                 <div class="wraplist-products">
                     <div class="listProduct-row listProduct-resize-1">
-                        <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content " data-id="1114414061">
+                        <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="topSanPham in listTopSanPham "
+                            data-id="1114414061">
                             <div class="product-inner product-resize ">
                                 <div class="proloop-image ">
                                     <div class="product--image image-resize">
                                         <div class="product--image__inner">
                                             <div class="prod-img first-image">
-                                                <picture>
-
+                                                <a href="#/detail-product/{{topSanPham.idSanPham}}">
                                                     <img class=" img-loop "
-                                                         src="../../../frontend/assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}">
-                                                </picture>
+                                                        src="../../../assets/anh-san-pham/{{topSanPham.duongDan}}">
+                                                </a>
                                             </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
+                                            <!-- <div class="prod-img second-image hovered-img hidden-xs">
 
-                                                    <img class="hover img-loop "
-                                                        src="../../../frontend/assets/anh-size/z3636855509379_048e036e3867398f2f62499a75a1e156_ebbb954a337547bea0d9c1e59f84d872_grande.jpg">
-                                                </picture>
-                                            </div>
+                                                <img class="hover img-loop " src="../../../assets/anh-size/{{hinhAnh}}">
+                                            </div> -->
 
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="proloop-detail">
-                                    <h3><a href="#/product/{{sanPhamChiTiet.idSanPhamChiTiet}}" class=" quickview-product "
-                                            data-handle="/products/hoodie-zip-boxy-8yo-monogram">{{sanPhamChiTiet.tenSanPham}}</a></h3>
+                                    <h3><a href="#/product/{{topSanPham.idSanPham}}"
+                                            class=" quickview-product ">{{topSanPham.tenSanPham}}
+                                            {{topSanPham.tenPhongCach}} {{topSanPham.tenHoaTiet}}
+                                        </a>
+                                    </h3>
                                     <p class="proloop--price">
-                                        <span class="price">Giá : {{sanPhamChiTiet.donGia}}₫</span>
-
+                                        <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
+                                            class="price">{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
+                                            number}}₫</span>
+                                        <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
+                                            class="price">{{topSanPham.giaMin | number}}₫</span>
 
                                     </p>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="wraplist-button text-center visible-desk  visible-mobile">

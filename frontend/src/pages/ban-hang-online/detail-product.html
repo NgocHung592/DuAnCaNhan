@@ -1,358 +1,167 @@
 <main class="wrapperMain_content ">
     <div class="layout-productDetail layout-pageProduct">
-        <section class="productDetail-information productDetail_style__01">
+        <section class="productDetail-information productDetail_style__01"
+            ng-repeat="sanPhamChiTiet in listSanPhamChiTiet">
             <div class="container">
-                <div class="row" ng-model="product.tenSanPham">
+                <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 productDetail--gallery">
                         <div class="product-container-gallery">
                             <div class="wrapbox-image">
 
+                                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="5000"
+                                            ng-repeat="hinhAnh in sanPhamChiTiet.duongDan">
+                                            <img src="../../../assets/anh-san-pham/{{hinhAnh}}" class="d-block w-100"
+                                                alt="...">
+                                        </div>
 
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon " aria-hidden="true"></span>
+                                    </button>
+                                </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 productDetail--content" id="detail-product">
                         <div class="product-container-detail">
                             <div class="product-container-order">
                                 <div class="product-variants">
-                                    <form id="add-item-form" action="https://8yostudio.com/cart/add" method="post"
-                                        class="variants clearfix" ng-repeat="sanPham in listSanPham.content ">
-                                        <div class="select clearfix">
-                                            <select id="product-select" name="id" style="display:none;">
+                                    <form id="add-item-form" class="variants clearfix">
+                                        <div class="product-heading">
+                                            <h1>{{sanPhamChiTiet.tenSanPham}}
+                                                {{sanPhamChiTiet.tenPhongCach}} {{sanPhamChiTiet.tenHoaTiet}}
+                                                {{sanPhamChiTiet.tenChatLieu}} {{sanPhamChiTiet.tenTayAo}}
+                                                {{sanPhamChiTiet.tenCoAo}}</h1>
 
-                                                <option value="1113947460">{{sanPhamChiTiet.tenMauSac}} / S - 159,000₫</option>
+                                        </div>
+                                        <div class="product-price" id="price-preview">
 
-
-                                            </select>
+                                            <span class="pro-price"
+                                                ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin
+                                                |
+                                                number}}₫ -
+                                                {{sanPhamChiTiet.giaMax | number}}₫</span>
+                                            <span class="pro-price"
+                                                ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin
+                                                |
+                                                number}}₫</span>
                                         </div>
                                         <div class="select-swatch clearfix">
 
-                                            <div id="variant-swatch-0" class="swatch" data-option="option1"
-                                                data-option-index="0">
+                                            <div class="swatch">
                                                 <div class="title-swap header">Màu sắc: <strong></strong></div>
                                                 <div class="select-swap">
-                                                    <div data-value="Black" class="n-sd swatch-element color black  ">
-                                                        <input class="variant-0" id="swatch-0-black" type="radio"
-                                                            name="option1" value="Black" data-vhandle="black" checked />
-
-
-                                                        <label class="black" for="swatch-0-black">
-                                                            <span>Black</span>
-                                                            <svg class="ico-check" xmlns='http://www.w3.org/2000/svg'
-                                                                width='20' height='20' viewBox='0 0 20 20'>
-                                                                <g fill='none' fill-rule='evenodd'>
-                                                                    <g>
-                                                                        <g>
-                                                                            <g>
-                                                                                <g>
-                                                                                    <g>
-                                                                                        <g>
-                                                                                            <g>
-                                                                                                <path fill='#4889c9'
-                                                                                                    d='M0 0h16c2.21 0 4 1.79 4 4v16L0 0z'
-                                                                                                    transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124)' />
-                                                                                                <g fill='#FFF'>
-                                                                                                    <path
-                                                                                                        d='M4.654 7.571L8.88 3.176c.22-.228.582-.235.81-.016.229.22.236.582.017.81L5.04 8.825c-.108.113-.258.176-.413.176-.176 0-.33-.076-.438-.203L2.136 6.37c-.205-.241-.175-.603.067-.808.242-.204.603-.174.808.068L4.654 7.57z'
-                                                                                                        transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124) translate(7.5)' />
-                                                                                                </g>
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </g>
-                                                                                </g>
-                                                                            </g>
-                                                                        </g>
-                                                                    </g>
-                                                                </g>
-                                                            </svg>
+                                                    <div class="n-sd swatch-element m"
+                                                        ng-repeat="mauSac in sanPhamChiTiet.tenMauSac"
+                                                        ng-click="selectdMauSac(mauSac)">
+                                                        <input class="variant-1" ng-model="searchMauSac" type="radio"
+                                                            ng-value="mauSac" />
+                                                        <label ng-if="searchMauSac == mauSac" class="sd"
+                                                            for="swatch-1-m">
+                                                            <span
+                                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                                                <i class="fa-solid fa-check"></i>
+                                                            </span>
+                                                            <span>{{mauSac}}</span>
                                                         </label>
-
-                                                    </div>
-                                                    <div data-value="Brown" class="n-sd swatch-element color brown  ">
-                                                        <input class="variant-0" id="swatch-0-brown" type="radio"
-                                                            name="option1" value="Brown" data-vhandle="brown" />
-
-
-                                                        <label class="brown" for="swatch-0-brown">
-                                                            <span>Brown</span>
-                                                            <svg class="ico-check" xmlns='http://www.w3.org/2000/svg'
-                                                                width='20' height='20' viewBox='0 0 20 20'>
-                                                                <g fill='none' fill-rule='evenodd'>
-                                                                    <g>
-                                                                        <g>
-                                                                            <g>
-                                                                                <g>
-                                                                                    <g>
-                                                                                        <g>
-                                                                                            <g>
-                                                                                                <path fill='#4889c9'
-                                                                                                    d='M0 0h16c2.21 0 4 1.79 4 4v16L0 0z'
-                                                                                                    transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124)' />
-                                                                                                <g fill='#FFF'>
-                                                                                                    <path
-                                                                                                        d='M4.654 7.571L8.88 3.176c.22-.228.582-.235.81-.016.229.22.236.582.017.81L5.04 8.825c-.108.113-.258.176-.413.176-.176 0-.33-.076-.438-.203L2.136 6.37c-.205-.241-.175-.603.067-.808.242-.204.603-.174.808.068L4.654 7.57z'
-                                                                                                        transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124) translate(7.5)' />
-                                                                                                </g>
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </g>
-                                                                                </g>
-                                                                            </g>
-                                                                        </g>
-                                                                    </g>
-                                                                </g>
-                                                            </svg>
+                                                        <label ng-if="searchMauSac != mauSac" for="swatch-1-m">
+                                                            <span>{{mauSac}}</span>
                                                         </label>
-
                                                     </div>
-
-                                                    <div data-value="Cream" class="n-sd swatch-element color cream  ">
-                                                        <input class="variant-0" id="swatch-0-cream" type="radio"
-                                                            name="option1" value="Cream" data-vhandle="cream" />
-
-
-                                                        <label class="cream" for="swatch-0-cream">
-                                                            <span>Cream</span>
-                                                            <svg class="ico-check" xmlns='http://www.w3.org/2000/svg'
-                                                                width='20' height='20' viewBox='0 0 20 20'>
-                                                                <g fill='none' fill-rule='evenodd'>
-                                                                    <g>
-                                                                        <g>
-                                                                            <g>
-                                                                                <g>
-                                                                                    <g>
-                                                                                        <g>
-                                                                                            <g>
-                                                                                                <path fill='#4889c9'
-                                                                                                    d='M0 0h16c2.21 0 4 1.79 4 4v16L0 0z'
-                                                                                                    transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124)' />
-                                                                                                <g fill='#FFF'>
-                                                                                                    <path
-                                                                                                        d='M4.654 7.571L8.88 3.176c.22-.228.582-.235.81-.016.229.22.236.582.017.81L5.04 8.825c-.108.113-.258.176-.413.176-.176 0-.33-.076-.438-.203L2.136 6.37c-.205-.241-.175-.603.067-.808.242-.204.603-.174.808.068L4.654 7.57z'
-                                                                                                        transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124) translate(7.5)' />
-                                                                                                </g>
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </g>
-                                                                                </g>
-                                                                            </g>
-                                                                        </g>
-                                                                    </g>
-                                                                </g>
-                                                            </svg>
-                                                        </label>
-
-                                                    </div>
-
-
-
-
-
                                                 </div>
                                             </div>
-
-
-
-
-                                            <div id="variant-swatch-1" class="swatch" data-option="option2"
-                                                data-option-index="1">
+                                            <div class="swatch">
                                                 <div class="title-swap header">Kích thước: </div>
                                                 <div class="select-swap">
+                                                    <div class="n-sd swatch-element m"
+                                                        ng-repeat="kichThuoc in sanPhamChiTiet.tenKichThuoc"
+                                                        ng-click="selectdKichThuoc(kichThuoc)">
+                                                        <input class="variant-1" ng-model="searchKichThuoc" type="radio"
+                                                            ng-value="kichThuoc" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                    <div data-value="S" class="n-sd swatch-element s  ">
-                                                        <input class="variant-1" id="swatch-1-s" type="radio"
-                                                            name="option2" value="S" data-vhandle="s" checked />
-
-                                                        <label for="swatch-1-s">
-                                                            <span>S</span>
-                                                            <svg class="ico-check" xmlns='http://www.w3.org/2000/svg'
-                                                                width='20' height='20' viewBox='0 0 20 20'>
-                                                                <g fill='none' fill-rule='evenodd'>
-                                                                    <g>
-                                                                        <g>
-                                                                            <g>
-                                                                                <g>
-                                                                                    <g>
-                                                                                        <g>
-                                                                                            <g>
-                                                                                                <path fill='#4889c9'
-                                                                                                    d='M0 0h16c2.21 0 4 1.79 4 4v16L0 0z'
-                                                                                                    transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124)' />
-                                                                                                <g fill='#FFF'>
-                                                                                                    <path
-                                                                                                        d='M4.654 7.571L8.88 3.176c.22-.228.582-.235.81-.016.229.22.236.582.017.81L5.04 8.825c-.108.113-.258.176-.413.176-.176 0-.33-.076-.438-.203L2.136 6.37c-.205-.241-.175-.603.067-.808.242-.204.603-.174.808.068L4.654 7.57z'
-                                                                                                        transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124) translate(7.5)' />
-                                                                                                </g>
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </g>
-                                                                                </g>
-                                                                            </g>
-                                                                        </g>
-                                                                    </g>
-                                                                </g>
-                                                            </svg>
+                                                        <label ng-if="searchKichThuoc == kichThuoc" class="sd"
+                                                            for="swatch-1-m">
+                                                            <span
+                                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                                                <i class="fa-solid fa-check"></i>
+                                                            </span>
+                                                            <span>{{kichThuoc}}</span>
                                                         </label>
-
-                                                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                    <div data-value="M" class="n-sd swatch-element m  ">
-                                                        <input class="variant-1" id="swatch-1-m" type="radio"
-                                                            name="option2" value="M" data-vhandle="m" />
-
-                                                        <label for="swatch-1-m">
-                                                            <span>M</span>
-                                                            <svg class="ico-check" xmlns='http://www.w3.org/2000/svg'
-                                                                width='20' height='20' viewBox='0 0 20 20'>
-                                                                <g fill='none' fill-rule='evenodd'>
-                                                                    <g>
-                                                                        <g>
-                                                                            <g>
-                                                                                <g>
-                                                                                    <g>
-                                                                                        <g>
-                                                                                            <g>
-                                                                                                <path fill='#4889c9'
-                                                                                                    d='M0 0h16c2.21 0 4 1.79 4 4v16L0 0z'
-                                                                                                    transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124)' />
-                                                                                                <g fill='#FFF'>
-                                                                                                    <path
-                                                                                                        d='M4.654 7.571L8.88 3.176c.22-.228.582-.235.81-.016.229.22.236.582.017.81L5.04 8.825c-.108.113-.258.176-.413.176-.176 0-.33-.076-.438-.203L2.136 6.37c-.205-.241-.175-.603.067-.808.242-.204.603-.174.808.068L4.654 7.57z'
-                                                                                                        transform='translate(-804 -366) translate(180 144) translate(484 114) translate(16 80) translate(0 28) translate(124) translate(7.5)' />
-                                                                                                </g>
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </g>
-                                                                                </g>
-                                                                            </g>
-                                                                        </g>
-                                                                    </g>
-                                                                </g>
-                                                            </svg>
+                                                        <label ng-if="searchKichThuoc != kichThuoc" for="swatch-1-m">
+                                                            <span>{{kichThuoc}}</span>
                                                         </label>
-
                                                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
                                         </div>
                                         <div class="select-actions hidden-xs hidden-sm clearfix">
+                                            <div class="row">
+                                                <div class="d-flex flex-row col-md-3">
+                                                    <button class="btn btn-link px-2"
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <input type="number" value="1" class="form-control form-control-sm"
+                                                        style="width: 60px;" />
 
-                                            <div class="quantity-area clearfix">
-                                                <input type="button" value="-" onclick="HRT.All.minusQuantity()"
-                                                    class="qty-btn">
-                                                <input type="text" id="quantity" name="quantity" value="1" min="1"
-                                                    class="quantity-input">
-                                                <input type="button" value="+" onclick="HRT.All.plusQuantity()"
-                                                    class="qty-btn">
+                                                    <button class="btn btn-link px-2"
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-6 midle">
+                                                    <p>50 sản phẩm có sẵn trong cửa hàng</p>
+                                                </div>
                                             </div>
-                                            <div class="addcart-area">
-                                                <button type="button" id="add-to-cart"
-                                                    class=" add-to-cartProduct btnred button dark btn-addtocart addtocart-modal "
-                                                    name="add">
-                                                    Thêm vào giỏ
-                                                </button>
-                                                <button type="button" id="buy-now"
-                                                    class=" add-to-cartProduct button dark btn-addtocart addtocart-modal hidden "
-                                                    name="add">
-                                                    Mua ngay
-                                                </button>
+
+                                            <div class=" row mr-3 mt-3">
+                                                <div class="col-md-4">
+                                                    <button type="button"
+                                                        class=" add-to-cartProduct btnred button dark btn-addtocart addtocart-modal "
+                                                        name="add">
+                                                        Thêm vào giỏ hàng
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button"
+                                                        class=" add-to-cartProduct button dark btn-addtocart addtocart-modal hidden "
+                                                        name="add">
+                                                        Mua ngay
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
-
-
-
                                     </form>
                                 </div>
-                                <div class="product-heading">
-                                    <h1>8YO WENDY POCKET SKIRT</h1>
-                                    <ul class="product-meta">
 
-
-                                        <li class="pro-soldold">Tình trạng:
-                                            <span>
-
-                                                Còn hàng
-
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-price" id="price-preview">
+                                <!-- <div class="product-price" id="price-preview">
 
                                     <span class="pro-percent">-47%</span>
                                     <del>300,000₫</del>
 
                                     <span class="pro-price">159,000₫</span>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="product-available">
+                            <!-- <div class="product-available">
                                 <p class="txt-inventory">
 
-
-
-
-
-
                                 </p>
-                            </div>
-                            <div class="product-coutdown product-coutdown-jsdata">
+                            </div> -->
+                            <!-- <div class="product-coutdown product-coutdown-jsdata">
 
-                            </div>
+                            </div> -->
 
 
-                            <div class="product-description product-description--accordion">
+                            <!-- <div class="product-description product-description--accordion">
                                 <div class="panel-group opened">
                                     <div class="panel-title">
                                         <h2>THông tin sản phẩm</h2>
@@ -374,11 +183,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- TAB 1-->
 
-                                <!-- TAB 2-->
-
-                                <!-- TAB 3-->
 
 
                                 <div class="panel-group">
@@ -443,7 +248,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- TAB 4-->
 
@@ -458,578 +263,19 @@
                 <div class="listprod-title">
                     <h2>Có thể bạn cũng thích</h2>
                 </div>
-
-
-
-
-
-
-
-
                 <div class="listprod-content">
                     <div class="listProduct-related listProduct-resize owl-carousel owlCarousel-style"
                         id="owlProduct-related">
-
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1114414061">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-36%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_88ff5b9526c7497fafa013111819efda_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_88ff5b9526c7497fafa013111819efda_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/1_88ff5b9526c7497fafa013111819efda_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" HOODIE ZIP BOXY 8YO MONOGRAM " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/3_11f307a6e0d74d248c86537bcc029d8a_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/3_11f307a6e0d74d248c86537bcc029d8a_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/3_11f307a6e0d74d248c86537bcc029d8a_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" HOODIE ZIP BOXY 8YO MONOGRAM " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="hoodie-zip-boxy-8yo-monogram.html" class="proloop-link "
-                                        data-handle="/products/hoodie-zip-boxy-8yo-monogram"
-                                        title="HOODIE ZIP BOXY 8YO MONOGRAM"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="hoodie-zip-boxy-8yo-monogram.html" class=""
-                                            data-handle="/products/hoodie-zip-boxy-8yo-monogram">HOODIE ZIP BOXY 8YO
-                                            MONOGRAM</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">320,000₫</span>
-
-                                        <span class="price-del">500,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1114284743">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-52%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4782864883862_97c412c34dd33ecb09c1f2addf2a5665_47fd34474fd349cbb835d316e8870246_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4782864883862_97c412c34dd33ecb09c1f2addf2a5665_47fd34474fd349cbb835d316e8870246_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4782864883862_97c412c34dd33ecb09c1f2addf2a5665_47fd34474fd349cbb835d316e8870246_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO DANCING ART TEE " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_44bf29021fd14b9db27b850163acefc8_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_44bf29021fd14b9db27b850163acefc8_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/1_44bf29021fd14b9db27b850163acefc8_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO DANCING ART TEE " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="nhan-ban-tu-8yo-city-girl-art-tee.html" class="proloop-link "
-                                        data-handle="/products/nhan-ban-tu-8yo-city-girl-art-tee"
-                                        title="8YO DANCING ART TEE"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="nhan-ban-tu-8yo-city-girl-art-tee.html" class=""
-                                            data-handle="/products/nhan-ban-tu-8yo-city-girl-art-tee">8YO DANCING ART
-                                            TEE</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">169,000₫</span>
-
-                                        <span class="price-del">350,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1114284693">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-52%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4782864873920_024638c05e9ceb5126039fb64479ddaa_4d896bd36379476183eb80bf1e4a0b09_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4782864873920_024638c05e9ceb5126039fb64479ddaa_4d896bd36379476183eb80bf1e4a0b09_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4782864873920_024638c05e9ceb5126039fb64479ddaa_4d896bd36379476183eb80bf1e4a0b09_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO CITY GIRL ART TEE " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/5_cb29f38f84184fc1b9a77564b5df1f91_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/5_cb29f38f84184fc1b9a77564b5df1f91_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/5_cb29f38f84184fc1b9a77564b5df1f91_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO CITY GIRL ART TEE " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="8yo-city-girl-art-tee.html" class="proloop-link "
-                                        data-handle="/products/8yo-city-girl-art-tee" title="8YO CITY GIRL ART TEE"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="8yo-city-girl-art-tee.html" class=""
-                                            data-handle="/products/8yo-city-girl-art-tee">8YO CITY GIRL ART TEE</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">169,000₫</span>
-
-                                        <span class="price-del">350,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1114169061">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-38%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4780095989275_12a06cea46f16d27ffdda15f298501dc_e0a496e12bb040f2bd9ceea652c5f45f_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4780095989275_12a06cea46f16d27ffdda15f298501dc_e0a496e12bb040f2bd9ceea652c5f45f_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4780095989275_12a06cea46f16d27ffdda15f298501dc_e0a496e12bb040f2bd9ceea652c5f45f_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" SWEETY TUBE " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4780096024076_9ad35e8de6c31733953e327f5b0e3db0_063869e547f74d8887f7ad0d3ad0f591_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4780096024076_9ad35e8de6c31733953e327f5b0e3db0_063869e547f74d8887f7ad0d3ad0f591_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4780096024076_9ad35e8de6c31733953e327f5b0e3db0_063869e547f74d8887f7ad0d3ad0f591_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" SWEETY TUBE " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="sweety-tube.html" class="proloop-link " data-handle="/products/sweety-tube"
-                                        title="SWEETY TUBE"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="sweety-tube.html" class="" data-handle="/products/sweety-tube">SWEETY
-                                            TUBE</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">125,000₫</span>
-
-                                        <span class="price-del">200,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1113948461">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-53%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114629708_446554a6d901a4f6d6562af816be5fd2_636f9fe38719459ebca58db071a71791_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114629708_446554a6d901a4f6d6562af816be5fd2_636f9fe38719459ebca58db071a71791_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4763114629708_446554a6d901a4f6d6562af816be5fd2_636f9fe38719459ebca58db071a71791_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO JEAN ZIPPER POLO " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/3_335f6d6d61c1494dad1335a936417b9f_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/3_335f6d6d61c1494dad1335a936417b9f_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/3_335f6d6d61c1494dad1335a936417b9f_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO JEAN ZIPPER POLO " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="8yo-jean-zipper-tee-unisex-form-rong.html" class="proloop-link "
-                                        data-handle="/products/8yo-jean-zipper-tee-unisex-form-rong"
-                                        title="8YO JEAN ZIPPER POLO"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="8yo-jean-zipper-tee-unisex-form-rong.html" class=""
-                                            data-handle="/products/8yo-jean-zipper-tee-unisex-form-rong">8YO JEAN ZIPPER
-                                            POLO</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">189,000₫</span>
-
-                                        <span class="price-del">400,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1113948344">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-53%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114632784_2d1e991629904bb653c998b01f5de57e_024590a40d5a42e4b025da59695750b9_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114632784_2d1e991629904bb653c998b01f5de57e_024590a40d5a42e4b025da59695750b9_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4763114632784_2d1e991629904bb653c998b01f5de57e_024590a40d5a42e4b025da59695750b9_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO 1ST LINE TEE " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/22_70844e359e64405e8ff4c6ad16256234_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/22_70844e359e64405e8ff4c6ad16256234_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/22_70844e359e64405e8ff4c6ad16256234_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO 1ST LINE TEE " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="8yo-1st-line-tee-unisex-form-rong.html" class="proloop-link "
-                                        data-handle="/products/8yo-1st-line-tee-unisex-form-rong"
-                                        title="8YO 1ST LINE TEE"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="8yo-1st-line-tee-unisex-form-rong.html" class=""
-                                            data-handle="/products/8yo-1st-line-tee-unisex-form-rong">8YO 1ST LINE
-                                            TEE</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">189,000₫</span>
-
-                                        <span class="price-del">400,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1113948331">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-53%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114650579_22e1f3a13118d300fe7cba0a94326187_7dee8d5f6885430abaaa1394b28bf86a_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4763114650579_22e1f3a13118d300fe7cba0a94326187_7dee8d5f6885430abaaa1394b28bf86a_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4763114650579_22e1f3a13118d300fe7cba0a94326187_7dee8d5f6885430abaaa1394b28bf86a_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO WISDOM TEE " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_941162c3f3e24dbc88498fa14e599b9c_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/1_941162c3f3e24dbc88498fa14e599b9c_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/1_941162c3f3e24dbc88498fa14e599b9c_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO WISDOM TEE " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="8yo-wisom-tee-unisex-form-rong.html" class="proloop-link "
-                                        data-handle="/products/8yo-wisom-tee-unisex-form-rong"
-                                        title="8YO WISDOM TEE"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="8yo-wisom-tee-unisex-form-rong.html" class=""
-                                            data-handle="/products/8yo-wisom-tee-unisex-form-rong">8YO WISDOM TEE</a>
-                                    </h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">189,000₫</span>
-
-                                        <span class="price-del">400,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div class="product-loop" data-id="1113947553">
-                            <div class="product-inner product-resize">
-                                <div class="proloop-image ">
-                                    <div class="pro-sale"><span>-50%</span></div>
-
-
-
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-
-                                            <div class="prod-img first-image">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4759579819150_94ac7c7b1e3a2d22d631c758b6bdbfd6_01ea30f0dfb0451c808247b21daa6f7b_medium.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4759579819150_94ac7c7b1e3a2d22d631c758b6bdbfd6_01ea30f0dfb0451c808247b21daa6f7b_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4759579819150_94ac7c7b1e3a2d22d631c758b6bdbfd6_01ea30f0dfb0451c808247b21daa6f7b_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO LISA CROPTOP " />
-                                                </picture>
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <picture>
-                                                    <source media="(max-width: 480px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4753063133016_39958ebc67247d22a80ff30cf4c95e56_37ad4feee92a4489b051009ae5c3f626_small.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <source media="(min-width: 481px)"
-                                                        data-srcset="../../product.hstatic.net/200000258387/product/z4753063133016_39958ebc67247d22a80ff30cf4c95e56_37ad4feee92a4489b051009ae5c3f626_large.jpg"
-                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                    <img class="lazyload img-loop "
-                                                        data-src="../../product.hstatic.net/200000258387/product/z4753063133016_39958ebc67247d22a80ff30cf4c95e56_37ad4feee92a4489b051009ae5c3f626_large.jpg"
-                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                        alt=" 8YO LISA CROPTOP " />
-                                                </picture>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <a href="8yo-lisa-croptop.html" class="proloop-link "
-                                        data-handle="/products/8yo-lisa-croptop" title="8YO LISA CROPTOP"></a>
-                                </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="8yo-lisa-croptop.html" class=""
-                                            data-handle="/products/8yo-lisa-croptop">8YO LISA CROPTOP</a></h3>
-
-                                    <p class="proloop--price">
-                                        <span class="price">149,000₫</span>
-
-                                        <span class="price-del">300,000₫</span>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
                     </div>
                 </div>
 
             </div>
         </section>
-        <section class="productDetail-listprod productDetail-viewed">
-            <div class="container">
-                <div class="listprod-title">
-                    <h2>Sản phẩm đã xem</h2>
-                </div>
-                <div class="listprod-content">
-                    <div class="listProduct-viewed listProduct-resize  owl-carousel owlCarousel-style"
-                        id="owlProduct-viewed">
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </div>
 </main>
+<style>
+    .selected {
+        border: 2px solid red;
+    }
+</style>

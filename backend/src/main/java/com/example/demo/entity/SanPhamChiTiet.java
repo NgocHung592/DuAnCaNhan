@@ -59,6 +59,9 @@ public class SanPhamChiTiet implements Serializable {
     @Column(name = "da_xoa")
     private Boolean daXoa;
 
+    @Column(name = "hinh_anh")
+    private String urlImage;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "san_pham_id", referencedColumnName = "id")
     private SanPham sanPham;

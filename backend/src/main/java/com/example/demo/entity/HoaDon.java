@@ -38,9 +38,6 @@ public class HoaDon {
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;
 
-    @Column(name = "ngay_dat_hang")
-    private Timestamp ngayDatHang;
-
     @Column(name = "ngay_thanh_toan")
     private Timestamp ngayThanhToan;
 

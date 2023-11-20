@@ -62,5 +62,10 @@ public class SanPhamController {
                                  @RequestParam(name = "keyword") String keyword) {
         return new ResponseEntity(sanPhamService.search(Integer.valueOf(pageNo), keyword), HttpStatus.OK);
     }
+
+    @GetMapping("/san-pham-moi")
+    public ResponseEntity topSanPhamMoi() {
+        return new ResponseEntity(sanPhamService.topSanPhamMoi(), HttpStatus.OK);
+    }
 }
 

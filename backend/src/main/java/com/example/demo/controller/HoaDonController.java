@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.HoaDonRepone;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class HoaDonController {
     }
 
     @PutMapping("update/{id}")
-    public HoaDon update(@RequestBody HoaDon hoaDon, @PathVariable("id") String id) {
-        return hoaDonService.update(hoaDon, UUID.fromString(id));
+    public HoaDon update(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
+        return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")
