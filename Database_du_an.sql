@@ -112,6 +112,7 @@ Create table [san_pham_chi_tiet](
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
+	hinh_anh varchar(200),
     da_xoa bit,
     san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham(id),
     chat_lieu_id UNIQUEIDENTIFIER REFERENCES chat_lieu(id),
@@ -122,20 +123,6 @@ Create table [san_pham_chi_tiet](
     mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
     kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id)
     )
-
-Create table [hinh_anh](
-    id UNIQUEIDENTIFIER
-    DEFAULT NEWID() PRIMARY KEY,
-    ma varchar(20) ,
-    ten nvarchar(50) not null,
-    duong_dan varchar(max),
-    ngay_tao datetime,
-    ngay_sua datetime,
-    nguoi_tao nvarchar(50),
-    nguoi_sua  nvarchar(50),
-    da_xoa bit,
-    chi_tiet_san_pham_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
-)
 
 Create table [chuc_vu](
     id UNIQUEIDENTIFIER
