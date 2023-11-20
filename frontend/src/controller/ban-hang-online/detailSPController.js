@@ -60,16 +60,29 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         });
 
         // Chuyển đổi object thành mảng
-        $scope.listSanPhamChiTiet = Object.values(groupedSanPham);
+        $scope.listNewSanPhamChiTiet = Object.values(groupedSanPham);
 
-        console.log($scope.listSanPhamChiTiet);
+        console.log($scope.listNewSanPhamChiTiet);
       });
   };
   $scope.getSanPhamChiTiet();
   $scope.selectdMauSac = function (mauSac) {
+    console.log();
     $scope.searchMauSac = mauSac;
+    console.log($scope.searchMauSac);
+    console.log($scope.searchKichThuoc);
+    $scope.listSanPhamChiTiet.filter((sanPham) => {
+      if (
+        sanPham.tenKichThuoc == $scope.searchKichThuoc &&
+        sanPham.tenMauSac == $scope.searchMauSac
+      ) {
+        $scope.listNewSanPhamChiTiet.giaMin = sanPham.donGia;
+      }
+    });
   };
   $scope.selectdKichThuoc = function (kichThuoc) {
     $scope.searchKichThuoc = kichThuoc;
+    console.log($scope.searchMauSac);
+    console.log($scope.searchKichThuoc);
   };
 };

@@ -137,33 +137,106 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       )
       .then(function (response) {
         $scope.listHoaDonChiTiet = response.data.content;
-        // $scope.tongTien = $scope.listHoaDonChiTiet
-        //   .filter((item) => item.maHoaDon === $scope.maHoaDon)
-        //   .reduce((total, item) => total + item.thanhTien, 0);
+        $scope.tongTien = $scope.listHoaDonChiTiet
+          .filter((item) => item.maHoaDon === $scope.maHoaDon)
+          .reduce((total, item) => total + item.thanhTien, 0);
       });
   };
   $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    const toastTrigger = document.getElementById("liveToastBtn");
+    const toastLiveExample = document.getElementById("liveToast");
+    if (toastTrigger) {
+      const toastBootstrap =
+        bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+      toastBootstrap.show();
+    }
     $scope.formHoaDonChiTiet.idSanPhamChiTiet = idSanPhamChiTiet;
     $scope.formHoaDonChiTiet.donGia =
       $scope.listSanPhamChiTiet.content[index].donGia;
     $scope.formHoaDonChiTiet.thanhTien = $scope.formHoaDonChiTiet.donGia;
-    console.log($scope.formHoaDonChiTiet);
-    console.log($scope.listHoaDonChiTiet);
-    $scope.listHoaDonChiTiet.forEach((hoaDonChiTiet) => {
-      if (
-        $scope.formHoaDonChiTiet.idSanPhamChiTiet ===
-        hoaDonChiTiet.idSanPhamChiTiet
-      ) {
-        $scope.formHoaDonChiTiet.soLuong += 1;
-        return;
-      } else {
-        $http
-          .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
-          .then(function () {
-            $scope.getHoaDonChiTiet();
-          });
+    console.log(idSanPhamChiTiet);
+    // Kiểm tra xem có phần tử nào trong listHoaDonChiTiet khớp với idSanPhamChiTiet hay không
+    var matchingItem = $scope.listHoaDonChiTiet.find(
+      (hoaDonChiTiet) => hoaDonChiTiet.idSanPhamChiTiet === idSanPhamChiTiet
+    );
+    if (matchingItem) {
+      if (toastTrigger) {
+        const toastBootstrap =
+          bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
       }
-    });
+      // Nếu có khớp, tăng soLuong lên 1
+      $http
+        .get(
+          sanPhamChiTietAPI +
+            "/detail/" +
+            $scope.formHoaDonChiTiet.idSanPhamChiTiet
+        )
+        .then(function (response) {
+          $scope.detailSanPhamChiTiet = response.data;
+          $scope.formHoaDonChiTiet.soLuong += 1;
+          if (
+            $scope.formHoaDonChiTiet.soLuong <=
+            $scope.detailSanPhamChiTiet.soLuong
+          ) {
+            // Cập nhật hoaDonChiTiet
+            $scope.hoaDonUpdate = {
+              soLuong: $scope.formHoaDonChiTiet.soLuong,
+              thanhTien:
+                $scope.formHoaDonChiTiet.soLuong *
+                $scope.formHoaDonChiTiet.donGia,
+            };
+            console.log($scope.hoaDonUpdate);
+            $http
+              .put(
+                hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
+                $scope.hoaDonUpdate
+              )
+              .then(function () {
+                $scope.getHoaDonChiTiet();
+              });
+            $scope.tongTien = $scope.listHoaDonChiTiet
+              .filter((item) => item.maHoaDon === $scope.maHoaDon)
+              .reduce((total, item) => total + item.thanhTien, 0);
+            $scope.message = "Cập nhật thành công ";
+            return;
+          } else {
+            // Hiển thị thông báo khi số lượng vượt quá giới hạn
+            if (toastTrigger) {
+              const toastBootstrap =
+                bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+              toastBootstrap.show();
+            }
+            $scope.message =
+              "Chỉ còn " +
+              $scope.detailSanPhamChiTiet.soLuong +
+              " sản phẩm trong cửa hàng";
+            return;
+          }
+        });
+    } else {
+      $scope.formHoaDonChiTiet.soLuong = 1; // Đặt số lượng là 1 cho sản phẩm mới
+      $http
+        .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
+        .then(function () {
+          $scope.getHoaDonChiTiet();
+          $scope.tongTien = $scope.listHoaDonChiTiet
+            .filter((item) => item.maHoaDon === $scope.maHoaDon)
+            .reduce((total, item) => total + item.thanhTien, 0);
+          $scope.message = "Thêm sản phẩm mới thành công";
+        });
+    }
   };
   $scope.changeSoLuong = function (index, idHoaDonChiTiet, idSanPhamChiTiet) {
     var elem = document.getElementById("myBar");

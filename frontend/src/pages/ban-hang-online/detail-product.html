@@ -1,7 +1,7 @@
 <main class="wrapperMain_content ">
     <div class="layout-productDetail layout-pageProduct">
         <section class="productDetail-information productDetail_style__01"
-            ng-repeat="sanPhamChiTiet in listSanPhamChiTiet">
+            ng-repeat="sanPhamChiTiet in listNewSanPhamChiTiet">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 productDetail--gallery">
@@ -118,7 +118,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-md-6 midle">
-                                                    <p>50 sản phẩm có sẵn trong cửa hàng</p>
+                                                    <p>{{sanPhamChiTiet.soLuong}} sản phẩm có sẵn trong cửa hàng</p>
                                                 </div>
                                             </div>
 
