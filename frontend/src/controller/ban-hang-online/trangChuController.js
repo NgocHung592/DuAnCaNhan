@@ -31,13 +31,23 @@ window.trangChuController = function (
 
             .then(function (response) {
                 $scope.listSanPham = response.data;
+                console.log(response.data)
 
-                $scope.listSanPhamChiTiet.forEach(function (detail) {
-                        $scope.listSanPhamChiTiet[detail.idsanpham] = detail;
-                        console.log(detail)
-                    });
+            });
+        $http
+            .get(
+                sanPhamChiTietAPI +
+                "/hien-thi"
+            )
+
+
+            .then(function (response) {
+                $scope.listSanPhamChiTiet = response.data;
+                console.log(response.data)
+
             });
     };
+
     $scope.getSanPham();
 
 

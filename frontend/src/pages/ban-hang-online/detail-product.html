@@ -20,21 +20,12 @@
                             <div class="product-container-order">
                                 <div class="product-variants">
                                     <form id="add-item-form" action="https://8yostudio.com/cart/add" method="post"
-                                        class="variants clearfix">
+                                        class="variants clearfix" ng-repeat="sanPham in listSanPham.content ">
                                         <div class="select clearfix">
                                             <select id="product-select" name="id" style="display:none;">
 
-                                                <option value="1113947460">Black / S - 159,000₫</option>
+                                                <option value="1113947460">{{sanPhamChiTiet.tenMauSac}} / S - 159,000₫</option>
 
-                                                <option value="1113947461">Black / M - 159,000₫</option>
-
-                                                <option value="1113947462">Brown / S - 159,000₫</option>
-
-                                                <option value="1113947463">Brown / M - 159,000₫</option>
-
-                                                <option value="1113947464">Cream / S - 159,000₫</option>
-
-                                                <option value="1113947465">Cream / M - 159,000₫</option>
 
                                             </select>
                                         </div>
