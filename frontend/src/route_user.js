@@ -9,6 +9,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/tat-ca-san-pham", {
       templateUrl: "ban-hang-online/tat-ca-san-pham.html",
+      controller: trangChuController,
     })
     .when("/bang-size", {
       templateUrl: "ban-hang-online/bang-size.html",
