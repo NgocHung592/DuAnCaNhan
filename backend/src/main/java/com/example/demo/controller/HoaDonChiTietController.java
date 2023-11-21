@@ -20,14 +20,14 @@ public class HoaDonChiTietController {
     private HoaDonChiTietService hoaDonChiTietService;
 
     @GetMapping("hien-thi/{ma}")
-    public ResponseEntity hienThiGioHang(@RequestParam(value = "pageN", defaultValue = "0") String pageNo, @PathVariable("ma") String ma) {
+    public ResponseEntity hienThiGioHang(@RequestParam(value = "pageNo", defaultValue = "0") String pageNo, @PathVariable("ma") String ma) {
         return new ResponseEntity(hoaDonChiTietService.getGioHang(Integer.valueOf(pageNo), ma), HttpStatus.OK);
     }
 
-//    @GetMapping("detail/{id}")
-//    public HoaDonChiTiet detail(@PathVariable("id") String id) {
-//        return hoaDonChiTietService.detail(UUID.fromString(id));
-//    }
+    @GetMapping("tinh-tong/{id}")
+    public ResponseEntity hienThi(@PathVariable("id") String ma) {
+        return new ResponseEntity(hoaDonChiTietService.getByMa(ma),HttpStatus.OK);
+    }
 
     @PostMapping("add")
     public HoaDonChiTiet add(@RequestBody HoaDonChiTietRequest hoaDonChiTietRequest) {

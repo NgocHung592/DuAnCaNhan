@@ -49,16 +49,25 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon update(HoaDonRequest hoaDonRequest, UUID id) {
+    public HoaDon updateKhachCoSan(HoaDonRequest hoaDonRequest, UUID id) {
+        Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
+        return optional.map(o -> {
+            o.setTrangThai(1);
+            o.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+            o.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+            o.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
+            return hoaDonReponsitory.save(o);
+        }).orElse(null);
+    }
+
+    @Override
+    public HoaDon updateKhachLe(HoaDonRequest hoaDonRequest, UUID id) {
         Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
         return optional.map(o -> {
             o.setTrangThai(1);
             o.setTenKhachHang(hoaDonRequest.getTenKhachHang());
-            o.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
-            o.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
             o.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
             o.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
-            o.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
             return hoaDonReponsitory.save(o);
         }).orElse(null);
     }

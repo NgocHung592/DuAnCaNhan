@@ -41,7 +41,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example ">
+                        <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -49,15 +49,17 @@
                                             << </span>
                                     </a>
                                 </li>
-                                <li class="page-item" ng-repeat="page in totalPages track by $index"
-                                    ng-click="changePage($index);">
-                                    <a class="page-link">{{$index+1}}</a>
+                                <li class="page-item" ng-repeat="page in visiblePages"
+                                    ng-class="{ 'active': page.active === 'active' }">
+                                    <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                                        }}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">>></a>
+                                    <a class="page-link" ng-click="nextPage()"> >> </a>
                                 </li>
                             </ul>
                         </nav>
+                        <p>Tổng số trang: {{ totalPages.length }}</p>
                     </div>
                 </div>
             </div>

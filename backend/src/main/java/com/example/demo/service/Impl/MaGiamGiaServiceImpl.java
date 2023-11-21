@@ -29,7 +29,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     @Override
     public Page<MaGiamGia> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        Page<MaGiamGia> p = maGiamGiaRepository.findAll(pageable);
+        Page<MaGiamGia> p = maGiamGiaRepository.getAll(pageable);
         java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
         for (MaGiamGia m : p) {
             try {

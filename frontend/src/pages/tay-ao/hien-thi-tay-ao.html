@@ -8,7 +8,6 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary mb-3" href="#tay-ao/add">
                                 <i class="fa-solid fa-plus"></i>
-
                                 Thêm</a>
                         </div>
                         <table class="table">
@@ -35,14 +34,16 @@
                                         </p>
                                     </th>
                                     <th>
-                                        <a href="#tay-ao/update/{{tayAo.id}}"> <i
-                                                class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        <a href="#tay-ao/update/{{tayAo.id}}" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" data-bs-title="Tooltip on bottom">
+                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
                                     </th>
+
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example ">
+                        <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -50,15 +51,17 @@
                                             << </span>
                                     </a>
                                 </li>
-                                <li class="page-item" ng-repeat="page in totalPages track by $index"
-                                    ng-click="changePage($index);">
-                                    <a class="page-link">{{$index+1}}</a>
+                                <li class="page-item" ng-repeat="page in visiblePages"
+                                    ng-class="{ 'active': page.active === 'active' }">
+                                    <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                                        }}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" ng-click="nextPage()">>></a>
+                                    <a class="page-link" ng-click="nextPage()"> >> </a>
                                 </li>
                             </ul>
                         </nav>
+                        <p>Tổng số trang: {{ totalPages.length }}</p>
                     </div>
                 </div>
             </div>

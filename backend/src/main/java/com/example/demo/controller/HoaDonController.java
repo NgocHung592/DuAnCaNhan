@@ -48,9 +48,13 @@ public class HoaDonController {
         return hoaDonService.add(hoaDon);
     }
 
-    @PutMapping("update/{id}")
-    public HoaDon update(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
-        return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
+    @PutMapping("update-khach-co-san/{id}")
+    public HoaDon updateKhachCoSan(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
+        return hoaDonService.updateKhachCoSan(hoaDonRequest, UUID.fromString(id));
+    }
+    @PutMapping("update-khach-le/{id}")
+    public HoaDon updateKhachLe(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
+        return hoaDonService.updateKhachLe(hoaDonRequest, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")

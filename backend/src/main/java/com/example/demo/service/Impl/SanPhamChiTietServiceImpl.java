@@ -68,7 +68,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Override
     public Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.getSanPhamBanHang(pageable);
+        return sanPhamChiTietRepository.getSanPhamBanHangTaiQuay(pageable);
+    }
+
+    @Override
+    public List<SanPhamChiTietResponse> getSanPhamTrangChu() {
+        return sanPhamChiTietRepository.getSanPhamTrangChu();
     }
 
     @Override

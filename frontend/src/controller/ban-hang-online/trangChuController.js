@@ -18,8 +18,9 @@ window.trangChuController = function ($scope, $http) {
     daXoa: Boolean,
   };
   $scope.getTopSanPhamMoi = function () {
-    $http.get(sanPhamChiTietAPI + "/hien-thi").then(function (response) {
-      $scope.listTopSanPham = response.data.content;
+    $http.get(sanPhamChiTietAPI + "/trang-chu").then(function (response) {
+      $scope.listTopSanPham = response.data;
+      console.log($scope.listTopSanPham);
       // Gộp các sản phẩm có cùng tên
       const groupedSanPham = {};
       $scope.listTopSanPham.forEach((sanPham) => {
@@ -28,6 +29,7 @@ window.trangChuController = function ($scope, $http) {
         if (!groupedSanPham[tenSanPham]) {
           groupedSanPham[tenSanPham] = {
             ...sanPham,
+            duongDan: [sanPham.duongDan],
             giaMin: sanPham.donGia,
             giaMax: sanPham.donGia,
           };
@@ -40,6 +42,9 @@ window.trangChuController = function ($scope, $http) {
             groupedSanPham[tenSanPham].giaMax,
             sanPham.donGia
           );
+          if (!groupedSanPham[tenSanPham].duongDan.includes(sanPham.duongDan)) {
+            groupedSanPham[tenSanPham].duongDan.push(sanPham.duongDan);
+          }
         }
       });
 

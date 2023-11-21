@@ -3,6 +3,8 @@ window.hienThiSanPhamController = function ($http, $scope) {
   $scope.listSanPham = [];
   $scope.totalPages = [];
   $scope.selectOption = "";
+  $scope.visiblePages = [];
+  $scope.maxVisiblePages = 3;
 
   $scope.getSanPham = function () {
     $http
@@ -11,9 +13,41 @@ window.hienThiSanPhamController = function ($http, $scope) {
         $scope.listSanPham = response.data;
         console.log($scope.listSanPham);
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
       });
   };
   $scope.getSanPham();
+  $scope.getVisiblePages = function () {
+    var totalPages = $scope.totalPages.length;
+
+    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    // Tạo danh sách trang hiển thị
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+    return visiblePages;
+  };
   $scope.loc = function () {
     console.log($scope.selectOption);
     $http
@@ -46,44 +80,23 @@ window.hienThiSanPhamController = function ($http, $scope) {
     }
   });
   $scope.changePage = function (index) {
-    $scope.currentPage = index;
-    $scope.getSanPham();
+    if (index >= 0 && index < $scope.totalPages.length) {
+      $scope.currentPage = index;
+      $scope.getSanPham();
+    }
   };
+
   $scope.nextPage = function () {
-    let length = $scope.totalPages.length;
-    if ($scope.currentPage < length - 1) {
+    if ($scope.currentPage < $scope.totalPages.length - 1) {
       $scope.currentPage++;
       $scope.getSanPham();
     }
   };
+
   $scope.previousPage = function () {
-    if ($scope.currentPage >= 0) {
+    if ($scope.currentPage > 0) {
       $scope.currentPage--;
       $scope.getSanPham();
     }
   };
-  //   $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
-  //     $scope.listChatLieuTrangThai = response.data;
-  //   });
-  //   $http.get(danhMucAPI + "/trang-thai").then(function (response) {
-  //     $scope.listDanhMucTrangThai = response.data;
-  //   });
-  //   $http.get(sanPhamAPI + "/trang-thai").then(function (response) {
-  //     $scope.listSanPhamTrangThai = response.data;
-  //   });
-  //   $http.get(kieuDangAPI + "/trang-thai").then(function (response) {
-  //     $scope.listKieuDangTrangThai = response.data;
-  //   });
-  //   $http.get(hoaTietAPI + "/trang-thai").then(function (response) {
-  //     $scope.listHoaTietTrangThai = response.data;
-  //   });
-  //   $http.get(phongCachAPI + "/trang-thai").then(function (response) {
-  //     $scope.listPhongCachTrangThai = response.data;
-  //   });
-  //   $http.get(mauSacAPI + "/trang-thai").then(function (response) {
-  //     $scope.listMauSacTrangThai = response.data;
-  //   });
-  //   $http.get(kichThuocAPI + "/trang-thai").then(function (response) {
-  //     $scope.listKichThuocTrangThai = response.data;
-  //   });
 };

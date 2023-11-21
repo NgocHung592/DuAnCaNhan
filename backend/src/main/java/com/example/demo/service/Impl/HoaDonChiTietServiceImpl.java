@@ -30,8 +30,13 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
 
     @Override
+    public List<HoaDonChiTiet> getByMa( String ma) {
+        return hoaDonChiTietRepository.getByMa(ma);
+    }
+
+    @Override
     public Page<HoaDonChiTietReponse> getGioHang(Integer pageNo, String ma) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 3);
         return hoaDonChiTietRepository.getGioHang(pageable, ma);
     }
 

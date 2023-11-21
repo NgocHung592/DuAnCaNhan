@@ -26,6 +26,7 @@ window.hienThiSanPhamChiTietController = function (
         $scope.listSanPhamChiTiet = response.data;
         console.log($scope.listSanPhamChiTiet);
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
       });
     $http
       .get(sanPhamAPI + "/detail/" + $routeParams.id)
@@ -52,6 +53,37 @@ window.hienThiSanPhamChiTietController = function (
       $scope.getSanPhamChiTiet();
     }
   };
+  $scope.getVisiblePages = function () {
+    var totalPages = $scope.totalPages.length;
+
+    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    // Tạo danh sách trang hiển thị
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+    return visiblePages;
+  };
   $scope.updateSanPham = function (e, id) {
     e.preventDefault();
     $scope.sanPhamUpdate = {
@@ -75,13 +107,30 @@ window.hienThiSanPhamChiTietController = function (
     });
   };
   $scope.updateSanPhamChiTietF = function (e, id) {
-    e.preventDefault();
     let productImages = document.getElementById("urlImage");
     for (const file of productImages.files) {
       $scope.urlImage = file.name;
     }
     if ($scope.urlImage == "") {
-      $scope.urlImage = $scope.detailSanPhamChiTiet.urlImage;
+      $scope.updateSanPhamChiTiet = {
+        idMauSac: $scope.detailSanPhamChiTiet.mauSac.id,
+        idKichThuoc: $scope.detailSanPhamChiTiet.kichThuoc.id,
+        idHoaTiet: $scope.detailSanPhamChiTiet.hoaTiet.id,
+        idPhongCach: $scope.detailSanPhamChiTiet.phongCach.id,
+        idChatLieu: $scope.detailSanPhamChiTiet.chatLieu.id,
+        idCoAo: $scope.detailSanPhamChiTiet.coAo.id,
+        idTayAo: $scope.detailSanPhamChiTiet.tayAo.id,
+        soLuong: $scope.detailSanPhamChiTiet.soLuong,
+        donGia: $scope.detailSanPhamChiTiet.donGia,
+        daXoa: $scope.detailSanPhamChiTiet.daXoa,
+        urlImage: $scope.detailSanPhamChiTiet.urlImage,
+        ngaySua: new Date(),
+      };
+      $http
+        .put(sanPhamChiTietAPI + "/update/" + id, $scope.updateSanPhamChiTiet)
+        .then(function () {
+          $scope.getSanPhamChiTiet();
+        });
     } else {
       $scope.updateSanPhamChiTiet = {
         idMauSac: $scope.detailSanPhamChiTiet.mauSac.id,
@@ -97,6 +146,7 @@ window.hienThiSanPhamChiTietController = function (
         urlImage: $scope.urlImage,
         ngaySua: new Date(),
       };
+      console.log($scope.updateSanPhamChiTiet);
       $http
         .put(sanPhamChiTietAPI + "/update/" + id, $scope.updateSanPhamChiTiet)
         .then(function () {

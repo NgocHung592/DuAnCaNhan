@@ -30,6 +30,10 @@ public class SanPhamChiTietController {
     public ResponseEntity getSanPhamBanHang(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
+    @GetMapping("trang-chu")
+    public ResponseEntity getSanPhamTranChu(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
+        return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(),HttpStatus.OK);
+    }
 
     @GetMapping("hien-thi/{id}")
     public ResponseEntity getAll(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo, @PathVariable("id") String id) {

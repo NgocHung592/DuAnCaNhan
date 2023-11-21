@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.UUID;
 
 public interface MaGiamGiaService {
+
     Page<MaGiamGia> getAll(Integer pageNo);
 
     MaGiamGia add(MaGiamGia khuyenMai) throws Exception;
@@ -13,5 +14,6 @@ public interface MaGiamGiaService {
     MaGiamGia update(MaGiamGia khuyenMai, UUID id);
 
     MaGiamGia detail(UUID id);
+
     void delete(UUID id);
 }

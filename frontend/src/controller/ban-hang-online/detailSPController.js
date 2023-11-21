@@ -2,6 +2,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
+  $scope.listNewSanPhamChiTiet = [];
 
   $scope.getSanPhamChiTiet = function () {
     $http
@@ -67,7 +68,6 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
   };
   $scope.getSanPhamChiTiet();
   $scope.selectdMauSac = function (mauSac) {
-    console.log();
     $scope.searchMauSac = mauSac;
     console.log($scope.searchMauSac);
     console.log($scope.searchKichThuoc);
@@ -77,6 +77,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
         $scope.listNewSanPhamChiTiet.giaMin = sanPham.donGia;
+        console.log($scope.listNewSanPhamChiTiet.giaMin);
       }
     });
   };
@@ -84,5 +85,16 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
     $scope.searchKichThuoc = kichThuoc;
     console.log($scope.searchMauSac);
     console.log($scope.searchKichThuoc);
+    $scope.listSanPhamChiTiet.filter((sanPham) => {
+      if (
+        sanPham.tenKichThuoc == $scope.searchKichThuoc &&
+        sanPham.tenMauSac == $scope.searchMauSac
+      ) {
+        $scope.listNewSanPhamChiTiet.giaMin = sanPham.donGia;
+        $scope.listNewSanPhamChiTiet.soLuong = sanPham.soLuong;
+
+        console.log($scope.listNewSanPhamChiTiet);
+      }
+    });
   };
 };

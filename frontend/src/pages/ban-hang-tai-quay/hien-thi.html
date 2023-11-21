@@ -72,9 +72,24 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <!-- <div class="" ng-if="listHoaDonChiTiet.length === 0">
-                                    <p class="justify-content-center"> Hiện không có sản phẩm nào trong giỏ hàng</p>
-                                </div> -->
+                                <nav aria-label="Page navigation example ">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item">
+                                            <a class="page-link" ng-click="previousPageHDCT()" aria-label="Previous">
+                                                <span aria-hidden="true">
+                                                    << </span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item" ng-repeat="page in totalPagesHDCT track by $index"
+                                            ng-class="{'active': $index === currentPageHDCT} "
+                                            ng-click="changePageHDCT($index);">
+                                            <a class="page-link">{{$index+1}}</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" ng-click="nextPageHDCT()">>></a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
 
                         </div>
@@ -332,7 +347,29 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <button class="btn btn-warning">Chọn Mã Giảm Giá</button>
+                                        <button class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#addVoucher">Chọn Mã Giảm Giá</button>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <div class="modal fade" id="addVoucher" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <h4>Danh sách Voucher</h4>
+                                                        <div class="row p-3">
+                                                            <div class="search-container col-md-5">
+                                                                <i class="fas fa-search search-icon"></i>
+                                                                <input type="text" ng-model="searchKeyword"
+                                                                    placeholder="Tìm kiếm sản phẩm theo mã, tên"
+                                                                    ng-change="search()" class="search-input" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br>
@@ -340,7 +377,7 @@
                                     <div class="col-md-5">
 
                                         <p>Tiền Hàng</p>
-                                        <p>Phí Vận Chuyển</p>
+                                        <p ng-if="show">Phí Vận Chuyển</p>
                                         <p>Giảm Giá</p>
                                         <p>Tổng Số Tiền</p>
 
@@ -351,7 +388,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <p>{{tongTien | number }} VNĐ</p>
-                                        <p>?</p>
+                                        <p ng-if="show">?</p>
                                         <p>?</p>
                                         <p>{{tongTien | number }} VNĐ</p>
                                     </div>

@@ -126,6 +126,13 @@ h4 {
     /* Màu sáng, độ mờ và màu ánh sáng */
 }
 
+.text-gl {
+    color: blue;
+    /* Màu của văn bản */
+    text-shadow: 0 0 10px rgba(0, 51, 255, 0.5);
+    /* Màu sáng, độ mờ và màu ánh sáng */
+}
+
 /* CSS cho phần header */
 .card-header {
     background-color: #f11596;
