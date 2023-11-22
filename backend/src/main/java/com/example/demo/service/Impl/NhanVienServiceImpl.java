@@ -55,25 +55,56 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (sdtnv.isPresent()) {
             throw new Exception("So dien thoai is already present!");
         }
-        NhanVien nhanVien = NhanVien.builder().chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
-                .ma(nhanVienRequest.getMa())
-                .hoten(nhanVienRequest.getHoten())
-                .email(nhanVienRequest.getEmail())
-                .matkhau(nhanVienRequest.getMatkhau())
-                .sodienthoai(nhanVienRequest.getSodienthoai())
-                .gioitinh(nhanVienRequest.getGioitinh())
-                .ngaysinh(nhanVienRequest.getNgaysinh())
-                .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
-                .anhdaidien(nhanVienRequest.getAnhdaidien())
-                .ngaytao(nhanVienRequest.getNgaytao())
-                .mota(nhanVienRequest.getMota())
-                .phuongxa(nhanVienRequest.getPhuongxa())
-                .quanhuyen(nhanVienRequest.getQuanhuyen())
-                .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
-                .build();
-        nhanVienRepository.save(nhanVien);
-        sendEmail(nhanVien);
-        return nhanVien;
+        Optional<ChucVu> chucVuOptional=chucVuRepository.findByTen(nhanVienRequest.getChucVu());
+        if (chucVuOptional.isPresent()) {
+            NhanVien nhanVien = NhanVien.builder()
+                    .chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
+                    .ma(nhanVienRequest.getMa())
+                    .hoten(nhanVienRequest.getHoten())
+                    .email(nhanVienRequest.getEmail())
+                    .matkhau(nhanVienRequest.getMatkhau())
+                    .sodienthoai(nhanVienRequest.getSodienthoai())
+                    .gioitinh(nhanVienRequest.getGioitinh())
+                    .ngaysinh(nhanVienRequest.getNgaysinh())
+                    .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
+                    .anhdaidien(nhanVienRequest.getAnhdaidien())
+                    .ngaytao(nhanVienRequest.getNgaytao())
+                    .mota(nhanVienRequest.getMota())
+                    .phuongxa(nhanVienRequest.getPhuongxa())
+                    .quanhuyen(nhanVienRequest.getQuanhuyen())
+                    .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
+                    .build();
+            nhanVienRepository.save(nhanVien);
+            sendEmail(nhanVien);
+            return nhanVien;
+        } else {
+            ChucVu chucVuSave = ChucVu.builder()
+                    .ma("CV1")
+                    .ten(nhanVienRequest.getChucVu())
+                    .trangThai(1)
+                    .build();
+            ChucVu chucVu = chucVuRepository.save(chucVuSave);
+            NhanVien nhanVien = NhanVien.builder()
+                    .chucVu(chucVu)
+                    .ma(nhanVienRequest.getMa())
+                    .hoten(nhanVienRequest.getHoten())
+                    .email(nhanVienRequest.getEmail())
+                    .matkhau(nhanVienRequest.getMatkhau())
+                    .sodienthoai(nhanVienRequest.getSodienthoai())
+                    .gioitinh(nhanVienRequest.getGioitinh())
+                    .ngaysinh(nhanVienRequest.getNgaysinh())
+                    .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
+                    .anhdaidien(nhanVienRequest.getAnhdaidien())
+                    .ngaytao(nhanVienRequest.getNgaytao())
+                    .mota(nhanVienRequest.getMota())
+                    .phuongxa(nhanVienRequest.getPhuongxa())
+                    .quanhuyen(nhanVienRequest.getQuanhuyen())
+                    .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
+                    .build();
+            nhanVienRepository.save(nhanVien);
+            sendEmail(nhanVien);
+            return nhanVien;
+        }
     }
 
     private void sendEmail(NhanVien nhanVien) {
@@ -82,9 +113,9 @@ public class NhanVienServiceImpl implements NhanVienService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(nhanVien.getEmail());
-            helper.setSubject("Chào mừng bạn đến với công ty");
+            helper.setSubject("Chào mừng bạn đến với công ty Simple");
             helper.setText("Xin chào " + nhanVien.getHoten() + ",\n\n" +
-                    "Chúc mừng bạn đã trở thành thành viên của công ty chúng tôi.\n" +
+                    "Chúc mừng bạn đã trở thành nhân viên của công ty chúng tôi.\n" +
                     "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +
                     "Mã nhân viên: " + nhanVien.getMa() + "\n" +
                     "Mật khẩu: " + nhanVien.getMatkhau() + "\n\n" +

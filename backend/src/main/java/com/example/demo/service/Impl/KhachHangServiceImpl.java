@@ -27,7 +27,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     private KhachHangRepository khachHangRepository;
     @Autowired
     private DiaChiRepository diaChiRepository;
-    long currentTimestampMillis = System.currentTimeMillis();
     @Autowired
     private JavaMailSender javaMailSender;
 
