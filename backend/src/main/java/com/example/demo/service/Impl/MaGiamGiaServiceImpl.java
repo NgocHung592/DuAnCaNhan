@@ -30,36 +30,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     public Page<MaGiamGia> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         Page<MaGiamGia> p = maGiamGiaRepository.getAll(pageable);
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
-        for (MaGiamGia m : p) {
-            try {
-                if (m.getNgayBatDau().compareTo(timestamp) < 0) {
-                    if (m.getNgayKetThuc().compareTo(timestamp) < 0) {
-                        if (m.getTrangThai() != 3) {
-                            m.setTrangThai(3);
-                            Connection conn = getConn();
-                            PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
-                            ps.setObject(1, m.getId());
-                            ps.executeUpdate();
-                            ps.close();
-                            conn.close();
-                        }
-                    } else {
-                        if (m.getTrangThai() != 2) {
-                            m.setTrangThai(2);
-                            Connection conn = getConn();
-                            PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
-                            ps.setObject(1, m.getId());
-                            ps.executeUpdate();
-                            ps.close();
-                            conn.close();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-            }
-        }
-        return p;
+        return getMaGiamGias(p);
     }
 
     @Override
@@ -83,33 +54,33 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     @Override
     public MaGiamGia detail(UUID id) {
         MaGiamGia m = maGiamGiaRepository.findById(id).orElse(null);
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
-        try {
-            if (m.getNgayBatDau().compareTo(timestamp) < 0) {
-                if (m.getNgayKetThuc().compareTo(timestamp) < 0) {
-                    if (m.getTrangThai() != 3) {
-                        m.setTrangThai(3);
-                        Connection conn = getConn();
-                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
-                        ps.setObject(1, id);
-                        ps.executeUpdate();
-                        ps.close();
-                        conn.close();
-                    }
-                } else {
-                    if (m.getTrangThai() != 2) {
-                        m.setTrangThai(2);
-                        Connection conn = getConn();
-                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
-                        ps.setObject(1, id);
-                        ps.executeUpdate();
-                        ps.close();
-                        conn.close();
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
+//        java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+//        try {
+//            if (m.getNgayBatDau().compareTo(timestamp) < 0) {
+//                if (m.getNgayKetThuc().compareTo(timestamp) < 0) {
+//                    if (m.getTrangThai() != 3) {
+//                        m.setTrangThai(3);
+//                        Connection conn = getConn();
+//                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 3 WHERE id = ?");
+//                        ps.setObject(1, id);
+//                        ps.executeUpdate();
+//                        ps.close();
+//                        conn.close();
+//                    }
+//                } else {
+//                    if (m.getTrangThai() != 2) {
+//                        m.setTrangThai(2);
+//                        Connection conn = getConn();
+//                        PreparedStatement ps = conn.prepareStatement("UPDATE [ma_giam_gia] SET [trang_thai] = 2 WHERE id = ?");
+//                        ps.setObject(1, id);
+//                        ps.executeUpdate();
+//                        ps.close();
+//                        conn.close();
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//        }
         return m;
     }
 
@@ -118,23 +89,39 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
         maGiamGiaRepository.deleteById(id);
     }
 
-    private Connection getConn() throws Exception {
-        ResourceBundle rb = ResourceBundle.getBundle("application");
-        String connectionString = rb.getString("spring.datasource.url");
-        String driverName = rb.getString("spring.datasource.driverClassName");
-        String username = rb.getString("spring.datasource.username");
-        String password = rb.getString("spring.datasource.password");
-        try {
-            Class.forName(driverName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Connection conn = DriverManager.getConnection(connectionString, username, password);
-        return conn;
+    @Override
+    public Page<MaGiamGia> locMaGiamGia(Integer pageNo, Integer trangThai) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<MaGiamGia> p = maGiamGiaRepository.locMaGiamGia(pageable,trangThai);
+        return getMaGiamGias(p);
     }
 
-    //    @Override
-//    public KhuyenMai delete(UUID id) {
-//        return khuyenMaiRepository.deleteById(id);
-//    }
+    private Page<MaGiamGia> getMaGiamGias(Page<MaGiamGia> maGiamGias) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        maGiamGias.forEach(maGiamGia -> {
+            if (maGiamGia.getNgayBatDau().compareTo(timestamp) < 0) {
+                if (maGiamGia.getNgayKetThuc().compareTo(timestamp) < 0) {
+                    if (maGiamGia.getTrangThai() != 3) {
+                        maGiamGia.setTrangThai(3);
+                        maGiamGiaRepository.save(maGiamGia);
+                    }
+                } else {
+                    if (maGiamGia.getTrangThai() != 2) {
+                        maGiamGia.setTrangThai(2);
+                      maGiamGiaRepository.save(maGiamGia);
+                    }
+                }
+            }
+        });
+        return maGiamGias;
+    }
+
+    @Override
+    public Page<MaGiamGia> searchMaGiamGia(Integer pageNo, String keyWord) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<MaGiamGia> p = maGiamGiaRepository.searchMaGiamGia(pageable,keyWord);
+        return getMaGiamGias(p);
+    }
+
+
 }

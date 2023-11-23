@@ -22,17 +22,17 @@
                         <div class="mb-3" class="form-check">
                             <label class="form-label">Trạng thái</label><br>
 
-                            <input type="radio" value="false" class="form-check-input" ng-click="getSanPham()" checked
+                            <input type="radio" class="form-check-input" ng-click="getSanPham()" checked
                                 name="trang_thai">
                             <label class="form-check-label">
                                 Tất cả
                             </label>
-                            <input type="radio" value="false" class="form-check-input" value="false" name="trang_thai"
+                            <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="false"
                                 ng-change="loc()" ng-model="selectOption">
                             <label class="form-check-label">
                                 Đang kinh doanh
                             </label>
-                            <input type="radio" value="true" class="form-check-input" value="true" name="trang_thai"
+                            <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="true"
                                 ng-model="selectOption" ng-change="loc()">
                             <label class="form-check-label">
                                 Ngừng kinh doanh

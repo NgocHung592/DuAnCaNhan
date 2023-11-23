@@ -16,4 +16,9 @@ public interface MaGiamGiaService {
     MaGiamGia detail(UUID id);
 
     void delete(UUID id);
+
+    Page<MaGiamGia> locMaGiamGia(Integer pageNo, Integer trangThai);
+
+    Page<MaGiamGia> searchMaGiamGia(Integer pageNo, String keyWord);
+
 }

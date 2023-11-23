@@ -5,61 +5,43 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>DANH SÁCH MÃ GIẢM GIÁ </h4>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="search-container">
-                                    <i class="fas fa-search search-icon"></i>
-                                    <form>
-                                        <input id="searchtxt" type="text" placeholder="Tìm kiếm theo mã, tên"
-                                            class="search-input" />
-
-                                    </form>
-                                </div>
+                        <div class="row pb-4 pr-2">
+                            <div class="search-container col-md-9">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" ng-model="searchKeyword"
+                                    placeholder="Tìm kiếm mã giảm giá theo mã, tên" ng-change="search()"
+                                    class="search-input" />
                             </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-3">
-                                <div class="col-md-10">
-                                    <select id="searchsel" class="form-select" aria-label="Default select example">
-                                        <option value="" selected disabled hidden>Trạng Thái Mã Giảm Giá</option>
-                                        <option value="1">Sắp diễn ra</option>
-                                        <option value="2">Đang diễn ra</option>
-                                        <option value="3">Đã hết hạn</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">Hình Thức Giảm Giá:</label>
-                                <div class="col-sm-4">
-
-                                    <input name="searchtype" type="radio" value="0" class="form-check-input">
-                                    <label class="form-check-label">
-                                        Tiền mặt
-                                    </label>
-                                    <br>
-                                    <input name="searchtype" type="radio" value="1" class="form-check-input">
-                                    <label class="form-check-label">
-                                        Phần trăm
-                                    </label>
-
-                                </div>
+                            <div class="col-md-3 text-end">
+                                <a type="button" class="btn btn-primary" href="#ma-giam-gia/add">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Thêm Mã Giảm Giá
+                                </a>
                             </div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col-md-2">
-                                <span type="button" class="btn btn-warning" ng-click="searching($event)">Tìm
-                                    kiếm</span>
-                            </div>
-                            <div class="col-md-2">
-                                <span type="button" class="btn btn-success" href="#/ma-giam-gia/hien-thi">Làm mới</span>
-                            </div>
-                            <div class="col-md-6"></div>
+                        <div class="mb-3" class="form-check">
+                            <label class="form-label">Trạng thái</label><br>
 
-                            <div class="col-md-2">
-                                <a type="button" class="btn btn-primary" href="#/ma-giam-gia/add">
-                                    <i class="fa-solid fa-plus"></i>
-                                    Thêm mã</a>
-                            </div>
+                            <input type="radio" class="form-check-input " ng-click="getMa()" name="trang_thai" checked>
+                            <label class="form-check-label">
+                                Tất cả
+                            </label>
+                            <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="1"
+                                ng-change="loc()" ng-model="selectOption">
+                            <label class="form-check-label">
+                                Sắp diễn ra
+                            </label>
+                            <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="2"
+                                ng-model="selectOption" ng-change="loc()">
+                            <label class="form-check-label">
+                                Đang diễn ra
+                            </label>
+                            <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="3"
+                                ng-model="selectOption" ng-change="loc()">
+                            <label class="form-check-label">
+                                Đã kết thúc
+                            </label>
+
                         </div>
                         <table class="table table-light table-striped table-hover">
                             <thead>
@@ -67,17 +49,16 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Mã</th>
                                     <th scope="col">Tên</th>
-                                    <th scope="col">Hình Thức </th>
-                                    <th scope="col">Đơn Tối Thiểu</th>
+                                    <th scope="col">Hình thức </th>
+                                    <th scope="col">Đơn tối thiểu</th>
                                     <th scope="col">Giảm</th>
                                     <th scope="col">Số lượng</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="maGiamGia in listMaGiamGia.content">
-                                <tr
-                                    ng-hide="(searchDat.search.length != 0) ? ((maGiamGia.ma.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : ((maGiamGia.tenKM.includes(searchDat.search)) ? ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false)) : true)) : ((searchDat.type.length != 0) ? ((maGiamGia.hinhThucGiam == searchDat.type) ? ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false) : true) : ((searchDat.select.length != 0) ? (!(maGiamGia.trangThai == searchDat.select)) : false))">
+                            <tbody ng-repeat="maGiamGia in listMaGiamGia">
+                                <tr>
                                     <th>{{$index+1}}</th>
                                     <!-- <th scope="col">
                                         <a
@@ -95,8 +76,8 @@
                                         </p>
                                     </th>
                                     <th>{{maGiamGia.giaTriDonToiThieu | number}} VND</th>
-                                    <th ng-if="maGiamGia.hinhThucGiam==0">{{maGiamGia.giaTriGiamToiDa |number}} VND</th>
-                                    <th ng-if="maGiamGia.hinhThucGiam==1">{{maGiamGia.giaTriGiamToiDa}} %</th>
+                                    <th ng-if="maGiamGia.hinhThucGiam==0">{{maGiamGia.giaTriGiam |number}} VND</th>
+                                    <th ng-if="maGiamGia.hinhThucGiam==1">{{maGiamGia.giaTriGiam}} %</th>
 
                                     <!-- <th>{{maGiamGia.ngayBatDau | date: 'dd/MM/yyyy hh:mm a'}}</th> -->
                                     <!-- <th>{{maGiamGia.ngayKetThuc | date: 'dd/MM/yyyy hh:mm a'}}</th> -->
@@ -105,11 +86,10 @@
 
                                         <p class="text-g" ng-if="maGiamGia.trangThai =='1'">Sắp diễn ra</p>
                                         <p class="text-gl" ng-if="maGiamGia.trangThai =='2'">Đang diễn ra</p>
-                                        <p class="text-glow" ng-if="maGiamGia.trangThai =='3'">Đã hết hạn</p>
+                                        <p class="text-glow" ng-if="maGiamGia.trangThai =='3'">Đã kết thúc</p>
                                     </th>
                                     <th>
-                                        <a
-                                            href="{{maGiamGia.trangThai =='1'? '#ma-giam-gia/update/'+maGiamGia.id : '#ma-giam-gia/hienthi'}}">
+                                        <a href="#ma-giam-gia/update/{{maGiamGia.id}}">
                                             <!-- <i
                                                 class="{{maGiamGia.trangThai =='1'? 'align-middle me-2 fas fa-fw fa-edit' : ''}}"></i> -->
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
@@ -119,6 +99,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- <div class="no-data-message" ng-if="listMaGiamGia.content.length === 0">
+                            Không tìm thấy dữ liệu phù hợp
+                        </div> -->
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation example">

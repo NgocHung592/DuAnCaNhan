@@ -38,6 +38,9 @@ public class MaGiamGia {
     @Column(name = "so_luong")
     private int soLuong;
 
+    @Column(name = "gia_tri_giam")
+    private BigDecimal giaTriGiam;
+
     @Column(name = "gia_tri_don_toi_thieu")
     private BigDecimal giaTriDonToiThieu;
 

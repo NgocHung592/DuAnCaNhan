@@ -7,10 +7,14 @@ import com.example.demo.service.MaGiamGiaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -47,5 +51,15 @@ public class MaGiamGiaController {
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") String id) {
         maGiamGiaService.delete(UUID.fromString(id));
+    }
+    @GetMapping("loc")
+    public Page<MaGiamGia> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                               @RequestParam(name = "trangThai") String trangThai) {
+        return maGiamGiaService.locMaGiamGia(pageNo,Integer.valueOf(trangThai));
+    }
+    @GetMapping("search")
+    public Page<MaGiamGia> search(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                                  @RequestParam(name = "keyWord") String keyWord) {
+        return maGiamGiaService.searchMaGiamGia(pageNo,keyWord);
     }
 }

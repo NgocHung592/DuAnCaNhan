@@ -397,43 +397,54 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
 
   $scope.thanhToan = function () {
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-        token: "6b9dba70-8881-11ee-af43-6ead57e9219a", // Thay YOUR_TOKEN_HERE bằng token thực tế của bạn
-      },
-    };
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+    // const axiosConfig = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     token: "6b9dba70-8881-11ee-af43-6ead57e9219a", // Thay YOUR_TOKEN_HERE bằng token thực tế của bạn
+    //   },
+    // };
 
-    const apiKey = "6b9dba70-8881-11ee-af43-6ead57e9219a"; // Thay YOUR_API_KEY bằng API Key của bạn
-    const apiUrl =
-      "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
-    const dichVuChuyen =
-      "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services";
+    // const apiKey = "6b9dba70-8881-11ee-af43-6ead57e9219a"; // Thay YOUR_API_KEY bằng API Key của bạn
+    // const apiUrl =
+    //   "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
+    // const dichVuChuyen =
+    //   "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services";
 
-    const requestData = {
-      token: apiKey,
-      height: 10, // Thông số kích thước của gói hàng
-      length: 20,
-      width: 15,
-      weight: 2, // Trọng lượng của gói hàng
-      service_type_id: 1, // Mã dịch vụ
-      from_district: "Quận 1", // Quận/Huyện người gửi
-      to_district: "Quận 10", // Quận/Huyện người nhận
-    };
-    const getDichVu = {
-      shop_id: 4714252,
-      from_district: 1542,
-      to_district: 1442,
-    };
-    axios
-      .post(dichVuChuyen, getDichVu, axiosConfig)
-      .then((response) => {
-        console.log(response.data);
-        // Xử lý dữ liệu phí vận chuyển ở đây
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // const requestData = {
+    //   token: apiKey,
+    //   height: 10, // Thông số kích thước của gói hàng
+    //   length: 20,
+    //   width: 15,
+    //   weight: 2, // Trọng lượng của gói hàng
+    //   service_type_id: 1, // Mã dịch vụ
+    //   from_district: "Quận 1", // Quận/Huyện người gửi
+    //   to_district: "Quận 10", // Quận/Huyện người nhận
+    // };
+    // const getDichVu = {
+    //   shop_id: 4714252,
+    //   from_district: 1542,
+    //   to_district: 1442,
+    // };
+    // axios
+    //   .post(dichVuChuyen, getDichVu, axiosConfig)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     // Xử lý dữ liệu phí vận chuyển ở đây
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
     // $http.get(dichVuChuyen, $scope.a).then(function (response) {
     //   console.log(response.data);
     // });
@@ -444,19 +455,29 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       .reduce((total, item) => total + item.thanhTien, 0);
     if ($scope.hoaDonThanhToan.idKhachHang == "") {
       $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
-      $http
-        .put(
-          hoaDonAPI + "/update-khach-le/" + $scope.formHoaDonChiTiet.idHoaDon,
-          $scope.hoaDonThanhToan
-        )
-        .then(function () {
-          $scope.getListHoaDon();
-        });
-      $http
-        .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
-        .then(function () {
-          // $location.path("/hoa-don/hien-thi");
-        });
+      if ($scope.formHoaDonChiTiet.idHoaDon == "") {
+        if (toastTrigger) {
+          const toastBootstrap =
+            bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+          toastBootstrap.show();
+        }
+        $scope.message = "Chọn 1 hóa đơn để thanh toán";
+        return;
+      } else {
+        $http
+          .put(
+            hoaDonAPI + "/update-khach-le/" + $scope.formHoaDonChiTiet.idHoaDon,
+            $scope.hoaDonThanhToan
+          )
+          .then(function () {
+            $scope.getListHoaDon();
+          });
+        $http
+          .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
+          .then(function () {
+            // $location.path("/hoa-don/hien-thi");
+          });
+      }
     } else {
       $scope.hoaDonThanhToan.tenKhachHang;
       $scope.hoaDonThanhToan.diaChiKhachHang =

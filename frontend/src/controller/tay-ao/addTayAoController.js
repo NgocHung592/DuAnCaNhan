@@ -9,7 +9,7 @@ window.addTayAoController = function ($http, $scope, $location) {
     });
   }
   $scope.randoom = "TA" + Math.floor(Math.random() * 10000) + 1;
-
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   $scope.formTayAo = {
     ma: $scope.randoom,
     ten: "",
@@ -32,11 +32,13 @@ window.addTayAoController = function ($http, $scope, $location) {
     }
     if ($scope.formTayAo.ten == "") {
       $scope.message = "Tên tay áo không được trống";
-      return false;
+      return;
+    } else if (specialChars.test($scope.formTayAo.ten)) {
+      $scope.message = "Sai dinh dang";
+      return;
     } else {
       $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
         $location.path("/tay-ao/hien-thi");
-        return true;
       });
     }
   };

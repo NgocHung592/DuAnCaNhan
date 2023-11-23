@@ -17,7 +17,7 @@ window.addMaGiamGiaController = function ($http, $scope, $location) {
 
   $scope.randoom = randomString;
 
-  $scope.detailProduct = {
+  $scope.maGiamGiaSave = {
     id: "",
     ma: $scope.randoom,
     tenKM: "",
@@ -25,7 +25,7 @@ window.addMaGiamGiaController = function ($http, $scope, $location) {
     trangThai: "1",
     soLuong: "",
     giaTriDonToiThieu: "",
-    giaTriGiamToiDa: "",
+    giaTriGiam: "",
     ngayBatDau: "",
     ngayKetThuc: "",
     ngayTao: new Date(),
@@ -41,14 +41,14 @@ window.addMaGiamGiaController = function ($http, $scope, $location) {
     $scope.showBD = true;
     $scope.showKT = true;
     let check = true;
-    let ma = $scope.detailProduct.ma;
-    let ten = $scope.detailProduct.tenKM;
-    let tt = $scope.detailProduct.giaTriDonToiThieu;
-    let td = $scope.detailProduct.giaTriGiamToiDa;
-    let ht = $scope.detailProduct.hinhThucGiam;
-    let sl = $scope.detailProduct.soLuong;
-    let bd = $scope.detailProduct.ngayBatDau;
-    let kt = $scope.detailProduct.ngayKetThuc;
+    // let ma = $scope.detailProduct.ma;
+    let ten = $scope.maGiamGiaSave.tenKM;
+    let tt = $scope.maGiamGiaSave.giaTriDonToiThieu;
+    let td = $scope.maGiamGiaSave.giaTriGiam;
+    let ht = $scope.maGiamGiaSave.hinhThucGiam;
+    let sl = $scope.maGiamGiaSave.soLuong;
+    let bd = $scope.maGiamGiaSave.ngayBatDau;
+    let kt = $scope.maGiamGiaSave.ngayKetThuc;
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     const regex = /[^0-9a-zA-Z]/;
     //alert(bd);
@@ -82,10 +82,10 @@ window.addMaGiamGiaController = function ($http, $scope, $location) {
         }
       }
     }
-    if (ma.length == 0 || ma.length > 10 || regex.test(ma)) {
-      $scope.showMa = false;
-      check = false;
-    }
+    // if (ma.length == 0 || ma.length > 10 || regex.test(ma)) {
+    //   $scope.showMa = false;
+    //   check = false;
+    // }
     if (ten.length == 0 || ten.length > 100 || specialChars.test(ten)) {
       $scope.showTen = false;
       check = false;
@@ -123,7 +123,7 @@ window.addMaGiamGiaController = function ($http, $scope, $location) {
     }
     if (check) {
       $http
-        .post(magiamgiaAPI + "/add", $scope.detailProduct)
+        .post(magiamgiaAPI + "/add", $scope.maGiamGiaSave)
         .then(function () {
           //   alert("Thêm thành công");
           //   $scope.show = true;

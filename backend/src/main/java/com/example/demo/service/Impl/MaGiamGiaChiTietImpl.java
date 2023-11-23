@@ -25,7 +25,6 @@ public class MaGiamGiaChiTietImpl implements MaGiamGiaChiTietService {
 
     @Override
     public MaGiamGiaChiTiet add(MaGiamGiaChiTiet maGiamGiaChiTiet) throws Exception {
-
         return maGiamGiaChiTietRepositioy.save(maGiamGiaChiTiet);
     }
 
