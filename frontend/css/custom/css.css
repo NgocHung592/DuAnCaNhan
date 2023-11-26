@@ -16,18 +16,21 @@
     text-align: center;
 }
 
-.no-data-message {
+/* CSS để tùy chỉnh giao diện khi không có dữ liệu */
+.dataTables_empty_lable {
     text-align: center;
-    /* Căn giữa theo chiều ngang */
-    margin-top: 20px;
-    /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
-    font-size: 20px;
-    /* Tùy chỉnh kích thước chữ */
-    color: rgb(112, 111, 111);
-    /* Tùy chỉnh màu sắc chữ */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    /* Tạo hiệu ứng glow */
+    font-size: 18px;
+    color: gray;
 }
+
+.dataTables_empty_icon {
+    text-align: center;
+    padding-top: 50px;
+    font-size: 25px;
+    color: gray;
+
+}
+
 
 .has-error {
     color: red
@@ -46,19 +49,17 @@ h4 {
     background-color: #ddd;
 }
 
-#myBar {
+#success {
     width: 0%;
     height: 10px;
     background-color: #4CAF50;
-    text-align: center;
-    line-height: 30px;
-    color: white;
 }
 
-* {
-    font-family: "Roboto", sans-serif;
+#error {
+    width: 0%;
+    height: 10px;
+    background-color: red;
 }
-
 
 .align-middle {
     text-align: center;

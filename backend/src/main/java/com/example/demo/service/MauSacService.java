@@ -8,7 +8,9 @@ import java.util.UUID;
 
 public interface MauSacService {
 
-    Page<MauSac> getAll(Integer pageNo);
+    List<MauSac> getAll();
+
+    Page<MauSac> getPage(Integer pageNo);
 
     List<MauSac> getAllByStatus();
 

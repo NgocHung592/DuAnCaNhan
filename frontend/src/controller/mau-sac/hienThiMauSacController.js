@@ -1,19 +1,55 @@
-window.hienThiMauSacController = function ($http, $scope) {
+window.hienThiMauSacController = function (
+  $http,
+  $scope,
+  $rootScope,
+  $timeout
+) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
   $scope.listMauSac = [];
-  $scope.currentPage = 0;
   $scope.totalPages = [];
+  $scope.currentPage = 0;
+  $scope.maxVisiblePages = 3;
+  $scope.message = $rootScope.message;
 
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getMauSac = function () {
+    if ($scope.message !== undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(mauSacAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listMauSac = response.data;
+        $scope.listMauSac = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
 
   $scope.getMauSac();
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
+
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;
@@ -36,7 +72,6 @@ window.hienThiMauSacController = function ($http, $scope) {
   };
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
-
     var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
     var curPage = $scope.currentPage;
 
@@ -65,10 +100,4 @@ window.hienThiMauSacController = function ($http, $scope) {
     }
     return visiblePages;
   };
-  const tooltipTriggerList = document.querySelectorAll(
-    '[data-bs-toggle="tooltip"]'
-  );
-  const tooltipList = [...tooltipTriggerList].map(
-    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-  );
 };

@@ -5,7 +5,6 @@
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
                         <h4>DANH SÁCH MÀU SẮC</h4>
-
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary mb-3" href="#mau-sac/add">
                                 <i class="fa-solid fa-plus"></i>
@@ -24,12 +23,12 @@
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="mauSac in listMauSac.content">
+                            <tbody ng-repeat="mauSac in listMauSac">
                                 <tr>
                                     <td scope="row">{{$index+1}}</td>
                                     <th scope="row">{{mauSac.ma}}</th>
                                     <th scope="row">{{mauSac.ten}}</th>
-                                    <th style="background-color: {{mauSac.ma}};">
+                                    <th ng-style="{ 'background-color': mauSac.ma }">
                                     </th>
                                     <th>
                                         <p ng-class="{' text-g ': !mauSac.daXoa
@@ -39,7 +38,7 @@
                                         </p>
                                     </th>
                                     </th>
-                                    <th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Update">
                                         <a href="#mau-sac/update/{{mauSac.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
@@ -47,7 +46,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example">
+                        <div ng-if="listMauSac.length === 0">
+                            <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                            <p class="dataTables_empty_lable">
+                                No Data
+                            </p>
+                        </div>
+                        <nav aria-label="Page navigation example" ng-if="listMauSac.length !== 0">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -64,8 +69,24 @@
                                     <a class="page-link" ng-click="nextPage()"> >> </a>
                                 </li>
                             </ul>
+                            <p>Tổng số trang: {{ totalPages.length }}</p>
                         </nav>
-                        <p>Tổng số trang: {{ totalPages.length }}</p>
+                        <div class="toast-container position-fixed top-0 end-0 p-3">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                data-bs-delay="1000">
+                                <div class="toast-body">
+                                    <span class="success">
+                                        <i class="fa-solid fa-check fa-xl"></i>
+                                    </span>
+                                    <span class="message_error">
+                                        {{message}}
+                                    </span>
+                                    <div id="myProgress">
+                                        <div id="success"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

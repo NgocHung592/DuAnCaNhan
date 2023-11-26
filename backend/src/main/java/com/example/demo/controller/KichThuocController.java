@@ -26,9 +26,14 @@ public class KichThuocController {
     @Autowired
     private KichThuocService kichThuocService;
 
+    @GetMapping("get-all")
+    public List<KichThuoc> getAll() {
+        return kichThuocService.getAll();
+    }
+
     @GetMapping("hien-thi")
-    public Page<KichThuoc> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return kichThuocService.getAll(pageNo);
+    public Page<KichThuoc> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return kichThuocService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")

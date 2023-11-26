@@ -2,7 +2,8 @@ window.updatePhongCachController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
   $scope.formPhongCach = {
     id: "",
@@ -10,7 +11,23 @@ window.updatePhongCachController = function (
     ten: "",
     daXoa: Boolean,
   };
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $http
     .get(phongCachAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
@@ -21,19 +38,9 @@ window.updatePhongCachController = function (
 
   $scope.update = function (e, idPhongCach) {
     e.preventDefault();
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let idp = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(idp);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-
     if ($scope.formPhongCach.ten === "") {
+      toastBootstrap.show();
+      $scope.errorProgress();
       $scope.message = "Tên phong cách không được để trống ";
       return;
     }
@@ -45,16 +52,8 @@ window.updatePhongCachController = function (
     $http
       .put(phongCachAPI + "/update/" + idPhongCach, $scope.updatePhongCach)
       .then(function () {
+        $rootScope.message = "Cập nhật thành công";
         $location.path("/phong-cach/hien-thi");
       });
   };
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

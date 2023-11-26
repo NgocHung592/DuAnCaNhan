@@ -25,7 +25,7 @@ public class CoAoServiceImpl implements CoAoService {
     @Override
     public Page<CoAo> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return coAoRepository.getAll(pageable);
+        return coAoRepository.getPage(pageable);
     }
 
     @Override

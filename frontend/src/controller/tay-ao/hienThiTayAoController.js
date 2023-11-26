@@ -1,14 +1,14 @@
 window.hienThiTayAoController = function ($http, $scope, $rootScope) {
   $scope.listTayAo = [];
-
-  $scope.currentPage = 0;
   $scope.totalPages = [];
-  $scope.count = 0;
+  $scope.visiblePages = [];
+  $scope.currentPage = 0;
+  $scope.maxVisiblePages = 3;
   $scope.getTayAo = function () {
     $http
       .get(tayAoAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listTayAo = response.data;
+        $scope.listTayAo = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
@@ -68,10 +68,4 @@ window.hienThiTayAoController = function ($http, $scope, $rootScope) {
     }
     return visiblePages;
   };
-  const tooltipTriggerList = document.querySelectorAll(
-    '[data-bs-toggle="tooltip"]'
-  );
-  const tooltipList = [...tooltipTriggerList].map(
-    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-  );
 };

@@ -22,9 +22,14 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
 
     @Override
-    public Page<ChatLieu> getAll(Integer pageNo) {
+    public List<ChatLieu> getAll() {
+        return chatLieuRepository.findAll();
+    }
+
+    @Override
+    public Page<ChatLieu> getPage(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return chatLieuRepository.getAll(pageable);
+        return chatLieuRepository.getPage(pageable);
     }
 
     @Override

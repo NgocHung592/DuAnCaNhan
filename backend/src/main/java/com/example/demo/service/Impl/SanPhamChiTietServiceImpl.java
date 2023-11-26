@@ -1,6 +1,5 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.HinhAnh;
 import com.example.demo.entity.KichThuoc;
 import com.example.demo.entity.MauSac;
 import com.example.demo.entity.SanPham;
@@ -10,7 +9,6 @@ import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
 import com.example.demo.repository.ChatLieuRepository;
 import com.example.demo.repository.CoAoRepository;
-import com.example.demo.repository.HinhAnhRepository;
 import com.example.demo.repository.HoaTietRepository;
 import com.example.demo.repository.KichThuocRepository;
 import com.example.demo.repository.MauSacRepository;
@@ -26,11 +24,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -54,15 +49,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     private TayAoRepository tayAoRepository;
     @Autowired
     private CoAoRepository coAoRepository;
-    @Autowired
-    private HinhAnhRepository hinhAnhRepository;
 
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamChiTietRepository.getPage(pageable, id);
     }
-
 
 
     @Override
@@ -84,7 +76,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Override
     public List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
         sanPhamChiTietRequests.forEach(sanPhamChiTietRequest -> {
-            if (sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham()).isPresent()) {
+            Optional<SanPham> optionalSanPham = sanPhamRepository.findByTen(sanPhamChiTietRequest.getTenSanPham());
+            if (optionalSanPham.isPresent()) {
+                optionalSanPham.map(sanPham -> {
+                            sanPham.setNgaySua(sanPhamChiTietRequest.getNgayTao());
+                            return sanPhamRepository.save(sanPham);
+                        }
+                ).orElse(null);
+
                 SanPhamChiTiet sanPhamChiTietSave = SanPhamChiTiet.builder()
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))

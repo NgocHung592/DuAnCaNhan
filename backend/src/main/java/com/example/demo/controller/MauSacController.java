@@ -26,9 +26,14 @@ public class MauSacController {
     @Autowired
     private MauSacService mauSacService;
 
+    @GetMapping("get-all")
+    public List<MauSac> getAll() {
+        return mauSacService.getAll();
+    }
+
     @GetMapping("hien-thi")
-    public Page<MauSac> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return mauSacService.getAll(pageNo);
+    public Page<MauSac> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return mauSacService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")

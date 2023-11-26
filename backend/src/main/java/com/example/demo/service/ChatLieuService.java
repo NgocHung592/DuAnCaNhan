@@ -8,7 +8,9 @@ import java.util.UUID;
 
 public interface ChatLieuService {
 
-    Page<ChatLieu> getAll(Integer pageNo);
+    List<ChatLieu> getAll( );
+
+    Page<ChatLieu> getPage(Integer pageNo);
 
     List<ChatLieu> getAllByStatus();
 

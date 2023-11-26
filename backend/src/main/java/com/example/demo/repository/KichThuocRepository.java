@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.CoAo;
-import com.example.demo.entity.HoaTiet;
 import com.example.demo.entity.KichThuoc;
+import com.example.demo.entity.MauSac;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,9 +14,17 @@ import java.util.UUID;
 @Repository
 public interface KichThuocRepository extends JpaRepository<KichThuoc, UUID> {
 
-    @Query("select kt from KichThuoc kt order by kt.ngayTao desc ")
-    Page<KichThuoc> getAll(Pageable pageable);
+    @Query(value = """
+            SELECT * FROM kich_thuoc
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                             """, nativeQuery = true)
+    Page<KichThuoc> getPage(Pageable pageable);
 
-    @Query("select kt from KichThuoc  kt where kt.daXoa=false")
+    @Query(value = """
+            SELECT * FROM kich_thuoc WHERE da_xoa = false
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                                    """, nativeQuery = true)
     List<KichThuoc> getAllByStatus();
 }

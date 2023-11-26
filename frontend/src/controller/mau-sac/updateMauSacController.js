@@ -2,17 +2,12 @@ window.updateMauSacController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
-  const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
   $scope.formMauSac = {
     id: "",
     ma: "",
@@ -23,7 +18,6 @@ window.updateMauSacController = function (
   $http.get(mauSacAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
       $scope.formMauSac = response.data;
-      console.log($scope.formMauSac);
     }
   });
 
@@ -32,17 +26,36 @@ window.updateMauSacController = function (
     let color = colorStr.slice(1, 7);
     $http.get(api_url + "/id?hex=" + color).then(function (response) {
       $scope.formMauSac.ten = response.data.name.value;
-      $scope.updateMauSac = {
-        ma: $scope.formMauSac.ma,
-        ten: $scope.formMauSac.ten,
-        ngaySua: new Date(),
-        daXoa: $scope.formMauSac.daXoa,
-      };
-      $http
-        .put(mauSacAPI + "/update/" + id, $scope.updateMauSac)
-        .then(function () {
-          $location.path("/mau-sac/hien-thi");
-        });
+      $http.get(mauSacAPI + "/get-all").then(function (response) {
+        $scope.listMauSac = response?.data;
+
+        $scope.updateMauSac = {
+          ma: $scope.formMauSac.ma,
+          ten: $scope.formMauSac.ten,
+          ngaySua: new Date(),
+          daXoa: $scope.formMauSac.daXoa,
+        };
+        $http
+          .put(mauSacAPI + "/update/" + id, $scope.updateMauSac)
+          .then(function () {
+            $rootScope.message = "Cập nhật thành công";
+            $location.path("/mau-sac/hien-thi");
+          });
+      });
     });
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
   };
 };

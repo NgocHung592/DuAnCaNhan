@@ -1,4 +1,9 @@
-window.hienThiSanPhamController = function ($http, $scope) {
+window.hienThiSanPhamController = function (
+  $http,
+  $scope,
+  $rootScope,
+  $timeout
+) {
   $scope.currentPage = 0;
   $scope.listSanPham = [];
   $scope.totalPages = [];
@@ -6,17 +11,43 @@ window.hienThiSanPhamController = function ($http, $scope) {
   $scope.visiblePages = [];
   $scope.maxVisiblePages = 3;
 
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  $scope.message = $rootScope.message;
+  console.log($scope.message);
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getSanPham = function () {
+    if ($scope.message != undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listSanPham = response.data;
-        console.log($scope.listSanPham);
+        $scope.listSanPham = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
   $scope.getSanPham();
+  $timeout(function () {
+    $scope.message = undefined;
+  }, 1000);
+
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
@@ -49,7 +80,6 @@ window.hienThiSanPhamController = function ($http, $scope) {
     return visiblePages;
   };
   $scope.loc = function () {
-    console.log($scope.selectOption);
     $http
       .get(
         sanPhamAPI +
@@ -59,8 +89,7 @@ window.hienThiSanPhamController = function ($http, $scope) {
           $scope.selectOption
       )
       .then(function (response) {
-        $scope.listSanPham = response.data;
-        console.log($scope.listSanPham);
+        $scope.listSanPham = response?.data.content;
       });
   };
   $scope.$watch("searchKeyword", function (newVal, oldVal) {
@@ -74,12 +103,12 @@ window.hienThiSanPhamController = function ($http, $scope) {
             $scope.searchKeyword
         )
         .then(function (response) {
-          $scope.listSanPham = response.data;
-          console.log($scope.listSanPham);
+          $scope.listSanPham = response?.data.content;
         });
     }
   });
   $scope.changePage = function (index) {
+    $scope.showError = false;
     if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
       $scope.getSanPham();

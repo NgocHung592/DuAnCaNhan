@@ -72,7 +72,13 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <nav aria-label="Page navigation example ">
+                                <div ng-if="listHoaDonChiTiet.length===0">
+                                    <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                                    <p class="dataTables_empty_lable">
+                                        No Data
+                                    </p>
+                                </div>
+                                <nav aria-label="Page navigation example " ng-if="listHoaDonChiTiet.length!==0">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item">
                                             <a class="page-link" ng-click="previousPageHDCT()" aria-label="Previous">
@@ -405,14 +411,22 @@
         </div>
     </div>
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1500">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
             <div class="toast-body">
-                {{message}}
+                <span class="success" ng-hide="showError==false">
+                    <i class="fa-solid fa-check fa-xl"></i>
+                </span>
+                <span class="icon_error" ng-hide="showError">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </span>
+                <span class="message_error">
+                    {{message}}
+                </span>
                 <div id="myProgress">
-                    <div id="myBar"></div>
+                    <div id="success" ng-hide="showError==false"></div>
+                    <div id="error" ng-hide="showError"></div>
                 </div>
             </div>
-
         </div>
     </div>
 </main>

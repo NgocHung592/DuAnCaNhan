@@ -10,7 +10,9 @@ import java.util.UUID;
 
 public interface KichThuocService {
 
-    Page<KichThuoc> getAll(Integer pageNo);
+    List<KichThuoc> getAll();
+
+    Page<KichThuoc> getPage(Integer pageNo);
 
     List<KichThuoc> getAllByStatus();
 

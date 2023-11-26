@@ -25,7 +25,7 @@ public class HoaTietServiceImpl implements HoaTietService {
     @Override
     public Page<HoaTiet> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return hoaTietRepository.getAll(pageable);
+        return hoaTietRepository.getPage(pageable);
     }
 
     @Override

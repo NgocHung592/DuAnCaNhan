@@ -24,7 +24,7 @@ public class TayAoServiceImpl implements TayAoService {
     @Override
     public Page<TayAo> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return tayAoRepository.getAll(pageable);
+        return tayAoRepository.getPage(pageable);
     }
 
     @Override

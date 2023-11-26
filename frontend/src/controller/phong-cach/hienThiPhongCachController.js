@@ -1,18 +1,54 @@
-window.hienThiPhongCachController = function ($http, $scope) {
-  $scope.currentPage = 0;
+window.hienThiPhongCachController = function (
+  $http,
+  $scope,
+  $rootScope,
+  $timeout
+) {
   $scope.totalPages = [];
+  $scope.visiblePages = [];
+  $scope.currentPage = 0;
+  $scope.maxVisiblePages = 3;
+  $scope.listPhongCach = [];
 
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+  $scope.message = $rootScope.message;
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getPhongCach = function () {
+    if ($scope.message !== undefined) {
+      toastBootstrap.show();
+      $scope.successProgress();
+    }
     $http
       .get(phongCachAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listPhongCach = response.data;
-        console.log($scope.listPhongCach);
+        $scope.listPhongCach = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
   $scope.getPhongCach();
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;

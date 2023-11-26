@@ -2,15 +2,26 @@ window.updateChatLieuController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
-  $scope.formChatLieu = {
-    id: "",
-    ma: "",
-    ten: "",
-    daXoa: Boolean,
-  };
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $http
     .get(chatLieuAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
@@ -20,20 +31,11 @@ window.updateChatLieuController = function (
     });
 
   $scope.update = function (id) {
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let idp = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(idp);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-
-    if ($scope.formChatLieu.ten === "") {
-      $scope.message = "Tên Chất Liệu Không Được Trống";
+    if ($scope.formChatLieu.ten == "") {
+      toastBootstrap.show();
+      $scope.message = "Tên chất liệu không được trống";
+      $scope.errorProgress();
+      return;
     } else {
       $scope.updateChatLieu = {
         ten: $scope.formChatLieu.ten,
@@ -43,17 +45,10 @@ window.updateChatLieuController = function (
       $http
         .put(chatLieuAPI + "/update/" + id, $scope.updateChatLieu)
         .then(function () {
+          $rootScope.message = "Cập nhật thành công";
           $location.path("/chat-lieu/hien-thi");
         });
+      return;
     }
   };
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

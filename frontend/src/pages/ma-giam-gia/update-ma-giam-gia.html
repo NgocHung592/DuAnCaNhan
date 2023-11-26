@@ -25,8 +25,9 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Hình thức<span style="color: red">*</span>:</label>
                                     <select class="form-control" ng-model="detailProduct.hinhThucGiam">
-                                        <option value="0">Tiền mặt</option>
-                                        <option value="1">Phần trăm</option>
+                                        <option ng-selected="detailProduct.hinhThucGiam===0" value="0">Tiền mặt</option>
+                                        <option ng-selected="detailProduct.hinhThucGiam===1" value="1">Phần trăm
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">

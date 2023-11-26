@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.CoAo;
 import com.example.demo.entity.HoaTiet;
+import com.example.demo.entity.MauSac;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,9 +14,17 @@ import java.util.UUID;
 @Repository
 public interface HoaTietRepository extends JpaRepository<HoaTiet, UUID> {
 
-    @Query("select ht from HoaTiet ht order by ht.ngayTao desc ")
-    Page<HoaTiet> getAll(Pageable pageable);
+    @Query(value = """
+            SELECT * FROM hoa_tiet
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                          """, nativeQuery = true)
+    Page<HoaTiet> getPage(Pageable pageable);
 
-    @Query("select ht from HoaTiet  ht where ht.daXoa=false")
+    @Query(value = """
+            SELECT * FROM hoa_tiet WHERE da_xoa = false
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                             """, nativeQuery = true)
     List<HoaTiet> getAllByStatus();
 }

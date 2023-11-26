@@ -21,9 +21,14 @@ public class KichThuocServiceImpl implements KichThuocService {
     private KichThuocRepository kichThuocRepository;
 
     @Override
-    public Page<KichThuoc> getAll(Integer pageNo) {
+    public List<KichThuoc> getAll() {
+        return kichThuocRepository.findAll();
+    }
+
+    @Override
+    public Page<KichThuoc> getPage(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return kichThuocRepository.getAll(pageable);
+        return kichThuocRepository.getPage(pageable);
     }
 
     @Override

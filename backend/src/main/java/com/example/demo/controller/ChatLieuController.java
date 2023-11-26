@@ -28,9 +28,14 @@ public class ChatLieuController {
     @Autowired
     private ChatLieuService chatLieuService;
 
+    @GetMapping("get-all")
+    public List<ChatLieu> getAll() {
+        return chatLieuService.getAll();
+    }
+
     @GetMapping("hien-thi")
-    public Page<ChatLieu> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return chatLieuService.getAll(pageNo);
+    public Page<ChatLieu> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return chatLieuService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")

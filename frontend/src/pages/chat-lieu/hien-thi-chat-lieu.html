@@ -23,7 +23,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="chatLieu in listChatLieu.content">
+                            <tbody ng-repeat="chatLieu in listChatLieu">
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
                                     <th scope="row">{{chatLieu.ma}}</th>
@@ -35,7 +35,7 @@
 
                                         </p>
                                     </th>
-                                    <th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Update">
                                         <a href="#chat-lieu/update/{{chatLieu.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
@@ -43,7 +43,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example">
+                        <div ng-if="listChatLieu.length === 0">
+                            <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                            <p class="dataTables_empty_lable">
+                                No Data
+                            </p>
+                        </div>
+                        <nav aria-label="Page navigation example" ng-if="listChatLieu.length !== 0">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -60,8 +66,24 @@
                                     <a class="page-link" ng-click="nextPage()"> >> </a>
                                 </li>
                             </ul>
+                            <p>Tổng số trang: {{ totalPages.length }}</p>
                         </nav>
-                        <p>Tổng số trang: {{ totalPages.length }}</p>
+                        <div class="toast-container position-fixed top-0 end-0 p-3">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                data-bs-delay="1000">
+                                <div class="toast-body">
+                                    <span class="success">
+                                        <i class="fa-solid fa-check fa-xl"></i>
+                                    </span>
+                                    <span class="message_error">
+                                        {{message}}
+                                    </span>
+                                    <div id="myProgress">
+                                        <div id="success"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

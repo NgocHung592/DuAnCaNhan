@@ -8,7 +8,9 @@ import java.util.UUID;
 
 public interface PhongCachService {
 
-    Page<PhongCach> getAll(Integer pageNo);
+    List<PhongCach> getAll();
+
+    Page<PhongCach> getPage(Integer pageNo);
 
     List<PhongCach> getAllByStatus();
 

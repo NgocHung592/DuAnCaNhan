@@ -1,4 +1,9 @@
-window.addSanPhamController = function ($http, $scope, $location) {
+window.addSanPhamChiTietController = function (
+  $http,
+  $scope,
+  $location,
+  $rootScope
+) {
   $scope.totalPages = [];
   $scope.products = [];
   $scope.productDetails = [];
@@ -6,10 +11,12 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.colors = [];
   $scope.sizeAndColors = [];
   $scope.newSizeAndColors = [];
+  $scope.selectedFiles = [];
 
   $scope.currentPage = 0;
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
-
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.product = {
     maSanPham: $scope.randoomSanPham,
     tenSanPham: "",
@@ -31,7 +38,6 @@ window.addSanPhamController = function ($http, $scope, $location) {
   $scope.color = {
     tenMauSac: "",
   };
-  $scope.selectedFiles = [];
 
   $scope.selectFile = function (tenMauSac, index) {
     var productImageInput = document.getElementById("product-image");
@@ -43,19 +49,22 @@ window.addSanPhamController = function ($http, $scope, $location) {
     function handleImageChange(event) {
       $scope.$apply(function () {
         var selectedFiles = event.target.files;
-        console.log(selectedFiles);
         if (
           $scope.groupedProducts[tenMauSac] &&
           $scope.groupedProducts[tenMauSac].length > index
         ) {
           var product = $scope.groupedProducts[tenMauSac];
-          console.log(product);
           product.forEach((product) => {
             for (const file of selectedFiles) {
-              var newProduct = Object.assign({}, product);
-              newProduct.urlImage = file.name;
-              $scope.newSizeAndColors.push(newProduct);
-              return;
+              if (file == "") {
+                $scope.newSizeAndColors.push(product);
+                return;
+              } else {
+                var newProduct = Object.assign({}, product);
+                newProduct.urlImage = file.name;
+                $scope.newSizeAndColors.push(newProduct);
+                return;
+              }
             }
           });
         }
@@ -94,10 +103,20 @@ window.addSanPhamController = function ($http, $scope, $location) {
       $scope.colors.splice(index, 1);
     }
   };
-  $scope.renderMota = function (tenSanPham) {
-    $http.get(sanPhamAPI + "/find/" + tenSanPham).then(function (response) {
-      $scope.product.moTa = response.data.moTa;
-    });
+  $scope.renderMota = function () {
+    if ($scope.product.tenSanPham) {
+      $http
+        .get(sanPhamAPI + "/find/" + $scope.product.tenSanPham)
+        .then(function (response) {
+          if (response?.data?.moTa) {
+            $scope.product.moTa = response.data.moTa;
+          } else {
+            return;
+          }
+        });
+    } else {
+      $scope.product.moTa = null;
+    }
   };
   $scope.addSizeAndColor = function () {
     $scope.sizeAndQuantitys.forEach((size) => {
@@ -145,11 +164,8 @@ window.addSanPhamController = function ($http, $scope, $location) {
       console.log($scope.groupedProducts);
     }
   };
-  $scope.saveProduct = function (event) {
+  $scope.addSanPhamChiTiet = function (event) {
     event.preventDefault();
-
-    console.log($scope.newSizeAndColors);
-
     $scope.newSizeAndColors.forEach((sizeAndColor) => {
       const newProductDetail = {
         maSanPham: $scope.product.maSanPham,
@@ -171,13 +187,83 @@ window.addSanPhamController = function ($http, $scope, $location) {
       $scope.productDetails.push(newProductDetail);
     });
 
-    console.log($scope.productDetails);
+    if ($scope.product.tenSanPham == "") {
+      toastBootstrap.show();
+      $scope.message = "Tên sản phẩm không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.moTa == "") {
+      toastBootstrap.show();
+      $scope.message = "Mô tả không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.idChatLieu == "") {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn chất liệu";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.idPhongCach == "") {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn phong cách";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.idHoaTiet == "") {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn họa tiết";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.idCoAo == "") {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn cổ áo";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.product.idTayAo == "") {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn tay áo";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.sizeAndColors.length === 0) {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn kích thước và màu sắc";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else if ($scope.newSizeAndColors.length === 0) {
+      toastBootstrap.show();
+      $scope.message = "Hãy chọn ảnh";
+      $scope.errorProgress();
+      $scope.showError = false;
+      return;
+    } else {
+      $http
+        .post(sanPhamChiTietAPI + "/add", $scope.productDetails)
+        .then(function () {
+          $rootScope.message = "Thêm thành công";
+          $rootScope.showError = true;
+          $location.path("/san-pham/hien-thi");
+        });
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
-    $http
-      .post(sanPhamChiTietAPI + "/add", $scope.productDetails)
-      .then(function () {
-        $location.path("/san-pham/hien-thi");
-      });
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
   };
 
   //load thuoc tinh theo trang thai kich hoat
@@ -339,14 +425,4 @@ window.addSanPhamController = function ($http, $scope, $location) {
       });
     });
   };
-
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

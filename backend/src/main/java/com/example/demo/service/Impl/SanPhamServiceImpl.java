@@ -26,7 +26,7 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public Page<SanPhamReponse> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamRepository.getAll(pageable);
+        return sanPhamRepository.getPage(pageable);
     }
 
     @Override

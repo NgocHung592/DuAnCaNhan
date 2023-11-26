@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.CoAo;
+import com.example.demo.entity.MauSac;
 import com.example.demo.entity.TayAo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +14,17 @@ import java.util.UUID;
 @Repository
 public interface TayAoRepository extends JpaRepository<TayAo, UUID> {
 
-    @Query("select ta from TayAo ta order by ta.ngayTao desc ")
-    Page<TayAo> getAll(Pageable pageable);
+    @Query(value = """
+            SELECT * FROM tay_ao
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                           """, nativeQuery = true)
+    Page<TayAo> getPage(Pageable pageable);
 
-    @Query("select ta from TayAo ta where ta.daXoa=false ")
+    @Query(value = """
+            SELECT * FROM tay_ao WHERE da_xoa = false
+            GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                            """, nativeQuery = true)
     List<TayAo> getAllByStatus();
 }

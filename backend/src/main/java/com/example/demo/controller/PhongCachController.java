@@ -29,9 +29,14 @@ public class PhongCachController {
     @Autowired
     private PhongCachService phongCachService;
 
+    @GetMapping("get-all")
+    public ResponseEntity getAll() {
+        return new ResponseEntity(phongCachService.getAll(), HttpStatus.OK);
+    }
+
     @GetMapping("hien-thi")
-    public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return new ResponseEntity(phongCachService.getAll(pageNo), HttpStatus.OK);
+    public ResponseEntity getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return new ResponseEntity(phongCachService.getPage(pageNo), HttpStatus.OK);
     }
 
     @GetMapping("trang-thai")

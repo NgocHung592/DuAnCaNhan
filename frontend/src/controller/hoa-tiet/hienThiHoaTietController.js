@@ -1,12 +1,14 @@
 window.hienThiHoaTietController = function ($http, $scope) {
   $scope.listHoaTiet = [];
-  $scope.currentPage = 0;
   $scope.totalPages = [];
+  $scope.visiblePages = [];
+  $scope.currentPage = 0;
+  $scope.maxVisiblePages = 3;
   $scope.getHoaTiet = function () {
     $http
       .get(hoaTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listHoaTiet = response.data;
+        $scope.listHoaTiet = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });

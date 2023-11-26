@@ -2,15 +2,32 @@ window.updateKichThuocController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
   $scope.formKichThuoc = {
     id: "",
     ma: "",
     ten: "",
     trangThai: Boolean,
   };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $http
     .get(kichThuocAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
@@ -21,19 +38,11 @@ window.updateKichThuocController = function (
 
   $scope.update = function (e, idKichThuoc) {
     e.preventDefault();
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
+
     if ($scope.formKichThuoc.ten === "") {
       $scope.message = "Tên kích thước không được trống";
+      $scope.errorProgress();
+      toastBootstrap.show();
       return;
     } else {
       $scope.updateKichThuoc = {
@@ -44,17 +53,9 @@ window.updateKichThuocController = function (
       $http
         .put(kichThuocAPI + "/update/" + idKichThuoc, $scope.updateKichThuoc)
         .then(function () {
+          $rootScope.message = "Cập nhật thành công";
           $location.path("/kich-thuoc/hien-thi");
         });
     }
   };
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

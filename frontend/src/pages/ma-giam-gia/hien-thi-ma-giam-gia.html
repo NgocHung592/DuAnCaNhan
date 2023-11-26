@@ -60,14 +60,7 @@
                             <tbody ng-repeat="maGiamGia in listMaGiamGia">
                                 <tr>
                                     <th>{{$index+1}}</th>
-                                    <!-- <th scope="col">
-                                        <a
-                                            href="{{maGiamGia.trangThai =='3'?'#ma-giam-gia/ma-giam-gia-chi-tiet/detail/'+maGiamGia.id : ''}}">
-                                            <i
-                                                class="{{maGiamGia.trangThai =='3'?'align-middle me-2 fas fa-fw fa-info-circle' : ''}}"></i>
-                                        </a>
-    
-                                    </th> -->
+
                                     <th>{{maGiamGia.ma}}</th>
                                     <th>{{maGiamGia.tenKM}}</th>
                                     <th>
@@ -79,8 +72,6 @@
                                     <th ng-if="maGiamGia.hinhThucGiam==0">{{maGiamGia.giaTriGiam |number}} VND</th>
                                     <th ng-if="maGiamGia.hinhThucGiam==1">{{maGiamGia.giaTriGiam}} %</th>
 
-                                    <!-- <th>{{maGiamGia.ngayBatDau | date: 'dd/MM/yyyy hh:mm a'}}</th> -->
-                                    <!-- <th>{{maGiamGia.ngayKetThuc | date: 'dd/MM/yyyy hh:mm a'}}</th> -->
                                     <th>{{maGiamGia.soLuong}}</th>
                                     <th>
 
@@ -90,8 +81,7 @@
                                     </th>
                                     <th>
                                         <a href="#ma-giam-gia/update/{{maGiamGia.id}}">
-                                            <!-- <i
-                                                class="{{maGiamGia.trangThai =='1'? 'align-middle me-2 fas fa-fw fa-edit' : ''}}"></i> -->
+
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
                                     </th>
@@ -99,10 +89,14 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <div class="no-data-message" ng-if="listMaGiamGia.content.length === 0">
-                            Không tìm thấy dữ liệu phù hợp
-                        </div> -->
-                        <div class="row mt-4">
+                        <div ng-if="listMaGiamGia.length === 0">
+                            <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                            <p class="dataTables_empty_lable">
+                                No Data
+                            </p>
+                        </div>
+
+                        <div class="row mt-4" ng-if="listMaGiamGia.length !== 0">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">

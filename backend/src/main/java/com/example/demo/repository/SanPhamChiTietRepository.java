@@ -26,7 +26,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
               inner join co_ao ca on spct.co_ao_id = ca.id
               where sp.id=?1
               group by sp.id,spct.id, sp.ten,kt.ten,ms.ten, cl.ten, pc.ten, ht.ten, ta.ten, ca.ten, spct.da_xoa,spct.ngay_tao,spct.don_gia,hinh_anh
-              order by spct.ngay_tao desc
+              ORDER BY IIF(MAX(spct.ngay_sua) IS NULL, MAX(spct.ngay_tao), IIF(MAX(spct.ngay_tao) > MAX(spct.ngay_sua), MAX(spct.ngay_tao), MAX(spct.ngay_sua))) DESC; 
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getPage(Pageable pageable, UUID id);
 
@@ -41,7 +41,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
               inner join mau_sac ms on ms.id = spct.mau_sac_id
               where spct.da_xoa='false'
               group by sp.id,spct.id, sp.ten,kt.ten,ms.ten, cl.ten, pc.ten, ht.ten,  spct.da_xoa,spct.ngay_tao,spct.don_gia,hinh_anh
-              order by spct.ngay_tao desc
+             ORDER BY IIF(MAX(spct.ngay_sua) IS NULL, MAX(spct.ngay_tao), IIF(MAX(spct.ngay_tao) > MAX(spct.ngay_sua), MAX(spct.ngay_tao), MAX(spct.ngay_sua))) DESC; 
             """, nativeQuery = true)
     Page<SanPhamChiTietResponse> getSanPhamBanHangTaiQuay(Pageable pageable);
 
@@ -55,7 +55,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
               inner join mau_sac ms on ms.id = spct.mau_sac_id
               where spct.da_xoa='false'
               group by sp.id,spct.id, sp.ten,kt.ten,ms.ten, cl.ten, pc.ten, ht.ten, spct.da_xoa,spct.ngay_tao,spct.don_gia,hinh_anh
-              order by spct.ngay_tao desc
+             ORDER BY IIF(MAX(spct.ngay_sua) IS NULL, MAX(spct.ngay_tao), IIF(MAX(spct.ngay_tao) > MAX(spct.ngay_sua), MAX(spct.ngay_tao), MAX(spct.ngay_sua))) DESC; 
             """, nativeQuery = true)
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
 
