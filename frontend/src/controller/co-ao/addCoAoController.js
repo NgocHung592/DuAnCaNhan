@@ -1,15 +1,9 @@
 window.addCoAoController = function ($http, $scope, $location) {
-  const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
-  $scope.randoom = "CA" + Math.floor(Math.random() * 10000) + 1;
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
+  $scope.randoom = "CA" + Math.floor(Math.random() * 10000) + 1;
+  $scope.listCoAo = [];
   $scope.formCoAo = {
     ma: $scope.randoom,
     ten: "",
@@ -17,26 +11,35 @@ window.addCoAoController = function ($http, $scope, $location) {
     daXoa: false,
   };
 
-  $scope.add = function (event) {
-    event.preventDefault();
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
+  $scope.add = function (e) {
+    e.preventDefault();
+    let isDuplicate = false;
     if ($scope.formCoAo.ten == "") {
       $scope.message = "Tên cổ áo không được trống";
-      return;
+      $scope.errorProgress();
+      toastBootstrap.show();
     } else {
+      $http.get(coAoAPI + "/get-all").then(function (response) {
+        $scope.listCoAo = response?.data;
+        $scope.listCoAo.forEach((coAo) => {});
+      });
       $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
         $location.path("/co-ao/hien-thi");
       });
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
     }
   };
 };

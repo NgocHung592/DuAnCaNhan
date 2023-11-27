@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface SanPhamService {
 
-    Page<SanPhamReponse> getAll(Integer pageNo);
+    Page<SanPhamReponse> getPage(Integer pageNo);
 
     List<SanPham> getAllByStatus();
 

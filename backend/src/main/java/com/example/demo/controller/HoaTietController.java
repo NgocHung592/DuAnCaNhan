@@ -4,6 +4,8 @@ import com.example.demo.entity.HoaTiet;
 import com.example.demo.service.HoaTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +27,13 @@ public class HoaTietController {
     @Autowired
     private HoaTietService hoaTietService;
 
-    @GetMapping("hien-thi")
+    @GetMapping("get-all")
+    public ResponseEntity getAll() {
+        return new ResponseEntity(hoaTietService.getAll(), HttpStatus.OK);
+
+    } @GetMapping("hien-thi")
     public Page<HoaTiet> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return hoaTietService.getAll(pageNo);
+        return hoaTietService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")
@@ -46,8 +52,8 @@ public class HoaTietController {
     }
 
     @PutMapping("update/{id}")
-    public HoaTiet update(@RequestBody HoaTiet hoaTiet, @PathVariable("id") String id) {
-        return hoaTietService.update(hoaTiet, UUID.fromString(id));
+    public ResponseEntity update(@RequestBody HoaTiet hoaTiet, @PathVariable("id") String id) {
+        return new ResponseEntity(hoaTietService.update(hoaTiet, UUID.fromString(id)),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

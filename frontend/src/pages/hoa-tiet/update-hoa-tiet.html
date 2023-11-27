@@ -38,14 +38,18 @@
         </div>
     </div>
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1500">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
             <div class="toast-body">
-                {{message}}
+                <span class="icon_error">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </span>
+                <span class="message_error">
+                    {{message}}
+                </span>
                 <div id="myProgress">
-                    <div id="myBar"></div>
+                    <div id="error"></div>
                 </div>
             </div>
-
         </div>
     </div>
 </main>

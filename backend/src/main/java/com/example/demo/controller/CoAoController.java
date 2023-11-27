@@ -28,9 +28,14 @@ public class CoAoController {
     @Autowired
     private CoAoService coAoService;
 
+    @GetMapping("get-all")
+    public List<CoAo> getAll() {
+        return coAoService.getAll();
+    }
+
     @GetMapping("hien-thi")
-    public Page<CoAo> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return coAoService.getAll(pageNo);
+    public Page<CoAo> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return coAoService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")

@@ -26,7 +26,7 @@ window.updateChatLieuController = function (
     .get(chatLieuAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       if (response.status == 200) {
-        $scope.formChatLieu = response.data;
+        $scope.formChatLieu = response?.data;
       }
     });
 
@@ -35,7 +35,6 @@ window.updateChatLieuController = function (
       toastBootstrap.show();
       $scope.message = "Tên chất liệu không được trống";
       $scope.errorProgress();
-      return;
     } else {
       $scope.updateChatLieu = {
         ten: $scope.formChatLieu.ten,
@@ -48,7 +47,6 @@ window.updateChatLieuController = function (
           $rootScope.message = "Cập nhật thành công";
           $location.path("/chat-lieu/hien-thi");
         });
-      return;
     }
   };
 };

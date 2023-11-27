@@ -28,9 +28,14 @@ public class TayAoController {
     @Autowired
     private TayAoService tayAoService;
 
+    @GetMapping("get-all")
+    public List<TayAo> getAll() {
+        return tayAoService.getAll();
+    }
+
     @GetMapping("hien-thi")
-    public Page<TayAo> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return tayAoService.getAll(pageNo);
+    public Page<TayAo> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return tayAoService.getPage(pageNo);
     }
 
     @GetMapping("trang-thai")

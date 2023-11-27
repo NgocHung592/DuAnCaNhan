@@ -1,6 +1,5 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.CoAo;
 import com.example.demo.repository.CoAoRepository;
 import com.example.demo.service.CoAoService;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +21,12 @@ public class CoAoServiceImpl implements CoAoService {
 
 
     @Override
-    public Page<CoAo> getAll(Integer pageNo) {
+    public List<CoAo> getAll() {
+        return coAoRepository.findAll();
+    }
+
+    @Override
+    public Page<CoAo> getPage(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return coAoRepository.getPage(pageable);
     }
@@ -58,7 +61,6 @@ public class CoAoServiceImpl implements CoAoService {
                 coAoUpdate.setNgaySua(coAo.getNgaySua());
                 coAoUpdate.setDaXoa(coAo.getDaXoa());
                 return coAoRepository.save(coAoUpdate);
-
             }).orElse(null);
         }
         return null;

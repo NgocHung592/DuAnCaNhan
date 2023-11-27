@@ -54,9 +54,9 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu update(ChatLieu chatLieu, UUID id) {
-        Optional<ChatLieu> optional = chatLieuRepository.findById(id);
-        if (optional.isPresent()) {
-            optional.map(chatLieuUpdte -> {
+        Optional<ChatLieu> optionalChatLieu = chatLieuRepository.findById(id);
+        if (optionalChatLieu.isPresent()) {
+            optionalChatLieu.map(chatLieuUpdte -> {
                 chatLieuUpdte.setTen(chatLieu.getTen());
                 chatLieuUpdte.setNgaySua(chatLieu.getNgaySua());
                 chatLieuUpdte.setNguoiSua("Hưng");

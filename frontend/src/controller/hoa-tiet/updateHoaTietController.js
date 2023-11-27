@@ -2,7 +2,8 @@ window.updateHoaTietController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
   $scope.formHoaTiet = {
     id: "",
@@ -10,51 +11,88 @@ window.updateHoaTietController = function (
     ten: "",
     daXoa: Boolean,
   };
-
+  $scope.listHoaTiet = [];
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $http
     .get(hoaTietAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       if (response.status == 200) {
-        $scope.formHoaTiet = response.data;
+        $scope.formHoaTiet = response?.data;
       }
     });
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
-  $scope.update = function (idHoaTiet) {
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let idp = setInterval(frame, 10);
     function frame() {
-      if (width >= 100) {
-        clearInterval(idp);
+      if (width <= 0) {
+        clearInterval(id);
       } else {
-        width++;
+        width--;
         elem.style.width = width + "%";
       }
     }
+  };
+  $scope.update = function (idHoaTiet) {
+    // Khởi tạo danh sách mới
+    let isDuplicate = false;
+    $scope.newListHoaTiet = [];
 
+    // Kiểm tra nếu 'ten' trống
     if ($scope.formHoaTiet.ten === "") {
       $scope.message = "Tên họa tiết không được trống";
-      return null;
+      toastBootstrap.show();
+      $scope.errorProgress();
     } else {
-      $scope.updateHoaTiet = {
-        ten: $scope.formHoaTiet.ten,
-        ngaySua: new Date(),
-        daXoa: $scope.formHoaTiet.daXoa,
-      };
-      $http
-        .put(hoaTietAPI + "/update/" + idHoaTiet, $scope.updateHoaTiet)
-        .then(function () {
-          $location.path("/hoa-tiet/hien-thi");
-        });
+      // Lấy danh sách hóa tiết
+      $http.get(hoaTietAPI + "/get-all").then(function (response) {
+        $scope.listHoaTiet = response?.data;
+
+        // Lấy chi tiết hóa tiết
+        $http
+          .get(hoaTietAPI + "/detail/" + $routeParams.id)
+          .then(function (responseDetail) {
+            if (responseDetail.status === 200) {
+              $scope.detailHoaTiet = responseDetail?.data;
+
+              // Tạo danh sách mới với các hóa tiết khác 'ten' với hóa tiết đang cập nhật
+              $scope.newListHoaTiet = $scope.listHoaTiet.filter(
+                (hoaTiet) => hoaTiet.ten !== $scope.detailHoaTiet.ten
+              );
+              console.log($scope.newListHoaTiet);
+              // Kiểm tra trùng lặp
+              $scope.newListHoaTiet.forEach((hoaTiet) => {
+                if (hoaTiet.ten === $scope.formHoaTiet.ten) {
+                  isDuplicate = true;
+                }
+              });
+              if (!isDuplicate) {
+                $scope.updateHoaTiet = {
+                  ten: $scope.formHoaTiet.ten,
+                  ngaySua: new Date(),
+                  daXoa: $scope.formHoaTiet.daXoa,
+                };
+
+                $http
+                  .put(
+                    hoaTietAPI + "/update/" + idHoaTiet,
+                    $scope.updateHoaTiet
+                  )
+                  .then(function () {
+                    $rootScope.message = "Cập nhật thành công";
+                    $location.path("/hoa-tiet/hien-thi");
+                  });
+              } else {
+                // Nếu có trùng lặp, thông báo và xử lý lỗi
+                $scope.message = "Tên họa tiết không được trùng";
+                toastBootstrap.show();
+                $scope.errorProgress();
+              }
+            }
+          });
+      });
     }
   };
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

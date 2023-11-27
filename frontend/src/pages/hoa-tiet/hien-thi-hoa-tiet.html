@@ -14,10 +14,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Họa Tiết</th>
-                                    <th scope="col">Tên Họa Tiết</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã họa tiết</th>
+                                    <th scope="col">Tên họa tiết</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
@@ -33,7 +33,7 @@
 
                                         </p>
                                     </th>
-                                    <th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Update">
                                         <a href="#hoa-tiet/update/{{hoaTiet.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
@@ -66,6 +66,22 @@
                             </ul>
                             <p>Tổng số trang: {{ totalPages.length }}</p>
                         </nav>
+                        <div class="toast-container position-fixed top-0 end-0 p-3">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                data-bs-delay="1000">
+                                <div class="toast-body">
+                                    <span class="success">
+                                        <i class="fa-solid fa-check fa-xl"></i>
+                                    </span>
+                                    <span class="message_error">
+                                        {{message}}
+                                    </span>
+                                    <div id="myProgress">
+                                        <div id="success"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

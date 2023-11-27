@@ -171,6 +171,9 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "khach-hang/update-khach-hang.html",
       controller: updateKhachHangController,
     })
+    .when("/thong-ke/hien-thi", {
+      templateUrl: "thong-ke/hien-thi-thong-ke.html",
+    })
 
     .otherwise({
       redirectTo: "/admin",

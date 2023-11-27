@@ -9,7 +9,9 @@ import java.util.UUID;
 
 public interface CoAoService {
 
-    Page<CoAo> getAll(Integer pageNo);
+    List<CoAo> getAll();
+
+    Page<CoAo> getPage(Integer pageNo);
 
     List<CoAo> getAllByStatus();
 

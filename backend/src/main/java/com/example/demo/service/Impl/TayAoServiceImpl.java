@@ -1,6 +1,5 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.CoAo;
 import com.example.demo.entity.TayAo;
 import com.example.demo.repository.TayAoRepository;
 import com.example.demo.service.TayAoService;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,9 +20,14 @@ public class TayAoServiceImpl implements TayAoService {
     private TayAoRepository tayAoRepository;
 
     @Override
-    public Page<TayAo> getAll(Integer pageNo) {
+    public Page<TayAo> getPage(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return tayAoRepository.getPage(pageable);
+    }
+
+    @Override
+    public List<TayAo> getAll() {
+        return tayAoRepository.findAll();
     }
 
     @Override

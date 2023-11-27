@@ -9,9 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +20,12 @@ public class HoaTietServiceImpl implements HoaTietService {
     private HoaTietRepository hoaTietRepository;
 
     @Override
-    public Page<HoaTiet> getAll(Integer pageNo) {
+    public List<HoaTiet> getAll() {
+        return hoaTietRepository.findAll();
+    }
+
+    @Override
+    public Page<HoaTiet> getPage(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return hoaTietRepository.getPage(pageable);
     }

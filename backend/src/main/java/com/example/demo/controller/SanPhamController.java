@@ -28,7 +28,7 @@ public class SanPhamController {
 
     @GetMapping("hien-thi")
     public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return new ResponseEntity(sanPhamService.getAll(pageNo), HttpStatus.OK);
+        return new ResponseEntity(sanPhamService.getPage(pageNo), HttpStatus.OK);
     }
 
     @GetMapping("trang-thai")
