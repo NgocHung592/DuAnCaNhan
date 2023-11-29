@@ -18,9 +18,9 @@
                                             style="color: red">*</span>:</label>
                                     <input type="text" class="form-control" id="inputTen" ng-model="maGiamGiaSave.tenKM"
                                         required>
-                                    <span ng-hide="showTen?true:false" class="has-error" style="font-size: 70%">Tên
+                                    <!-- <span ng-hide="showTen?true:false" class="has-error" style="font-size: 70%">Tên
                                         sai định dạng
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Hình thức<span style="color: red">*</span>:</label>
@@ -34,10 +34,10 @@
                                         <span style="color: red">*</span>:</label>
                                     <input type="number" class="form-control" id="inputSlm"
                                         ng-model="maGiamGiaSave.soLuong">
-                                    <span ng-hide="showSoLuong?true:false" class="has-error" style="font-size: 70%">Vui
+                                    <!-- <span ng-hide="showSoLuong?true:false" class="has-error" style="font-size: 70%">Vui
                                         lòng
                                         nhập
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="inputGTDToiThieu" class="form-label">Giá
@@ -45,18 +45,18 @@
                                         thiểu <span style="color: red">*</span>:</label>
                                     <input type="number" class="form-control" id="inputGTDToiThieu"
                                         ng-model="maGiamGiaSave.giaTriDonToiThieu" required>
-                                    <span ng-hide="showTT?true:false" class="has-error" style="font-size: 70%">Vui
+                                    <!-- <span ng-hide="showTT?true:false" class="has-error" style="font-size: 70%">Vui
                                         lòng nhập giá trị
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="inputGTD" class="form-label">Giá trị giảm
                                         <span style="color: red">*</span>:</label>
                                     <input type="number" class="form-control" id="inputGTD"
                                         ng-model="maGiamGiaSave.giaTriGiam" required>
-                                    <span ng-hide="showTT?true:false" class="has-error" style="font-size: 70%">Vui
+                                    <!-- <span ng-hide="showTD?true:false" class="has-error" style="font-size: 70%">Vui
                                         lòng nhập giá trị
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="inputNbd" class="form-label">Ngày bắt đầu
@@ -64,9 +64,9 @@
                                     <input type="datetime-local"
                                         onfocus="this.min = new Date().toISOString().split(':')[0] + ':' + new Date().toISOString().split(':')[1]"
                                         class="form-control" id="inputNbd" ng-model="maGiamGiaSave.ngayBatDau" required>
-                                    <span ng-hide="showBD?true:false" class="has-error" style="font-size: 70%">Vui
+                                    <!-- <span ng-hide="showBD?true:false" class="has-error" style="font-size: 70%">Vui
                                         lòng nhập
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="inputNkt" class="form-label">Ngày kết thúc
@@ -75,9 +75,9 @@
                                         onfocus="this.min = new Date().toISOString().split(':')[0] + ':' + new Date().toISOString().split(':')[1]"
                                         class="form-control" id="inputNkt" ng-model="maGiamGiaSave.ngayKetThuc"
                                         required>
-                                    <span ng-hide="showBD?true:false" class="has-error" style="font-size: 70%">Vui
+                                    <!-- <span ng-hide="showBD?true:false" class="has-error" style="font-size: 70%">Vui
                                         lòng nhập
-                                    </span>
+                                    </span> -->
                                 </div>
 
                             </div>
@@ -88,6 +88,21 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
+            <div class="toast-body">
+                <span class="icon_error">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </span>
+                <span class="message_error">
+                    {{message}}
+                </span>
+                <div id="myProgress">
+                    <div id="error"></div>
                 </div>
             </div>
         </div>

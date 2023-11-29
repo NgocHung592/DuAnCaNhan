@@ -11,9 +11,7 @@ window.hienThiChatLieuController = function (
 
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
     let elem = document.getElementById("success");
@@ -30,7 +28,7 @@ window.hienThiChatLieuController = function (
     }
   };
   $scope.getChatLieu = function () {
-    if ($scope.message != undefined) {
+    if ($scope.message !== undefined) {
       $scope.successProgress();
       toastBootstrap.show();
     }

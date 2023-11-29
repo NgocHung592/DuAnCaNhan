@@ -148,18 +148,12 @@ Create table [nhan_vien](
     ngay_sinh date,
     anh_dai_dien varchar(max),
     mat_khau varchar(20),
-    so_can_cuoc varchar(20),
-    ghi_chu nvarchar(max),
     trang_thai int,
     ngay_tao datetime,
     ngay_sua datetime,
-    da_xoa bit,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
-    mo_ta nvarchar(20),
-    tinh_thanh_pho nvarchar(20),
-    quan_huyen nvarchar(20),
-    phuong_xa nvarchar(20),
+    da_xoa bit,
     chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
     )
 
@@ -174,27 +168,29 @@ Create table [khach_hang](
     ngay_sinh date,
     anh_dai_dien varchar(max),
     mat_khau varchar(20),
-    so_can_cuoc varchar(20),
-    ghi_chu nvarchar(max),
-    trang_thai int,
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
+    da_xoa bit,
     )
 
 Create table [dia_chi](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
-    ten nvarchar(max),
     dia_chi_mac_dinh nvarchar(max),
-    mo_ta nvarchar(70),
+    dia_chi_cu_the nvarchar(70),
     tinh_thanh_pho nvarchar(20),
     quan_huyen nvarchar(20),
     phuong_xa nvarchar(20),
-	ngay_tao date,
+	ngay_tao datetime,
+	ngay_sua datetime,
+	nguoi_tao nvarchar(250),
+	nguoi_sua nvarchar(250),
     trang_thai int,
-    khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id)
+    khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
+    nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id)
+
     )
 
 Create table [hoa_don](
@@ -309,26 +305,3 @@ Create table [gio_hang_chi_tiet](
     san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
     gio_hang_id UNIQUEIDENTIFIER REFERENCES gio_hang(id)
     )
-
-
-
-
-INSERT INTO  chuc_vu (ma,ten) VALUES ('CV1','Nhân viên')
-Insert into hoa_don_chi_tiet ( so_luong, don_gia, thanh_tien, hoa_don_id, san_pham_chi_tiet_id) 
-								values	( 2, 135000, 270000, '45f8e079-ba5a-4bb6-a119-00d2065e7480', null),
-										( 2, 135000, 270000, 'a407cf5c-49ff-454c-90e3-00d2fe5d0347', null),
-										( 2, 135000, 270000, '318a52e9-1dca-4731-89db-070bcf25b492', null),
-										( 2, 135000, 270000, '3912691b-ddae-440f-a322-ab1ff12ac366', null),
-										( 2, 135000, 270000, '3de7e71f-7617-41da-8af5-ced357bdac80', null),
-										( 2, 135000, 270000, 'b2cce980-1c19-4536-a0b5-d7857b820d4e', null)
-Insert into hoa_don (ma,ngay_tao, ngay_dat_hang, ngay_thanh_toan, ngay_ship, 
-					ngay_mong_muon_nhan,  ngay_co_the_nhan, ngay_nhan_duoc_hang, 
-					dia_chi_khach_hang, so_dien_thoai_khach_hang, phi_ship, phu_phi,
-					phi_hoan_tra, trang_thai, tong_tien, ngay_sua, nguoi_tao, nguoi_sua, khach_hang_id, nhan_vien_id) 
-					values	('hd1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd2', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 15000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd3', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd4', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd5', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd6', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null),
-							('hd7', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', '2023-10-30 11:20:1', N'Phú Minh', 0123456789, 30000, 0, 0 ,0, 300000, null, null, null, null, null)

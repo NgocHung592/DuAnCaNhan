@@ -7,14 +7,48 @@ window.updateKhachHangController = function (
   $http
     .get(khachHangAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
-      $scope.detailKhachHang = response.data;
+      $scope.detailKhachHang = response?.data;
       console.log($scope.detailKhachHang);
+      // const groupedKhachHang = {};
+      // $scope.detailKhachHang.forEach((khachHang) => {
+      //   const tenKhachHang = khachHang.hoTen;
+
+      //   if (!groupedKhachHang[tenKhachHang]) {
+      //     groupedKhachHang[tenKhachHang] = {
+      //       ...khachHang,
+      //       diaChi: [sanPham.tenMauSac],
+      //       tenKichThuoc: [sanPham.tenKichThuoc],
+      //       duongDan: [sanPham.duongDan],
+      //       giaMin: sanPham.donGia,
+      //       giaMax: sanPham.donGia,
+      //     };
+      //   } else {
+      //     if (
+      //       !groupedSanPham[tenSanPham].tenMauSac.includes(sanPham.tenMauSac)
+      //     ) {
+      //       groupedSanPham[tenSanPham].tenMauSac.push(sanPham.tenMauSac);
+      //     }
+      //     if (
+      //       !groupedSanPham[tenSanPham].tenKichThuoc.includes(
+      //         sanPham.tenKichThuoc
+      //       )
+      //     ) {
+      //       groupedSanPham[tenSanPham].tenKichThuoc.push(sanPham.tenKichThuoc);
+      //     }
+      //     if (!groupedSanPham[tenSanPham].duongDan.includes(sanPham.duongDan)) {
+      //       groupedSanPham[tenSanPham].duongDan.push(sanPham.duongDan);
+      //     }
+      //   }
+      // });
+
+      // $scope.newDetailKhachHang = Object.values(groupedKhachHang);
+
+      // console.log($scope.newDetailKhachHang);
     });
   var date = new Date();
   $scope.update = function (id1, id2, event) {
     let check = true;
     const hinhanh = document.getElementById("product-image");
-    console.log(hinhanh);
     for (const image of hinhanh.files) {
       $scope.detailKhachHang.khachHang.anhdaidien = image.name;
     }
@@ -60,15 +94,7 @@ window.updateKhachHangController = function (
   };
 
   $scope.show = Boolean;
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
+
   var date = new Date();
   $scope.form_dc = {
     tinhthanhpho: "",
@@ -116,13 +142,6 @@ window.updateKhachHangController = function (
   };
   $scope.show = Boolean;
 
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
   const host = "https://provinces.open-api.vn/api/";
   var callAPI = (api) => {
     return axios.get(api).then((response) => {

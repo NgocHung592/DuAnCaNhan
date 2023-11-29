@@ -1,4 +1,4 @@
-window.addCoAoController = function ($http, $scope, $location) {
+window.addCoAoController = function ($http, $scope, $location, $rootScope) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
@@ -21,10 +21,20 @@ window.addCoAoController = function ($http, $scope, $location) {
     } else {
       $http.get(coAoAPI + "/get-all").then(function (response) {
         $scope.listCoAo = response?.data;
-        $scope.listCoAo.forEach((coAo) => {});
-      });
-      $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
-        $location.path("/co-ao/hien-thi");
+        $scope.listCoAo.forEach((coAo) => {
+          if (coAo.ten === $scope.formCoAo.ten) {
+            $scope.message = "Tên cổ áo không được trùng";
+            $scope.errorProgress();
+            toastBootstrap.show();
+            isDuplicate = true;
+          }
+        });
+        if (!isDuplicate) {
+          $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
+            $rootScope.message = "Thêm thành công";
+            $location.path("/co-ao/hien-thi");
+          });
+        }
       });
     }
   };

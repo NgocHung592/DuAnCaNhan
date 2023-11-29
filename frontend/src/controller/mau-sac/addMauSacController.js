@@ -15,21 +15,20 @@ window.addMauSacController = function ($http, $scope, $location, $rootScope) {
       toastBootstrap.show();
       $scope.message = "Hãy chọn 1 màu";
       $scope.errorProgress();
+      return;
     }
     callColorApi(color).then(function (tenMauSac) {
-      let isDuplicate = false;
       $scope.formMauSac.ten = tenMauSac;
       $http.get(mauSacAPI + "/get-all").then(function (response) {
         $scope.listMauSac = response?.data;
-        $scope.listMauSac.forEach((mauSac) => {
-          if (mauSac.ten === tenMauSac) {
-            isDuplicate = true;
-            toastBootstrap.show();
-            $scope.message = "Tên màu sắc không được trùng";
-            $scope.errorProgress();
-          }
-        });
-        if (!isDuplicate) {
+        let isDuplicate = $scope.listMauSac.some(
+          (mauSac) => mauSac.ten === tenMauSac
+        );
+        if (isDuplicate) {
+          toastBootstrap.show();
+          $scope.message = "Tên màu sắc không được trùng";
+          $scope.errorProgress();
+        } else {
           $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
             $rootScope.message = "Thêm thành công";
             $location.path("/mau-sac/hien-thi");

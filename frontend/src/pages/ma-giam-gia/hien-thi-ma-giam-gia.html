@@ -43,7 +43,7 @@
                             </label>
 
                         </div>
-                        <table class="table table-light table-striped table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -75,14 +75,17 @@
                                     <th>{{maGiamGia.soLuong}}</th>
                                     <th>
 
-                                        <p class="text-g" ng-if="maGiamGia.trangThai =='1'">Sắp diễn ra</p>
-                                        <p class="text-gl" ng-if="maGiamGia.trangThai =='2'">Đang diễn ra</p>
-                                        <p class="text-glow" ng-if="maGiamGia.trangThai =='3'">Đã kết thúc</p>
+                                        <p class="text-g" ng-if="maGiamGia.trangThai ===1">Sắp diễn ra</p>
+                                        <p class="text-gl" ng-if="maGiamGia.trangThai ===2">Đang diễn ra</p>
+                                        <p class="text-glow" ng-if="maGiamGia.trangThai ===3">Đã kết thúc</p>
                                     </th>
                                     <th>
-                                        <a href="#ma-giam-gia/update/{{maGiamGia.id}}">
-
+                                        <a ng-if="maGiamGia.trangThai===1" href="#ma-giam-gia/update/{{maGiamGia.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
+                                        </a>
+                                        <a ng-if="maGiamGia.trangThai===2 || maGiamGia.trangThai===3"
+                                            href="#ma-giam-gia/ma-giam-gia-chi-tiet/detail/{{maGiamGia.id}}">
+                                            <i class="align-middle me-2 fas fa-fw fa-info-circle"></i>
                                         </a>
                                     </th>
 

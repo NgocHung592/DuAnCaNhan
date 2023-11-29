@@ -148,7 +148,7 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
 
     .when("/ma-giam-gia/hien-thi", {
       templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
-      controller: MaGiamGiaController,
+      controller: hienThiMaGiamGiaController,
     })
 
     .when("/ma-giam-gia/add", {

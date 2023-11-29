@@ -60,12 +60,12 @@
                                     <th>{{sanPham.tenSanPham}} </th>
                                     <th>{{sanPham.soLuong}}</th>
                                     <th>{{sanPham.moTa}}</th>
-                                    <th style="text-align: center;" ng-class="{' text-g ': !sanPham.daXoa
+                                    <th ng-class="{' text-g ': !sanPham.daXoa
                                     ,'text-glow':sanPham.daXoa}">
                                         {{sanPham.daXoa?"Ngừng kinh
                                         Doanh":"Đang Kinh Doanh"}}
                                     </th>
-                                    <th style="text-align: center;">
+                                    <th data-toggle="tooltip" data-placement="top" title="Update">
                                         <a href="#san-pham-chi-tiet/hien-thi/{{sanPham.idSanPham}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>

@@ -1,14 +1,30 @@
 window.hienThiCoAoController = function ($http, $scope, $rootScope) {
   $scope.listCoAo = [];
   $scope.totalPages = [];
-  $scope.visiblePages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $scope.getCoAo = function () {
-    toastBootstrap.show();
+  $scope.message = $rootScope.message;
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  $scope.getCoAo = function () {
+    if ($scope.message != undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(coAoAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
@@ -19,7 +35,11 @@ window.hienThiCoAoController = function ($http, $scope, $rootScope) {
   };
 
   $scope.getCoAo();
-
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;

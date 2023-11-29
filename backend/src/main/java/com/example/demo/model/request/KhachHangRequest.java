@@ -1,53 +1,42 @@
 package com.example.demo.model.request;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
 public class KhachHangRequest {
 
-
     private String ma;
 
-    private String hoten;
+    private String hoTen;
 
     private String email;
 
-    private String anhdaidien;
+    private String anhDaiDien;
 
-    private Boolean gioitinh;
+    private Boolean gioiTinh;
 
-    private String matkhau;
+    private String matKhau;
 
-    private String sodienthoai;
+    private String soDienThoai;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.DATE)
-    private Date ngaysinh;
+    private Date ngaySinh;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.DATE)
-    private Timestamp ngaytao;
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.DATE)
-    private Timestamp ngaysua;
+    private Timestamp ngayTao;
 
-    private String trangthai;
+    private Timestamp ngaySua;
 
+    private String daXoa;
 
-    private String mota;
+    private String diaChiCuThe;
 
-    private String quanhuyen;
+    private String quanHuyen;
 
-    private String phuongxa;
+    private String phuongXa;
 
-    private String tinhthanhpho;
+    private String tinhThanhPho;
 }

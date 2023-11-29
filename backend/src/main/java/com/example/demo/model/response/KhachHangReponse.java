@@ -8,9 +8,6 @@ public interface KhachHangReponse {
     @Value("#{target.id}")
     String getId();
 
-    @Value("#{target.ma}")
-    String getMa();
-
     @Value("#{target.anh_dai_dien}")
     String getHinhAnh();
 
@@ -26,20 +23,14 @@ public interface KhachHangReponse {
     @Value("#{target.so_dien_thoai}")
     String getSoDienThoai();
 
-    @Value("#{target.mat_khau}")
-    String getMatKhau();
-
     @Value("#{target.ngay_sinh}")
     Date getNgaySinh();
 
-    @Value("#{target.trang_thai}")
-    Integer getTrangThai();
+    @Value("#{target.da_xoa}")
+    Boolean getDaXoa();
 
-    @Value("#{target.ngay_tao}")
-    Date getNgayTao();
-
-    @Value("#{target.mo_ta}")
-    String getMoTa();
+    @Value("#{target.dia_chi_cu_the}")
+    String getDiaChiCuThe();
 
     @Value("#{target.phuong_xa}")
     String getPhuongXa();

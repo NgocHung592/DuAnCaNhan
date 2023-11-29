@@ -6,21 +6,26 @@ import com.example.demo.model.response.KhachHangReponse;
 import com.example.demo.model.request.KhachHangRequest;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface KhachHangService {
-    Page<KhachHangReponse> getAll(Integer pageNo);
+
+    List<KhachHang> getAll();
+
+    Page<KhachHang> getPage(Integer pageNo);
 
     DiaChi add(KhachHangRequest khachHangRequest) throws Exception;
 
-    DiaChi addid(KhachHangRequest khachHangRequest, UUID id);
+    //    DiaChi addid(KhachHangRequest khachHangRequest, UUID id);
+//
+//
+//    DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception;
+//
+    Page<KhachHang> loc(Integer pageNo, String trangThai);
 
-    Page<KhachHangReponse> getAllTrangThai(Integer pageNo, String tt);
+    Page<KhachHang> search(Integer pageNo, String keyWord);
 
-    DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception;
-
-    Page<KhachHangReponse> getSearch(Integer pageNo, String serch);
-
-    DiaChi detail(UUID id);
+    List detail(UUID id);
 
 }

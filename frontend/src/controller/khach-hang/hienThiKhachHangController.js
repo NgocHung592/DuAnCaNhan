@@ -5,21 +5,22 @@ window.hienThiKhachHangController = function (
   $rootScope
 ) {
   $scope.list_kh = [];
+  $scope.totalPages = [];
   $scope.searchKeyword = "";
   $scope.selectedOption = "";
   $scope.currentPage = 0;
-  $scope.totalPages = [];
   $scope.maxVisiblePages = 3;
   $scope.getKhachHang = function () {
     $http
       .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.list_kh = response.data;
+        $scope.list_kh = response?.data;
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
   };
   $scope.getKhachHang();
-  $scope.getVisiblePages = function () {
+  function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
     var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
@@ -32,7 +33,7 @@ window.hienThiKhachHangController = function (
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
-      var active = pos === curPage ? "active" : "";
+      var active = pos - 1 === curPage ? "active" : "";
 
       if (totalPages >= 2 * range - 1) {
         if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
@@ -48,9 +49,8 @@ window.hienThiKhachHangController = function (
         });
       }
     }
-
     return visiblePages;
-  };
+  }
 
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {
@@ -75,18 +75,18 @@ window.hienThiKhachHangController = function (
   $scope.$watch("searchKeyword", function (newVal, oldVal) {
     if (newVal !== oldVal) {
       $http
-        .get(khachHangAPI + "/search?search=" + $scope.searchKeyword)
+        .get(khachHangAPI + "/search?keyWord=" + $scope.searchKeyword)
         .then(function (response) {
-          $scope.list_kh = response.data;
-          console.log("thanh cong", response.data);
+          $scope.list_kh = response?.data;
         });
     }
   });
-  $scope.searchTT = function () {
+  $scope.loc = function () {
+    console.log($scope.selectedOption);
     $http
-      .get(khachHangAPI + "/hien-thiTT?search=" + $scope.selectedOption)
+      .get(khachHangAPI + "/loc?trangThai=" + $scope.selectedOption)
       .then(function (response) {
-        $scope.list_kh = response.data;
+        $scope.list_kh = response?.data;
       });
   };
 

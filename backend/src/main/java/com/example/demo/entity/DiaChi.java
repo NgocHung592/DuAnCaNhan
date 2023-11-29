@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,35 +23,43 @@ public class DiaChi {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "ten")
-    private String ten;
-
     @Column(name = "dia_chi_mac_dinh")
-    private String diachimacdinh;
+    private String diaChiMacDinh;
 
-    @Column(name = "mo_ta")
-    private String mota;
+    @Column(name = "dia_chi_cu_the")
+    private String diaChiCuThe;
 
     @Column(name = "tinh_thanh_pho")
-    private String tinhthanhpho;
+    private String tinhThanhPho;
 
     @Column(name = "quan_huyen")
-    private String quanhuyen;
+    private String quanHuyen;
 
     @Column(name = "phuong_xa")
-    private String phuongxa;
+    private String phuongXa;
 
     @Column(name = "ngay_tao")
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngaytao;
+    private Timestamp ngayTao;
 
-    @Column(name = "trang_thai")
-    private Integer trangthai;
+    @Column(name = "ngay_sua")
+    private Timestamp ngaySua;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
+
+    @Column(name = "nguoi_sua")
+    private String nguoiSua;
+
+    @Column(name = "da_xoa")
+    private Boolean daXoa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "khach_hang_id", referencedColumnName = "id")
     private KhachHang khachHang;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nhan_vien_id", referencedColumnName = "id")
+    private NhanVien nhanVien;
 
 
 }

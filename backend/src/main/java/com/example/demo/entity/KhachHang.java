@@ -26,38 +26,39 @@ public class KhachHang {
     private String ma;
 
     @Column(name = "ho_ten")
-    private String hoten;
+    private String hoTen;
 
     @Column(name = "so_dien_thoai")
-    private String sodienthoai;
+    private String soDienThoai;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "gioi_tinh")
-    private Boolean gioitinh;
+    private Boolean gioiTinh;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
     @Column(name = "ngay_sinh")
-    private Date ngaysinh;
-
-    @Column(name = "ngay_tao")
-    private Timestamp ngaytao;
+    private Date ngaySinh;
 
     @Column(name = "anh_dai_dien")
-    private String anhdaidien;
-
-    @Column(name = "ngay_sua")
-    private Timestamp ngaysua;
+    private String anhDaiDien;
 
     @Column(name = "mat_khau")
-    private String matkhau;
+    private String matKhau;
 
-    @Column(name = "ghi_chu")
-    private String ghichu;
+    @Column(name = "ngay_tao")
+    private Timestamp ngayTao;
 
-    @Column(name = "trang_thai")
-    private Integer trangthai;
+    @Column(name = "ngay_sua")
+    private Timestamp ngaySua;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
+
+    @Column(name = "nguoi_sua")
+    private String nguoiSua;
+
+    @Column(name = "da_xoa")
+    private Boolean daXoa;
 
 }

@@ -11,7 +11,6 @@ window.updateHoaTietController = function (
     ten: "",
     daXoa: Boolean,
   };
-  $scope.listHoaTiet = [];
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $http
@@ -35,29 +34,24 @@ window.updateHoaTietController = function (
       }
     }
   };
-  $scope.update = function (idHoaTiet) {
-    // Khởi tạo danh sách mới
+  $scope.update = function () {
     let isDuplicate = false;
     $scope.newListHoaTiet = [];
 
-    // Kiểm tra nếu 'ten' trống
     if ($scope.formHoaTiet.ten === "") {
       $scope.message = "Tên họa tiết không được trống";
       toastBootstrap.show();
       $scope.errorProgress();
     } else {
-      // Lấy danh sách hóa tiết
       $http.get(hoaTietAPI + "/get-all").then(function (response) {
         $scope.listHoaTiet = response?.data;
 
-        // Lấy chi tiết hóa tiết
         $http
           .get(hoaTietAPI + "/detail/" + $routeParams.id)
           .then(function (responseDetail) {
             if (responseDetail.status === 200) {
               $scope.detailHoaTiet = responseDetail?.data;
 
-              // Tạo danh sách mới với các hóa tiết khác 'ten' với hóa tiết đang cập nhật
               $scope.newListHoaTiet = $scope.listHoaTiet.filter(
                 (hoaTiet) => hoaTiet.ten !== $scope.detailHoaTiet.ten
               );
@@ -77,7 +71,7 @@ window.updateHoaTietController = function (
 
                 $http
                   .put(
-                    hoaTietAPI + "/update/" + idHoaTiet,
+                    hoaTietAPI + "/update/" + $routeParams.id,
                     $scope.updateHoaTiet
                   )
                   .then(function () {
@@ -85,7 +79,6 @@ window.updateHoaTietController = function (
                     $location.path("/hoa-tiet/hien-thi");
                   });
               } else {
-                // Nếu có trùng lặp, thông báo và xử lý lỗi
                 $scope.message = "Tên họa tiết không được trùng";
                 toastBootstrap.show();
                 $scope.errorProgress();

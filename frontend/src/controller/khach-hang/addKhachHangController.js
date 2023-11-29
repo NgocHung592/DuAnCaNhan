@@ -4,15 +4,7 @@ window.addKhachHangController = function (
   $rootScope,
   $location
 ) {
-  $scope.showTen = true;
-  $scope.showEmail = true;
-  $scope.showSdt = true;
-  $scope.showMota = true;
-  $scope.showT = true;
-  $scope.showP = true;
-  $scope.showQ = true;
   $scope.randoom = "KH" + Math.floor(Math.random() * 10000) + 1;
-  var date = new Date();
   $scope.matkhau = generateRandomPassword();
   function generateRandomPassword() {
     const characters =
@@ -28,112 +20,111 @@ window.addKhachHangController = function (
   }
   $scope.form_kh = {
     ma: $scope.randoom,
-    hoten: "",
+    hoTen: "",
     email: "",
-    gioitinh: "",
-    ngaysinh: "",
-    anhdaidien: "",
-    sodienthoai: "",
-    matkhau: $scope.matkhau,
-    tinhthanhpho: "",
-    quanhuyen: "",
-    phuongxa: "",
-    ngaytao: date,
-    mota: "",
-    trangthai: 1,
+    gioiTinh: "",
+    ngaySinh: "",
+    anhDaiDien: "",
+    soDienThoai: "",
+    matKhau: $scope.matkhau,
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
+    ngayTao: new Date(),
+    diaChiCuThe: "",
+    daXoa: false,
   };
   $scope.addKhachHang = function (event) {
+    event.preventDefault();
     const hinhanh = document.getElementById("product-image");
-    console.log(hinhanh);
     for (const image of hinhanh.files) {
-      $scope.form_kh.anhdaidien = image.name;
+      $scope.form_kh.anhDaiDien = image.name;
     }
+    console.log($scope.form_kh);
     let check = true;
-    $scope.showTen = true;
-    $scope.showEmail = true;
-    $scope.showSdt = true;
-    $scope.showMota = true;
-    $scope.showT = true;
-    $scope.showP = true;
-    $scope.showQ = true;
-    let hoten = $scope.form_kh.hoten;
-    let email = $scope.form_kh.email;
-    let mota = $scope.form_kh.mota;
-    let tinhthanhpho = $scope.form_kh.tinhthanhphone;
-    let phuongxa = $scope.form_kh.phuongxa;
-    let quanhuyen = $scope.form_kh.quanhuyen;
+    // $scope.showTen = true;
+    // $scope.showEmail = true;
+    // $scope.showSdt = true;
+    // $scope.showMota = true;
+    // $scope.showT = true;
+    // $scope.showP = true;
+    // $scope.showQ = true;
+    // let hoten = $scope.form_kh.hoten;
+    // let email = $scope.form_kh.email;
+    // let mota = $scope.form_kh.mota;
+    // let tinhThanhPho = $scope.form_kh.tinhThanhPhone;
+    // let phuongXa = $scope.form_kh.phuongXa;
+    // let quanHuyen = $scope.form_kh.quanHuyen;
 
-    let sodienthoai = $scope.form_kh.sodienthoai;
-    const onlyLetters =
-      /^[a-zA-Z\s?áàảãạâấầẩẫậăắằẳẵặéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵY\s]*$/;
+    // let sodienthoai = $scope.form_kh.sodienthoai;
+    // const onlyLetters =
+    //   /^[a-zA-Z\s?áàảãạâấầẩẫậăắằẳẵặéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵY\s]*$/;
 
-    const emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
-    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    const vietnamPhoneRegex =
-      /^(?:\+84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
+    // const emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    // const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    // const vietnamPhoneRegex =
+    //   /^(?:\+84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
 
-    if (
-      hoten.length == 0 ||
-      hoten.length > 100 ||
-      specialChars.test(hoten) ||
-      !onlyLetters.test(hoten)
-    ) {
-      $scope.showTen = false;
+    // if (
+    //   hoten.length == 0 ||
+    //   hoten.length > 100 ||
+    //   specialChars.test(hoten) ||
+    //   !onlyLetters.test(hoten)
+    // ) {
+    //   $scope.showTen = false;
 
-      check = false;
-    }
-    if (!emailRegex.test(email)) {
-      console.log(email);
-      $scope.showEmail = false;
+    //   check = false;
+    // }
+    // if (!emailRegex.test(email)) {
+    //   console.log(email);
+    //   $scope.showEmail = false;
 
-      check = false;
-    }
-    if (
-      sodienthoai.length == 0 ||
-      specialChars.test(sodienthoai) ||
-      !vietnamPhoneRegex.test(sodienthoai)
-    ) {
-      $scope.showSdt = false;
+    //   check = false;
+    // }
+    // if (
+    //   sodienthoai.length == 0 ||
+    //   specialChars.test(sodienthoai) ||
+    //   !vietnamPhoneRegex.test(sodienthoai)
+    // ) {
+    //   $scope.showSdt = false;
 
-      check = false;
-    }
-    if (mota.length == 0 || mota.length > 51 || specialChars.test(mota)) {
-      $scope.showMota = false;
+    //   check = false;
+    // }
+    // if (mota.length == 0 || mota.length > 51 || specialChars.test(mota)) {
+    //   $scope.showMota = false;
 
-      check = false;
-    }
-    if (tinhthanhpho == "") {
-      $scope.showT = false;
+    //   check = false;
+    // }
+    // if (tinhThanhPho == "") {
+    //   $scope.showT = false;
 
-      check = false;
-    }
-    if (quanhuyen == "") {
-      $scope.showQ = false;
+    //   check = false;
+    // }
+    // if (quanHuyen == "") {
+    //   $scope.showQ = false;
 
-      check = false;
-    }
-    if (phuongxa == "") {
-      $scope.showP = false;
+    //   check = false;
+    // }
+    // if (phuongXa == "") {
+    //   $scope.showP = false;
 
-      check = false;
-    }
+    //   check = false;
+    // }
     if (check) {
-      $http
-        .post(khachHangAPI + "/add", $scope.form_kh)
-        .then(function () {
-          alert("Thêm thành công");
-          $location.path("/khach-hang/hien-thi");
-        })
-        .catch(function (errorResponse) {
-          if (errorResponse && errorResponse.preventDefault) {
-            errorResponse.preventDefault();
-          }
-          alert("Email hoặc số điện thoại đã tồn tại");
-          $scope.show = true;
-        });
-    } else {
-      event.preventDefault();
+      $http.post(khachHangAPI + "/add", $scope.form_kh).then(function () {
+        $location.path("/khach-hang/hien-thi");
+      });
+      // .catch(function (errorResponse) {
+      //   if (errorResponse && errorResponse.preventDefault) {
+      //     errorResponse.preventDefault();
+      //   }
+      //   alert("Email hoặc số điện thoại đã tồn tại");
+      //   $scope.show = true;
+      // });
     }
+    // else {
+    //   event.preventDefault();
+    // }
   };
 
   const host = "https://provinces.open-api.vn/api/";
@@ -184,9 +175,9 @@ window.addKhachHangController = function (
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_kh.tinhthanhpho = $("#city option:selected").text();
-      $scope.form_kh.quanhuyen = $("#district option:selected").text();
-      $scope.form_kh.phuongxa = $("#ward option:selected").text();
+      $scope.form_kh.tinhThanhPho = $("#city option:selected").text();
+      $scope.form_kh.quanHuyen = $("#district option:selected").text();
+      $scope.form_kh.phuongXa = $("#ward option:selected").text();
     }
   };
 };

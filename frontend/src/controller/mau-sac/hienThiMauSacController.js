@@ -6,9 +6,7 @@ window.hienThiMauSacController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+
   $scope.listMauSac = [];
   $scope.totalPages = [];
   $scope.currentPage = 0;

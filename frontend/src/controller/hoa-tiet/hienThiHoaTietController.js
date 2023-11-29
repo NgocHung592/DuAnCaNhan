@@ -11,9 +11,7 @@ window.hienThiHoaTietController = function (
   $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
     let elem = document.getElementById("success");

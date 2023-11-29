@@ -1,9 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.KhachHang;
-import com.example.demo.entity.NhanVien;
 import com.example.demo.model.response.KhachHangReponse;
-import com.example.demo.model.response.NhanVienReponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,37 +9,67 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
-    @Query(value = """  
-              select a.id,a.anh_dai_dien,b.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,b.mo_ta,b.phuong_xa,
-            b.tinh_thanh_pho,b.quan_huyen from  khach_hang a inner join dia_chi b on a.id=b.khach_hang_id  order by  a.ngay_tao desc 
-            """, nativeQuery = true)
-    Page<KhachHangReponse> getKhachHangAll(Pageable pageable);
-
-
-    @Query(value = """
-            select a.id,a.anh_dai_dien,b.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,b.mo_ta,b.phuong_xa,
-                   b.tinh_thanh_pho,b.quan_huyen from  khach_hang a inner join dia_chi b on a.id=b.khach_hang_id where a.trang_thai like %:search% order by a.ngay_tao desc
-            """, nativeQuery = true)
-    Page<KhachHangReponse> getKhachHangTrangThai(Pageable pageable, @Param("search") String search);
-
-    @Query(value = """
-            select a.id,a.anh_dai_dien,b.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,b.mo_ta,b.phuong_xa,
-                   b.tinh_thanh_pho,b.quan_huyen from  khach_hang a inner join dia_chi b on a.id=b.khach_hang_id  where
-                        a.ma like %:search% or a.ho_ten like %:search% or a.email like %:search% or a.so_dien_thoai like %:search%
-            order by a.ngay_tao desc
-            """, nativeQuery = true)
-    Page<KhachHangReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
 
     Optional<KhachHang> findKhachHangByEmail(String email);
 
-    Optional<KhachHang> findKhachHangBySodienthoai(String sdt);
+    Optional<KhachHang> findKhachHangBySoDienThoai(String sdt);
 
-    Optional<KhachHang> findKhachHangByEmailAndIdNot(String email, UUID id);
+    @Query(value = """  
+            select * from khach_hang
+            group by id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh,mat_khau, da_xoa, ngay_tao,nguoi_tao,nguoi_sua,ngay_sua
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao),
+                         IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+            """, nativeQuery = true)
+    Page<KhachHang> getALl(Pageable pageable);
 
-    Optional<KhachHang> findKhachHangBySodienthoaiAndIdNot(String sdt, UUID id);
+    @Query(value = """  
+              select kh.id,
+                      kh.ho_ten,
+                      kh.ngay_sinh,
+                      kh.gioi_tinh,
+                      kh.anh_dai_dien,
+                      kh.so_dien_thoai,
+                      kh.email,
+                      kh.da_xoa,
+                      dc.dia_chi_cu_the,
+                      dc.phuong_xa,
+                      dc.quan_huyen,
+                      dc.tinh_thanh_pho
+              from khach_hang kh
+                  inner join dia_chi dc on kh.id = dc.khach_hang_id
+              where kh.id = ?1
+            """, nativeQuery = true)
+    List<KhachHangReponse> detailKhachHang(UUID idKhachHang);
+
+    @Query(value = """
+            select * from khach_hang
+            where da_xoa = ?1
+            group by id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
+                     nguoi_tao, nguoi_sua, ngay_sua
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao),
+                         IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;        
+            """, nativeQuery = true)
+    Page<KhachHang> loc(Pageable pageable, String trangThai);
+
+    @Query(value = """
+           SELECT *
+            FROM khach_hang
+            WHERE ma LIKE %:key%
+            OR ho_ten LIKE %:key%
+            OR email LIKE %:key%
+            OR so_dien_thoai LIKE %:key%
+            GROUP BY id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
+            nguoi_tao, nguoi_sua, ngay_sua
+            ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao),
+            IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
+                                """, nativeQuery = true)
+    Page<KhachHang> searchByKeyword(Pageable pageable, @Param("key") String keyWord);
+
+
 }

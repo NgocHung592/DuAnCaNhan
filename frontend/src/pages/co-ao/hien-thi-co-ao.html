@@ -34,7 +34,7 @@
 
                                         </p>
                                     </th>
-                                    <th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Update">
                                         <a href="#co-ao/update/{{coAo.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>
@@ -69,20 +69,16 @@
                         </nav>
                         <div class="toast-container position-fixed top-0 end-0 p-3">
                             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-                                data-bs-delay="1100">
+                                data-bs-delay="1000">
                                 <div class="toast-body">
-                                    <span class="success" ng-hide="showError==false">
+                                    <span class="success">
                                         <i class="fa-solid fa-check fa-xl"></i>
-                                    </span>
-                                    <span class="icon_error" ng-hide="showError">
-                                        <i class="fa-solid fa-xmark fa-xl"></i>
                                     </span>
                                     <span class="message_error">
                                         {{message}}
                                     </span>
                                     <div id="myProgress">
-                                        <div id="success" ng-hide="showError==false"></div>
-                                        <div id="error" ng-hide="showError"></div>
+                                        <div id="success"></div>
                                     </div>
                                 </div>
                             </div>

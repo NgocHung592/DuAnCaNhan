@@ -1,4 +1,4 @@
-window.MaGiamGiaController = function ($http, $scope, $location) {
+window.hienThiMaGiamGiaController = function ($http, $scope, $location) {
   $scope.listMaGiamGia = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
@@ -12,7 +12,6 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listMaGiamGia = response?.data.content;
-        console.log($scope.listMaGiamGia);
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
@@ -51,12 +50,20 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
     return visiblePages;
   };
   $scope.getMa = function () {
-    $scope.intervalId = setInterval(scheduledTask, 1000);
+    setTimeout(() => {
+      clearInterval($scope.intervalId);
+    });
+    $http
+      .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .then(function (response) {
+        $scope.listMaGiamGia = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
   };
   $scope.loc = function () {
     setTimeout(() => {
       clearInterval($scope.intervalId);
-      console.log("Scheduled task stopped.");
     });
     $http
       .get(
@@ -72,8 +79,11 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
-  $scope.$watch("searchKeyword", function (newVal, oldVal) {
-    if (newVal !== oldVal) {
+  $scope.search = function () {
+    setTimeout(() => {
+      clearInterval($scope.intervalId);
+    });
+    if ($scope.searchKeyword) {
       $http
         .get(
           magiamgiaAPI +
@@ -83,13 +93,32 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
             $scope.searchKeyword
         )
         .then(function (response) {
-          $scope.listMaGiamGia = response.data.content;
+          if (response?.data?.content) {
+            $scope.listMaGiamGia = response.data.content;
+            $scope.totalPages = new Array(response.data.totalPages);
+            $scope.visiblePages = $scope.getVisiblePages();
+          } else {
+            return null;
+          }
+        });
+    } else {
+      $http
+        .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+        .then(function (response) {
+          $scope.listMaGiamGia = response?.data.content;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
         });
     }
-  });
+  };
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
       $scope.getMa();
     }
   };
@@ -97,6 +126,11 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.totalPages.length - 1) {
       $scope.currentPage++;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
       $scope.getMa();
     }
   };
@@ -104,6 +138,11 @@ window.MaGiamGiaController = function ($http, $scope, $location) {
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
       $scope.getMa();
     }
   };
