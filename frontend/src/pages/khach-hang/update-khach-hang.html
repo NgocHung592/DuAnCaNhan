@@ -49,7 +49,7 @@
 <main class="content">
   <div class="container-fluid p-0">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 ">
         <div class="card flex-fill">
           <div class="card-body d-flex">
             <div class="align-self-center w-100">
@@ -59,11 +59,11 @@
                   <div class="ms-4 mb-5">
                     <div class="uploadfile">
                       <label for="product-image">
-                        <i ng-if="!detailKhachHang.khachHang.anhdaidien" style="font-size: 250px"
-                          class="fas fa-user-circle" aria-hidden="true"></i>
-                        <img ng-if="detailKhachHang.khachHang.anhdaidien"
-                          src="../../../assets/anh-nguoi-dung/{{detailKhachHang.khachHang.anhdaidien}}"
-                          alt="Employee Image" class="table_img" />
+                        <i ng-if="!detailKhachHang.anhDaiDien" style="font-size: 250px" class="fas fa-user-circle"
+                          aria-hidden="true"></i>
+                        <img ng-if="detailKhachHang.anhDaiDien"
+                          src="../../../assets/anh-nguoi-dung/{{detailKhachHang.anhDaiDien}}" alt="Employee Image"
+                          class="table_img" />
                         <input type="file" multiple class="file-upload-input" id="product-image"
                           data-mdb-file-upload="file-upload" style="display: none" />
                       </label>
@@ -77,41 +77,41 @@
                   </div>
                   <div class="mb-4">
                     <label class="form-label">Ngày sinh <span style="color: red">*</span>:</label>
-                    <input type="date" class="form-control" ng-model="form_kh.ngaysinh">
+                    <input type="date" class="form-control" ng-model-options="{timezone: 'UTC'}">
                   </div>
                   <div class="mb-4">
                     <label class="form-label">Giới tính <span style="color: red">*</span>:</label><br>
 
-                    <input ng-model="form_kh.gioitinh" type="radio" name="gender" value="true"
+                    <input ng-model="detailKhachHang.gioiTinh" type="radio" name="gender" ng-value="true"
                       class="form-check-input" />
                     <label class="form-check-label"> Nam </label>
 
-                    <input type="radio" ng-model="form_kh.gioitinh" name="gender" value="false"
+                    <input type="radio" ng-model="detailKhachHang.gioiTinh" name="gender" ng-value="false"
                       class="form-check-input ms-3" />
                     <label class="form-check-label"> Nữ </label>
                   </div>
                   <div class="mb-4">
                     <label class="form-label">Số điện thoại <span style="color: red">*</span>:</label>
-                    <input type="text" class="form-control" ng-model="form_kh.sodienthoai" />
+                    <input type="text" class="form-control" ng-model="detailKhachHang.soDienThoai" />
                   </div>
                   <div class="mb-4">
                     <label class="form-label">Email <span style="color: red">*</span>:</label>
-                    <input type="text" class="form-control" ng-model="form_kh.email" />
+                    <input type="text" class="form-control" ng-model="detailKhachHang.email" />
                   </div>
                   <div class="mb-4">
                     <label class="form-label">Trạng thái <span style="color: red">*</span>:</label><br>
 
-                    <input ng-model="form_kh.gioitinh" type="radio" name="gender" value="true"
+                    <input ng-model="detailKhachHang.daXoa" type="radio" name="trang_thai" ng-value="false"
                       class="form-check-input" />
                     <label class="form-check-label"> Kích hoạt </label>
 
-                    <input type="radio" ng-model="form_kh.gioitinh" name="gender" value="false"
+                    <input type="radio" ng-model="detailKhachHang.daXoa" name="trang_thai" ng-value="true"
                       class="form-check-input ms-3" />
                     <label class="form-check-label"> Hủy kích hoạt </label>
                   </div>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <a type="button" class="btn btn-warning" ng-click="addKhachHang($event)">Cập nhật</a>
+                  <a type="button" class="btn btn-warning" ng-click="updateKhachHang($event)">Cập nhật</a>
                 </div>
               </form>
             </div>
@@ -123,8 +123,8 @@
           <div class="card-body d-flex">
             <div class="align-self-center w-100">
               <h4 class="mb-4">Danh sách địa chỉ</h4>
-              <div>
-                <a data-bs-target="#diaChi" data-bs-toggle="collapse" class="collapsed mb-4">
+              <div class="mb-4">
+                <a data-bs-target="#diaChi" data-bs-toggle="collapse" class="sidebar-link collapsed mb-4">
                   <i class="fa-solid fa-plus"></i>
                   <span class="align-middle">Tạo địa chỉ mới</span>
                 </a>
@@ -133,10 +133,8 @@
                     <div class="mb-3">
                       <label class="form-label">Số nhà, tên đường
                         <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" ng-model="form_dc.mota" name="mota" />
-                      <span ng-show="formAdd.mota.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                        nhập
-                      </span>
+                      <input type="text" class="form-control" ng-model="form_dc.diaChiCuThe" />
+
                     </div>
                     <div class="row">
                       <div class="col-md-4">
@@ -152,9 +150,7 @@
                         <select class="form-control" id="district" name="qh">
                           <option value="" selected></option>
                         </select>
-                        <span ng-show="formAdd.qh.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                          nhập
-                        </span>
+
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Phường xã
@@ -162,274 +158,75 @@
                         <select class="form-control" id="ward" name="px">
                           <option value="" selected></option>
                         </select>
-                        <span ng-show="formAdd.px.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                          nhập
-                        </span>
                       </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                      <a type="button" class="btn btn-primary" ng-click="addDiaChi($event)">Thêm </a>
                     </div>
                   </form>
                 </ul>
               </div>
-              <div ng-repeat="khachHang in detailKhachHang">
-                <a data-bs-target="#diaChi" data-bs-toggle="collapse" class="collapsed mb-4">
-                  <i class="fa-solid fa-plus"></i>
-                  <span class="align-middle">Tạo địa chỉ mới</span>
+              <div ng-repeat="diaChi in detailDiaChi">
+                <a data-bs-target="#{{$index}}" data-bs-toggle="collapse" class="sidebar-link collapsed mb-4">
+                  <span class="align-middle">Địa chỉ {{$index+1}}</span>
                 </a>
-                <ul id="diaChi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="{{$index}}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                   <form>
                     <div class="mb-3">
-                      <label class="form-label">Số nhà, tên đường
+                      <label class="form-label">Địa chỉ cụ thể
                         <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" ng-model="form_dc.mota" name="mota" />
-                      <span ng-show="formAdd.mota.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                        nhập
-                      </span>
+                      <input type="text" class="form-control" ng-model="diaChi.diaChiCuThe" />
                     </div>
                     <div class="row">
                       <div class="col-md-4">
-                        <label class="form-label">Tỉnh thành phố
-                          <span style="color: red">*</span></label>
-                        <select name="tt" id="city" class="form-control">
-                          <option selected id="thanhpho"></option>
-                        </select>
-                      </div>
-                      <div class="col-md-4">
-                        <label class="form-label">Quận huyện
-                          <span style="color: red">*</span></label>
-                        <select class="form-control" id="district" name="qh">
-                          <option value="" selected></option>
-                        </select>
-                        <span ng-show="formAdd.qh.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                          nhập
-                        </span>
-                      </div>
-                      <div class="col-md-4">
-                        <label class="form-label">Phường xã
-                          <span style="color: red">*</span></label>
-                        <select class="form-control" id="ward" name="px">
-                          <option value="" selected></option>
-                        </select>
-                        <span ng-show="formAdd.px.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                          nhập
-                        </span>
-                      </div>
-                    </div>
-                  </form>
-                </ul>
-              </div>
-
-              <!-- <div class="row">
-                <div class="col-mb-12 row">
-                  <label class="col-sm-6 col-form-label"></label>
-                  <label class="col-sm-6 col-form-label">Mã khách hàng</label>
-                </div>
-                <div class="col-mb-12 row">
-                  <div class="col-sm-6"> -->
-
-              <!-- <div class="uploadfile">
-                      <label for="product-image">
-                        <i ng-if="!detailKhachHang.khachHang.anhdaidien" style="font-size: 250px"
-                          class="fas fa-user-circle" aria-hidden="true"></i>
-                        <img ng-if="detailKhachHang.khachHang.anhdaidien"
-                          src="../../../assets/anh-nguoi-dung/{{detailKhachHang.khachHang.anhdaidien}}"
-                          alt="Employee Image" class="table_img" />
-                        <input type="file" multiple class="file-upload-input" id="product-image"
-                          data-mdb-file-upload="file-upload" style="display: none" />
-                      </label>
-                    </div> -->
-              <!-- </div>
-
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                      ng-model="detailKhachHang.khachHang.ma" name="manv" required disabled />
-
-                    <label for="" class="col-sm-6 col-form-label"><span style="color: red">*</span> Tên khách
-                      hàng</label>
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                      ng-model="detailKhachHang.khachHang.hoten" placeholder="Tên khách hàng" required name="tennv" />
-
-                    <label for="" class="col-sm-6 col-form-label"><span style="color: red">*</span> Email</label>
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                      ng-model="detailKhachHang.khachHang.email" placeholder="Email" required name="tennv" /> -->
-              <!-- <span
-                      ng-show="formAdd.tennv.$invalid"
-                      ng-hide="show?true:false"
-                      class="has-error"
-                      >Tên nhân viên không được trống</span
-                    > -->
-              <!-- </div>
-                </div>
-              </div> -->
-
-              <!-- <div class="row">
-                <div class="col-mb-12 row">
-                  <label for="inputGTDToiThieu" class="col-sm-6 col-form-label"><span style="color: red">*</span>Số điện
-                    thoại</label>
-                  <label for="inputGTD" class="col-sm-6 col-form-label"><span style="color: red">*</span>Giới
-                    tính</label>
-                </div>
-                <div class="col-mb-12 row">
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                      ng-model="detailKhachHang.khachHang.sodienthoai" required name="sdt"
-                      placeholder="Số điện thoại" />
-                    <span
-                      ng-show="formAdd.email.$invalid"
-                      ng-hide="show?true:false"
-                      class="has-error"
-                      >Email không được trống</span
-                    >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <input type="radio" ng-checked="detailKhachHang.khachHang.gioitinh==false"
-                      ng-model="detailKhachHang.khachHang.gioitinh" id="female" name="gender" value="false"
-                      class="form-check-input" />
-                    <label class="form-check-label"> Nữ </label>
-                    <input ng-checked="detailKhachHang.khachHang.gioitinh==true"
-                      ng-model="detailKhachHang.khachHang.gioitinh" type="radio" id="male" name="gender" value="true"
-                      class="form-check-input" />
-                    <label class="form-check-label"> Nam </label>
-                    <span
-                      ng-show="formAdd.sdt.$invalid"
-                      ng-hide="show?true:false"
-                      class="has-error"
-                      >Số điện thoại không được trống</span
-                    >
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- <div class="row">
-                <div class="col-mb-12 row">
-                  <label for="inputNbd" class="col-sm-6 col-form-label">Ngày sinh</label>
-                  <label for="inputNkt" class="col-sm-6 col-form-label">Ngày tạo</label>
-                </div>
-                <div class="col-mb-12 row">
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" ng-model="detailKhachHang.khachHang.ngaysinh" required
-                      name="ns" />
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control"
-                      ng-model="detailKhachHang.khachHang.ngaytao | date: 'dd/MM/yyyy hh:mm a'" required disabled
-                      name="ns" />
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- <div class="row">
-                <div class="col-mb-12 row">
-                  <label class="col-sm-3 col-form-label"><span style="color: red">*</span>Địa chỉ</label>
-                </div>
-                <div class="col-mb-12 row">
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control"
-                      ng-model="detailKhachHang.mota + '-' + detailKhachHang.phuongxa + '-' + detailKhachHang.quanhuyen + '-' + detailKhachHang.tinhthanhpho"
-                      name="mota" />
-                  </div>
-                </div>
-              </div> -->
-              <!-- <div class="row">
-                <div class="col-mb-12 row">
-                  <label for="inputNbd" class="col-sm-6 col-form-label">Trạng thái</label>
-                  <label for="inputNkt" class="col-sm-6 col-form-label">Ngày cập nhật</label>
-                </div>
-                <div class="col-mb-12 row">
-                  <div class="col-sm-6">
-                    <input type="radio" ng-checked="detailKhachHang.khachHang.trangthai==1"
-                      ng-model="detailKhachHang.khachHang.trangthai" id="female" name="trangthai" value="1"
-                      class="form-check-input" />
-                    <label class="form-check-label">
-                      Đang hoạt động
-                    </label>
-                    <input ng-checked="detailKhachHang.khachHang.trangthai==2"
-                      ng-model="detailKhachHang.khachHang.trangthai" type="radio" id="male" name="trangthai" value="2"
-                      class="form-check-input" />
-                    <label class="form-check-label">
-                      Hủy kích hoạt
-                    </label>
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control"
-                      ng-model="detailKhachHang.khachHang.ngaysua | date: 'dd/MM/yyyy hh:mm a'" required disabled
-                      name="ns" />
-                  </div>
-                </div>
-              </div> -->
-              <!-- <div class="col-md-4">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <div class="modal fade" id="adddc" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-body">
-                          <div class="container-fluid">
-                            <h4>ĐỊA CHỈ</h4>
-                            <form>
-                              <div class="mb-3">
-                                <label class="form-label">Số nhà, tên đường
-                                  <span style="color: red">*</span></label>
-                                <input type="text" class="form-control" ng-model="form_dc.mota" name="mota" />
-                                <span ng-show="formAdd.mota.$invalid" ng-hide="show?true:false" class="has-error">Vui
-                                  lòng
-                                  nhập
-                                </span>
-                              </div>
-                              <div class="mb-3">
-                                <label class="form-label">Tỉnh thành phố
-                                  <span style="color: red">*</span></label>
-                                <select name="tt" id="city" class="form-control">
-                                  <option selected id="thanhpho"></option>
-                                </select>
-                                <span ng-show="formAdd.tt.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                                  nhập
-                                </span>
-                              </div>
-                              <div class="mb-3">
-                                <label class="form-label">Quận huyện
-                                  <span style="color: red">*</span></label>
-                                <select class="form-control" id="district" name="qh">
-                                  <option value="" selected></option>
-                                </select>
-                                <span ng-show="formAdd.qh.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                                  nhập
-                                </span>
-                              </div>
-                              <div class="mb-3">
-                                <label class="form-label">Phường xã
-                                  <span style="color: red">*</span></label>
-                                <select class="form-control" id="ward" name="px">
-                                  <option value="" selected></option>
-                                </select>
-                                <span ng-show="formAdd.px.$invalid" ng-hide="show?true:false" class="has-error">Vui lòng
-                                  nhập
-                                </span>
-                              </div>
-                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a type="button" class="btn btn-success" id="liveToastBtn" data-bs-dismiss="modal"
-                                  ng-click="addDiaChi($event)">Thêm</a>
-                              </div>
-                            </form>
-                          </div>
+                        <label class="form-label">Tỉnh / Thành Phố</label>
+                        <div class="dropdown-container">
+                          <input type="text" ng-model="diaChi.tinhThanhPho" ng-click="dropDownThanhPho($event)"
+                            class="form-control">
+                          <ul id="dropDownThanhPho">
+                            <li ng-repeat="city in cityOptions" ng-model="diaChi.tinhThanhPho"
+                              ng-click="selectOptionThanhPho(diaChi,city.name)">
+                              {{city.name}}</li>
+                          </ul>
                         </div>
                       </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Quận / Huyện</label>
+                        <input type="text" ng-model="diaChi.quanHuyen" ng-click="dropDownQuanHuyen($event)"
+                          class="form-control">
+                        <ul id="dropDownQuanHuyen">
+                          <li ng-repeat="district in districtOptions" ng-model="diaChi.quanHuyen"
+                            ng-click="selectOptionQuanHuyen(diaChi,district.name)">
+                            {{district.name}}</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Phường / Xã </label>
+                        <input type="text" ng-model="diaChi.phuongXa" ng-click="dropDownPhuongXa($event)"
+                          class="form-control">
+                        <ul id="dropDownPhuongXa">
+                          <li ng-repeat="ward in wardOptions" ng-model="diaChi.phuongXa"
+                            ng-click="selectOptionPhuongXa(diaChi,ward.name)">
+                            {{ward.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="row">
+                    <div class="form-check form-switch col-md-6 mt-4">
+                      <input class="form-check-input" type="checkbox" role="switch" ng-model="diaChi.diaChiMacDinh"
+                        id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Mặc định</label>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 col-md-6">
+                      <a type="button" class="btn btn-warning" ng-click="updateDiaChi($index,$event,diaChi.id)">Cập nhật
+                      </a>
                     </div>
                   </div>
-                </div>
-              </div> -->
-
-
-              <!-- <div class="col-md-12">
-                <a type="button" id="liveToastBtn" class="btn btn-success"
-                  ng-click="update(detailKhachHang.id,detailKhachHang.khachHang.id)">Cập Nhật</a>
-                <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#adddc">Thêm địa
-                  chỉ</a>
-                <a type="button" class="btn btn-warning" href="#khach-hang/hien-thi">Quay lại</a>
-              </div> -->
-              </form>
+                </ul>
+              </div>
             </div>
-
           </div>
         </div>
       </div>

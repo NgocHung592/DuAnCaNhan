@@ -99,6 +99,63 @@ h4 {
     background-color: red;
 }
 
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+#dropDownThanhPho {
+    display: none;
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+#dropDownThanhPho li:hover {
+    background-color: #fff;
+}
+
+#dropDownQuanHuyen {
+    display: none;
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+#dropDownQuanHuyen li:hover {
+    background-color: #fff;
+}
+
+#dropDownPhuongXa {
+    display: none;
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+#dropDownPhuongXa li:hover {
+    background-color: #fff;
+}
+
 .align-middle {
     text-align: center;
 

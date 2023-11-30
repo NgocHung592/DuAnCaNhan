@@ -20,12 +20,13 @@ public interface KhachHangService {
     //    DiaChi addid(KhachHangRequest khachHangRequest, UUID id);
 //
 //
-//    DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception;
-//
+    KhachHang update(KhachHang khachHang,UUID id);
+
     Page<KhachHang> loc(Integer pageNo, String trangThai);
 
     Page<KhachHang> search(Integer pageNo, String keyWord);
 
-    List detail(UUID id);
+    KhachHang detail(UUID id);
+
 
 }

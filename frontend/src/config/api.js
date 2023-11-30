@@ -25,6 +25,7 @@ window.hoaDonChiTietAPI = url + "/hoa-don-chi-tiet";
 window.khachHangAPI = url + "/khach-hang";
 
 window.magiamgiaAPI = url + "/ma-giam-gia";
+
 window.nhanVienAPI = url + "/nhan-vien";
 
 window.thuChiAPI = url + "/thu-chi";
@@ -33,7 +34,7 @@ window.hangKhachHangAPI = url + "/hang-khach-hang";
 
 window.vaiTroAPI = url + "/vai-tro";
 
-window.diaChiAPI = url + "/dia-chi";
+window.diaChiAPI = url + "/api/v1/dia-chi";
 
 window.api_url = "https://www.thecolorapi.com";
 

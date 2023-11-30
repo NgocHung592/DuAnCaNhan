@@ -22,7 +22,7 @@ public interface PhongCachRepository extends JpaRepository<PhongCach, UUID> {
     Page<PhongCach> getPage(Pageable pageable);
 
     @Query(value = """
-            SELECT * FROM phong_cach WHERE da_xoa = false
+            SELECT * FROM phong_cach WHERE da_xoa = 'false'
             GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
             ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
                                                 """, nativeQuery = true)

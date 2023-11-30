@@ -178,7 +178,7 @@ Create table [khach_hang](
 Create table [dia_chi](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
-    dia_chi_mac_dinh nvarchar(max),
+    dia_chi_mac_dinh bit,
     dia_chi_cu_the nvarchar(70),
     tinh_thanh_pho nvarchar(20),
     quan_huyen nvarchar(20),
@@ -187,12 +187,10 @@ Create table [dia_chi](
 	ngay_sua datetime,
 	nguoi_tao nvarchar(250),
 	nguoi_sua nvarchar(250),
-    trang_thai int,
+    da_xoa bit,
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id)
-
     )
-
 Create table [hoa_don](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,

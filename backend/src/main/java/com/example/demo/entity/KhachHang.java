@@ -5,7 +5,9 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -60,5 +62,9 @@ public class KhachHang {
 
     @Column(name = "da_xoa")
     private Boolean daXoa;
+
+//    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
+//    private Collection<DiaChi> diaChis;
+
 
 }

@@ -22,7 +22,7 @@ public interface ChatLieuRepository extends JpaRepository<ChatLieu, UUID> {
     Page<ChatLieu> getPage(Pageable pageable);
 
     @Query(value = """
-            SELECT * FROM chat_lieu WHERE da_xoa = false
+            SELECT * FROM chat_lieu WHERE da_xoa = 'false'
             GROUP BY id, ma, ten, ngay_tao, ngay_sua, nguoi_sua, nguoi_tao, da_xoa
             ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
             """, nativeQuery = true)

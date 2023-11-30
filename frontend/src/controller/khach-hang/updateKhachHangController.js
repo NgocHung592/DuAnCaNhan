@@ -2,145 +2,203 @@ window.updateKhachHangController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $document
 ) {
+  $scope.cityOptions = [];
+  $scope.districtOptions = [];
+  $scope.wardOptions = [];
+  $scope.form_dc = {
+    diaChiMacDinh: false,
+    diaChiCuThe: "",
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
+    ngayTao: new Date(),
+    daXoa: false,
+  };
   $http
     .get(khachHangAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       $scope.detailKhachHang = response?.data;
       console.log($scope.detailKhachHang);
-      // const groupedKhachHang = {};
-      // $scope.detailKhachHang.forEach((khachHang) => {
-      //   const tenKhachHang = khachHang.hoTen;
-
-      //   if (!groupedKhachHang[tenKhachHang]) {
-      //     groupedKhachHang[tenKhachHang] = {
-      //       ...khachHang,
-      //       diaChi: [sanPham.tenMauSac],
-      //       tenKichThuoc: [sanPham.tenKichThuoc],
-      //       duongDan: [sanPham.duongDan],
-      //       giaMin: sanPham.donGia,
-      //       giaMax: sanPham.donGia,
-      //     };
-      //   } else {
-      //     if (
-      //       !groupedSanPham[tenSanPham].tenMauSac.includes(sanPham.tenMauSac)
-      //     ) {
-      //       groupedSanPham[tenSanPham].tenMauSac.push(sanPham.tenMauSac);
-      //     }
-      //     if (
-      //       !groupedSanPham[tenSanPham].tenKichThuoc.includes(
-      //         sanPham.tenKichThuoc
-      //       )
-      //     ) {
-      //       groupedSanPham[tenSanPham].tenKichThuoc.push(sanPham.tenKichThuoc);
-      //     }
-      //     if (!groupedSanPham[tenSanPham].duongDan.includes(sanPham.duongDan)) {
-      //       groupedSanPham[tenSanPham].duongDan.push(sanPham.duongDan);
-      //     }
-      //   }
-      // });
-
-      // $scope.newDetailKhachHang = Object.values(groupedKhachHang);
-
-      // console.log($scope.newDetailKhachHang);
     });
-  var date = new Date();
-  $scope.update = function (id1, id2, event) {
+  $scope.detailDiaChi = function () {
+    $http
+      .get(diaChiAPI + "/detail/" + $routeParams.id)
+      .then(function (response) {
+        $scope.detailDiaChi = response?.data;
+        console.log($scope.detailDiaChi);
+      });
+  };
+  $scope.detailDiaChi();
+
+  $scope.updateKhachHang = function (event) {
+    event.preventDefault();
     let check = true;
     const hinhanh = document.getElementById("product-image");
     for (const image of hinhanh.files) {
-      $scope.detailKhachHang.khachHang.anhdaidien = image.name;
+      $scope.detailKhachHang.anhDaiDien = image.name;
     }
-    $scope.updateKhachHang = {
-      ma: $scope.detailKhachHang.khachHang.ma,
-      hoten: $scope.detailKhachHang.khachHang.hoten,
-      email: $scope.detailKhachHang.khachHang.email,
-      gioitinh: $scope.detailKhachHang.khachHang.gioitinh,
-      ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
-      matkhau: $scope.detailKhachHang.khachHang.matkhau,
-      anhdaidien: $scope.detailKhachHang.khachHang.anhdaidien,
-      sodienthoai: $scope.detailKhachHang.khachHang.sodienthoai,
-      ngaysinh: $scope.detailKhachHang.khachHang.ngaysinh,
-      tinhthanhpho: $scope.detailKhachHang.tinhthanhpho,
-      quanhuyen: $scope.detailKhachHang.quanhuyen,
-      phuongxa: $scope.detailKhachHang.phuongxa,
-      ngaysua: ($scope.detailKhachHang.khachHang.ngaysua = date),
-      ngaytao: $scope.detailKhachHang.khachHang.ngaytao,
-      trangthai: $scope.detailKhachHang.khachHang.trangthai,
-      mota: $scope.detailKhachHang.mota,
+    $scope.khachHangUpdate = {
+      hoTen: $scope.detailKhachHang.hoTen,
+      email: $scope.detailKhachHang.email,
+      gioiTinh: $scope.detailKhachHang.gioiTinh,
+      ngaySinh: $scope.detailKhachHang.ngaySinh,
+      anhDaiDien: $scope.detailKhachHang.anhDaiDien,
+      soDienThoai: $scope.detailKhachHang.soDienThoai,
+      ngaySua: new Date(),
+      daXoa: $scope.detailKhachHang.daXoa,
     };
     if (check) {
       $http
         .put(
-          khachHangAPI + "/update/" + id1 + "/" + id2,
-          $scope.updateKhachHang
+          khachHangAPI + "/update/" + $routeParams.id,
+          $scope.khachHangUpdate
         )
         .then(function () {
           alert("Cập nhật thành công");
-          $location.path("/khach-hang/hien-thi");
-
-          return true;
-        })
-        .catch(function (errorResponse) {
-          if (errorResponse && errorResponse.preventDefault) {
-            errorResponse.preventDefault();
-          }
-          alert("Email hoặc số điện thoại đã tồn tại");
         });
-    } else {
-      event.preventDefault();
     }
   };
 
-  $scope.show = Boolean;
-
-  var date = new Date();
-  $scope.form_dc = {
-    tinhthanhpho: "",
-    quanhuyen: "",
-    phuongxa: "",
-    ngaytao: date,
-    mota: "",
-    trangthai: 1,
-  };
   $scope.addDiaChi = function () {
-    console.log($scope.form_nv);
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 15);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
     if (
-      $scope.form_dc.tinhthanhpho != "" &&
-      $scope.form_dc.quanhuyen != "" &&
-      $scope.form_dc.phuongxa != "" &&
-      $scope.form_dc.mota != ""
+      $scope.form_dc.tinhThanhPho != "" &&
+      $scope.form_dc.quanHuyen != "" &&
+      $scope.form_dc.phuongXa != "" &&
+      $scope.form_dc.diaChiCuThe != ""
     ) {
       $http
-        .post(
-          khachHangAPI + "/addid/" + $scope.detailKhachHang.khachHang.id,
-          $scope.form_dc
-        )
+        .post(diaChiAPI + "/add/" + $routeParams.id, $scope.form_dc)
         .then(function () {
-          $scope.message = "Thêm thành công";
-          console.log(from_dc);
-          $scope.show = true;
-          return true;
+          alert("them thanh cong");
+          $http
+            .get(diaChiAPI + "/detail/" + $routeParams.id)
+            .then(function (response) {
+              $scope.detailDiaChi = response?.data;
+            });
         });
     } else {
-      $scope.message = "Thêm thất bại";
-      $scope.show = false;
-      return false;
+      alert("them that bai");
     }
   };
-  $scope.show = Boolean;
+  $scope.updateDiaChi = function (index, event, idDiaChi) {
+    event.preventDefault();
+    $scope.updateDC = {
+      diaChiMacDinh: $scope.detailDiaChi[index].diaChiMacDinh,
+      diaChiCuThe: $scope.detailDiaChi[index].diaChiCuThe,
+      tinhThanhPho: $scope.detailDiaChi[index].tinhThanhPho,
+      quanHuyen: $scope.detailDiaChi[index].quanHuyen,
+      phuongXa: $scope.detailDiaChi[index].phuongXa,
+      ngaySua: new Date(),
+    };
+    $http
+      .put(diaChiAPI + "/update/" + idDiaChi, $scope.updateDC)
+      .then(function () {
+        alert("cap nhat thanh cong");
+      });
+  };
+  $scope.getCity = function () {
+    const api = api_giaoHang + "?depth=1";
+    axios.get(api).then((response) => {
+      $scope.cityOptions = response.data;
+      console.log($scope.cityOptions);
+    });
+  };
+  $scope.getCity();
+
+  $scope.dropDownThanhPho = function (event) {
+    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
+    dropDownThanhPho.style.display =
+      dropDownThanhPho.style.display === "block" ? "none" : "block";
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display = "none";
+    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
+    dropDownPhuongXa.style.display = "none";
+    event.stopPropagation();
+  };
+  $scope.dropDownQuanHuyen = function (event) {
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display =
+      dropDownQuanHuyen.style.display === "block" ? "none" : "block";
+    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
+    dropDownThanhPho.style.display = "none";
+    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
+    dropDownPhuongXa.style.display = "none";
+    event.stopPropagation();
+  };
+  $scope.dropDownPhuongXa = function (event) {
+    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
+    dropDownPhuongXa.style.display =
+      dropDownPhuongXa.style.display === "block" ? "none" : "block";
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display = "none";
+    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
+    dropDownThanhPho.style.display = "none";
+    event.stopPropagation();
+  };
+
+  $scope.selectOptionThanhPho = function (diaChi, option) {
+    diaChi.tinhThanhPho = option;
+    let selectedCityCode = "";
+
+    $scope.cityOptions.find((city) => {
+      if (city.name === option) {
+        selectedCityCode = city.code;
+      }
+    });
+    if (selectedCityCode) {
+      const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
+      axios.get(api).then(function (response) {
+        $scope.districtOptions = response?.data.districts;
+      });
+    }
+    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
+    dropDownThanhPho.style.display = "none";
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display = "none";
+  };
+  $scope.selectOptionQuanHuyen = function (diaChi, option) {
+    diaChi.quanHuyen = option;
+    let selectedDistrictCode = "";
+
+    $scope.districtOptions.find((district) => {
+      if (district.name === option) {
+        selectedDistrictCode = district.code;
+      }
+    });
+    if (selectedDistrictCode) {
+      const api = api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
+      axios.get(api).then(function (response) {
+        $scope.wardOptions = response?.data.wards;
+        console.log($scope.wardOptions);
+      });
+    }
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display = "none";
+  };
+  $scope.selectOptionPhuongXa = function (diaChi, option) {
+    diaChi.phuongXa = option;
+    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+    dropDownQuanHuyen.style.display = "none";
+  };
+  document.addEventListener("click", function (event) {
+    var dropdown_container = document.getElementById("dropdown-container");
+
+    if (event.target !== dropdown_container) {
+      var dropDownThanhPho = document.getElementById("dropDownThanhPho");
+      dropDownThanhPho.style.display = "none";
+    }
+    if (event.target !== dropdown_container) {
+      var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
+      dropDownQuanHuyen.style.display = "none";
+    }
+    if (event.target !== dropdown_container) {
+      var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
+      dropDownPhuongXa.style.display = "none";
+    }
+  });
 
   const host = "https://provinces.open-api.vn/api/";
   var callAPI = (api) => {
@@ -190,9 +248,9 @@ window.updateKhachHangController = function (
       $("#city").find(":selected").data("id") != "" &&
       $("#ward").find(":selected").data("id") != ""
     ) {
-      $scope.form_dc.tinhthanhpho = $("#city option:selected").text();
-      $scope.form_dc.quanhuyen = $("#district option:selected").text();
-      $scope.form_dc.phuongxa = $("#ward option:selected").text();
+      $scope.form_dc.tinhThanhPho = $("#city option:selected").text();
+      $scope.form_dc.quanHuyen = $("#district option:selected").text();
+      $scope.form_dc.phuongXa = $("#ward option:selected").text();
     }
   };
 };

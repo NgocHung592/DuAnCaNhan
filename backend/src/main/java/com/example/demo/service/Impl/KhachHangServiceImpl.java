@@ -98,38 +98,22 @@ public class KhachHangServiceImpl implements KhachHangService {
 //    }
 
 
-//    @Override
-//    public DiaChi update(KhachHangRequest khachHangRequest, UUID id1, UUID id2) throws Exception {
-//        Optional<KhachHang> emailnv = khachHangRepository.findKhachHangByEmailAndIdNot(khachHangRequest.getEmail(), id2);
-//        Optional<KhachHang> sdtnv = khachHangRepository.findKhachHangBySodienthoaiAndIdNot(khachHangRequest.getSodienthoai(), id2);
-//        if (emailnv.isPresent()) {
-//            throw new Exception("Email is already present!");
-//        }
-//        if (sdtnv.isPresent()) {
-//            throw new Exception("So dien thoai is already present!");
-//        }
-//        KhachHang khachHang = KhachHang.builder().id(id2)
-//                .ma(khachHangRequest.getMa())
-//                .anhdaidien(khachHangRequest.getAnhdaidien())
-//                .ngaysua(khachHangRequest.getNgaysua())
-//                .hoten(khachHangRequest.getHoten())
-//                .email(khachHangRequest.getEmail())
-//                .matkhau(khachHangRequest.getMatkhau())
-//                .sodienthoai(khachHangRequest.getSodienthoai())
-//                .gioitinh(khachHangRequest.getGioitinh())
-//                .ngaysinh(khachHangRequest.getNgaysinh())
-//                .ngaytao(khachHangRequest.getNgaytao())
-//                .daXoa(Boolean.valueOf(khachHangRequest.getTrangthai())).build();
-//        KhachHang KhachHangg = khachHangRepository.save(khachHang);
-//        DiaChi diaChi = DiaChi.builder().id(id1).khachHang(KhachHangg)
-//                .tinhthanhpho(khachHangRequest.getTinhthanhpho())
-//                .phuongxa(khachHangRequest.getPhuongxa())
-//                .ngaytao(khachHangRequest.getNgaytao())
-//                .quanhuyen(khachHangRequest.getQuanhuyen())
-//                .mota(khachHangRequest.getMota())
-//                .trangthai(Integer.valueOf(khachHangRequest.getTrangthai())).build();
-//        return diaChiRepository.save(diaChi);
-//    }
+    @Override
+    public KhachHang update(KhachHang khachHang, UUID id) {
+        Optional<KhachHang> optionalKhachHang = khachHangRepository.findById(id);
+        if (optionalKhachHang.isPresent()) {
+            optionalKhachHang.map(khachHangUpdate -> {
+                khachHangUpdate.setHoTen(khachHang.getHoTen());
+                khachHangUpdate.setNgaySinh(khachHang.getNgaySinh());
+                khachHangUpdate.setGioiTinh(khachHang.getGioiTinh());
+                khachHangUpdate.setEmail(khachHang.getEmail());
+                khachHangUpdate.setSoDienThoai(khachHang.getSoDienThoai());
+                khachHangUpdate.setDaXoa(khachHang.getDaXoa());
+                return khachHangRepository.save(khachHangUpdate);
+            }).orElse(null);
+        }
+        return null;
+    }
 
     private void sendEmail(KhachHang khachHang) {
         try {
@@ -164,8 +148,8 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public List<KhachHangReponse> detail(UUID id) {
-        return khachHangRepository.detailKhachHang(id);
+    public KhachHang detail(UUID id) {
+        return khachHangRepository.findById(id).get();
     }
 
 

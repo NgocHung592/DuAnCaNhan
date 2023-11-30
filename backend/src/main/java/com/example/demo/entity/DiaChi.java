@@ -3,10 +3,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 @Table(name = "dia_chi")
@@ -24,7 +22,7 @@ public class DiaChi {
     private UUID id;
 
     @Column(name = "dia_chi_mac_dinh")
-    private String diaChiMacDinh;
+    private Boolean diaChiMacDinh;
 
     @Column(name = "dia_chi_cu_the")
     private String diaChiCuThe;
@@ -60,6 +58,4 @@ public class DiaChi {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nhan_vien_id", referencedColumnName = "id")
     private NhanVien nhanVien;
-
-
 }

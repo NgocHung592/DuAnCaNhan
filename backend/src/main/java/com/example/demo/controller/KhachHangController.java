@@ -49,13 +49,11 @@ public class KhachHangController {
     }
 
     //
-//    @PutMapping("update/{id1}/{id2}")
-//    public DiaChi update(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id1") String id1, @PathVariable("id2") String id2) throws Exception {
-//        khachHangRequest.setEmail(khachHangRequest.getEmail());
-//        khachHangRequest.setSodienthoai(khachHangRequest.getSodienthoai());
-//        return khachHangService.update(khachHangRequest, UUID.fromString(id1), UUID.fromString(id2));
-//    }
-//
+    @PutMapping("update/{id}")
+    public ResponseEntity update(@RequestBody KhachHang khachHang, @PathVariable("id") String id) {
+        return new ResponseEntity(khachHangService.update(khachHang, UUID.fromString(id)), HttpStatus.OK);
+    }
+
     @GetMapping("loc")
     public ResponseEntity loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "trangThai") String trangThai) {
         return new ResponseEntity(khachHangService.loc(pageNo, trangThai), HttpStatus.OK);
