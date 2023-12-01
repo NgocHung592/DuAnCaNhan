@@ -154,6 +154,10 @@ Create table [nhan_vien](
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
     da_xoa bit,
+	dia_chi_cu_the nvarchar(70),
+    tinh_thanh_pho nvarchar(20),
+    quan_huyen nvarchar(20),
+    phuong_xa nvarchar(20),
     chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
     )
 
@@ -189,7 +193,6 @@ Create table [dia_chi](
 	nguoi_sua nvarchar(250),
     da_xoa bit,
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
-    nhan_vien_id UNIQUEIDENTIFIER REFERENCES nhan_vien(id)
     )
 Create table [hoa_don](
     id UNIQUEIDENTIFIER
