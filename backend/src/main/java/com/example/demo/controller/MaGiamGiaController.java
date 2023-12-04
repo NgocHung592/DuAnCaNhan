@@ -7,6 +7,8 @@ import com.example.demo.service.MaGiamGiaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.Model;
@@ -24,12 +26,14 @@ public class MaGiamGiaController {
 
     @Autowired
     private MaGiamGiaService maGiamGiaService;
-    @Autowired
-    private MaGiamGiaChiTietService maGiamGiaChiTietService;
 
     @GetMapping("hien-thi")
     public Page<MaGiamGia> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return maGiamGiaService.getAll(pageNo);
+    }
+    @GetMapping("trang-thai")
+    public ResponseEntity getAllByStatus(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return new ResponseEntity(maGiamGiaService.getAllByStatus(pageNo), HttpStatus.OK);
     }
 
     @PostMapping("add")
@@ -48,10 +52,6 @@ public class MaGiamGiaController {
         return maGiamGiaService.detail(UUID.fromString(id));
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") String id) {
-        maGiamGiaService.delete(UUID.fromString(id));
-    }
     @GetMapping("loc")
     public Page<MaGiamGia> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
                                @RequestParam(name = "trangThai") String trangThai) {

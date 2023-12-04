@@ -2,8 +2,7 @@ window.updateKhachHangController = function (
   $http,
   $scope,
   $routeParams,
-  $location,
-  $document
+  $location
 ) {
   $scope.cityOptions = [];
   $scope.districtOptions = [];

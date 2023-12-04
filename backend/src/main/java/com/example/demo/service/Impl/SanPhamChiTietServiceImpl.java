@@ -165,13 +165,13 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
             if (optional.isPresent()) {
                 Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-                if (soLuongNew == 0) {
                     optional.map(sanPhamChiTiet -> {
                         sanPhamChiTiet.setSoLuong(soLuongNew);
-                        sanPhamChiTiet.setDaXoa(true);
+                        if(soLuongNew==0){
+                            sanPhamChiTiet.setDaXoa(true);
+                        }
                         return sanPhamChiTietRepository.save(sanPhamChiTiet);
                     }).orElse(null);
-                }
             }
         });
 

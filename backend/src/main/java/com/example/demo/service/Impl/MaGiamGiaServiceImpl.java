@@ -34,11 +34,13 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     }
 
     @Override
-    public MaGiamGia add(MaGiamGia maGiamGia) throws Exception {
-        Optional<MaGiamGia> maGiamGiaOptional = maGiamGiaRepository.findMaGiamGiaByMa(maGiamGia.getMa());
-        if (maGiamGiaOptional.isPresent()) {
-            throw new Exception("Ma Giam Gia is already present!");
-        }
+    public Page<MaGiamGia> getAllByStatus(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return maGiamGiaRepository.getAllByStatus(pageable);
+    }
+
+    @Override
+    public MaGiamGia add(MaGiamGia maGiamGia) {
         return maGiamGiaRepository.save(maGiamGia);
 
     }

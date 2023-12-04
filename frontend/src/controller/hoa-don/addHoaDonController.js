@@ -6,23 +6,27 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.currentPage = 0;
   $scope.currentPageHDCT = 0;
   $scope.maxVisiblePages = 3;
-
   $scope.totalPages = [];
   $scope.totalPagesHDCT = [];
-
+  $scope.listMaGiamGia = [];
   $scope.listSanPhamChiTiet = [];
   $scope.listHoaDonChiTiet = [];
   $scope.listKhachHang = [];
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
-  $scope.filter;
   $scope.khachHangDefault = true;
   $scope.chonKhachHang = false;
   $scope.diaChiMoi = true;
   $scope.diaChiMacDinh = false;
   $scope.show = false;
-
+  $scope.showDropDownVoucher = false;
+  $scope.tongTien = "";
+  $scope.giamGia = "";
+  $scope.showError = "";
+  $scope.visiblePages = [];
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.detailKhachHang = {
     id: "",
     hinhAnh: "",
@@ -58,6 +62,57 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     ngayThanhToan: new Date(),
     trangThai: 1,
   };
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  function showError(message) {
+    $scope.errorProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = true;
+  }
+  function showSuccess(message) {
+    $scope.successProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = false;
+  }
+
+  $scope.selectTab = function (tab, id, ma) {
+    $scope.formHoaDonChiTiet.idHoaDon = id;
+    $scope.maHoaDon = ma;
+    $scope.selectedTab = tab;
+    $scope.getHoaDonChiTiet();
+  };
+
+  $scope.isSelectedTab = function (tab) {
+    return tab === $scope.selectedTab;
+  };
 
   $scope.getListHoaDon = function () {
     $http.get(hoaDonAPI + "/get-list").then(function (response) {
@@ -65,20 +120,15 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     });
   };
   $scope.getListHoaDon();
-
+  $scope.getMaGiamGia = function () {
+    $http.get(magiamgiaAPI + "/trang-thai").then(function (response) {
+      $scope.listMaGiamGia = response?.data.content;
+    });
+  };
+  $scope.getMaGiamGia();
   $scope.addHoaDon = function (event) {
     event.preventDefault();
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
+
     $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
     $scope.formHoaDon = {
       ma: $scope.randomHoaDon,
@@ -89,19 +139,18 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       $http.post(hoaDonAPI + "/add", $scope.formHoaDon).then(function () {
         $scope.getListHoaDon();
       });
-      $scope.message = "Tạo thành công";
-      return true;
+      showSuccess("Tạo hóa đơn thành công");
     } else {
-      $scope.message = "Chỉ được tạo tối đa 5 hóa đơn chờ";
-      return false;
+      showError("Chỉ tạo tối đa 5 hóa đơn");
     }
   };
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response.data;
+        $scope.listSanPhamChiTiet = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
   };
   $scope.getSanPhamChiTiet();
@@ -127,7 +176,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
   $scope.nextPageHDCT = function () {
     let length = $scope.totalPages.length;
-    if ($scope.currentPageHDCT <= length - 1) {
+    if ($scope.currentPageHDCT < length - 1) {
       $scope.currentPageHDCT++;
       $scope.getHoaDonChiTiet();
     }
@@ -145,11 +194,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       $scope.getHoaDonChiTiet();
     }
   };
-  $scope.getIdHoaDon = function (idHoaDon, maHoaDon) {
-    $scope.formHoaDonChiTiet.idHoaDon = idHoaDon;
-    $scope.maHoaDon = maHoaDon;
-    $scope.getHoaDonChiTiet();
-  };
 
   $scope.getHoaDonChiTiet = function () {
     $http
@@ -161,54 +205,35 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
           $scope.currentPageHDCT
       )
       .then(function (response) {
-        $scope.listHoaDonChiTiet = response.data.content;
+        $scope.listHoaDonChiTiet = response?.data.content;
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
     $http
       .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
       .then(function (response) {
-        $scope.listHoaDonChiTiet2 = response.data;
-        console.log($scope.listHoaDonChiTiet2);
+        $scope.listHoaDonChiTiet2 = response?.data;
         $scope.tongTien = $scope.listHoaDonChiTiet2
           .filter((item) => item.hoaDon.ma === $scope.maHoaDon)
           .reduce((total, item) => total + item.thanhTien, 0);
       });
   };
   $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-    const toastTrigger = document.getElementById("liveToastBtn");
-    const toastLiveExample = document.getElementById("liveToast");
-    if (toastTrigger) {
-      const toastBootstrap =
-        bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-      toastBootstrap.show();
-    }
-    $scope.formHoaDonChiTiet.idSanPhamChiTiet = idSanPhamChiTiet;
-    $scope.formHoaDonChiTiet.donGia =
-      $scope.listSanPhamChiTiet.content[index].donGia;
-    $scope.formHoaDonChiTiet.thanhTien = $scope.formHoaDonChiTiet.donGia;
-    console.log(idSanPhamChiTiet);
-    // Kiểm tra xem có phần tử nào trong listHoaDonChiTiet khớp với idSanPhamChiTiet hay không
+    // Gán giá trị cho $scope.formHoaDonChiTiet
+    $scope.formHoaDonChiTiet = {
+      idHoaDon: $scope.formHoaDonChiTiet.idHoaDon,
+      idSanPhamChiTiet: idSanPhamChiTiet,
+      donGia: $scope.listSanPhamChiTiet[index].donGia,
+      thanhTien: $scope.listSanPhamChiTiet[index].donGia,
+      soLuong: 1,
+    };
+
+    // Tìm sản phẩm chi tiết trong danh sách hóa đơn
     var matchingItem = $scope.listHoaDonChiTiet.find(
-      (hoaDonChiTiet) => hoaDonChiTiet.idSanPhamChiTiet === idSanPhamChiTiet
+      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
     );
     if (matchingItem) {
-      if (toastTrigger) {
-        const toastBootstrap =
-          bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-        toastBootstrap.show();
-      }
-      // Nếu có khớp, tăng soLuong lên 1
+      // Cập nhật số lượng sản phẩm chi tiết trong hóa đơn
       $http
         .get(
           sanPhamChiTietAPI +
@@ -217,19 +242,15 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
         )
         .then(function (response) {
           $scope.detailSanPhamChiTiet = response.data;
-          $scope.formHoaDonChiTiet.soLuong += 1;
-          if (
-            $scope.formHoaDonChiTiet.soLuong <=
-            $scope.detailSanPhamChiTiet.soLuong
-          ) {
-            // Cập nhật hoaDonChiTiet
+          matchingItem.soLuong += 1;
+          if (matchingItem.soLuong <= $scope.detailSanPhamChiTiet.soLuong) {
+            // Cập nhật thông tin sản phẩm chi tiết trong hóa đơn
             $scope.hoaDonUpdate = {
-              soLuong: $scope.formHoaDonChiTiet.soLuong,
+              soLuong: matchingItem.soLuong,
               thanhTien:
                 $scope.formHoaDonChiTiet.soLuong *
                 $scope.formHoaDonChiTiet.donGia,
             };
-            console.log($scope.hoaDonUpdate);
             $http
               .put(
                 hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
@@ -237,67 +258,45 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
               )
               .then(function () {
                 $scope.getHoaDonChiTiet();
+                $scope.tongTien = $scope.calculateTotal();
+                showSuccess("Cập nhật thành công");
               });
-            $scope.tongTien = $scope.listHoaDonChiTiet
-              .filter((item) => item.maHoaDon === $scope.maHoaDon)
-              .reduce((total, item) => total + item.thanhTien, 0);
-            $scope.message = "Cập nhật thành công ";
-            return;
           } else {
-            // Hiển thị thông báo khi số lượng vượt quá giới hạn
-            if (toastTrigger) {
-              const toastBootstrap =
-                bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-              toastBootstrap.show();
-            }
-            $scope.message =
+            showError(
               "Chỉ còn " +
-              $scope.detailSanPhamChiTiet.soLuong +
-              " sản phẩm trong cửa hàng";
-            return;
+                $scope.detailSanPhamChiTiet.soLuong +
+                " sản phẩm trong cửa hàng"
+            );
           }
         });
     } else {
-      $scope.formHoaDonChiTiet.soLuong = 1; // Đặt số lượng là 1 cho sản phẩm mới
       $http
         .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
         .then(function () {
           $scope.getHoaDonChiTiet();
-          $scope.tongTien = $scope.listHoaDonChiTiet
-            .filter((item) => item.maHoaDon === $scope.maHoaDon)
-            .reduce((total, item) => total + item.thanhTien, 0);
-          $scope.message = "Thêm sản phẩm mới thành công";
+          $scope.tongTien = $scope.calculateTotal();
+          showSuccess("Thêm sản phẩm mới thành công");
         });
     }
   };
-  $scope.changeSoLuong = function (index, idHoaDonChiTiet, idSanPhamChiTiet) {
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-    const toastTrigger = document.getElementById("liveToastBtn");
-    const toastLiveExample = document.getElementById("liveToast");
 
+  // Tính tổng tiền của hóa đơn
+  $scope.calculateTotal = function () {
+    return $scope.listHoaDonChiTiet
+      .filter((item) => item.maHoaDon === $scope.maHoaDon)
+      .reduce((total, item) => total + item.thanhTien, 0);
+  };
+
+  $scope.changeSoLuong = function (index, idHoaDonChiTiet, idSanPhamChiTiet) {
     $http
       .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
       .then(function (response) {
         $scope.detailSanPhamChiTiet = response.data;
         let item = $scope.listHoaDonChiTiet[index];
         if (item.soLuong == null) {
+          showError("Số lượng không được nhỏ hơn 0");
           return;
         } else if (item.soLuong <= $scope.detailSanPhamChiTiet.soLuong) {
-          if (toastTrigger) {
-            const toastBootstrap =
-              bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-            toastBootstrap.show();
-          }
           item.soLuong = $scope.listHoaDonChiTiet[index].soLuong;
           item.thanhTien = item.soLuong * item.donGia;
 
@@ -314,19 +313,13 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
           $scope.tongTien = $scope.listHoaDonChiTiet
             .filter((item) => item.maHoaDon === $scope.maHoaDon)
             .reduce((total, item) => total + item.thanhTien, 0);
-          $scope.message = "Cập nhật thành công ";
-          return;
+          showSuccess("Cập nhật thành công");
         } else {
-          if (toastTrigger) {
-            const toastBootstrap =
-              bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-            toastBootstrap.show();
-          }
-          $scope.message =
+          showError(
             "Chỉ còn " +
-            $scope.detailSanPhamChiTiet.soLuong +
-            " sản phẩm trong cửa hàng";
-          return;
+              $scope.detailSanPhamChiTiet.soLuong +
+              " sản phẩm trong cửa hàng"
+          );
         }
       });
   };
@@ -335,7 +328,37 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       $scope.getHoaDonChiTiet();
     });
   };
+  function getVisiblePages() {
+    var totalPages = $scope.totalPages.length;
 
+    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    // Tạo danh sách trang hiển thị
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+    return visiblePages;
+  }
   $scope.giaoHang = function () {
     $scope.show = !$scope.show;
   };
@@ -344,6 +367,12 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     axios.get(api).then((response) => {
       $scope.cityOptions = response.data;
     });
+  };
+  $scope.toggleAPI = function (event) {
+    // Mở hoặc đóng dropdown tương ứng
+    $scope.showDropDownVoucher = !$scope.showDropDownVoucher;
+
+    event.stopPropagation();
   };
   $scope.getCity();
 
@@ -456,13 +485,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     if ($scope.hoaDonThanhToan.idKhachHang == "") {
       $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
       if ($scope.formHoaDonChiTiet.idHoaDon == "") {
-        if (toastTrigger) {
-          const toastBootstrap =
-            bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-          toastBootstrap.show();
-        }
-        $scope.message = "Chọn 1 hóa đơn để thanh toán";
-        return;
+        showError("Chọn 1 hóa đơn để thanh toán");
       } else {
         $http
           .put(
@@ -561,13 +584,4 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     $scope.diaChiMoi = true;
     $scope.diaChiMacDinh = false;
   };
-  const toastTrigger = document.getElementById("liveToastBtn");
-  const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
 };

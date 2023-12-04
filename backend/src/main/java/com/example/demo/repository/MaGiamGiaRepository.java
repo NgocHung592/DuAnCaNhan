@@ -20,6 +20,11 @@ public interface MaGiamGiaRepository extends JpaRepository<MaGiamGia, UUID> {
                         """, nativeQuery = true)
     Page<MaGiamGia> getAll(Pageable pageable);
 
+    @Query(value = """
+            select * from ma_giam_gia where trang_thai=2 order by ngay_tao desc
+                        """, nativeQuery = true)
+    Page<MaGiamGia> getAllByStatus(Pageable pageable);
+
     Optional<MaGiamGia> findMaGiamGiaByMa(String ma);
 
     @Query(value = """

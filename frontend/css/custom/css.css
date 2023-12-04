@@ -104,15 +104,12 @@ h4 {
     display: inline-block;
 }
 
-.dropdown-container {
-    position: relative;
-}
 
 #dropDown {
     position: absolute;
     background-color: #f0f0f0;
     z-index: 1000;
-    width: 200px;
+    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     cursor: pointer;
@@ -120,7 +117,7 @@ h4 {
 }
 
 #dropDown li {
-    margin: 10px;
+    /* margin: 10px; */
     list-style: none;
 }
 
@@ -128,6 +125,25 @@ h4 {
     background-color: #fff;
 }
 
+#dropDownVoucher {
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 410px;
+    max-height: 200px;
+    overflow-y: auto;
+    cursor: pointer;
+    padding: 0px 5px;
+}
+
+#dropDownVoucher li {
+    /* margin: 10px; */
+    list-style: none;
+}
+
+#dropDownVoucher li:hover {
+    background-color: #fff;
+}
 
 .align-middle {
     text-align: center;
@@ -302,8 +318,13 @@ img.employee-image {
     align-items: center;
 }
 
+.search-input {
+    width: 100%;
+}
+
 .search-container {
-    display: flex;
+    position: relative;
+    display: inline-block;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 25px;

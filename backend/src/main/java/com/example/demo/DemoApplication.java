@@ -9,7 +9,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 @SpringBootApplication
-//@EnableScheduling
 public class DemoApplication {
 
 
