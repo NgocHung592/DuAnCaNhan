@@ -37,7 +37,7 @@
                     <div class="col-md-6 mb-6">
                       <label class="form-label">Giới tính <span style="color: red">*</span>:</label><br>
 
-                      <input ng-model="form_kh.gioiTinh" type="radio" name="gender" value="true"
+                      <input ng-model="form_kh.gioiTinh" checked type="radio" name="gender" value="true"
                         class="form-check-input" />
                       <label class="form-check-label"> Nam </label>
 
@@ -100,6 +100,21 @@
                 <a type="button" class="btn btn-primary" ng-click="addKhachHang($event)">Thêm khách hàng</a>
               </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
+      <div class="toast-body">
+        <span class="icon_error">
+          <i class="fa-solid fa-xmark fa-xl"></i>
+        </span>
+        <span class="message_error">
+          {{message}}
+        </span>
+        <div id="myProgress">
+          <div id="error"></div>
         </div>
       </div>
     </div>

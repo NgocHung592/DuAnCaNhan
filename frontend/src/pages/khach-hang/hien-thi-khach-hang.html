@@ -9,7 +9,7 @@
               <div class="search-container col-md-8">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, họ tên, email, số điện thoại"
-                  class="search-input" />
+                  ng-change="search()" class="search-input" />
               </div>
               <div class="col-md-4 text-end">
                 <label for="file-upload" class="custom-file-upload btn btn-success">
@@ -36,8 +36,8 @@
               <label class="form-check-label">
                 Kích hoạt
               </label>
-              <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="true"
-                ng-model="selectedOption" ng-change="loc()">
+              <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="true" ng-change="loc()"
+                ng-model="selectedOption">
               <label class="form-check-label">
                 Hủy kích hoạt
               </label>
@@ -56,7 +56,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="kh in list_kh.content">
+                <tr ng-repeat="kh in list_kh">
                   <th scope="row">{{$index+1}}</th>
 
                   <th scope="row">{{kh.hoTen}}</th>
@@ -80,13 +80,13 @@
                 </tr>
               </tbody>
             </table>
-            <div ng-if="list_kh.content.length === 0">
+            <div ng-if="list_kh.length === 0">
               <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
               <p class="dataTables_empty_lable">
                 No Data
               </p>
             </div>
-            <nav aria-label="Page navigation example" ng-if="list_kh.content.length !== 0">
+            <nav aria-label="Page navigation example" ng-if="list_kh.length !== 0">
               <ul class="pagination justify-content-center">
                 <li class="page-item">
                   <a class="page-link" ng-click="previousPage()" aria-label="Previous">

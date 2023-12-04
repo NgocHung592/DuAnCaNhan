@@ -124,11 +124,11 @@
             <div class="align-self-center w-100">
               <h4 class="mb-4">Danh sách địa chỉ</h4>
               <div class="mb-4">
-                <a data-bs-target="#diaChi" data-bs-toggle="collapse" class="sidebar-link collapsed mb-4">
+                <a ng-click="toggleDropdownNewAdress($event)" class="sidebar-link mb-4">
                   <i class="fa-solid fa-plus"></i>
                   <span class="align-middle">Tạo địa chỉ mới</span>
                 </a>
-                <ul id="diaChi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul ng-show="newAdress" class="sidebar-dropdown list-unstyled">
                   <form>
                     <div class="mb-3">
                       <label class="form-label">Số nhà, tên đường
@@ -167,11 +167,11 @@
                   </form>
                 </ul>
               </div>
-              <div ng-repeat="diaChi in detailDiaChi">
-                <a data-bs-target="#{{$index}}" data-bs-toggle="collapse" class="sidebar-link collapsed mb-4">
-                  <span class="align-middle">Địa chỉ {{$index+1}}</span>
+              <div ng-repeat="(indexDiaChi,diaChi) in detailAdress">
+                <a ng-click="toggleDropdown($event, indexDiaChi)" class=" sidebar-link mb-4">
+                  <span class="align-middle">Địa chỉ {{indexDiaChi+1}}</span>
                 </a>
-                <ul id="{{$index}}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul ng-show="diaChi.isDropdownOpen" class="sidebar-dropdown list-unstyled">
                   <form>
                     <div class="mb-3">
                       <label class="form-label">Địa chỉ cụ thể
@@ -182,34 +182,38 @@
                       <div class="col-md-4">
                         <label class="form-label">Tỉnh / Thành Phố</label>
                         <div class="dropdown-container">
-                          <input type="text" ng-model="diaChi.tinhThanhPho" ng-click="dropDownThanhPho($event)"
+                          <input type="text" ng-model="diaChi.tinhThanhPho" ng-click="toggleAPI($event,'ThanhPho')"
                             class="form-control">
-                          <ul id="dropDownThanhPho">
+                          <ul ng-show="showDropDownThanhPho" id="dropDown">
                             <li ng-repeat="city in cityOptions" ng-model="diaChi.tinhThanhPho"
-                              ng-click="selectOptionThanhPho(diaChi,city.name)">
+                              ng-click="selectOptionThanhPho(indexDiaChi, city.name)">
                               {{city.name}}</li>
                           </ul>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Quận / Huyện</label>
-                        <input type="text" ng-model="diaChi.quanHuyen" ng-click="dropDownQuanHuyen($event)"
-                          class="form-control">
-                        <ul id="dropDownQuanHuyen">
-                          <li ng-repeat="district in districtOptions" ng-model="diaChi.quanHuyen"
-                            ng-click="selectOptionQuanHuyen(diaChi,district.name)">
-                            {{district.name}}</li>
-                        </ul>
+                        <div class="dropdown-container">
+                          <input type="text" ng-model="diaChi.quanHuyen" ng-click="toggleAPI($event,'QuanHuyen')"
+                            class="form-control">
+                          <ul ng-show="showDropDownQuanHuyen" id="dropDown">
+                            <li ng-repeat="district in districtOptions" ng-model="diaChi.quanHuyen"
+                              ng-click="selectOptionQuanHuyen(indexDiaChi, district.name)">
+                              {{district.name}}</li>
+                          </ul>
+                        </div>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Phường / Xã </label>
-                        <input type="text" ng-model="diaChi.phuongXa" ng-click="dropDownPhuongXa($event)"
-                          class="form-control">
-                        <ul id="dropDownPhuongXa">
-                          <li ng-repeat="ward in wardOptions" ng-model="diaChi.phuongXa"
-                            ng-click="selectOptionPhuongXa(diaChi,ward.name)">
-                            {{ward.name}}</li>
-                        </ul>
+                        <div class="dropdown-container">
+                          <input type="text" ng-model="diaChi.phuongXa" ng-click="toggleAPI($event,'PhuongXa')"
+                            class="form-control">
+                          <ul ng-show="showDropDownPhuongXa" id="dropDown">
+                            <li ng-repeat="ward in wardOptions" ng-model="diaChi.phuongXa"
+                              ng-click="selectOptionPhuongXa(indexDiaChi, ward.name)">
+                              {{ward.name}}</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -220,7 +224,8 @@
                       <label class="form-check-label" for="flexSwitchCheckDefault">Mặc định</label>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 col-md-6">
-                      <a type="button" class="btn btn-warning" ng-click="updateDiaChi($index,$event,diaChi.id)">Cập nhật
+                      <a type="button" class="btn btn-warning" ng-click="updateDiaChi(indexDiaChi,$event,diaChi.id)">Cập
+                        nhật
                       </a>
                     </div>
                   </div>

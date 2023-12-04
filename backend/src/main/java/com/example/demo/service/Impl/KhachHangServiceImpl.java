@@ -47,15 +47,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public DiaChi add(KhachHangRequest khachHangRequest) throws Exception {
-        Optional<KhachHang> email = khachHangRepository.findKhachHangByEmail(khachHangRequest.getEmail());
-        Optional<KhachHang> sdt = khachHangRepository.findKhachHangBySoDienThoai(khachHangRequest.getSoDienThoai());
-        if (email.isPresent()) {
-            throw new Exception("Email is already present!");
-        }
-        if (sdt.isPresent()) {
-            throw new Exception("So dien thoai is already present!");
-        }
+    public DiaChi add(KhachHangRequest khachHangRequest) {
         KhachHang khachHangSave = KhachHang.builder()
                 .ma(khachHangRequest.getMa())
                 .hoTen(khachHangRequest.getHoTen())
@@ -84,20 +76,6 @@ public class KhachHangServiceImpl implements KhachHangService {
         return diaChiRepository.save(diaChi);
     }
 
-//    @Override
-//    public DiaChi addid(KhachHangRequest khachHangRequest, UUID id) {
-//        KhachHang khachHang = KhachHang.builder().id(id).build();
-//        DiaChi diaChi = DiaChi.builder().khachHang(khachHang)
-//                .tinhthanhpho(khachHangRequest.getTinhthanhpho())
-//                .phuongxa(khachHangRequest.getPhuongxa())
-//                .quanhuyen(khachHangRequest.getQuanhuyen())
-//                .mota(khachHangRequest.getMota())
-//                .trangthai(Integer.valueOf(khachHangRequest.getTrangthai()))
-//                .ngaytao(khachHangRequest.getNgaytao()).build();
-//        return diaChiRepository.save(diaChi);
-//    }
-
-
     @Override
     public KhachHang update(KhachHang khachHang, UUID id) {
         Optional<KhachHang> optionalKhachHang = khachHangRepository.findById(id);
@@ -121,7 +99,7 @@ public class KhachHangServiceImpl implements KhachHangService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(khachHang.getEmail());
-            helper.setSubject("Chào mừng bạn đến với công ty");
+            helper.setSubject("Chào mừng bạn đến với cửa hàng Simple");
             helper.setText("Xin chào " + khachHang.getHoTen() + ",\n\n" +
                     "Chúc mừng bạn đã trở thành khách hàng của cửa hàng chúng tôi.\n" +
                     "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +

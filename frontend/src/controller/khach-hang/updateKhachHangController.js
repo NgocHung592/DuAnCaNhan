@@ -8,6 +8,11 @@ window.updateKhachHangController = function (
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
+  $scope.detailAdress = [];
+  $scope.NewAdress = false;
+  $scope.showDropDownThanhPho = false;
+  $scope.showDropDownQuanHuyen = false;
+  $scope.showDropDownPhuongXa = false;
   $scope.form_dc = {
     diaChiMacDinh: false,
     diaChiCuThe: "",
@@ -21,17 +26,16 @@ window.updateKhachHangController = function (
     .get(khachHangAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       $scope.detailKhachHang = response?.data;
-      console.log($scope.detailKhachHang);
     });
-  $scope.detailDiaChi = function () {
+  $scope.detailAdress = function () {
     $http
       .get(diaChiAPI + "/detail/" + $routeParams.id)
       .then(function (response) {
-        $scope.detailDiaChi = response?.data;
-        console.log($scope.detailDiaChi);
+        $scope.detailAdress = response?.data;
+        console.log($scope.detailAdress);
       });
   };
-  $scope.detailDiaChi();
+  $scope.detailAdress();
 
   $scope.updateKhachHang = function (event) {
     event.preventDefault();
@@ -76,7 +80,7 @@ window.updateKhachHangController = function (
           $http
             .get(diaChiAPI + "/detail/" + $routeParams.id)
             .then(function (response) {
-              $scope.detailDiaChi = response?.data;
+              $scope.detailAdress = response?.data;
             });
         });
     } else {
@@ -86,11 +90,11 @@ window.updateKhachHangController = function (
   $scope.updateDiaChi = function (index, event, idDiaChi) {
     event.preventDefault();
     $scope.updateDC = {
-      diaChiMacDinh: $scope.detailDiaChi[index].diaChiMacDinh,
-      diaChiCuThe: $scope.detailDiaChi[index].diaChiCuThe,
-      tinhThanhPho: $scope.detailDiaChi[index].tinhThanhPho,
-      quanHuyen: $scope.detailDiaChi[index].quanHuyen,
-      phuongXa: $scope.detailDiaChi[index].phuongXa,
+      diaChiMacDinh: $scope.detailAdress[index].diaChiMacDinh,
+      diaChiCuThe: $scope.detailAdress[index].diaChiCuThe,
+      tinhThanhPho: $scope.detailAdress[index].tinhThanhPho,
+      quanHuyen: $scope.detailAdress[index].quanHuyen,
+      phuongXa: $scope.detailAdress[index].phuongXa,
       ngaySua: new Date(),
     };
     $http
@@ -98,51 +102,97 @@ window.updateKhachHangController = function (
       .then(function () {
         alert("cap nhat thanh cong");
       });
+    $scope.detailAdress.find((diaChi) => {
+      if (diaChi.id !== idDiaChi) {
+        if ($scope.updateDC.diaChiMacDinh == true) {
+          $http
+            .put(diaChiAPI + "/update-ma-dinh/" + diaChi.id, diaChi)
+            .then(function () {
+              alert("cap nhat thanh cong");
+            });
+        }
+      }
+    });
   };
   $scope.getCity = function () {
     const api = api_giaoHang + "?depth=1";
     axios.get(api).then((response) => {
       $scope.cityOptions = response.data;
-      console.log($scope.cityOptions);
     });
   };
   $scope.getCity();
 
-  $scope.dropDownThanhPho = function (event) {
-    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
-    dropDownThanhPho.style.display =
-      dropDownThanhPho.style.display === "block" ? "none" : "block";
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display = "none";
-    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
-    dropDownPhuongXa.style.display = "none";
+  $scope.toggleDropdownNewAdress = function (event, index) {
+    $scope.detailAdress.forEach(function (item, i) {
+      if (i !== index) {
+        item.isDropdownOpen = false;
+      }
+    });
+    $scope.newAdress = !$scope.newAdress;
     event.stopPropagation();
   };
-  $scope.dropDownQuanHuyen = function (event) {
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display =
-      dropDownQuanHuyen.style.display === "block" ? "none" : "block";
-    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
-    dropDownThanhPho.style.display = "none";
-    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
-    dropDownPhuongXa.style.display = "none";
-    event.stopPropagation();
-  };
-  $scope.dropDownPhuongXa = function (event) {
-    var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
-    dropDownPhuongXa.style.display =
-      dropDownPhuongXa.style.display === "block" ? "none" : "block";
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display = "none";
-    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
-    dropDownThanhPho.style.display = "none";
+  $scope.toggleDropdown = function (event, index) {
+    let diaChi = $scope.detailAdress[index];
+    let selectedCityCode = "";
+    let selectedDistrictCode = "";
+    $scope.cityOptions.find((city) => {
+      if (city.name === diaChi.tinhThanhPho) {
+        selectedCityCode = city.code;
+      }
+    });
+    if (selectedCityCode) {
+      const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
+      axios.get(api).then(function (response) {
+        $scope.districtOptions = response?.data.districts;
+        $scope.districtOptions.find((district) => {
+          if (district.name === diaChi.quanHuyen) {
+            selectedDistrictCode = district.code;
+            if (selectedDistrictCode) {
+              const api =
+                api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
+              axios.get(api).then(function (response) {
+                $scope.wardOptions = response?.data.wards;
+              });
+            }
+          }
+        });
+      });
+    }
+
+    $scope.detailAdress.forEach(function (item, i) {
+      if (i !== index) {
+        item.isDropdownOpen = false;
+      }
+    });
+
+    $scope.detailAdress[index].isDropdownOpen =
+      !$scope.detailAdress[index].isDropdownOpen;
+    $scope.newAdress = false;
     event.stopPropagation();
   };
 
-  $scope.selectOptionThanhPho = function (diaChi, option) {
+  $scope.toggleAPI = function (event, type) {
+    // Mở hoặc đóng dropdown tương ứng
+    if (type === "ThanhPho") {
+      $scope.showDropDownThanhPho = !$scope.showDropDownThanhPho;
+      $scope.showDropDownPhuongXa = false;
+      $scope.showDropDownQuanHuyen = false;
+    } else if (type === "QuanHuyen") {
+      $scope.showDropDownQuanHuyen = !$scope.showDropDownQuanHuyen;
+      $scope.showDropDownPhuongXa = false;
+      $scope.showDropDownThanhPho = false;
+    } else if (type === "PhuongXa") {
+      $scope.showDropDownPhuongXa = !$scope.showDropDownPhuongXa;
+
+      $scope.showDropDownQuanHuyen = false;
+      $scope.showDropDownThanhPho = false;
+    }
+    event.stopPropagation();
+  };
+  $scope.selectOptionThanhPho = function (index, option) {
+    let diaChi = $scope.detailAdress[index];
     diaChi.tinhThanhPho = option;
     let selectedCityCode = "";
-
     $scope.cityOptions.find((city) => {
       if (city.name === option) {
         selectedCityCode = city.code;
@@ -154,15 +204,16 @@ window.updateKhachHangController = function (
         $scope.districtOptions = response?.data.districts;
       });
     }
-    var dropDownThanhPho = document.getElementById("dropDownThanhPho");
-    dropDownThanhPho.style.display = "none";
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display = "none";
+    diaChi.quanHuyen = null;
+    diaChi.phuongXa = null;
+
+    $scope.showDropDownThanhPho = false;
+    $scope.showDropDownQuanHuyen = false;
   };
-  $scope.selectOptionQuanHuyen = function (diaChi, option) {
+  $scope.selectOptionQuanHuyen = function (index, option) {
+    let diaChi = $scope.detailAdress[index];
     diaChi.quanHuyen = option;
     let selectedDistrictCode = "";
-
     $scope.districtOptions.find((district) => {
       if (district.name === option) {
         selectedDistrictCode = district.code;
@@ -172,31 +223,26 @@ window.updateKhachHangController = function (
       const api = api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
       axios.get(api).then(function (response) {
         $scope.wardOptions = response?.data.wards;
-        console.log($scope.wardOptions);
       });
     }
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display = "none";
+    diaChi.phuongXa = null;
+    $scope.showDropDownQuanHuyen = false;
+    $scope.showDropDownPhuongXa = false;
   };
-  $scope.selectOptionPhuongXa = function (diaChi, option) {
+  $scope.selectOptionPhuongXa = function (index, option) {
+    let diaChi = $scope.detailAdress[index];
     diaChi.phuongXa = option;
-    var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-    dropDownQuanHuyen.style.display = "none";
+    $scope.showDropDownPhuongXa = false;
   };
   document.addEventListener("click", function (event) {
-    var dropdown_container = document.getElementById("dropdown-container");
+    var dropdownContainer = document.querySelector(".dropdown-container");
 
-    if (event.target !== dropdown_container) {
-      var dropDownThanhPho = document.getElementById("dropDownThanhPho");
-      dropDownThanhPho.style.display = "none";
-    }
-    if (event.target !== dropdown_container) {
-      var dropDownQuanHuyen = document.getElementById("dropDownQuanHuyen");
-      dropDownQuanHuyen.style.display = "none";
-    }
-    if (event.target !== dropdown_container) {
-      var dropDownPhuongXa = document.getElementById("dropDownPhuongXa");
-      dropDownPhuongXa.style.display = "none";
+    if (!dropdownContainer.contains(event.target)) {
+      $scope.$apply(function () {
+        $scope.showDropDownThanhPho = false;
+        $scope.showDropDownQuanHuyen = false;
+        $scope.showDropDownPhuongXa = false;
+      });
     }
   });
 

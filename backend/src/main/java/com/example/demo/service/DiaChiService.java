@@ -13,4 +13,7 @@ public interface DiaChiService {
 
     DiaChi update(DiaChi diaChi, UUID id);
 
+    DiaChi updateMacDinh(DiaChi diaChi, UUID id);
+
+
 }

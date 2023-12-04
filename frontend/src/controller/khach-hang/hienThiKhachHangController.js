@@ -2,7 +2,8 @@ window.hienThiKhachHangController = function (
   $http,
   $scope,
   $location,
-  $rootScope
+  $rootScope,
+  $timeout
 ) {
   $scope.list_kh = [];
   $scope.totalPages = [];
@@ -10,16 +11,43 @@ window.hienThiKhachHangController = function (
   $scope.selectedOption = "";
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
+  $scope.message = $rootScope.message;
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getKhachHang = function () {
+    if ($scope.message !== undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.list_kh = response?.data;
+        $scope.list_kh = response?.data.content;
+        console.log($scope.list_kh);
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
   };
   $scope.getKhachHang();
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
   function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
@@ -53,7 +81,17 @@ window.hienThiKhachHangController = function (
   }
 
   $scope.changePage = function (index) {
-    if (index >= 0 && index < $scope.totalPages.length) {
+    if ($scope.selectedOption === false || $scope.selectedOption === true) {
+      $scope.currentPage = index;
+      $scope.loc();
+    } else if (
+      $scope.searchKeyword !== undefined &&
+      $scope.searchKeyword !== null &&
+      $scope.searchKeyword !== ""
+    ) {
+      $scope.currentPage = index;
+      $scope.search();
+    } else {
       $scope.currentPage = index;
       $scope.getKhachHang();
     }
@@ -61,32 +99,69 @@ window.hienThiKhachHangController = function (
 
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.totalPages.length - 1) {
-      $scope.currentPage++;
-      $scope.getKhachHang();
+      if ($scope.selectedOption === false || $scope.selectedOption === true) {
+        $scope.currentPage++;
+        $scope.loc();
+      } else if (
+        $scope.searchKeyword !== undefined &&
+        $scope.searchKeyword !== null &&
+        $scope.searchKeyword !== ""
+      ) {
+        $scope.currentPage++;
+        $scope.search();
+      } else {
+        $scope.currentPage++;
+        $scope.getKhachHang();
+      }
     }
   };
 
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
-      $scope.currentPage--;
-      $scope.getKhachHang();
+      if ($scope.selectedOption === false || $scope.selectedOption === true) {
+        $scope.currentPage--;
+        $scope.loc();
+      } else if (
+        $scope.searchKeyword !== undefined &&
+        $scope.searchKeyword !== null &&
+        $scope.searchKeyword !== ""
+      ) {
+        $scope.currentPage--;
+        $scope.search();
+      } else {
+        $scope.currentPage--;
+        $scope.getKhachHang();
+      }
     }
   };
-  $scope.$watch("searchKeyword", function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $http
-        .get(khachHangAPI + "/search?keyWord=" + $scope.searchKeyword)
-        .then(function (response) {
-          $scope.list_kh = response?.data;
-        });
-    }
-  });
-  $scope.loc = function () {
-    console.log($scope.selectedOption);
+  $scope.search = function () {
     $http
-      .get(khachHangAPI + "/loc?trangThai=" + $scope.selectedOption)
+      .get(
+        khachHangAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&keyWord=" +
+          $scope.searchKeyword
+      )
       .then(function (response) {
-        $scope.list_kh = response?.data;
+        $scope.list_kh = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
+      });
+  };
+  $scope.loc = function () {
+    $http
+      .get(
+        khachHangAPI +
+          "/loc?pageNo=" +
+          $scope.currentPage +
+          "&trangThai=" +
+          $scope.selectedOption
+      )
+      .then(function (response) {
+        $scope.list_kh = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
   };
 

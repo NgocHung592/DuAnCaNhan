@@ -43,15 +43,26 @@ public class DiaChiServiceImpl implements DiaChiService {
     @Override
     public DiaChi update(DiaChi diaChi, UUID id) {
         Optional<DiaChi> optionalDiaChi = diaChiRepository.findById(id);
+
         if (optionalDiaChi.isPresent()) {
+
             optionalDiaChi.map(diaChiUpdate -> {
                 diaChiUpdate.setDiaChiMacDinh(diaChi.getDiaChiMacDinh());
                 diaChiUpdate.setDiaChiCuThe(diaChi.getDiaChiCuThe());
                 diaChiUpdate.setTinhThanhPho(diaChi.getTinhThanhPho());
                 diaChiUpdate.setQuanHuyen(diaChi.getQuanHuyen());
-                diaChiUpdate.setPhuongXa(diaChiUpdate.getPhuongXa());
+                diaChiUpdate.setPhuongXa(diaChi.getPhuongXa());
                 return diaChiRepository.save(diaChiUpdate);
             }).orElse(null);
+        }
+        return null;
+    }
+
+    @Override
+    public DiaChi updateMacDinh(DiaChi diaChi, UUID id) {
+        Optional<DiaChi> optional = diaChiRepository.findById(id);
+        if (optional.isPresent()) {
+
         }
         return null;
     }

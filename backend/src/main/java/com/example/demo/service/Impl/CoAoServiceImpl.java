@@ -56,7 +56,7 @@ public class CoAoServiceImpl implements CoAoService {
         Optional<CoAo> optionalCoAo = coAoRepository.findById(id);
         if (optionalCoAo.isPresent()) {
             optionalCoAo.map(coAoUpdate -> {
-                coAoUpdate.setTen(coAoUpdate.getTen());
+                coAoUpdate.setTen(coAo.getTen());
                 coAoUpdate.setNguoiSua("Hưng");
                 coAoUpdate.setNgaySua(coAo.getNgaySua());
                 coAoUpdate.setDaXoa(coAo.getDaXoa());

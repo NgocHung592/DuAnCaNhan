@@ -39,4 +39,9 @@ public class DiaChiController {
         return new ResponseEntity(diaChiService.update(diaChi, UUID.fromString(id)), HttpStatus.OK);
     }
 
+    @PutMapping("update-ma-dinh/{id}")
+    public ResponseEntity updateMacDinh(@RequestBody DiaChi diaChi, @PathVariable("id") String id) {
+        return new ResponseEntity(diaChiService.updateMacDinh(diaChi, UUID.fromString(id)), HttpStatus.OK);
+    }
+
 }

@@ -2,8 +2,7 @@ window.hienThiKichThuocController = function (
   $http,
   $scope,
   $rootScope,
-  $timeout,
-  sharedService
+  $timeout
 ) {
   $scope.listKichThuoc = [];
   $scope.totalPages = [];
@@ -11,8 +10,6 @@ window.hienThiKichThuocController = function (
   $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $scope.listMauSac = sharedService.getDate();
-  console.log($scope.listMauSac);
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
     let elem = document.getElementById("success");

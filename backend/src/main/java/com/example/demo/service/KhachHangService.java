@@ -17,9 +17,6 @@ public interface KhachHangService {
 
     DiaChi add(KhachHangRequest khachHangRequest) throws Exception;
 
-    //    DiaChi addid(KhachHangRequest khachHangRequest, UUID id);
-//
-//
     KhachHang update(KhachHang khachHang,UUID id);
 
     Page<KhachHang> loc(Integer pageNo, String trangThai);
