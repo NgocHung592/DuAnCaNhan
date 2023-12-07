@@ -16,7 +16,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
 
     @Query(value = """  
             select * from khach_hang
-            group by id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,nguoi_tao,nguoi_sua,ngay_sua
+            group by id, ma, anh_dai_dien,reset_token, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,nguoi_tao,nguoi_sua,ngay_sua
             ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
             """, nativeQuery = true)
     Page<KhachHang> getALl(Pageable pageable);
@@ -24,7 +24,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
     @Query(value = """
             select * from khach_hang
             where da_xoa = ?1
-            group by id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
+            group by id, ma, anh_dai_dien,reset_token, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
                      nguoi_tao, nguoi_sua, ngay_sua
             ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao),IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;        
             """, nativeQuery = true)
@@ -37,7 +37,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
             OR ho_ten LIKE %:key%
             OR email LIKE %:key%
             OR so_dien_thoai LIKE %:key%
-            GROUP BY id, ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
+            GROUP BY id, ma, anh_dai_dien,reset_token, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, da_xoa, ngay_tao,
             nguoi_tao, nguoi_sua, ngay_sua
             ORDER BY IIF(MAX(ngay_sua) IS NULL, MAX(ngay_tao),IIF(MAX(ngay_tao) > MAX(ngay_sua), MAX(ngay_tao), MAX(ngay_sua))) DESC;
             """, nativeQuery = true)

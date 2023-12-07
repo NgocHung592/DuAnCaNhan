@@ -177,7 +177,9 @@ Create table [khach_hang](
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
     da_xoa bit,
+	reset_token nvarchar(250)
     )
+
 
 Create table [dia_chi](
     id UNIQUEIDENTIFIER

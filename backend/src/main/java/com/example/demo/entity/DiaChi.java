@@ -55,7 +55,4 @@ public class DiaChi {
     @JoinColumn(name = "khach_hang_id", referencedColumnName = "id")
     private KhachHang khachHang;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nhan_vien_id", referencedColumnName = "id")
-    private NhanVien nhanVien;
 }
