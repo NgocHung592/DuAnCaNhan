@@ -42,7 +42,7 @@ public interface NhanVienReponse {
     @Value("#{target.ngay_tao}")
     Date getNgayTao();
 
-    @Value("#{target.mo_ta}")
+    @Value("#{target.dia_chi_cu_the}")
     String getMoTa();
 
     @Value("#{target.phuong_xa}")

@@ -24,6 +24,23 @@ myApp.config(function ($routeProvider, $locationProvider) {
     .when("/gio-hang", {
       templateUrl: "ban-hang-online/gio-hang.html",
     })
+    .when("/login", {
+      templateUrl: "tai-khoan/login.html",
+      // controller: loginController,
+    })
+    .when("/singup", {
+      templateUrl: "tai-khoan/dang-ky.html",
+      controller: dangkyController,
+    })
+    .when("/quen-mat-khau", {
+      templateUrl: "tai-khoan/quen-mat-khau.html",
+      controller: forgetController,
+    })
+    .when("/dat-lai-mat-khau", {
+      templateUrl: "tai-khoan/dat-lai-mat-khau.html",
+      controller: resetController,
+    })
+
     .otherwise({
       redirectTo: "/trang-chu",
     });

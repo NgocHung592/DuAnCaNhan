@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.NhanVien;
 import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.model.response.NhanVienReponse;
@@ -7,6 +8,8 @@ import com.example.demo.service.NhanVienService;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +25,17 @@ public class NhanVienController {
     @GetMapping("hien-thi")
     public Page<NhanVienReponse> getAll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return nhanVienService.getAll(pageNo);
+
+    }
+    @PostMapping("login")
+    public ResponseEntity<?> login(@RequestBody NhanVien nhanVien) {
+        NhanVien existingUser = nhanVienService.login(nhanVien.getEmail());
+
+        if (existingUser != null && existingUser.getMatkhau().equals(nhanVien.getMatkhau())) {
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+        }
 
     }
 

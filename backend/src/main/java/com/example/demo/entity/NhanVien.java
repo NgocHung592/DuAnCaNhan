@@ -51,7 +51,7 @@ public class NhanVien {
     @Column(name = "anh_dai_dien")
     private String anhdaidien;
 
-    @Column(name = "mo_ta")
+    @Column(name = "dia_chi_cu_the")
     private String mota;
 
     @Column(name = "tinh_thanh_pho")
@@ -65,9 +65,6 @@ public class NhanVien {
 
     @Column(name = "mat_khau")
     private String matkhau;
-
-    @Column(name = "ghi_chu")
-    private String ghichu;
 
     @Column(name = "trang_thai")
     private Integer trangthai;
