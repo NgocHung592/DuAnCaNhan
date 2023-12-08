@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.ChucVu;
+import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.NhanVien;
 import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.model.request.NhanVienRequest;
@@ -43,7 +44,10 @@ public class NhanVienServiceImpl implements NhanVienService {
         Pageable pageable = PageRequest.of(pageNo, 100);
         return nhanVienRepository.getNhanVienTrangThai1(pageable, tt);
     }
-
+    @Override
+    public NhanVien login(String email) {
+        return nhanVienRepository.findByEmail(email);
+    }
 
     @Override
     public NhanVien add(NhanVienRequest nhanVienRequest) throws Exception {

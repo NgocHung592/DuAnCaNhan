@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myApp" ng-controller="nhanVienController">
 
 <head>
   <meta charset="utf-8" />
@@ -25,7 +25,83 @@
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
-  <div class="wrapper">
+  <div class="d-flex justify-content-center">
+  <div ng-if="isLoggedInAdmin==false">
+    <main class="wrapperMain_content">
+      <div id="login">
+        <div class="accounttype">
+          <h2 class="text-center">Đăng Nhập</h2>
+        </div>
+        <form>
+          <div class="clearfix large_form">
+            <input
+              required=""
+              type="email"
+              value=""
+              name="customer[email]"
+              id="customer_email"
+              placeholder="Email"
+              class="text"
+              ng-model="user.email"
+              fdprocessedid="3l1joc"
+            />
+          </div>
+
+          <div class="clearfix large_form large_form-mrb">
+            <input
+              required=""
+              type="password"
+              value=""
+              name="customer[password]"
+              id="customer_password"
+              ng-model="user.matkhau"
+              placeholder="Mật khẩu"
+              class="text"
+              size="16"
+              fdprocessedid="vqke7p"
+            />
+          </div>
+
+          <div class="clearfix large_form sitebox-recaptcha">
+            <!-- This site is protected by reCAPTCHA and the Google -->
+            <!-- <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noreferrer"
+              >Privacy Policy</a
+            >
+            and
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noreferrer"
+              >Terms of Service</a
+            > -->
+            <!-- apply. -->
+          </div>
+          <div class="clearfix custommer_account_action">
+            <div class="action_bottom">
+              <button
+                class="btn btn-signin button dark"
+                type="submit"
+                fdprocessedid="2wf5kf"
+                ng-click="login()"
+              >
+                Đăng nhập
+              </button>
+            </div>
+            <!-- <div class="req_pass">
+              <a href="#quen-mat-khau">Quên mật khẩu?</a><br />
+              hoặc <a href="/account/register" title="Đăng ký">Đăng ký</a>
+            </div> -->
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+  <div ng-if="isLoggedInAdmin==true" class="wrapper">
+
     <nav id="sidebar" class="sidebar js-sidebar">
       <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="#/admin">
@@ -194,9 +270,10 @@
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+           <li class="nav-item dropdown">
               <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                <img src="" class="avatar img-fluid rounded" alt="Charles Hall" />
+                <img src="" class="avatar img-fluid rounded"  />
+                {{list.hoten}}
               </a>
               <div class="dropdown-menu dropdown-menu-end">
                 <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i>
@@ -210,7 +287,7 @@
                 <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i>
                   Help Center</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Log out</a>
+                <a class="dropdown-item"      ng-click="logout()">Log out</a>
               </div>
             </li>
           </ul>
@@ -298,6 +375,8 @@
   <script src="../controller/ma-giam-gia/hienThiMaGiamGiaController.js"></script>
   <script src="../controller/ma-giam-gia/addMaGiamGiaController.js"></script>
   <script src="../controller/ma-giam-gia/updateMaGiamGiaController.js"></script>
+
+   <script src="../controller/tai-khoan/nhanvienloginController.js"></script>
 
   <script src="../controller/ma-giam-gia/maGiamGiaChiTietController.js"></script>
 </body>

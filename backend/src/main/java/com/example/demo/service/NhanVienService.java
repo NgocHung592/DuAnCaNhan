@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.NhanVien;
 import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.model.request.KhachHangRequest;
@@ -11,6 +12,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface NhanVienService {
+
+    NhanVien login(String email);
+
     Page<NhanVienReponse> getAll(Integer pageNo);
 
     Page<NhanVienReponse> getAllTrangThai(Integer pageNo, String tt);

@@ -63,6 +63,9 @@ public class KhachHang {
     @Column(name = "da_xoa")
     private Boolean daXoa;
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
 //    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
 //    private Collection<DiaChi> diaChis;
 

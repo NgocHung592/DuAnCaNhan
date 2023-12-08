@@ -3,9 +3,85 @@
     width: 90px;
 }
 
-
 .table thead tr th {
     text-align: center;
+}
+
+.header-page {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#login {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.large_form {
+    margin-bottom: 20px;
+}
+
+.text {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.sitebox-recaptcha {
+    margin-bottom: 20px;
+}
+
+.custommer_account_action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action_bottom {
+    flex-grow: 1;
+}
+
+.btn-signin {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-signin:hover {
+    background-color: #45a049;
+}
+
+.req_pass {
+    text-align: right;
+}
+
+.req_pass a {
+    color: #4caf50;
+    text-decoration: none;
+}
+
+.req_pass a:hover {
+    text-decoration: underline;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+}
+
+.remove-bullet {
+    list-style-type: none;
+    padding: 0;
+    /* Đặt padding về 0 để loại bỏ khoảng trắng */
 }
 
 .table tbody tr th {
@@ -66,20 +142,18 @@
     padding-top: 50px;
     font-size: 25px;
     color: gray;
-
 }
 
-
 .has-error {
-    color: red
+    color: red;
 }
 
 h4 {
-    text-align: center
+    text-align: center;
 }
 
 .page-item {
-    text-align: center
+    text-align: center;
 }
 
 #myProgress {
@@ -90,7 +164,7 @@ h4 {
 #success {
     width: 0%;
     height: 10px;
-    background-color: #4CAF50;
+    background-color: #4caf50;
 }
 
 #error {
@@ -146,12 +220,10 @@ h4 {
 
 .align-middle {
     text-align: center;
-
 }
 
 .trang-thai {
     background-color: green;
-
 }
 
 .custom-select {
@@ -229,8 +301,6 @@ h4 {
     text-shadow: 0 0 10px rgba(0, 51, 255, 0.5);
     /* Màu sáng, độ mờ và màu ánh sáng */
 }
-
-
 
 /* CSS cho phần header */
 .card-header {
@@ -415,5 +485,4 @@ img.employee-image {
 
 .load_img {
     text-align: center;
-
 }

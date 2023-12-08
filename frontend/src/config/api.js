@@ -13,6 +13,7 @@ window.phongCachAPI = url + "/phong-cach";
 window.hoaTietAPI = url + "/hoa-tiet";
 
 window.coAoAPI = url + "/co-ao";
+window.taiKhoanAPI = url + "/accout";
 
 window.tayAoAPI = url + "/tay-ao";
 
