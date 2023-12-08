@@ -30,7 +30,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
 
     @Override
-    public List<HoaDonChiTiet> getByMa( String ma) {
+    public List<HoaDonChiTiet> getByMa(String ma) {
         return hoaDonChiTietRepository.getByMa(ma);
     }
 
@@ -53,20 +53,16 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet  update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
+    public HoaDonChiTiet update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id) {
         Optional<HoaDonChiTiet> optional = hoaDonChiTietRepository.findById(id);
-        return optional.map(o -> {
+        optional.map(o -> {
             o.setSoLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()));
             o.setThanhTien(BigDecimal.valueOf(hoaDonChiTietRequest.getThanhTien()));
             return hoaDonChiTietRepository.save(o);
         }).orElse(null);
+        return null;
     }
 
-//    @Override
-//        public HoaDonChiTiet detail(HoaDonChiTietId hoaDonChiTietId) {
-////        return hoaDonChiTietRepository.findById(hoaDonChiTietId).orElse(null);
-//            return null;
-//    }
 
     @Override
     public HoaDonChiTiet delete(UUID id) {
@@ -78,8 +74,5 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         }).orElse(null);
     }
 
-//    @Override
-//    public HoaDonChiTiet delete(HoaDonChiTietId hoaDonChiTietId) {
-//        return null;
-//    }
+
 }

@@ -57,7 +57,7 @@ window.addMaGiamGiaController = function (
 
     let ten = $scope.maGiamGiaSave.tenKM;
     let tt = $scope.maGiamGiaSave.giaTriDonToiThieu;
-    let td = $scope.maGiamGiaSave.giaTriGiam;
+    let gtg = $scope.maGiamGiaSave.giaTriGiam;
     let ht = $scope.maGiamGiaSave.hinhThucGiam;
     let sl = $scope.maGiamGiaSave.soLuong;
     let bd = $scope.maGiamGiaSave.ngayBatDau;
@@ -104,42 +104,32 @@ window.addMaGiamGiaController = function (
     } else if (parseInt(ht) == 0) {
       if (tt.length == 0) {
         showError("Giá trị tối thiểu không được trống");
-      } else if (td.length == 0) {
+      } else if (gtg.length == 0) {
         showError("Giá trị giảm không được trống");
-      } else if (parseInt(td) < 0) {
+      } else if (parseInt(gtg) < 0) {
         showError("Giá trị giảm không được nhỏ hơn 0");
       } else if (
-        parseInt(td) >= parseInt(tt) ||
-        parseInt(td) != parseFloat(td)
+        parseInt(gtg) >= parseInt(tt) ||
+        parseInt(gtg) != parseFloat(gtg)
       ) {
         showError("Giá trị giảm phải lớn hơn hoặc bằng giá trị giảm tối thiểu");
       }
     } else if (parseInt(ht) != 0) {
       if (tt.length == 0) {
         showError("Giá trị tối thiểu không được trống");
-      } else if (td.length == 0) {
+      } else if (gtg.length == 0) {
         showError("Giá trị giảm không được trống");
-      } else if (parseFloat(td) < 0 || parseFloat(td) > 100) {
+      } else if (parseFloat(gtg) < 0 || parseFloat(gtg) > 100) {
         showError("Giá trị giảm nằm trong khoảng từ 0 -> 100 %");
       }
     } else {
       check = true;
     }
     if (check) {
-      $http
-        .post(magiamgiaAPI + "/add", $scope.maGiamGiaSave)
-        .then(function () {
-          $rootScope.message = "Thêm thành công";
-          $location.path("/ma-giam-gia/hien-thi");
-        })
-        .catch(function (e) {
-          // event.preventDefault();
-          //   alert("Mã đã tồn tại");
-          //   $scope.show = true;
-          // window.location.href = "#ma-giam-gia/hienthi";
-        });
-    } else {
-      // event.preventDefault();
+      $http.post(magiamgiaAPI + "/add", $scope.maGiamGiaSave).then(function () {
+        $rootScope.message = "Thêm thành công";
+        $location.path("/ma-giam-gia/hien-thi");
+      });
     }
   };
 };

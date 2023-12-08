@@ -32,11 +32,12 @@ window.addKhachHangController = function (
     anhDaiDien: "",
     soDienThoai: "",
     matKhau: $scope.matkhau,
+    diaChiCuThe: "",
+    diaChiMacDinh: "true",
     tinhThanhPho: "",
     quanHuyen: "",
     phuongXa: "",
     ngayTao: new Date(),
-    diaChiCuThe: "",
     daXoa: false,
   };
   function showError(message) {

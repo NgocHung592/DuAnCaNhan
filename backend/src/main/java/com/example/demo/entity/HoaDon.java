@@ -33,7 +33,7 @@ public class HoaDon {
     private String tenKhachHang;
 
     @Column(name = "loai_hoa_don")
-    private String loai_hoa_don;
+    private String loaiHoaDon;
 
     @Column(name = "ngay_tao")
     private Timestamp ngayTao;

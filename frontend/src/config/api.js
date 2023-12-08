@@ -39,3 +39,10 @@ window.diaChiAPI = url + "/api/v1/dia-chi";
 window.api_url = "https://www.thecolorapi.com";
 
 window.api_giaoHang = "https://provinces.open-api.vn/api/";
+
+window.APIPhiVanChuyen =
+  "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
+window.APIDistrict =
+  "https://online-gateway.ghn.vn/shiip/public-api/master-data/district";
+window.APIWard =
+  "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward";

@@ -1,12 +1,13 @@
-window.hienThiMaGiamGiaController = function ($http, $scope, $location) {
+window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
   $scope.listMaGiamGia = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.visiblePages = [];
   $scope.timeRemaining = "";
   $scope.timeRemainingArray = [];
-  $scope.maxVisiblePages = 3; // Số trang tối đa để hiển thị
+  $scope.maxVisiblePages = 3;
   $scope.intervalId = "";
+  $scope.message = $rootScope.message;
   function scheduledTask() {
     $http
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -21,7 +22,7 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $location) {
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);

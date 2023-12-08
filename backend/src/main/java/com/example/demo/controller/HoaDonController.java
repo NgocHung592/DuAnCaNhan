@@ -35,7 +35,7 @@ public class HoaDonController {
 
     @GetMapping("get-list")
     public ResponseEntity getList() {
-        return new ResponseEntity(hoaDonService.getList(), HttpStatus.OK);
+        return new ResponseEntity(hoaDonService.getHoaDonCho(), HttpStatus.OK);
     }
 
     @GetMapping("detail/{id}")
@@ -48,13 +48,9 @@ public class HoaDonController {
         return hoaDonService.add(hoaDon);
     }
 
-    @PutMapping("update-khach-co-san/{id}")
+    @PutMapping("update/{id}")
     public HoaDon updateKhachCoSan(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
-        return hoaDonService.updateKhachCoSan(hoaDonRequest, UUID.fromString(id));
-    }
-    @PutMapping("update-khach-le/{id}")
-    public HoaDon updateKhachLe(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
-        return hoaDonService.updateKhachLe(hoaDonRequest, UUID.fromString(id));
+        return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
     }
 
     @DeleteMapping("delete/{id}")

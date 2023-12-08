@@ -43,5 +43,4 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
             """, nativeQuery = true)
     Page<KhachHang> searchByKeyword(Pageable pageable, @Param("key") String keyWord);
 
-
 }

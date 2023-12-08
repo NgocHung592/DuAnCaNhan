@@ -32,7 +32,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDon> getList() {
+    public List<HoaDon> getHoaDonCho() {
         return hoaDonReponsitory.getHoaDonCho();
     }
 
@@ -41,7 +41,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         HoaDon hoaDonSave = HoaDon.builder()
                 .ma(hoaDon.getMa())
                 .ngayTao(hoaDon.getNgayTao())
-                .loai_hoa_don("Tại quầy")
+                .loaiHoaDon("Tại quầy")
                 .nguoiTao("Hưng")
                 .trangThai(hoaDon.getTrangThai())
                 .build();
@@ -49,28 +49,33 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon updateKhachCoSan(HoaDonRequest hoaDonRequest, UUID id) {
+    public HoaDon update(HoaDonRequest hoaDonRequest, UUID id) {
         Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
-        return optional.map(o -> {
-            o.setTrangThai(1);
-            o.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
-            o.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
-            o.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
-            return hoaDonReponsitory.save(o);
-        }).orElse(null);
+        if (hoaDonRequest.getIdKhachHang() == null) {
+            optional.map(hoaDon -> {
+                hoaDon.setTrangThai(1);
+                hoaDon.setTenKhachHang(hoaDonRequest.getTenKhachHang());
+                hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
+                hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
+                hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+                hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+                return hoaDonReponsitory.save(hoaDon);
+            }).orElse(null);
+        } else {
+            optional.map(hoaDon -> {
+                hoaDon.setTrangThai(1);
+                hoaDon.setTenKhachHang(hoaDonRequest.getTenKhachHang());
+                hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
+                hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
+                hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+                hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+                hoaDon.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
+                return hoaDonReponsitory.save(hoaDon);
+            }).orElse(null);
+        }
+        return null;
     }
 
-    @Override
-    public HoaDon updateKhachLe(HoaDonRequest hoaDonRequest, UUID id) {
-        Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
-        return optional.map(o -> {
-            o.setTrangThai(1);
-            o.setTenKhachHang(hoaDonRequest.getTenKhachHang());
-            o.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
-            o.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
-            return hoaDonReponsitory.save(o);
-        }).orElse(null);
-    }
 
     @Override
     public HoaDon detail(UUID id) {

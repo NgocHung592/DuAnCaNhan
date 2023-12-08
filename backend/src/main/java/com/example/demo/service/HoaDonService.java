@@ -11,13 +11,12 @@ import java.util.UUID;
 public interface HoaDonService {
     Page<HoaDon> getAll(Integer pageNo);
 
-    List<HoaDon> getList();
+    List<HoaDon> getHoaDonCho();
 
     HoaDon add(HoaDon hoaDon);
 
-    HoaDon updateKhachCoSan(HoaDonRequest hoaDonRequest, UUID id);
+    HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
-    HoaDon updateKhachLe(HoaDonRequest hoaDonRequest, UUID id);
 
     HoaDon detail(UUID id);
 
@@ -26,7 +25,6 @@ public interface HoaDonService {
     List<HoaDon> getExcel();
 
     Page<HoaDonRepone> getAlll(Integer pageNo);
-
 
     Page<HoaDonRepone> getSearch(Integer pageNo, String serch);
 }

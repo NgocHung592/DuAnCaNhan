@@ -69,8 +69,12 @@
                                         </p>
                                     </th>
                                     <th>{{maGiamGia.giaTriDonToiThieu | number}} VND</th>
-                                    <th ng-if="maGiamGia.hinhThucGiam==0">{{maGiamGia.giaTriGiam |number}} VND</th>
-                                    <th ng-if="maGiamGia.hinhThucGiam==1">{{maGiamGia.giaTriGiam}} %</th>
+                                    <th><span>
+                                            {{ maGiamGia.hinhThucGiam === 0 ?
+                                            (maGiamGia.giaTriGiam | number) + ' VND' :
+                                            maGiamGia.giaTriGiam + ' %'
+                                            }}
+                                        </span></th>
 
                                     <th>{{maGiamGia.soLuong}}</th>
                                     <th>

@@ -2,10 +2,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.listHoaDon = [];
   $scope.sizeAndQuantitys = [];
   $scope.listKichThuoc = [];
-  $scope.filterKichThuoc = "";
-  $scope.currentPage = 0;
-  $scope.currentPageHDCT = 0;
-  $scope.maxVisiblePages = 3;
   $scope.totalPages = [];
   $scope.totalPagesHDCT = [];
   $scope.listMaGiamGia = [];
@@ -15,16 +11,25 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
-  $scope.khachHangDefault = true;
+  $scope.visiblePages = [];
+  $scope.detailDiaChi = [];
+  $scope.districts = [];
+  $scope.wards = [];
   $scope.chonKhachHang = false;
-  $scope.diaChiMoi = true;
   $scope.diaChiMacDinh = false;
   $scope.show = false;
   $scope.showDropDownVoucher = false;
-  $scope.tongTien = "";
-  $scope.giamGia = "";
-  $scope.showError = "";
-  $scope.visiblePages = [];
+  $scope.showDropDownThanhPho = false;
+  $scope.showDropDownPhuongXa = false;
+  $scope.showDropDownQuanHuyen = false;
+  $scope.tongTien = 0;
+  $scope.giamGia = 0;
+  $scope.tienHang = 0;
+  $scope.phiVanChuyen = 0;
+  // $scope.showError = undefined;
+  $scope.currentPage = 0;
+  $scope.currentPageHDCT = 0;
+  $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.detailKhachHang = {
@@ -55,9 +60,13 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
   $scope.hoaDonThanhToan = {
     idKhachHang: "",
-    tenKhachHang: "",
+    tenKhachHang: "Khách lẻ",
     soDienThoaiKhachHang: "",
     diaChiKhachHang: "",
+    diaChiCuThe: "",
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
     tongTien: "",
     ngayThanhToan: new Date(),
     trangThai: 1,
@@ -208,18 +217,25 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
         $scope.listHoaDonChiTiet = response?.data.content;
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
-      });
-    $http
-      .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
-      .then(function (response) {
-        $scope.listHoaDonChiTiet2 = response?.data;
-        $scope.tongTien = $scope.listHoaDonChiTiet2
-          .filter((item) => item.hoaDon.ma === $scope.maHoaDon)
-          .reduce((total, item) => total + item.thanhTien, 0);
+        $scope.tienHang = $scope.calculateTotal();
+        $scope.tongTien = $scope.calculateTotal();
       });
   };
+  function detailChiTietSanPham(idSanPhamChiTiet) {
+    return $http
+      .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
+      .then(function (response) {
+        return response?.data;
+      })
+      .catch(function (error) {
+        console.error("Error fetching product details:", error);
+        throw error; // Chuyển tiếp lỗi để xử lý ở nơi gọi
+      });
+  }
   $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
-    // Gán giá trị cho $scope.formHoaDonChiTiet
+    var matchingItem = $scope.listHoaDonChiTiet.find(
+      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
+    );
     $scope.formHoaDonChiTiet = {
       idHoaDon: $scope.formHoaDonChiTiet.idHoaDon,
       idSanPhamChiTiet: idSanPhamChiTiet,
@@ -227,101 +243,85 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       thanhTien: $scope.listSanPhamChiTiet[index].donGia,
       soLuong: 1,
     };
-
-    // Tìm sản phẩm chi tiết trong danh sách hóa đơn
-    var matchingItem = $scope.listHoaDonChiTiet.find(
-      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
-    );
-    if (matchingItem) {
-      // Cập nhật số lượng sản phẩm chi tiết trong hóa đơn
-      $http
-        .get(
-          sanPhamChiTietAPI +
-            "/detail/" +
-            $scope.formHoaDonChiTiet.idSanPhamChiTiet
-        )
-        .then(function (response) {
-          $scope.detailSanPhamChiTiet = response.data;
-          matchingItem.soLuong += 1;
-          if (matchingItem.soLuong <= $scope.detailSanPhamChiTiet.soLuong) {
-            // Cập nhật thông tin sản phẩm chi tiết trong hóa đơn
-            $scope.hoaDonUpdate = {
-              soLuong: matchingItem.soLuong,
-              thanhTien:
-                $scope.formHoaDonChiTiet.soLuong *
-                $scope.formHoaDonChiTiet.donGia,
-            };
-            $http
-              .put(
-                hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
-                $scope.hoaDonUpdate
-              )
-              .then(function () {
-                $scope.getHoaDonChiTiet();
-                $scope.tongTien = $scope.calculateTotal();
-                showSuccess("Cập nhật thành công");
-              });
-          } else {
-            showError(
-              "Chỉ còn " +
-                $scope.detailSanPhamChiTiet.soLuong +
-                " sản phẩm trong cửa hàng"
-            );
-          }
-        });
-    } else {
-      $http
-        .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
-        .then(function () {
-          $scope.getHoaDonChiTiet();
-          $scope.tongTien = $scope.calculateTotal();
-          showSuccess("Thêm sản phẩm mới thành công");
-        });
-    }
+    detailChiTietSanPham(idSanPhamChiTiet).then(function (
+      detailSanPhamChiTiet
+    ) {
+      if (matchingItem) {
+        matchingItem.soLuong += 1;
+        if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
+          $scope.hoaDonUpdate = {
+            soLuong: matchingItem.soLuong,
+            thanhTien: matchingItem.soLuong * detailSanPhamChiTiet.donGia,
+          };
+          $http
+            .put(
+              hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
+              $scope.hoaDonUpdate
+            )
+            .then(function () {
+              $scope.getHoaDonChiTiet();
+              $scope.tienHang = $scope.calculateTotal();
+              $scope.tongTien = $scope.calculateTotal();
+              showSuccess("Cập nhật thành công");
+            });
+        } else {
+          showError(
+            "Chỉ còn " +
+              detailSanPhamChiTiet.soLuong +
+              " sản phẩm trong cửa hàng"
+          );
+        }
+      } else {
+        $http
+          .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
+          .then(function () {
+            $scope.getHoaDonChiTiet();
+            $scope.tienHang = $scope.calculateTotal();
+            $scope.tongTien = $scope.calculateTotal();
+            showSuccess("Thêm sản phẩm mới thành công");
+          });
+      }
+    });
   };
 
-  // Tính tổng tiền của hóa đơn
   $scope.calculateTotal = function () {
     return $scope.listHoaDonChiTiet
       .filter((item) => item.maHoaDon === $scope.maHoaDon)
       .reduce((total, item) => total + item.thanhTien, 0);
   };
 
-  $scope.changeSoLuong = function (index, idHoaDonChiTiet, idSanPhamChiTiet) {
-    $http
-      .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
-      .then(function (response) {
-        $scope.detailSanPhamChiTiet = response.data;
-        let item = $scope.listHoaDonChiTiet[index];
-        if (item.soLuong == null) {
-          showError("Số lượng không được nhỏ hơn 0");
-          return;
-        } else if (item.soLuong <= $scope.detailSanPhamChiTiet.soLuong) {
-          item.soLuong = $scope.listHoaDonChiTiet[index].soLuong;
-          item.thanhTien = item.soLuong * item.donGia;
+  $scope.changeSoLuong = function (idSanPhamChiTiet) {
+    var matchingItem = $scope.listHoaDonChiTiet.find(
+      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
+    );
+    detailChiTietSanPham(idSanPhamChiTiet).then(function (
+      detailSanPhamChiTiet
+    ) {
+      if (matchingItem.soLuong === null || matchingItem.soLuong === undefined) {
+        showError("Số lượng không được nhỏ hơn 0");
+      } else if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
+        $scope.hoaDonUpdate = {
+          soLuong: matchingItem.soLuong,
+          thanhTien: matchingItem.soLuong * matchingItem.donGia,
+        };
 
-          $scope.hoaDonUpdate = {
-            soLuong: item.soLuong,
-            thanhTien: item.thanhTien,
-          };
-          $http
-            .put(
-              hoaDonChiTietAPI + "/update/" + idHoaDonChiTiet,
-              $scope.hoaDonUpdate
-            )
-            .then(function () {});
-          $scope.tongTien = $scope.listHoaDonChiTiet
-            .filter((item) => item.maHoaDon === $scope.maHoaDon)
-            .reduce((total, item) => total + item.thanhTien, 0);
-          showSuccess("Cập nhật thành công");
-        } else {
-          showError(
-            "Chỉ còn " +
-              $scope.detailSanPhamChiTiet.soLuong +
-              " sản phẩm trong cửa hàng"
-          );
-        }
-      });
+        $http
+          .put(
+            hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
+            $scope.hoaDonUpdate
+          )
+          .then(function () {
+            $scope.getHoaDonChiTiet();
+            $scope.tienHang = $scope.calculateTotal();
+            $scope.tongTien = $scope.calculateTotal();
+            showSuccess("Cập nhật thành công");
+          });
+      } else {
+        showError(
+          "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"
+        );
+      }
+    });
   };
   $scope.xoaSanPhamGioHang = function (id) {
     $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
@@ -368,165 +368,227 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       $scope.cityOptions = response.data;
     });
   };
-  $scope.toggleAPI = function (event) {
-    // Mở hoặc đóng dropdown tương ứng
+  $scope.toggleAPI = function (event, type) {
+    if (type === "ThanhPho") {
+      $scope.showDropDownThanhPho = !$scope.showDropDownThanhPho;
+      $scope.showDropDownPhuongXa = false;
+      $scope.showDropDownQuanHuyen = false;
+    } else if (type === "QuanHuyen") {
+      $scope.showDropDownQuanHuyen = !$scope.showDropDownQuanHuyen;
+      $scope.showDropDownPhuongXa = false;
+      $scope.showDropDownThanhPho = false;
+    } else if (type === "PhuongXa") {
+      $scope.showDropDownPhuongXa = !$scope.showDropDownPhuongXa;
+      $scope.showDropDownQuanHuyen = false;
+      $scope.showDropDownThanhPho = false;
+    }
+    event.stopPropagation();
+  };
+  $scope.selectOptionThanhPho = function (option) {
+    $scope.hoaDonThanhToan.tinhThanhPho = option;
+    let selectedCityCode = "";
+    $scope.cityOptions.find((city) => {
+      if (city.name === option) {
+        selectedCityCode = city.code;
+      }
+    });
+    if (selectedCityCode) {
+      const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
+      axios.get(api).then(function (response) {
+        $scope.districtOptions = response?.data.districts;
+        console.log($scope.districtOptions);
+      });
+    }
+    $scope.hoaDonThanhToan.quanHuyen = null;
+    $scope.hoaDonThanhToan.phuongXa = null;
+
+    $scope.showDropDownThanhPho = false;
+    $scope.showDropDownQuanHuyen = false;
+  };
+  $scope.selectOptionQuanHuyen = function (option) {
+    $scope.hoaDonThanhToan.quanHuyen = option;
+    let selectedDistrictCode = "";
+    $scope.districtOptions.find((district) => {
+      if (district.name === option) {
+        selectedDistrictCode = district.code;
+      }
+    });
+    console.log(selectedDistrictCode);
+    if (selectedDistrictCode) {
+      const api = api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
+      axios.get(api).then(function (response) {
+        $scope.wardOptions = response?.data.wards;
+      });
+    }
+    $scope.hoaDonThanhToan.phuongXa = null;
+    $scope.showDropDownQuanHuyen = false;
+    $scope.showDropDownPhuongXa = false;
+  };
+  $scope.selectOptionPhuongXa = async function (option) {
+    $scope.hoaDonThanhToan.phuongXa = option;
+    $scope.showDropDownPhuongXa = false;
+    var headers = {
+      "Content-Type": "application/json",
+      token: "6b9dba70-8881-11ee-af43-6ead57e9219a",
+      shop_id: "4714252",
+    };
+
+    var config = {
+      headers: headers,
+    };
+    $http
+      .get(APIDistrict, config)
+      .then(function (response) {
+        $scope.districts = response.data.data;
+        console.log($scope.districts);
+        var foundDistrict = $scope.districts.find(function (district) {
+          return district.DistrictName === $scope.hoaDonThanhToan.quanHuyen;
+        });
+
+        if (foundDistrict) {
+          var district_id = foundDistrict.DistrictID;
+
+          $http
+            .get(APIWard + "?district_id=" + district_id, config)
+            .then(function (response) {
+              $scope.wards = response.data.data;
+
+              var foundWard = $scope.wards.find(function (ward) {
+                return ward.WardName === $scope.hoaDonThanhToan.phuongXa;
+              });
+
+              if (foundWard) {
+                var wardCode = foundWard.WardCode;
+
+                var requestData = {
+                  service_type_id: 2,
+                  to_district_id: district_id,
+                  to_ward_code: wardCode,
+                  height: 20,
+                  length: 30,
+                  weight: 3000,
+                  width: 40,
+                };
+
+                $http
+                  .post(APIPhiVanChuyen, requestData, config)
+                  .then(function (response) {
+                    console.log(response.data);
+                    $scope.phiVanChuyen = response.data.data.total;
+                    $scope.tongTien =
+                      $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+                  });
+              }
+            });
+        }
+      })
+      .catch(function (error) {
+        console.error("An error occurred:", error);
+      });
+  };
+
+  $scope.toggleVoucher = function (event) {
     $scope.showDropDownVoucher = !$scope.showDropDownVoucher;
 
     event.stopPropagation();
   };
-  $scope.getCity();
-
-  $scope.onCityChange = () => {
-    const selectedCityCode = $scope.formDiaChi.tinhThanhPho;
-    if (selectedCityCode) {
-      const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
-      axios.get(api).then(function (response) {
-        $scope.districtOptions = response.data.districts;
-
-        printResult();
-      });
-    }
-    $scope.formDiaChi.quanHuyen = null; // Đặt lại quận/huyện khi tỉnh/thành phố thay đổi.
-    $scope.formDiaChi.phuongXa = null;
-    $scope.districtOptions = [];
-    $scope.wardOptions = [];
-  };
-  $scope.onDistrictChange = () => {
-    const selectedDistrictCode = $scope.formDiaChi.quanHuyen;
-    if (selectedDistrictCode) {
-      const api = api_giaoHang + "d/" + selectedDistrictCode + "?depth=2";
-      axios.get(api).then(function (response) {
-        $scope.wardOptions = response.data.wards;
-        printResult();
-      });
-    }
-    $scope.formDiaChi.phuongXa = null;
-    $scope.wardOptions = [];
-  };
-  $scope.onWardChange = () => {
-    printResult();
-  };
-  var printResult = () => {
-    if (
-      $scope.formDiaChi.quanHuyen &&
-      $scope.formDiaChi.tinhThanhPho &&
-      $scope.formDiaChi.phuongXa
-    ) {
-      $scope.formHoaDon.tenThanhPho = $scope.cityOptions.find(
-        (option) => option.code == $scope.formDiaChi.tinhThanhPho
-      ).name;
-
-      $scope.formHoaDon.tenQuanHuyen = $scope.districtOptions.find(
-        (option) => option.code == $scope.formDiaChi.quanHuyen
-      ).name;
-      $scope.formHoaDon.tenPhuongXa = $scope.wardOptions.find(
-        (option) => option.code == $scope.formDiaChi.phuongXa
-      ).name;
-    }
-  };
-
-  $scope.thanhToan = function () {
-    var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
+  $scope.selectedVoucher = function (index, option) {
+    if ($scope.formHoaDonChiTiet.idHoaDon === "") {
+      showError("Hãy chọn 1 hóa đơn để áp dụng mã giảm giá");
+    } else if ($scope.tienHang < option.giaTriDonToiThieu) {
+      showError("Chưa đủ giá trị đơn tối thiểu");
+    } else {
+      if (option.hinhThucGiam === 1) {
+        $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
+        $scope.tongTien =
+          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
       } else {
-        width++;
-        elem.style.width = width + "%";
+        $scope.tongTien =
+          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
       }
     }
-    // const axiosConfig = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     token: "6b9dba70-8881-11ee-af43-6ead57e9219a", // Thay YOUR_TOKEN_HERE bằng token thực tế của bạn
-    //   },
-    // };
 
-    // const apiKey = "6b9dba70-8881-11ee-af43-6ead57e9219a"; // Thay YOUR_API_KEY bằng API Key của bạn
-    // const apiUrl =
-    //   "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
-    // const dichVuChuyen =
-    //   "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services";
+    $scope.showDropDownVoucher = false;
+  };
+  document.addEventListener("click", function (event) {
+    var dropdownContainer = document.querySelector(".dropdown-container");
 
-    // const requestData = {
-    //   token: apiKey,
-    //   height: 10, // Thông số kích thước của gói hàng
-    //   length: 20,
-    //   width: 15,
-    //   weight: 2, // Trọng lượng của gói hàng
-    //   service_type_id: 1, // Mã dịch vụ
-    //   from_district: "Quận 1", // Quận/Huyện người gửi
-    //   to_district: "Quận 10", // Quận/Huyện người nhận
-    // };
-    // const getDichVu = {
-    //   shop_id: 4714252,
-    //   from_district: 1542,
-    //   to_district: 1442,
-    // };
-    // axios
-    //   .post(dichVuChuyen, getDichVu, axiosConfig)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // Xử lý dữ liệu phí vận chuyển ở đây
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    // $http.get(dichVuChuyen, $scope.a).then(function (response) {
-    //   console.log(response.data);
-    // });
+    if (!dropdownContainer.contains(event.target)) {
+      $scope.$apply(function () {
+        $scope.showDropDownVoucher = false;
+        $scope.showDropDownThanhPho = false;
+        $scope.showDropDownQuanHuyen = false;
+        $scope.showDropDownPhuongXa = false;
+      });
+    }
+  });
+  $scope.getCity();
 
-    let tenKhachHangMacDinh = document.getElementById("tenKhachHang").value;
-    $scope.hoaDonThanhToan.tongTien = $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.maHoaDon)
-      .reduce((total, item) => total + item.thanhTien, 0);
-    if ($scope.hoaDonThanhToan.idKhachHang == "") {
-      $scope.hoaDonThanhToan.tenKhachHang = tenKhachHangMacDinh;
-      if ($scope.formHoaDonChiTiet.idHoaDon == "") {
-        showError("Chọn 1 hóa đơn để thanh toán");
-      } else {
+  $scope.thanhToan = function () {
+    $scope.hoaDonThanhToan.tongTien = $scope.tongTien;
+    let diaChiKhachHang =
+      $scope.hoaDonThanhToan.diaChiCuThe +
+      ", " +
+      $scope.hoaDonThanhToan.phuongXa +
+      ", " +
+      $scope.hoaDonThanhToan.quanHuyen +
+      ", " +
+      $scope.hoaDonThanhToan.tinhThanhPho;
+    if ($scope.formHoaDonChiTiet.idHoaDon === "") {
+      showError("Chọn 1 hóa đơn để thanh toán");
+    } else {
+      if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
+        console.log($scope.hoaDonThanhToan);
         $http
           .put(
-            hoaDonAPI + "/update-khach-le/" + $scope.formHoaDonChiTiet.idHoaDon,
+            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
           .then(function () {
             $scope.getListHoaDon();
-          });
-        $http
-          .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
+          })
           .then(function () {
-            // $location.path("/hoa-don/hien-thi");
+            return $http.put(
+              sanPhamChiTietAPI + "/update-so-luong",
+              $scope.listHoaDonChiTiet
+            );
+          });
+      } else if (
+        $scope.hoaDonThanhToan.idKhachHang === "" &&
+        $scope.show == true
+      ) {
+        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $http
+          .put(
+            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+            $scope.hoaDonThanhToan
+          )
+          .then(function () {
+            $scope.getListHoaDon();
+          })
+          .then(function () {
+            return $http.put(
+              sanPhamChiTietAPI + "/update-so-luong",
+              $scope.listHoaDonChiTiet
+            );
+          });
+      } else {
+        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $http
+          .put(
+            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+            $scope.hoaDonThanhToan
+          )
+          .then(function () {
+            $scope.getListHoaDon();
+          })
+          .then(function () {
+            return $http.put(
+              sanPhamChiTietAPI + "/update-so-luong",
+              $scope.listHoaDonChiTiet
+            );
           });
       }
-    } else {
-      $scope.hoaDonThanhToan.tenKhachHang;
-      $scope.hoaDonThanhToan.diaChiKhachHang =
-        $scope.formHoaDon.soNha +
-        ", " +
-        $scope.formHoaDon.tenPhuongXa +
-        ", " +
-        $scope.formHoaDon.tenQuanHuyen +
-        ", " +
-        $scope.formHoaDon.tenThanhPho;
-      $scope.hoaDonThanhToan.tenKhachHang;
-      $http
-        .put(
-          hoaDonAPI +
-            "/update-khach-co-san/" +
-            $scope.formHoaDonChiTiet.idHoaDon,
-          $scope.hoaDonThanhToan
-        )
-        .then(function () {
-          $scope.getListHoaDon();
-        });
-      $http
-        .put(sanPhamChiTietAPI + "/update-so-luong", $scope.listHoaDonChiTiet)
-        .then(function () {
-          // $location.path("/hoa-don/hien-thi");
-        });
     }
   };
   $scope.getKhachHangByTrangThai = function (e) {
@@ -534,54 +596,50 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     $http
       .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.listKhachHang = response.data;
-        console.log($scope.listKhachHang);
+        $scope.listKhachHang = response?.data.content;
       });
   };
-  $scope.addKhachHang = function (e, id) {
-    $scope.khachHangDefault = false;
-    $scope.chonKhachHang = true;
-    $scope.diaChiMoi = false;
-    $scope.diaChiMacDinh = true;
+  function detailKhachHang(idKhachHang) {
+    return $http
+      .get(khachHangAPI + "/detail/" + idKhachHang)
+      .then(function (response) {
+        return response?.data;
+      });
+  }
+  function detailDiaChi(idKhachHang) {
+    return $http
+      .get(diaChiAPI + "/detail/" + idKhachHang)
+      .then(function (response) {
+        return response?.data;
+      });
+  }
+  $scope.addKhachHang = function (e, idKhachHang) {
     e.preventDefault();
-
-    $http.get(khachHangAPI + "/detail/" + id).then(function (response) {
-      $scope.detailKhachHang = response.data;
-      $scope.hoaDonThanhToan.tenKhachHang =
-        $scope.detailKhachHang.khachHang.hoten;
-      $scope.hoaDonThanhToan.soDienThoaiKhachHang =
-        $scope.detailKhachHang.khachHang.sodienthoai;
-      $scope.diaChiMacDinh =
-        $scope.detailKhachHang.mota +
-        " - " +
-        $scope.detailKhachHang.phuongxa +
-        " - " +
-        $scope.detailKhachHang.quanhuyen +
-        " - " +
-        $scope.detailKhachHang.tinhthanhpho;
+    $scope.chonKhachHang = true;
+    let diaChiMacDinh = "";
+    detailKhachHang(idKhachHang).then(function (detailKhachHang) {
+      $scope.hoaDonThanhToan.idKhachHang = detailKhachHang.id;
+      $scope.hoaDonThanhToan.tenKhachHang = detailKhachHang.hoTen;
+      $scope.hoaDonThanhToan.soDienThoaiKhachHang = detailKhachHang.soDienThoai;
     });
-    if ($scope.chonKhachHang == true && $scope.show == false) {
-      $scope.tenKhachHang = "";
-      $scope.diaChiKhachHang = "";
-      $scope.hoaDonThanhToan.idKhachHang = id;
-      $scope.soDienThoaiKhachHang = "";
-      $scope.hoaDonThanhToan.tongTien = $scope.listHoaDonChiTiet
-        .filter((item) => item.maHoaDon === $scope.maHoaDon)
-        .reduce((total, item) => total + item.thanhTien, 0);
-      console.log($scope.hoaDonThanhToan);
-    }
-  };
-  $scope.$watch("searchKeyword", function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $http
-        .get(khachHangAPI + "/search?search=" + $scope.searchKeyword)
-        .then(function (response) {
-          $scope.listKhachHang = response.data;
+    detailDiaChi(idKhachHang).then(function (detailDiaChi) {
+      if (detailDiaChi) {
+        diaChiMacDinh = detailDiaChi.find((diaChi) => {
+          return diaChi.diaChiMacDinh === true;
         });
-    }
-  });
-  $scope.addDiaChi = function () {
-    $scope.diaChiMoi = true;
-    $scope.diaChiMacDinh = false;
+      }
+      $scope.hoaDonThanhToan.diaChiCuThe = diaChiMacDinh.diaChiCuThe;
+      $scope.hoaDonThanhToan.tinhThanhPho = diaChiMacDinh.tinhThanhPho;
+      $scope.hoaDonThanhToan.quanHuyen = diaChiMacDinh.quanHuyen;
+      $scope.hoaDonThanhToan.phuongXa = diaChiMacDinh.phuongXa;
+      $scope.hoaDonThanhToan.diaChiKhachHang =
+        $scope.hoaDonThanhToan.diaChiCuThe +
+        ", " +
+        $scope.hoaDonThanhToan.phuongXa +
+        ", " +
+        $scope.hoaDonThanhToan.quanHuyen +
+        ", " +
+        $scope.hoaDonThanhToan.tinhThanhPho;
+    });
   };
 };

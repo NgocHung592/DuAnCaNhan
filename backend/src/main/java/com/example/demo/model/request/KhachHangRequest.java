@@ -34,6 +34,8 @@ public class KhachHangRequest {
 
     private String diaChiCuThe;
 
+    private String diaChiMacDinh;
+
     private String quanHuyen;
 
     private String phuongXa;

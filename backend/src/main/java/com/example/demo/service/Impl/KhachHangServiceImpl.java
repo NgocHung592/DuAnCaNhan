@@ -65,12 +65,13 @@ public class KhachHangServiceImpl implements KhachHangService {
         sendEmail(KhachHang);
         DiaChi diaChi = DiaChi.builder()
                 .khachHang(KhachHang)
+                .diaChiCuThe(khachHangRequest.getDiaChiCuThe())
+                .diaChiMacDinh(Boolean.valueOf(khachHangRequest.getDiaChiMacDinh()))
                 .tinhThanhPho(khachHangRequest.getTinhThanhPho())
                 .quanHuyen(khachHangRequest.getQuanHuyen())
                 .phuongXa(khachHangRequest.getPhuongXa())
                 .ngayTao(khachHangRequest.getNgayTao())
                 .nguoiTao("Hưng")
-                .diaChiCuThe(khachHangRequest.getDiaChiCuThe())
                 .daXoa(Boolean.valueOf(khachHangRequest.getDaXoa()))
                 .build();
         return diaChiRepository.save(diaChi);

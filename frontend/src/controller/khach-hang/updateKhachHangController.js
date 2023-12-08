@@ -1,9 +1,4 @@
-window.updateKhachHangController = function (
-  $http,
-  $scope,
-  $routeParams,
-  $location
-) {
+window.updateKhachHangController = function ($http, $scope, $routeParams) {
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
@@ -25,6 +20,8 @@ window.updateKhachHangController = function (
     .get(khachHangAPI + "/detail/" + $routeParams.id)
     .then(function (response) {
       $scope.detailKhachHang = response?.data;
+      $scope.detailKhachHang.ngaySinh = new Date(response.data.ngaySinh);
+      console.log($scope.detailKhachHang);
     });
   $scope.detailAdress = function () {
     $http
