@@ -21,10 +21,12 @@ import java.util.UUID;
 @RequestMapping("/accout/")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class TaiKhoanController {
+
     @Autowired
     private TaiKhoanService taiKhoanService;
     @Autowired
     private JavaMailSender javaMailSender;
+
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody KhachHang khachHang) {
         KhachHang existingUser = taiKhoanService.login(khachHang.getEmail());
@@ -36,30 +38,31 @@ public class TaiKhoanController {
         }
 
     }
+
     @PostMapping("forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody Map<String,String> request ) throws MessagingException {
-        String email=request.get("email");
-        Optional<KhachHang> optionalKhachHang=taiKhoanService.forgetPassword(email);
-        if(optionalKhachHang.isPresent()){
-            String resetToken= UUID.randomUUID().toString();
-            KhachHang khachHang=optionalKhachHang.get();
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) throws MessagingException {
+        String email = request.get("email");
+        Optional<KhachHang> optionalKhachHang = taiKhoanService.forgetPassword(email);
+        if (optionalKhachHang.isPresent()) {
+            String resetToken = UUID.randomUUID().toString();
+            KhachHang khachHang = optionalKhachHang.get();
             khachHang.setResetToken(resetToken);
             taiKhoanService.save(khachHang);
-            String resetUrl="http://127.0.0.1:5500/src/pages/user.html#/dat-lai-mat-khau?token=" + resetToken;
+            String resetUrl = "http://127.0.0.1:5500/src/pages/user.html#/dat-lai-mat-khau?token=" + resetToken;
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
             helper.setSubject("[SIMPLE] - ĐỔI MẬT KHẨU");
-            String emailContent = "Xin chào quý khách "+ ",\n\n" +
+            String emailContent = "Xin chào quý khách " + ",\n\n" +
                     "Click vào đường dẫn dưới đây để thiết lập mật khẩu tài khoản của bạn tại SIMPLE.\n"
                     + "<br><br>"
                     + "Nếu bạn không có yêu cầu thay đổi mật khẩu\n\n"
                     + "<br>"
-                    +"xin hãy xóa email này để bảo mật thông tin. "  + "\n"
+                    + "xin hãy xóa email này để bảo mật thông tin. " + "\n"
                     + "<br><br>"
                     + "<a href=\"" + resetUrl + "\" style=\"display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none;\">Reset Password</a>"
                     + "<br><br>"
-                    +"<hr>"
+                    + "<hr>"
                     + "Trân trọng,\n";
             helper.setText(emailContent, true);
 
@@ -70,14 +73,10 @@ public class TaiKhoanController {
         }
 
 
+    }
 
-
-
-
-
-        }
     @PostMapping("reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam("token") String token,@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
 
         String newPassword = request.get("newPassword");
 
@@ -94,12 +93,11 @@ public class TaiKhoanController {
             return new ResponseEntity<>("Email not found.", HttpStatus.UNAUTHORIZED);
         }
     }
+
     @PostMapping("singup")
     public ResponseEntity add(@RequestBody KhachHang khachHang) throws Exception {
         return new ResponseEntity(taiKhoanService.singup(khachHang), HttpStatus.OK);
     }
-
-
 
 
 }

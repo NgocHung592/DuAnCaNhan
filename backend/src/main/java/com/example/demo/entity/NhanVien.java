@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -26,51 +25,52 @@ public class NhanVien {
     private String ma;
 
     @Column(name = "ho_ten")
-    private String hoten;
+    private String hoTen;
 
     @Column(name = "so_dien_thoai")
-    private String sodienthoai;
+    private String soDienThoai;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "gioi_tinh")
-    private Boolean gioitinh;
+    private Boolean gioiTinh;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
     @Column(name = "ngay_sinh")
-    private Date ngaysinh;
+    private Date ngaySinh;
 
     @Column(name = "ngay_tao")
-    private Timestamp ngaytao;
+    private Timestamp ngayTao;
+
+    @Column(name = "nguoi_tao")
+    private String nguoiTao;
 
     @Column(name = "ngay_sua")
-    private Timestamp ngaysua;
+    private Timestamp ngaySua;
+
+    @Column(name = "nguoi_sua")
+    private String nguoi_sua;
 
     @Column(name = "anh_dai_dien")
-    private String anhdaidien;
+    private String anhDaiDien;
 
     @Column(name = "dia_chi_cu_the")
-    private String mota;
+    private String diaChiCuThe;
 
     @Column(name = "tinh_thanh_pho")
-    private String tinhthanhpho;
+    private String tinhThanhPho;
 
     @Column(name = "quan_huyen")
-    private String quanhuyen;
+    private String quanHuyen;
 
     @Column(name = "phuong_xa")
-    private String phuongxa;
+    private String phuongXa;
 
     @Column(name = "mat_khau")
-    private String matkhau;
-
-    @Column(name = "trang_thai")
-    private Integer trangthai;
+    private String matKhau;
 
     @Column(name = "da_xoa")
-    private Boolean daxoa;
+    private Boolean daXoa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chuc_vu_id", referencedColumnName = "id")

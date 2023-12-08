@@ -37,6 +37,11 @@ public class KhachHangController {
         return new ResponseEntity(khachHangService.add(khachHangRequest), HttpStatus.OK);
     }
 
+    @PostMapping("import-excel")
+    public ResponseEntity importExcel(@RequestBody KhachHang khachHang)   {
+        return new ResponseEntity(khachHangService.importExcel(khachHang), HttpStatus.OK);
+    }
+
     //    @PostMapping("addid/{id}")
 //    public DiaChi postid(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id") String id) {
 //        System.out.println(khachHangRequest);

@@ -20,9 +20,7 @@ angular
       $http
         .post(nhanVienAPI + "/login", $scope.user)
         .then(function (response) {
-          // Kiểm tra mã trạng thái HTTP
           if (response.status === 200) {
-            // Đăng nhập thành công, response.data sẽ chứa thông tin người dùng
             alert("Đăng nhập thành công");
 
             $scope.list = response.data;
@@ -31,7 +29,6 @@ angular
 
             localStorage.setItem("loggedInUser", JSON.stringify($scope.list));
           } else {
-            // Đăng nhập không thành công
             alert("Invalid credentials");
           }
         })

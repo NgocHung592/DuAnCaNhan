@@ -33,33 +33,6 @@ import java.util.UUID;
 @Builder
 @ToString
 public class HoaDonChiTiet {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
-//    @Column(name = "id")
-//    private UUID id;
-//
-//    @Column(name = "so_luong")
-//    private Integer soLuong;
-//
-//    @Column(name = "don_gia")
-//    private BigDecimal donGia;
-//
-//    @Column(name = "thanh_tien")
-//    private BigDecimal thanhTien;
-//
-//    @Column(name = "ngay_tao")
-//    private Timestamp ngayTao;
-//
-//    @Column(name = "nguoi_tao")
-//    private String nguoiTao;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "san_pham_chi_tiet_id", referencedColumnName = "id")
-//    private SanPhamChiTiet sanPhamChiTiet;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
-//    private HoaDon hoaDon;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

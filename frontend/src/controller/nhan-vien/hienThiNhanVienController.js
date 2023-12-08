@@ -1,22 +1,23 @@
 window.hienThiNhanVienController = function ($http, $scope, $location) {
-  $scope.list_nv = [];
+  $scope.listNhanVien = [];
   $scope.searchKeyword = "";
   $scope.selectedOption = "";
-  $scope.currentPage = 0;
   $scope.totalPages = [];
-  $scope.maxVisiblePages = 3; // Số trang tối đa để hiển thị
+  $scope.currentPage = 0;
+  $scope.maxVisiblePages = 3;
   $scope.getNhanVien = function () {
     $http
       .get(nhanVienAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.list_nv = response.data;
-        console.log(response.data);
+        $scope.listNhanVien = response?.data.content;
+        console.log($scope.listNhanVien);
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
   };
   $scope.getNhanVien();
 
-  $scope.getVisiblePages = function () {
+  function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
     var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
@@ -47,7 +48,7 @@ window.hienThiNhanVienController = function ($http, $scope, $location) {
     }
 
     return visiblePages;
-  };
+  }
 
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {

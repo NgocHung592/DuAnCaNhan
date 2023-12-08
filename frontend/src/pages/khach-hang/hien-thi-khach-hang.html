@@ -6,22 +6,27 @@
           <div class="align-self-center w-100">
             <h4 class="mb-4">DANH SÁCH KHÁCH HÀNG</h4>
             <div class="row pb-4 pr-2">
-              <div class="search-container col-md-8">
+              <div class="search-container col-md-6">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, họ tên, email, số điện thoại"
                   ng-change="search()" class="search-input" />
               </div>
-              <div class="col-md-4 text-end">
+              <div class="col-md-6 text-end">
                 <label for="file-upload" class="custom-file-upload btn btn-success">
                   <i class="fa-solid fa-plus"></i>
                   Thêm Excel
                 </label>
                 <input type="file" id="file-upload" style="display: none"
-                  onchange="angular.element(this).scope().import(this.files)" />
+                  onchange="angular.element(this).scope().uploadExcel(this.files)" />
+                <a type="button" class="btn btn-primary" ng-click="exportToExcel()">
+                  <i class="fa-solid fa-plus"></i>
+                  Tải file mẫu
+                </a>
                 <a type="button" class="btn btn-primary" href="#khach-hang/add">
                   <i class="fa-solid fa-plus"></i>
                   Thêm khách hàng
                 </a>
+
               </div>
             </div>
             <div class="mb-3" class="form-check">

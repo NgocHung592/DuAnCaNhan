@@ -1,10 +1,12 @@
 window.hienThiKhachHangController = function (
   $http,
   $scope,
-  $location,
   $rootScope,
-  $timeout
+  $timeout,
+  $window
 ) {
+  $scope.randoom = "KH" + Math.floor(Math.random() * 10000) + 1;
+
   $scope.list_kh = [];
   $scope.totalPages = [];
   $scope.searchKeyword = "";
@@ -165,57 +167,88 @@ window.hienThiKhachHangController = function (
       });
   };
 
-  $scope.import = function (files) {
+  $scope.uploadExcel = function (files) {
     var reader = new FileReader();
-    reader.onload = async () => {
+    reader.onload = function () {
       var workbook = new ExcelJS.Workbook();
-      await workbook.xlsx.load(reader.result);
-      const worksheet = workbook.getWorksheet("Sheet1");
-      var date = new Date();
-      worksheet.eachRow((row, index) => {
-        if (index > 1) {
-          let nhanvien = {
-            ma: row.getCell(1).value,
-            hoten: row.getCell(2).value,
-            gioitinh: true && row.getCell(3).value,
-            email: row.getCell(5).value,
-            ngaysinh: row.getCell(6).value,
-            sodienthoai: row.getCell(7).value,
-            matkhau: "123",
-            ngaytao: date,
-            tinhthanhpho: row.getCell(8).value,
-            quanhuyen: row.getCell(9).value,
-            phuongxa: row.getCell(10).value,
-            mota: row.getCell(11).value,
-            trangthai: row.getCell(12).value,
-          };
-          $http.post(khachHangAPI + "/add", nhanvien).then(function () {
-            $location.path("/nhan-vien/hien-thi");
-          });
-        }
+      workbook.xlsx.load(reader.result).then(function () {
+        var worksheet = workbook.getWorksheet("Sheet 1");
+        var data = [];
+
+        worksheet.eachRow(function (row, index) {
+          var gioiTinhText = row.getCell(3).text;
+          var gioiTinh = gioiTinhText === "Nam" ? true : false;
+          var soDienThoaiCell = row.getCell(4);
+
+          if (index > 1) {
+            data.push({
+              ma: $scope.randoom,
+              hoTen: row.getCell(1).text,
+              ngaysinh:
+                row.getCell(2).value instanceof Date
+                  ? row.getCell(2).value
+                  : null,
+              gioiTinh: gioiTinh,
+              soDienThoai: "0" + soDienThoaiCell,
+              email: row.getCell(5).text,
+              ngayTao: new Date(),
+              daXoa: false,
+            });
+          }
+        });
+
+        data.forEach((khachHang) => {
+          $http
+            .post(khachHangAPI + "/import-excel", khachHang)
+            .then(function () {
+              $scope.successProgress();
+              $scope.message = "Thêm khách hàng thành công";
+              toastBootstrap.show();
+              $scope.getKhachHang();
+            })
+
+            .catch(function (error) {
+              // Xử lý khi có lỗi trong yêu cầu POST
+              console.error("Lỗi khi thêm khách hàng:", error);
+            });
+        });
       });
     };
+
     reader.readAsArrayBuffer(files[0]);
   };
   $scope.exportToExcel = function () {
-    // Lấy dữ liệu từ bảng (sử dụng jQuery, hoặc nguyên bản AngularJS)
-    var tableData = [];
-    $("table tr").each(function (rowIndex, row) {
-      var rowData = [];
-      $(row)
-        .find("td")
-        .each(function (colIndex, cell) {
-          rowData.push(angular.element(cell).text());
-        });
-      tableData.push(rowData);
+    var workbook = new ExcelJS.Workbook();
+    var sheet = workbook.addWorksheet("Sheet 1");
+
+    var headerRow = sheet.addRow([
+      "Tên khách hàng",
+      "Ngày sinh",
+      "Giới tính",
+      "Số điện thoại",
+      "Email",
+    ]);
+    headerRow.eachCell(function (cell, colNumber) {
+      sheet.getColumn(colNumber).width = Math.max(
+        sheet.getColumn(colNumber).width || 0,
+        cell.value.toString().length + 2
+      );
     });
 
-    // Tạo tệp Excel sử dụng SheetJS
-    var ws = XLSX.utils.aoa_to_sheet(tableData);
-    var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Danh sách");
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+      var blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
 
-    // Lưu tệp Excel
-    XLSX.writeFile(wb, "danh-sach.xlsx");
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = "danh-sach.xlsx";
+
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+    });
   };
 };

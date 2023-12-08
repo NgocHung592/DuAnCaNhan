@@ -47,7 +47,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public DiaChi add(KhachHangRequest khachHangRequest) {
+    public KhachHang add(KhachHangRequest khachHangRequest) {
         KhachHang khachHangSave = KhachHang.builder()
                 .ma(khachHangRequest.getMa())
                 .hoTen(khachHangRequest.getHoTen())
@@ -74,7 +74,13 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .nguoiTao("Hưng")
                 .daXoa(Boolean.valueOf(khachHangRequest.getDaXoa()))
                 .build();
-        return diaChiRepository.save(diaChi);
+        diaChiRepository.save(diaChi);
+        return null;
+    }
+
+    @Override
+    public KhachHang importExcel(KhachHang khachHang) {
+        return khachHangRepository.save(khachHang);
     }
 
     @Override

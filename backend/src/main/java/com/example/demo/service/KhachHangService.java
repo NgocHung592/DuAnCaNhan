@@ -15,17 +15,17 @@ public interface KhachHangService {
 
     Page<KhachHang> getPage(Integer pageNo);
 
-    DiaChi add(KhachHangRequest khachHangRequest) throws Exception;
+    KhachHang add(KhachHangRequest khachHangRequest);
 
-    KhachHang update(KhachHang khachHang,UUID id);
+    KhachHang importExcel(KhachHang khachHang);
+
+    KhachHang update(KhachHang khachHang, UUID id);
 
     Page<KhachHang> loc(Integer pageNo, String trangThai);
 
     Page<KhachHang> search(Integer pageNo, String keyWord);
 
     KhachHang detail(UUID id);
-
-
 
 
 }

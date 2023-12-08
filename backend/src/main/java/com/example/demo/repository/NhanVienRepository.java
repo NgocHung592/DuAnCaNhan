@@ -16,35 +16,42 @@ import java.util.UUID;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
-    @Query(value = """  
-            select a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.dia_chi_cu_the,a.phuong_xa,
-                        a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id 
-                        order by a.ngay_tao desc """, nativeQuery = true)
-    Page<NhanVienReponse> getNhanVienAll(Pageable pageable);
-
-    @Query(value = """  
-            select a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.dia_chi_cu_the,a.phuong_xa,
-                        a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id where
-                                                    a.trang_thai like %:search% 
-                        order by a.ngay_tao desc """, nativeQuery = true)
-    Page<NhanVienReponse> getNhanVienTrangThai1(Pageable pageable, @Param("search") String search);
-
-    @Query(value = """  
-            select  a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.dia_chi_cu_the,a.phuong_xa,
-                                                    a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id  where
-                                                    a.ma like %:search% or a.ho_ten like %:search% or a.email like %:search% or a.so_dien_thoai like %:search%
-                                                    order by a.ngay_tao desc """, nativeQuery = true)
-    Page<NhanVienReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
-
-    Optional<NhanVien> findNhanVienByEmail(String email);
-
-    Optional<NhanVien> findNhanVienBySodienthoai(String sdt);
-
-    Optional<NhanVien> findNhanVienByEmailAndIdNot(String email, UUID id);
-
-    Optional<NhanVien> findNhanVienBySodienthoaiAndIdNot(String sodienthoai, UUID id);
-
-    NhanVien findByEmail(String email);
+    @Query(value = """
+                select nv.id, nv.ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, nv.da_xoa, nv.ngay_tao,
+                nv.nguoi_tao, nv.nguoi_sua, nv.ngay_sua,chuc_vu_id,dia_chi_cu_the,tinh_thanh_pho,quan_huyen,phuong_xa
+                from nhan_vien nv
+                inner join chuc_vu cv on cv.id = nv.chuc_vu_id
+                where cv.ten='Nhân viên'
+                group by nv.id, nv.ma, anh_dai_dien, ho_ten, email, so_dien_thoai, gioi_tinh, ngay_sinh, mat_khau, nv.da_xoa, nv.ngay_tao,
+                nv.nguoi_tao, nv.nguoi_sua, nv.ngay_sua,chuc_vu_id,dia_chi_cu_the,tinh_thanh_pho,quan_huyen,phuong_xa
+                ORDER BY IIF(MAX(nv.ngay_sua) IS NULL, MAX(nv.ngay_tao),
+                IIF(MAX(nv.ngay_tao) > MAX(nv.ngay_sua), MAX(nv.ngay_tao), MAX(nv.ngay_sua))) DESC;
+""", nativeQuery = true)
+    Page<NhanVien> getNhanVienAll(Pageable pageable);
+//
+//    @Query(value = """
+//            select a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.dia_chi_cu_the,a.phuong_xa,
+//                        a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id where
+//                                                    a.trang_thai like %:search%
+//                        order by a.ngay_tao desc """, nativeQuery = true)
+//    Page<NhanVienReponse> getNhanVienTrangThai1(Pageable pageable, @Param("search") String search);
+//
+//    @Query(value = """
+//            select  a.id, a.ma,a.ho_ten,a.email,a.mat_khau,a.anh_dai_dien,b.ten as chuc_vu,a.so_dien_thoai,a.gioi_tinh,a.ngay_sinh,a.trang_thai,a.ngay_tao,a.dia_chi_cu_the,a.phuong_xa,
+//                                                    a.tinh_thanh_pho,a.quan_huyen from  nhan_vien a inner join chuc_vu b on a.chuc_vu_id=b.id  where
+//                                                    a.ma like %:search% or a.ho_ten like %:search% or a.email like %:search% or a.so_dien_thoai like %:search%
+//                                                    order by a.ngay_tao desc """, nativeQuery = true)
+//    Page<NhanVienReponse> searchByKeyword(Pageable pageable, @Param("search") String search);
+//
+//    Optional<NhanVien> findNhanVienByEmail(String email);
+//
+//    Optional<NhanVien> findNhanVienBySodienthoai(String sdt);
+//
+//    Optional<NhanVien> findNhanVienByEmailAndIdNot(String email, UUID id);
+//
+//    Optional<NhanVien> findNhanVienBySodienthoaiAndIdNot(String sodienthoai, UUID id);
+//
+//    NhanVien findByEmail(String email);
 
 
 }

@@ -1,7 +1,6 @@
 Create database DU_AN_WEBSITE_BAN_AO_PHONG_SIMPLE
 USE DU_AN_WEBSITE_BAN_AO_PHONG_SIMPLE
 GO
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,7 +128,6 @@ Create table [chuc_vu](
     DEFAULT NEWID() PRIMARY KEY,
     ma varchar(20) not null,
     ten nvarchar(50) not null,
-    trang_thai int,
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
@@ -148,19 +146,17 @@ Create table [nhan_vien](
     ngay_sinh date,
     anh_dai_dien varchar(max),
     mat_khau varchar(20),
-    trang_thai int,
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
-    da_xoa bit,
 	dia_chi_cu_the nvarchar(70),
     tinh_thanh_pho nvarchar(20),
     quan_huyen nvarchar(20),
     phuong_xa nvarchar(20),
+    da_xoa bit,
     chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
     )
-
 Create table [khach_hang](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
@@ -172,14 +168,13 @@ Create table [khach_hang](
     ngay_sinh date,
     anh_dai_dien varchar(max),
     mat_khau varchar(20),
+	reset_token nvarchar(250),
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
     da_xoa bit,
-	reset_token nvarchar(250)
     )
-
 
 Create table [dia_chi](
     id UNIQUEIDENTIFIER
@@ -308,3 +303,4 @@ Create table [gio_hang_chi_tiet](
     san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
     gio_hang_id UNIQUEIDENTIFIER REFERENCES gio_hang(id)
     )
+

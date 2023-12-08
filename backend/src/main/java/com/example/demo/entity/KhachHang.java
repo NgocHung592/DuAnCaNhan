@@ -66,8 +66,4 @@ public class KhachHang {
     @Column(name = "reset_token")
     private String resetToken;
 
-//    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
-//    private Collection<DiaChi> diaChis;
-
-
 }
