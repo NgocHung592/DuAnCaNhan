@@ -1,0 +1,61 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.request.GioHangRequset;
+import com.example.demo.model.response.GioHangChiTietReponse;
+import com.example.demo.service.GioHangService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/gio-hang/")
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+public class GioHangController {
+    @Autowired
+    private GioHangService gioHangService;
+
+    @PostMapping("them")
+    public ResponseEntity<?> themSanPhamVaKhachHangVaoGioHang(@RequestBody GioHangRequset request)
+    {
+        gioHangService.GioHang(request.getSanPhamChiTietId(),request.getKhachHangId(),request.getSoLuong());
+
+        return ResponseEntity.ok("San pham va khach hang da duoc them vao gio hang.");
+    }
+    @DeleteMapping("xoa")
+    public ResponseEntity<?> xoaGioHang(@RequestParam UUID gioHangId) {
+        gioHangService.Xoa(gioHangId);
+        return ResponseEntity.ok("Giỏ hàng đã được xóa.");
+    }
+    @GetMapping("hien-thi/{id}")
+    public ResponseEntity<List<GioHangChiTietReponse>> getAll( @PathVariable UUID id){
+        List<GioHangChiTietReponse> gioHangChiTietReponses=gioHangService.getAll(id);
+        return ResponseEntity.ok(gioHangChiTietReponses);
+
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map<String, String>> xoa(@PathVariable UUID id) {
+        try {
+            gioHangService.delete(id);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Xóa giỏ hàng thành công");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    @PutMapping("/update")
+    public ResponseEntity<?> updateCartItem(@RequestBody GioHangRequset gioHangChiTietRequest) {
+        try {
+            gioHangService.update(gioHangChiTietRequest);
+            return ResponseEntity.ok("Cập nhật giỏ hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
+        }
+    }
+}

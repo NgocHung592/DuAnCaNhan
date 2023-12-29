@@ -23,10 +23,14 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/gio-hang", {
       templateUrl: "ban-hang-online/gio-hang.html",
+      controller: GioHangController,
     })
     .when("/login", {
       templateUrl: "tai-khoan/login.html",
       // controller: loginController,
+    })
+    .when("/thong-tin", {
+      templateUrl: "tai-khoan/thong-tin.html",
     })
     .when("/singup", {
       templateUrl: "tai-khoan/dang-ky.html",

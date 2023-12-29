@@ -66,4 +66,5 @@ public class KhachHang {
     @Column(name = "reset_token")
     private String resetToken;
 
+
 }

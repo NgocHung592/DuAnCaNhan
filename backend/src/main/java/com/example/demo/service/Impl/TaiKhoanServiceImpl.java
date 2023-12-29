@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaiKhoanServiceImpl implements TaiKhoanService {
@@ -50,6 +51,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             sendEmail(khachHang1);
         return khachHang1;
     }
+
     private void sendEmail(KhachHang khachHang) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();

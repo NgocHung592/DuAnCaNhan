@@ -122,41 +122,31 @@ Create table [san_pham_chi_tiet](
     mau_sac_id UNIQUEIDENTIFIER REFERENCES mau_sac(id),
     kich_thuoc_id UNIQUEIDENTIFIER REFERENCES kich_thuoc(id)
     )
-
-Create table [chuc_vu](
+	Create table [gio_hang](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
-    ma varchar(20) not null,
-    ten nvarchar(50) not null,
+    ma varchar(20),
+    ten nvarchar(50),
+    ngay_cap_nhat datetime,
+    ghi_chu nvarchar(max),
+    khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id)
+    )
+
+Create table [gio_hang_chi_tiet](
+    id UNIQUEIDENTIFIER
+    DEFAULT NEWID() PRIMARY KEY,
+    so_luong int,
+    don_gia decimal (20,0),
+    don_gia_sau_khuyen_mai decimal(20,0),
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
-    da_xoa bit
+    ghi_chu nvarchar(50),
+    san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
+    gio_hang_id UNIQUEIDENTIFIER REFERENCES gio_hang(id)
     )
 
-Create table [nhan_vien](
-    id UNIQUEIDENTIFIER
-    DEFAULT NEWID() PRIMARY KEY,
-    ma varchar(20) not null,
-    ho_ten nvarchar(70) not null,
-    so_dien_thoai varchar(15),
-    email varchar(30),
-    gioi_tinh bit,
-    ngay_sinh date,
-    anh_dai_dien varchar(max),
-    mat_khau varchar(20),
-    ngay_tao datetime,
-    ngay_sua datetime,
-    nguoi_tao nvarchar(50),
-    nguoi_sua  nvarchar(50),
-	dia_chi_cu_the nvarchar(70),
-    tinh_thanh_pho nvarchar(20),
-    quan_huyen nvarchar(20),
-    phuong_xa nvarchar(20),
-    da_xoa bit,
-    chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
-    )
 Create table [khach_hang](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
@@ -279,28 +269,40 @@ Create table  ma_giam_gia_chi_tiet(
         hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
 )
 
-Create table [gio_hang](
+Create table [chuc_vu](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
-    ma varchar(20),
-    ten nvarchar(50),
-    ngay_cap_nhat datetime,
-    ghi_chu nvarchar(max),
-    khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id)
-    )
-
-Create table [gio_hang_chi_tiet](
-    id UNIQUEIDENTIFIER
-    DEFAULT NEWID() PRIMARY KEY,
-    so_luong int,
-    don_gia decimal (20,0),
-    don_gia_sau_khuyen_mai decimal(20,0),
+    ma varchar(20) not null,
+    ten nvarchar(50) not null,
     ngay_tao datetime,
     ngay_sua datetime,
     nguoi_tao nvarchar(50),
     nguoi_sua  nvarchar(50),
-    ghi_chu nvarchar(50),
-    san_pham_chi_tiet_id UNIQUEIDENTIFIER REFERENCES san_pham_chi_tiet(id),
-    gio_hang_id UNIQUEIDENTIFIER REFERENCES gio_hang(id)
+    da_xoa bit
     )
+
+Create table [nhan_vien](
+    id UNIQUEIDENTIFIER
+    DEFAULT NEWID() PRIMARY KEY,
+    ma varchar(20) not null,
+    ho_ten nvarchar(70) not null,
+    so_dien_thoai varchar(15),
+    email varchar(30),
+    gioi_tinh bit,
+    ngay_sinh date,
+    anh_dai_dien varchar(max),
+    mat_khau varchar(20),
+    ngay_tao datetime,
+    ngay_sua datetime,
+    nguoi_tao nvarchar(50),
+    nguoi_sua  nvarchar(50),
+	dia_chi_cu_the nvarchar(70),
+    tinh_thanh_pho nvarchar(20),
+    quan_huyen nvarchar(20),
+    phuong_xa nvarchar(20),
+    da_xoa bit,
+    chuc_vu_id UNIQUEIDENTIFIER REFERENCES chuc_vu(id)
+    )
+
+
 

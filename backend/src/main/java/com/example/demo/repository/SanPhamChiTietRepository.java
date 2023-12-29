@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -58,5 +59,6 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
              ORDER BY IIF(MAX(spct.ngay_sua) IS NULL, MAX(spct.ngay_tao), IIF(MAX(spct.ngay_tao) > MAX(spct.ngay_sua), MAX(spct.ngay_tao), MAX(spct.ngay_sua))) DESC; 
             """, nativeQuery = true)
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
+    Optional<SanPhamChiTiet> findById(UUID sanPhamChiTietId );
 
 }

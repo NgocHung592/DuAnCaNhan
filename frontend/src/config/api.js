@@ -31,6 +31,8 @@ window.nhanVienAPI = url + "/nhan-vien";
 
 window.thuChiAPI = url + "/thu-chi";
 
+window.gioHangAPI = url + "/gio-hang";
+
 window.hangKhachHangAPI = url + "/hang-khach-hang";
 
 window.vaiTroAPI = url + "/vai-tro";
