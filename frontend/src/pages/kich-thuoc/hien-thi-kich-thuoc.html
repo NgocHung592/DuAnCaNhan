@@ -15,16 +15,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Kích Thước</th>
-                                    <th scope="col">Tên Kích Thước</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã kích thước</th>
+                                    <th scope="col">Tên kích thước</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="kichThuoc in listKichThuoc">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <th scope="row">{{customIndex +$index+1}}</th>
                                     <th scope="row">{{kichThuoc.ma}}</th>
                                     <th scope="row">{{kichThuoc.ten}}</th>
                                     <th>

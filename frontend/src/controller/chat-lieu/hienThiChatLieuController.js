@@ -36,6 +36,7 @@ window.hienThiChatLieuController = function (
       .get(chatLieuAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listChatLieu = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });

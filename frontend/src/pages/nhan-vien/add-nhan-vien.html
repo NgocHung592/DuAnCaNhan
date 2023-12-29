@@ -32,26 +32,26 @@
                   <div class="row">
                     <div class="col-md-6 mb-6">
                       <label class="form-label">Ngày sinh <span style="color: red">*</span>:</label>
-                      <input type="date" class="form-control" ng-model="form_nv.ngaySinh">
+                      <input type="date" class="form-control" ng-model="formNhanVien.ngaySinh">
                     </div>
                     <div class="col-md-6 mb-6">
                       <label class="form-label">Giới tính <span style="color: red">*</span>:</label><br>
 
-                      <input ng-model="form_nv.gioiTinh" checked type="radio" name="gender" value="true"
+                      <input ng-model="formNhanVien.gioiTinh" checked type="radio" name="gender" value="true"
                         class="form-check-input" />
                       <label class="form-check-label"> Nam </label>
 
-                      <input type="radio" ng-model="form_nv.gioiTinh" name="gender" value="false"
+                      <input type="radio" ng-model="formNhanVien.gioiTinh" name="gender" value="false"
                         class="form-check-input ms-3" />
                       <label class="form-check-label"> Nữ </label>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label class="form-label">Số điện thoại <span style="color: red">*</span>:</label>
-                      <input type="text" class="form-control" ng-model="form_nv.soDienThoai" />
+                      <input type="text" class="form-control" ng-model="formNhanVien.soDienThoai" />
                     </div>
                     <div class="col-md-6 mb-3">
                       <label class="form-label">Email <span style="color: red">*</span>:</label>
-                      <input type="text" class="form-control" ng-model="form_nv.email" />
+                      <input type="text" class="form-control" ng-model="formNhanVien.email" />
                     </div>
                   </div>
                 </div>
@@ -59,17 +59,17 @@
               <div class="row mb-5">
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Mã nhân viên <span style="color: red">*</span>:</label>
-                  <input type="text" class="form-control" disabled ng-model="form_nv.ma">
+                  <input type="text" class="form-control" disabled ng-model="formNhanVien.ma">
                 </div>
                 <div class="col-md-8">
                   <label class="form-label">Địa chỉ cụ thể <span style="color: red">*</span>:</label>
-                  <input type="text" class="form-control" ng-model="form_nv.diaChiCuThe">
+                  <input type="text" class="form-control" ng-model="formNhanVien.diaChiCuThe">
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Tên nhân viên <span style="color: red">*</span>:</label>
-                  <input type="text" class="form-control" ng-model="form_nv.hoTen">
+                  <input type="text" class="form-control" ng-model="formNhanVien.hoTen">
                 </div>
                 <div class="col-md-8">
                   <div class="row">
@@ -120,42 +120,3 @@
     </div>
   </div>
 </main>
-<style>
-  .file-upload-wrapper {
-    width: 100px;
-    /* Điều chỉnh chiều rộng theo ý muốn */
-    height: 200px;
-    /* Điều chỉnh chiều cao theo ý muốn */
-    border-radius: 50%;
-    /* Làm cho nút tròn */
-    overflow: hidden;
-    /* Đảm bảo nội dung không bị tràn ra ngoài */
-  }
-
-  .file-upload {
-    width: 100%;
-    /* Đảm bảo nút bên trong kích thước đúng */
-    height: 100%;
-    border-radius: 50%;
-  }
-
-  .input-container {
-    position: relative;
-  }
-
-  .form-control {
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #ccc;
-    /* Màu và độ dày của gạch chân mặc định */
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-bottom 0.3s;
-    /* Hiệu ứng chuyển động khi thay đổi border-bottom */
-  }
-
-  .form-control:focus {
-    border-bottom: none;
-    /* Loại bỏ gạch chân khi ô input được focus */
-  }
-</style>

@@ -1,21 +1,47 @@
-window.hienThiTayAoController = function ($http, $scope, $rootScope) {
+window.hienThiTayAoController = function ($http, $scope, $rootScope, $timeout) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listTayAo = [];
   $scope.totalPages = [];
   $scope.visiblePages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
+  $scope.message = $rootScope.message;
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getTayAo = function () {
+    if ($scope.message !== undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(tayAoAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listTayAo = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
 
   $scope.getTayAo();
-
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
   $scope.changePage = function (index) {
     if (index >= 0) {
       $scope.currentPage = index;
@@ -40,13 +66,12 @@ window.hienThiTayAoController = function ($http, $scope, $rootScope) {
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {

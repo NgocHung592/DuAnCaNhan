@@ -1,15 +1,7 @@
-window.addTayAoController = function ($http, $scope, $location) {
-  const toastTrigger = document.getElementById("liveToastBtn");
+window.addTayAoController = function ($http, $scope, $location, $rootScope) {
   const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.randoom = "TA" + Math.floor(Math.random() * 10000) + 1;
-  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   $scope.formTayAo = {
     ma: $scope.randoom,
     ten: "",
@@ -17,29 +9,45 @@ window.addTayAoController = function ($http, $scope, $location) {
     daXoa: false,
   };
 
-  $scope.add = function (event) {
-    event.preventDefault();
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
+  $scope.add = function (e) {
+    e.preventDefault();
+    let isDuplicate = false;
     if ($scope.formTayAo.ten == "") {
       $scope.message = "Tên tay áo không được trống";
-      return;
-    } else if (specialChars.test($scope.formTayAo.ten)) {
-      $scope.message = "Sai dinh dang";
-      return;
+      $scope.errorProgress();
+      toastBootstrap.show();
     } else {
-      $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
-        $location.path("/tay-ao/hien-thi");
+      $http.get(tayAoAPI + "/get-all").then(function (response) {
+        $scope.listTayAo = response?.data;
+        $scope.listTayAo.forEach((tayAo) => {
+          if (tayAo.ten === $scope.formTayAo.ten) {
+            $scope.message = "Tên tay áo không được trùng";
+            $scope.errorProgress();
+            toastBootstrap.show();
+            isDuplicate = true;
+          }
+        });
+        if (!isDuplicate) {
+          $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
+            $rootScope.message = "Thêm thành công";
+            $location.path("/tay-ao/hien-thi");
+          });
+        }
       });
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
     }
   };
 };

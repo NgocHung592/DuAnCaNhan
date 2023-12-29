@@ -2,17 +2,11 @@ window.updateTayAoController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
-  const toastTrigger = document.getElementById("liveToastBtn");
   const toastLiveExample = document.getElementById("liveToast");
-  if (toastTrigger) {
-    const toastBootstrap =
-      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-    toastTrigger.addEventListener("click", () => {
-      toastBootstrap.show();
-    });
-  }
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.formTayAo = {
     id: "",
     ma: "",
@@ -22,36 +16,75 @@ window.updateTayAoController = function (
 
   $http.get(tayAoAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
-      $scope.formTayAo = response.data;
+      $scope.formTayAo = response?.data;
     }
   });
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
-  $scope.update = function (id) {
-    let elem = document.getElementById("myBar");
-    let width = 0;
-    let idp = setInterval(frame, 10);
     function frame() {
-      if (width >= 100) {
-        clearInterval(idp);
+      if (width <= 0) {
+        newListTayAo;
+        clearInterval(id);
       } else {
-        width++;
+        width--;
         elem.style.width = width + "%";
       }
     }
-    if ($scope.formTayAo.ten == "") {
+  };
+  $scope.update = function () {
+    let isDuplicate = false;
+    $scope.newListTayAo = [];
+
+    if ($scope.formTayAo.ten === "") {
       $scope.message = "Tên tay áo không được trống";
-      return;
+      toastBootstrap.show();
+      $scope.errorProgress();
     } else {
-      $scope.updateTayAo = {
-        ten: $scope.formTayAo.ten,
-        ngaySua: new Date(),
-        daXoa: $scope.formTayAo.daXoa,
-      };
-      $http
-        .put(tayAoAPI + "/update/" + id, $scope.updateTayAo)
-        .then(function () {
-          $location.path("/tay-ao/hien-thi");
-        });
+      $http.get(tayAoAPI + "/get-all").then(function (response) {
+        $scope.listTayAo = response?.data;
+
+        $http
+          .get(tayAoAPI + "/detail/" + $routeParams.id)
+          .then(function (responseDetail) {
+            if (responseDetail.status === 200) {
+              $scope.detailTayAo = responseDetail?.data;
+
+              $scope.newListTayAo = $scope.listTayAo.filter(
+                (tayAo) => tayAo.ten !== $scope.detailTayAo.ten
+              );
+              console.log($scope.newListTayAo);
+              $scope.newListTayAo.forEach((tayAo) => {
+                if (tayAo.ten === $scope.formTayAo.ten) {
+                  isDuplicate = true;
+                }
+              });
+              if (!isDuplicate) {
+                $scope.updateTayAo = {
+                  ten: $scope.formTayAo.ten,
+                  ngaySua: new Date(),
+                  daXoa: $scope.formTayAo.daXoa,
+                };
+
+                $http
+                  .put(
+                    tayAoAPI + "/update/" + $routeParams.id,
+                    $scope.updateTayAo
+                  )
+                  .then(function () {
+                    $rootScope.message = "Cập nhật thành công";
+                    $location.path("/tay-ao/hien-thi");
+                  });
+              } else {
+                $scope.message = "Tên tay áo không được trùng";
+                toastBootstrap.show();
+                $scope.errorProgress();
+              }
+            }
+          });
+      });
     }
   };
 };

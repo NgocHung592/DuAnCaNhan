@@ -1,10 +1,11 @@
-window.hienThiCoAoController = function ($http, $scope, $rootScope) {
+window.hienThiCoAoController = function ($http, $scope, $rootScope, $timeout) {
   $scope.listCoAo = [];
   $scope.totalPages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
     let elem = document.getElementById("success");
@@ -21,7 +22,7 @@ window.hienThiCoAoController = function ($http, $scope, $rootScope) {
     }
   };
   $scope.getCoAo = function () {
-    if ($scope.message != undefined) {
+    if ($scope.message !== undefined) {
       $scope.successProgress();
       toastBootstrap.show();
     }
@@ -29,6 +30,7 @@ window.hienThiCoAoController = function ($http, $scope, $rootScope) {
       .get(coAoAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listCoAo = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });

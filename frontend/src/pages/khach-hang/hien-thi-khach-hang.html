@@ -22,7 +22,7 @@
                   <i class="fa-solid fa-plus"></i>
                   Tải file mẫu
                 </a>
-                <a type="button" class="btn btn-primary" href="#khach-hang/add">
+                <a type="button" class="btn btn-primary" href="#/khach-hang/add">
                   <i class="fa-solid fa-plus"></i>
                   Thêm khách hàng
                 </a>
@@ -61,8 +61,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="kh in list_kh">
-                  <th scope="row">{{$index+1}}</th>
+                <tr ng-repeat="kh in listKhachHang">
+                  <th scope="row">{{customIndex+$index+1}}</th>
 
                   <th scope="row">{{kh.hoTen}}</th>
                   <th scope="row">{{kh.email}}</th>
@@ -77,7 +77,7 @@
 
                     </p>
                   </th>
-                  <th data-toggle="tooltip" data-placement="top" title="Update">
+                  <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
                     <a href="#khach-hang/update/{{kh.id}}">
                       <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                     </a>
@@ -85,13 +85,13 @@
                 </tr>
               </tbody>
             </table>
-            <div ng-if="list_kh.length === 0">
+            <div ng-if="listKhachHang.length === 0">
               <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
               <p class="dataTables_empty_lable">
                 No Data
               </p>
             </div>
-            <nav aria-label="Page navigation example" ng-if="list_kh.length !== 0">
+            <nav aria-label="Page navigation example" ng-if="listKhachHang.length !== 0">
               <ul class="pagination justify-content-center">
                 <li class="page-item">
                   <a class="page-link" ng-click="previousPage()" aria-label="Previous">

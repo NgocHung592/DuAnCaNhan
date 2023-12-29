@@ -1,13 +1,16 @@
 window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listMaGiamGia = [];
-  $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.visiblePages = [];
-  $scope.timeRemaining = "";
-  $scope.timeRemainingArray = [];
+  $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
   $scope.intervalId = "";
   $scope.message = $rootScope.message;
+  $scope.selectOption = null;
+  $scope.selectOptionHinhThuc = null;
+
   function scheduledTask() {
     $http
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -28,7 +31,6 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
@@ -50,10 +52,46 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
     }
     return visiblePages;
   };
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  if ($scope.message !== undefined) {
+    $scope.successProgress();
+    toastBootstrap.show();
+  }
   $scope.getMa = function () {
     setTimeout(() => {
       clearInterval($scope.intervalId);
     });
+    // $scope.selectOption = null;
+    // $scope.selectOptionHinhThuc = null;
+
+    $http
+      .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .then(function (response) {
+        $scope.listMaGiamGia = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
+  $scope.getMaHinhThuc = function () {
+    setTimeout(() => {
+      clearInterval($scope.intervalId);
+    });
+    $scope.selectOptionHinhThuc = null;
+    console.log($scope.selectOption);
+    console.log($scope.selectOptionHinhThuc);
     $http
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
@@ -72,7 +110,9 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
           "/loc?pageNo=" +
           $scope.currentPage +
           "&trangThai=" +
-          $scope.selectOption
+          $scope.selectOption +
+          "&hinhThuc=" +
+          $scope.selectOptionHinhThuc
       )
       .then(function (response) {
         $scope.listMaGiamGia = response?.data.content;
@@ -84,33 +124,19 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
     setTimeout(() => {
       clearInterval($scope.intervalId);
     });
-    if ($scope.searchKeyword) {
-      $http
-        .get(
-          magiamgiaAPI +
-            "/search?pageNo=" +
-            $scope.currentPage +
-            "&keyWord=" +
-            $scope.searchKeyword
-        )
-        .then(function (response) {
-          if (response?.data?.content) {
-            $scope.listMaGiamGia = response.data.content;
-            $scope.totalPages = new Array(response.data.totalPages);
-            $scope.visiblePages = $scope.getVisiblePages();
-          } else {
-            return null;
-          }
-        });
-    } else {
-      $http
-        .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-        .then(function (response) {
-          $scope.listMaGiamGia = response?.data.content;
-          $scope.totalPages = new Array(response.data.totalPages);
-          $scope.visiblePages = $scope.getVisiblePages();
-        });
-    }
+    $http
+      .get(
+        magiamgiaAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&keyWord=" +
+          $scope.searchKeyword
+      )
+      .then(function (response) {
+        $scope.listMaGiamGia = response.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
   };
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {

@@ -8,24 +8,23 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a type="button" class="btn btn-primary mb-3" href="#mau-sac/add">
                                 <i class="fa-solid fa-plus"></i>
-
                                 Thêm</a>
                         </div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Màu</th>
-                                    <th scope="col">Tên Màu</th>
-                                    <th scope="col">Màu Sắc</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã màu</th>
+                                    <th scope="col">Tên màu</th>
+                                    <th scope="col">Màu sắc</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="mauSac in listMauSac">
                                 <tr>
-                                    <td scope="row">{{$index+1}}</td>
+                                    <th scope="row">{{$index+1}}</th>
                                     <th scope="row">{{mauSac.ma}}</th>
                                     <th scope="row">{{mauSac.ten}}</th>
                                     <th ng-style="{ 'background-color': mauSac.ma }">

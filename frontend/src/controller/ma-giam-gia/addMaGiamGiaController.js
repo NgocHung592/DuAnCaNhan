@@ -6,18 +6,8 @@ window.addMaGiamGiaController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  let check = true;
 
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var randomString = "";
-
-  while (randomString.length < 10) {
-    var randomIndex = Math.floor(Math.random() * characters.length);
-    randomString += characters.charAt(randomIndex);
-  }
-
-  $scope.randoom = randomString;
+  $scope.randoom = "MG" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.maGiamGiaSave = {
     id: "",

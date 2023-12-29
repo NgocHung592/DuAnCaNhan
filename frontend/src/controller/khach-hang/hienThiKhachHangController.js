@@ -2,12 +2,11 @@ window.hienThiKhachHangController = function (
   $http,
   $scope,
   $rootScope,
-  $timeout,
-  $window
+  $timeout
 ) {
   $scope.randoom = "KH" + Math.floor(Math.random() * 10000) + 1;
 
-  $scope.list_kh = [];
+  $scope.listKhachHang = [];
   $scope.totalPages = [];
   $scope.searchKeyword = "";
   $scope.selectedOption = "";
@@ -38,8 +37,8 @@ window.hienThiKhachHangController = function (
     $http
       .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
-        $scope.list_kh = response?.data.content;
-        console.log($scope.list_kh);
+        $scope.listKhachHang = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
@@ -146,7 +145,7 @@ window.hienThiKhachHangController = function (
           $scope.searchKeyword
       )
       .then(function (response) {
-        $scope.list_kh = response?.data.content;
+        $scope.listKhachHang = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
@@ -161,7 +160,7 @@ window.hienThiKhachHangController = function (
           $scope.selectedOption
       )
       .then(function (response) {
-        $scope.list_kh = response?.data.content;
+        $scope.listKhachHang = response?.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
@@ -208,7 +207,6 @@ window.hienThiKhachHangController = function (
             })
 
             .catch(function (error) {
-              // Xử lý khi có lỗi trong yêu cầu POST
               console.error("Lỗi khi thêm khách hàng:", error);
             });
         });
@@ -244,7 +242,7 @@ window.hienThiKhachHangController = function (
       var a = document.createElement("a");
       document.body.appendChild(a);
       a.href = url;
-      a.download = "danh-sach.xlsx";
+      a.download = "danh-sach-khach-hang.xlsx";
 
       a.click();
 

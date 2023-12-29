@@ -6,7 +6,7 @@ window.updateMaGiamGiaController = function ($http, $scope, $routeParams) {
   $scope.showBD = true;
   $scope.showKT = true;
 
-  $scope.detailProduct = {
+  $scope.detailMaGiamGia = {
     id: "",
     ma: "",
     tenKM: "",
@@ -57,9 +57,9 @@ window.updateMaGiamGiaController = function ($http, $scope, $routeParams) {
           );
         }
         console.log(response.data);
-        $scope.detailProduct = response.data;
-        //document.getElementById("inputNkt").value = $scope.detailProduct.ngayKetThuc.split("+")[0].split(".")[0];
-        //document.getElementById("inputNbd").value = $scope.detailProduct.ngayBatDau.split("+")[0].split(".")[0];
+        $scope.detailMaGiamGia = response.data;
+        //document.getElementById("inputNkt").value = $scope.detailMaGiamGia.ngayKetThuc.split("+")[0].split(".")[0];
+        //document.getElementById("inputNbd").value = $scope.detailMaGiamGia.ngayBatDau.split("+")[0].split(".")[0];
       }
     });
 
@@ -71,13 +71,13 @@ window.updateMaGiamGiaController = function ($http, $scope, $routeParams) {
     $scope.showBD = true;
     $scope.showKT = true;
     let check = true;
-    let ten = $scope.detailProduct.tenKM;
-    let tt = $scope.detailProduct.giaTriDonToiThieu;
-    let td = $scope.detailProduct.giaTriGiamToiDa;
-    let ht = $scope.detailProduct.hinhThucGiam;
-    let sl = $scope.detailProduct.soLuong;
-    let bd = $scope.detailProduct.ngayBatDau;
-    let kt = $scope.detailProduct.ngayKetThuc;
+    let ten = $scope.detailMaGiamGia.tenKM;
+    let tt = $scope.detailMaGiamGia.giaTriDonToiThieu;
+    let td = $scope.detailMaGiamGia.giaTriGiamToiDa;
+    let ht = $scope.detailMaGiamGia.hinhThucGiam;
+    let sl = $scope.detailMaGiamGia.soLuong;
+    let bd = $scope.detailMaGiamGia.ngayBatDau;
+    let kt = $scope.detailMaGiamGia.ngayKetThuc;
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     const regex = /[^0-9a-zA-Z]/;
     if (bd == null) {
@@ -170,7 +170,7 @@ window.updateMaGiamGiaController = function ($http, $scope, $routeParams) {
     }
     if (check) {
       $http
-        .put(magiamgiaAPI + "/update/" + id, $scope.detailProduct)
+        .put(magiamgiaAPI + "/update/" + id, $scope.detailMaGiamGia)
         .then(function () {
           alert("Cập nhật thành công");
         });

@@ -36,6 +36,7 @@ window.hienThiMauSacController = function (
       .get(mauSacAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listMauSac = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });

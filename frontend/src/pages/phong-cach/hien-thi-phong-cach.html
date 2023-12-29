@@ -15,16 +15,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Phong Cách</th>
-                                    <th scope="col">Tên Phong Cách</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã phong cách</th>
+                                    <th scope="col">Tên phong cách</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="phongCach in listPhongCach">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <th scope="row">{{customIndex +$index+1}}</th>
                                     <th scope="row">{{phongCach.ma}}</th>
                                     <th scope="row">{{phongCach.ten}}</th>
                                     <th>
@@ -34,7 +34,7 @@
 
                                         </p>
                                     </th>
-                                    <th data-toggle="tooltip" data-placement="top" title="Update">
+                                    <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
                                         <a href="#phong-cach/update/{{phongCach.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>

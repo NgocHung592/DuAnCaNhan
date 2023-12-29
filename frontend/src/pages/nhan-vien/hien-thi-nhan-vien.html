@@ -6,22 +6,27 @@
           <div class="align-self-center w-100">
             <h4 class="mb-4">DANH SÁCH NHÂN VIÊN</h4>
             <div class="row pb-4 pr-2">
-              <div class="search-container col-md-8">
+              <div class="search-container col-md-6">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm theo mã, họ tên, email, số điện thoại"
                   ng-change="search()" class="search-input" />
               </div>
-              <div class="col-md-4 text-end">
+              <div class="col-md-6 text-end">
                 <label for="file-upload" class="custom-file-upload btn btn-success">
                   <i class="fa-solid fa-plus"></i>
                   Thêm Excel
                 </label>
                 <input type="file" id="file-upload" style="display: none"
-                  onchange="angular.element(this).scope().import(this.files)" />
-                <a type="button" class="btn btn-primary" href="#nhan-vien/add">
+                  onchange="angular.element(this).scope().uploadExcel(this.files)" />
+                <a type="button" class="btn btn-primary" ng-click="exportToExcel()">
+                  <i class="fa-solid fa-plus"></i>
+                  Tải file mẫu
+                </a>
+                <a type="button" class="btn btn-primary" href="#/nhan-vien/add">
                   <i class="fa-solid fa-plus"></i>
                   Thêm nhân viên
                 </a>
+
               </div>
             </div>
             <div class="mb-3" class="form-check">
@@ -57,22 +62,23 @@
               </thead>
               <tbody>
                 <tr ng-repeat="nhanVien in listNhanVien">
-                  <th scope="row">{{$index+1}}</th>
-                  <th scope="row">{{kh.hoTen}}</th>
-                  <th scope="row">{{kh.email}}</th>
-                  <th scope="row">{{kh.soDienThoai}}</th>
+                  <th scope="row">{{customIndex+$index+1}}</th>
+
+                  <th scope="row">{{nhanVien.hoTen}}</th>
+                  <th scope="row">{{nhanVien.email}}</th>
+                  <th scope="row">{{nhanVien.soDienThoai}}</th>
                   <th scope="row">
-                    {{kh.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
+                    {{nhanVien.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
                   </th>
                   <th>
-                    <p ng-class="{' text-g ': !kh.daXoa
-                    ,'text-glow':kh.daXoa}">
-                      {{kh.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+                    <p ng-class="{' text-g ': !nhanVien.daXoa
+                    ,'text-glow':nhanVien.daXoa}">
+                      {{nhanVien.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
 
                     </p>
                   </th>
-                  <th data-toggle="tooltip" data-placement="top" title="Update">
-                    <a href="#khach-hang/update/{{kh.id}}">
+                  <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
+                    <a href="#/nhan-vien/update/{{nhanVien.id}}">
                       <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                     </a>
                   </th>

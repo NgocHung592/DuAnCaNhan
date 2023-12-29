@@ -15,16 +15,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Cổ Áo</th>
-                                    <th scope="col">Tên Cổ Áo</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã cổ áo</th>
+                                    <th scope="col">Tên cổ áo</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="coAo in listCoAo">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <th scope="row">{{customIndex +$index+1}}</th>
                                     <th scope="row">{{coAo.ma}}</th>
                                     <th scope="row">{{coAo.ten}}</th>
                                     <th>
@@ -34,7 +34,7 @@
 
                                         </p>
                                     </th>
-                                    <th data-toggle="tooltip" data-placement="top" title="Update">
+                                    <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
                                         <a href="#co-ao/update/{{coAo.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>

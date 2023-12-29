@@ -486,3 +486,21 @@ img.employee-image {
 .load_img {
     text-align: center;
 }
+
+.file-upload-wrapper {
+    width: 100px;
+    /* Điều chỉnh chiều rộng theo ý muốn */
+    height: 200px;
+    /* Điều chỉnh chiều cao theo ý muốn */
+    border-radius: 50%;
+    /* Làm cho nút tròn */
+    overflow: hidden;
+    /* Đảm bảo nội dung không bị tràn ra ngoài */
+}
+
+.file-upload {
+    width: 100%;
+    /* Đảm bảo nút bên trong kích thước đúng */
+    height: 100%;
+    border-radius: 50%;
+}

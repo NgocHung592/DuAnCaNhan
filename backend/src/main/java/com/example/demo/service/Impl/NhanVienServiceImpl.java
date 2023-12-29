@@ -2,7 +2,6 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.ChucVu;
 import com.example.demo.entity.NhanVien;
-import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.model.request.NhanVienRequest;
 import com.example.demo.repository.ChucVuRepository;
 import com.example.demo.repository.NhanVienRepository;
@@ -17,6 +16,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,23 +33,16 @@ public class NhanVienServiceImpl implements NhanVienService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public Page<NhanVien> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        return nhanVienRepository.getNhanVienAll(pageable);
+    public List<NhanVien> getAll() {
+        return nhanVienRepository.findAll();
     }
 
     @Override
-    public Page<NhanVienReponse> getAllTrangThai(Integer pageNo, String tt) {
-        Pageable pageable = PageRequest.of(pageNo, 100);
-//        return nhanVienRepository.getNhanVienTrangThai1(pageable, tt);
-        return null;
+    public Page<NhanVien> getPage(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return nhanVienRepository.getALl(pageable);
     }
 
-    @Override
-    public NhanVien login(String email) {
-//        return nhanVienRepository.findByEmail(email);
-        return null;
-    }
 
     @Override
     public NhanVien add(NhanVienRequest nhanVienRequest) {
@@ -107,56 +100,49 @@ public class NhanVienServiceImpl implements NhanVienService {
         }
     }
 
+    @Override
+    public NhanVien importExcel(NhanVien nhanVien) {
+        return nhanVienRepository.save(nhanVien);
+    }
+
+    @Override
+    public NhanVien update(NhanVien nhanVien, UUID id) {
+        Optional<NhanVien> optional=nhanVienRepository.findById(id);
+        if (optional.isPresent()){
+            return nhanVienRepository.save(nhanVien);
+        }
+        return null;
+    }
+
+    @Override
+    public Page<NhanVien> loc(Integer pageNo, String trangThai) {
+        Pageable pageable=PageRequest.of(pageNo,10);
+        return nhanVienRepository.loc(pageable,trangThai);
+    }
+
+    @Override
+    public Page<NhanVien> search(Integer pageNo, String keyWord) {
+        Pageable pageable=PageRequest.of(pageNo,10);
+        return nhanVienRepository.searchByKeyword(pageable,keyWord);
+    }
+
     private void sendEmail(NhanVien nhanVien) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(nhanVien.getEmail());
-            helper.setSubject("Chào mừng bạn đến với công ty Simple");
+            helper.setSubject("Chào mừng bạn đến với cửa hàng Simple");
             helper.setText("Xin chào " + nhanVien.getHoTen() + ",\n\n" +
-                    "Chúc mừng bạn đã trở thành nhân viên của công ty chúng tôi.\n" +
+                    "Chúc mừng bạn đã trở thành nhân viên của cửa hàng chúng tôi.\n" +
                     "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +
                     "Mã nhân viên: " + nhanVien.getMa() + "\n" +
                     "Mật khẩu: " + nhanVien.getMatKhau() + "\n\n" +
                     "Trân trọng,\n");
             javaMailSender.send(message);
         } catch (Exception e) {
-            e.printStackTrace();  // Handle exception appropriately
+            e.printStackTrace();
         }
-    }
-
-
-    @Override
-    public NhanVien update(NhanVienRequest nhanVienRequest, UUID id) {
-//        NhanVien nhanVien = NhanVien.builder().id(id)
-//                .ma(nhanVienRequest.getMa())
-//                .hoten(nhanVienRequest.getHoten())
-//                .chucVu(chucVuRepository.findById(getId(nhanVienRequest.getChucVu())).get())
-//                .ngaytao(nhanVienRequest.getNgaytao())
-//                .email(nhanVienRequest.getEmail())
-//                .matkhau(nhanVienRequest.getMatkhau())
-//                .sodienthoai(nhanVienRequest.getSodienthoai())
-//                .gioitinh(nhanVienRequest.getGioitinh())
-//                .ngaysinh(nhanVienRequest.getNgaysinh())
-//                .trangthai(Integer.valueOf(nhanVienRequest.getTrangthai()))
-//                .anhdaidien(nhanVienRequest.getAnhdaidien())
-//                .ngaysua(nhanVienRequest.getNgaysua())
-//                .mota(nhanVienRequest.getMota())
-//                .phuongxa(nhanVienRequest.getPhuongxa())
-//                .quanhuyen(nhanVienRequest.getQuanhuyen())
-//                .tinhthanhpho((nhanVienRequest.getTinhthanhpho()))
-//                .build();
-//        return nhanVienRepository.save(nhanVien);
-        return null;
-
-    }
-
-    @Override
-    public Page<NhanVienReponse> getSearch(Integer pageNo, String seach) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-//        return nhanVienRepository.searchByKeyword(pageable, seach);
-        return null;
     }
 
     @Override
@@ -171,8 +157,6 @@ public class NhanVienServiceImpl implements NhanVienService {
             }
         }
         return null;
-
-
     }
 
 }

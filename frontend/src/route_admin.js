@@ -173,6 +173,7 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     })
     .when("/thong-ke/hien-thi", {
       templateUrl: "thong-ke/hien-thi-thong-ke.html",
+      controller: hienThiThongKeController,
     })
 
     .otherwise({

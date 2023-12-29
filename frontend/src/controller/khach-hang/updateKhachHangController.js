@@ -39,6 +39,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
     const hinhanh = document.getElementById("product-image");
     for (const image of hinhanh.files) {
       $scope.detailKhachHang.anhDaiDien = image.name;
+      console.log(image.name);
     }
     $scope.khachHangUpdate = {
       hoTen: $scope.detailKhachHang.hoTen,

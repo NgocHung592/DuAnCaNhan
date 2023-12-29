@@ -1,277 +1,136 @@
-<style>
-  .file-upload-wrapper {
-    width: 100px;
-    /* Điều chỉnh chiều rộng theo ý muốn */
-    height: 100px;
-    /* Điều chỉnh chiều cao theo ý muốn */
-    border-radius: 50%;
-    /* Làm cho nút tròn */
-    overflow: hidden;
-    /* Đảm bảo nội dung không bị tràn ra ngoài */
-  }
-
-  .input-container {
-    position: relative;
-  }
-
-  .form-control {
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #ccc;
-    /* Màu và độ dày của gạch chân mặc định */
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-bottom 0.3s;
-    /* Hiệu ứng chuyển động khi thay đổi border-bottom */
-  }
-
-  .form-control:focus {
-    border-bottom: none;
-    /* Loại bỏ gạch chân khi ô input được focus */
-  }
-
-  .file-upload {
-    width: 100%;
-    /* Đảm bảo nút bên trong kích thước đúng */
-    height: 100%;
-    border-radius: 100%;
-  }
-
-  .table_img {
-    border-radius: 100%;
-    /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
-    width: 260px;
-    /* Điều chỉnh kích thước theo nhu cầu của bạn */
-    height: 297px;
-    /* Điều chỉnh kích thước theo nhu cầu của bạn */
-  }
-</style>
-
 <main class="content">
   <div class="container-fluid p-0">
-    <div class="row justify-content-center">
+    <div class="row">
       <div class="card flex-fill">
-        <div class="card-body">
-          <div class="text-center">
-            <h4 class="mb-3">THÔNG TIN NHÂN VIÊN</h4>
-          </div>
-          <div class="card-body d-flex">
-            <div class="container">
+        <div class="card-body d-flex">
+          <div class="align-self-center w-100">
+            <h4 class="mb-4">CẬP NHẬT NHÂN VIÊN</h4>
+            <form>
               <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                  <form>
-                    <div class="row">
-                      <div class="col-mb-12 row"></div>
-                    </div>
-                    <div class="row">
-                      <div class="col-mb-12 row">
-                        <label class="col-sm-6 col-form-label"></label>
-                        <label class="col-sm-6 col-form-label">Mã nhân viên</label>
-                      </div>
-                      <div class="col-mb-12 row">
-                        <div class="col-sm-6">
-                          <!-- <div
-                            class="toast-container position-fixed top-0 end-0 p-3"
-                          >
-                            <div
-                              id="liveToast"
-                              class="toast"
-                              role="alert"
-                              aria-live="assertive"
-                              aria-atomic="true"
-                              data-bs-delay="1500"
-                            >
-                              <div class="toast-body">
-                                {{message}}
-                                <div id="myProgress">
-                                  <div id="myBar"></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div> -->
-                          <div class="uploadfile">
-                            <label for="product-image">
-                              <i ng-if="!detailNhanVien.anhdaidien" style="font-size: 250px" class="fas fa-user-circle"
-                                aria-hidden="true"></i>
-                              <img ng-if="detailNhanVien.anhdaidien" src="../../../assets/{{detailNhanVien.anhdaidien}}"
-                                alt="Employee Image" class="table_img" />
-                              <input type="file" multiple class="file-upload-input" id="product-image"
-                                data-mdb-file-upload="file-upload" style="display: none" />
-                            </label>
+                <div class="col-md-4 mb-3">
+                  <div class="uploadfile">
+                    <section class="p-4 d-flex justify-content-center h-200 w-100">
+                      <div class="file-upload-wrapper">
+                        <div class="file-upload">
+                          <div class="file-upload-message">
+                            <i class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
+                            <p class="file-upload-default-message">
+                              Tải hình ảnh
+                            </p>
                           </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" aria-describedby="emailHelp"
-                            ng-model="detailNhanVien.ma" name="manv" required disabled />
-
-                          <label for="" class="col-sm-6 col-form-label"><span style="color: red">*</span> Tên nhân
-                            viên</label>
-                          <!-- <span
-                            ng-hide="showSdt?true:false"
-                            class="has-error"
-                            style="font-size: 70%"
-                            >Tên trống hoặc sai định dạng</span
-                          > -->
-
-                          <input type="text" class="form-control" aria-describedby="emailHelp"
-                            ng-model="detailNhanVien.hoten" placeholder="Tên nhân viên" required name="tennv" />
-
-                          <label for="" class="col-sm-6 col-form-label">Chức vụ</label>
-                          <input type="text" class="form-control" aria-describedby="emailHelp"
-                            ng-model="detailNhanVien.chucVu.ten" placeholder="Tên nhân viên" disabled required
-                            name="tennv" />
-
-                          <label for="" class="col-sm-6 col-form-label"><span style="color: red">*</span> Email</label>
-                          <input type="text" class="form-control" aria-describedby="emailHelp"
-                            ng-model="detailNhanVien.email" placeholder="Tên nhân viên" required name="tennv" />
-                          <!-- <span
-                            ng-show="formAdd.tennv.$invalid"
-                            ng-hide="show?true:false"
-                            class="has-error"
-                            >Tên nhân viên không được trống</span
-                          > -->
+                          <div class="file-upload-mask"></div>
+                          <ul class="file-upload-errors"></ul>
+                          <input type="file" class="file-upload-input" id="product-image"
+                            data-mdb-file-upload="file-upload" />
+                          <div class="file-upload-previews"></div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-mb-12 row">
-                        <label for="inputGTDToiThieu" class="col-sm-6 col-form-label"><span
-                            style="color: red">*</span>Số điện thoại</label>
-                        <label for="inputGTD" class="col-sm-6 col-form-label"><span style="color: red">*</span>Giới
-                          tính</label>
-                      </div>
-                      <div class="col-mb-12 row">
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" aria-describedby="emailHelp"
-                            ng-model="detailNhanVien.sodienthoai" required name="sdt" placeholder="Số điện thoại" />
-                          <!-- <span
-                            ng-show="formAdd.email.$invalid"
-                            ng-hide="show?true:false"
-                            class="has-error"
-                            >Email không được trống</span
-                          > -->
-                        </div>
-
-                        <div class="col-sm-6">
-                          <input type="radio" ng-checked="detailNhanVien.gioitinh==false"
-                            ng-model="detailNhanVien.gioitinh" id="female" name="gender" value="false"
-                            class="form-check-input" />
-                          <label class="form-check-label"> Nữ </label>
-                          <input ng-checked="detailNhanVien.gioitinh==true" ng-model="detailNhanVien.gioitinh"
-                            type="radio" id="male" name="gender" value="true" class="form-check-input" />
-                          <label class="form-check-label"> Nam </label>
-                          <!-- <span
-                            ng-show="formAdd.sdt.$invalid"
-                            ng-hide="show?true:false"
-                            class="has-error"
-                            >Số điện thoại không được trống</span
-                          > -->
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-mb-12 row">
-                        <label for="inputNbd" class="col-sm-6 col-form-label">Ngày sinh</label>
-                        <label for="inputNkt" class="col-sm-6 col-form-label">Ngày tạo</label>
-                      </div>
-                      <div class="col-mb-12 row">
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" ng-model="detailNhanVien.ngaysinh" required
-                            name="ns" />
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control"
-                            ng-model="detailNhanVien.ngaytao | date: 'dd/MM/yyyy hh:mm a'" required disabled
-                            name="ns" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-mb-12 row">
-                        <label class="col-sm-3 col-form-label"><span style="color: red">*</span>Địa chỉ</label>
-                      </div>
-                      <div class="col-mb-12 row">
-                        <div class="col-sm-3">
-                          <div class="input-container">
-                            <input style="outline: none" type="text" class="form-control" ng-model="detailNhanVien.mota"
-                              name="mota" placeholder="Số nhà" />
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="input-container">
-                            <input type="text" class="form-control" ng-model="detailNhanVien.phuongxa" name="mota"
-                              placeholder="Phường xã" />
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="input-container">
-                            <input type="text" class="form-control" ng-model="detailNhanVien.quanhuyen" name="mota"
-                              placeholder="Quận huyện" />
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="input-container">
-                            <input type="text" class="form-control" ng-model="detailNhanVien.tinhthanhpho" name="mota"
-                              placeholder="Tỉnh thành phố" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-mb-12 row">
-                        <label for="inputNbd" class="col-sm-6 col-form-label">Trạng thái</label>
-                        <label for="inputNkt" class="col-sm-6 col-form-label">Ngày cập nhật</label>
-                      </div>
-                      <div class="col-mb-12 row">
-                        <div class="col-sm-6">
-                          <input type="radio" ng-checked="detailNhanVien.trangthai==1"
-                            ng-model="detailNhanVien.trangthai" id="female" name="trangthai" value="1"
-                            class="form-check-input" />
-                          <label class="form-check-label">
-                            Đang hoạt động
-                          </label>
-                          <input ng-checked="detailNhanVien.trangthai==2" ng-model="detailNhanVien.trangthai"
-                            type="radio" id="male" name="trangthai" value="2" class="form-check-input" />
-                          <label class="form-check-label">
-                            Hủy kích hoạt
-                          </label>
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control"
-                            ng-model="detailNhanVien.ngaysua | date: 'dd/MM/yyyy hh:mm a'" required disabled
-                            name="ns" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <br />
-
-                    <div class="col-md-4">
-                      <a type="button" id="liveToastBtn" class="btn btn-success"
-                        ng-click="update(detailNhanVien.id)">Cập Nhật</a>
-                      <a type="button" class="btn btn-warning" href="#nhan-vien/hien-thi">Quay lại</a>
-                    </div>
-                  </form>
+                    </section>
+                  </div>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-6 mb-6">
+                      <label class="form-label">Ngày sinh <span style="color: red">*</span>:</label>
+                      <input type="date" class="form-control" ng-model="detailNhanVien.ngaySinh">
+                    </div>
+                    <div class="col-md-6 mb-6">
+                      <label class="form-label">Giới tính <span style="color: red">*</span>:</label><br>
+
+                      <input ng-model="detailNhanVien.gioiTinh" checked type="radio" name="gender" value="true"
+                        class="form-check-input" />
+                      <label class="form-check-label"> Nam </label>
+
+                      <input type="radio" ng-model="detailNhanVien.gioiTinh" name="gender" value="false"
+                        class="form-check-input ms-3" />
+                      <label class="form-check-label"> Nữ </label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Số điện thoại <span style="color: red">*</span>:</label>
+                      <input type="text" class="form-control" ng-model="detailNhanVien.soDienThoai" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Email <span style="color: red">*</span>:</label>
+                      <input type="text" class="form-control" ng-model="detailNhanVien.email" />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="row mb-5">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Mã nhân viên <span style="color: red">*</span>:</label>
+                  <input type="text" class="form-control" disabled ng-model="detailNhanVien.ma">
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label">Địa chỉ cụ thể <span style="color: red">*</span>:</label>
+                  <input type="text" class="form-control" ng-model="detailNhanVien.diaChiCuThe">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Tên nhân viên <span style="color: red">*</span>:</label>
+                  <input type="text" class="form-control" ng-model="detailNhanVien.hoTen">
+                </div>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label class="form-label">Tỉnh / Thành Phố</label>
+                      <div class="dropdown-container">
+                        <input type="text" ng-model="diaChi.tinhThanhPho" ng-click="toggleAPI($event,'ThanhPho')"
+                          class="form-control">
+                        <ul ng-show="showDropDownThanhPho" id="dropDown">
+                          <li ng-repeat="city in cityOptions" ng-model="diaChi.tinhThanhPho"
+                            ng-click="selectOptionThanhPho(indexDiaChi, city.name)">
+                            {{city.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Quận / Huyện</label>
+                      <div class="dropdown-container">
+                        <input type="text" ng-model="diaChi.quanHuyen" ng-click="toggleAPI($event,'QuanHuyen')"
+                          class="form-control">
+                        <ul ng-show="showDropDownQuanHuyen" id="dropDown">
+                          <li ng-repeat="district in districtOptions" ng-model="diaChi.quanHuyen"
+                            ng-click="selectOptionQuanHuyen(indexDiaChi, district.name)">
+                            {{district.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Phường / Xã </label>
+                      <div class="dropdown-container">
+                        <input type="text" ng-model="diaChi.phuongXa" ng-click="toggleAPI($event,'PhuongXa')"
+                          class="form-control">
+                        <ul ng-show="showDropDownPhuongXa" id="dropDown">
+                          <li ng-repeat="ward in wardOptions" ng-model="diaChi.phuongXa"
+                            ng-click="selectOptionPhuongXa(indexDiaChi, ward.name)">
+                            {{ward.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a type="button" class="btn btn-primary" ng-click="addNhanVien($event)">Thêm nhân viên</a>
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1500">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
       <div class="toast-body">
-        {{message}}
+        <span class="icon_error">
+          <i class="fa-solid fa-xmark fa-xl"></i>
+        </span>
+        <span class="message_error">
+          {{message}}
+        </span>
         <div id="myProgress">
-          <div id="myBar"></div>
+          <div id="error"></div>
         </div>
       </div>
     </div>

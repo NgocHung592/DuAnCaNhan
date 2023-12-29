@@ -23,7 +23,7 @@
                             </thead>
                             <tbody ng-repeat="hoaTiet in listHoaTiet">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <th scope="row">{{customIndex+$index+1}}</th>
                                     <th scope="row">{{hoaTiet.ma}}</th>
                                     <th scope="row">{{hoaTiet.ten}}</th>
                                     <th>
@@ -33,7 +33,7 @@
 
                                         </p>
                                     </th>
-                                    <th data-toggle="tooltip" data-placement="top" title="Update">
+                                    <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
                                         <a href="#hoa-tiet/update/{{hoaTiet.id}}">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
                                         </a>

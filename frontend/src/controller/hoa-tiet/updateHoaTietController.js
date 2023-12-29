@@ -56,7 +56,6 @@ window.updateHoaTietController = function (
                 (hoaTiet) => hoaTiet.ten !== $scope.detailHoaTiet.ten
               );
               console.log($scope.newListHoaTiet);
-              // Kiểm tra trùng lặp
               $scope.newListHoaTiet.forEach((hoaTiet) => {
                 if (hoaTiet.ten === $scope.formHoaTiet.ten) {
                   isDuplicate = true;

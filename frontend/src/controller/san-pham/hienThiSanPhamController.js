@@ -4,18 +4,15 @@ window.hienThiSanPhamController = function (
   $rootScope,
   $timeout
 ) {
-  $scope.currentPage = 0;
-  $scope.listSanPham = [];
-  $scope.totalPages = [];
-  $scope.selectOption = "";
-  $scope.visiblePages = [];
-  $scope.maxVisiblePages = 3;
-
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $scope.listSanPham = [];
+  $scope.totalPages = [];
+  $scope.visiblePages = [];
+  $scope.maxVisiblePages = 3;
+  $scope.currentPage = 0;
 
   $scope.message = $rootScope.message;
-  console.log($scope.message);
   $scope.successProgress = function () {
     let elem = document.getElementById("success");
     let width = 100;
@@ -39,6 +36,7 @@ window.hienThiSanPhamController = function (
       .get(sanPhamAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listSanPham = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
@@ -57,7 +55,6 @@ window.hienThiSanPhamController = function (
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
@@ -79,53 +76,53 @@ window.hienThiSanPhamController = function (
     }
     return visiblePages;
   };
-  $scope.loc = function () {
-    $http
-      .get(
-        sanPhamAPI +
-          "/loc?pageNo=" +
-          $scope.currentPage +
-          "&loc=" +
-          $scope.selectOption
-      )
-      .then(function (response) {
-        $scope.listSanPham = response?.data.content;
-      });
-  };
-  $scope.$watch("searchKeyword", function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $http
-        .get(
-          sanPhamAPI +
-            "/search?pageNo=" +
-            $scope.currentPage +
-            "&keyword=" +
-            $scope.searchKeyword
-        )
-        .then(function (response) {
-          $scope.listSanPham = response?.data.content;
-        });
-    }
-  });
-  $scope.changePage = function (index) {
-    $scope.showError = false;
-    if (index >= 0 && index < $scope.totalPages.length) {
-      $scope.currentPage = index;
-      $scope.getSanPham();
-    }
-  };
+  // $scope.loc = function () {
+  //   $http
+  //     .get(
+  //       sanPhamAPI +
+  //         "/loc?pageNo=" +
+  //         $scope.currentPage +
+  //         "&loc=" +
+  //         $scope.selectOption
+  //     )
+  //     .then(function (response) {
+  //       $scope.listSanPham = response?.data.content;
+  //     });
+  // };
+  // $scope.$watch("searchKeyword", function (newVal, oldVal) {
+  //   if (newVal !== oldVal) {
+  //     $http
+  //       .get(
+  //         sanPhamAPI +
+  //           "/search?pageNo=" +
+  //           $scope.currentPage +
+  //           "&keyword=" +
+  //           $scope.searchKeyword
+  //       )
+  //       .then(function (response) {
+  //         $scope.listSanPham = response?.data.content;
+  //       });
+  //   }
+  // });
+  // $scope.changePage = function (index) {
+  //   $scope.showError = false;
+  //   if (index >= 0 && index < $scope.totalPages.length) {
+  //     $scope.currentPage = index;
+  //     $scope.getSanPham();
+  //   }
+  // };
 
-  $scope.nextPage = function () {
-    if ($scope.currentPage < $scope.totalPages.length - 1) {
-      $scope.currentPage++;
-      $scope.getSanPham();
-    }
-  };
+  // $scope.nextPage = function () {
+  //   if ($scope.currentPage < $scope.totalPages.length - 1) {
+  //     $scope.currentPage++;
+  //     $scope.getSanPham();
+  //   }
+  // };
 
-  $scope.previousPage = function () {
-    if ($scope.currentPage > 0) {
-      $scope.currentPage--;
-      $scope.getSanPham();
-    }
-  };
+  // $scope.previousPage = function () {
+  //   if ($scope.currentPage > 0) {
+  //     $scope.currentPage--;
+  //     $scope.getSanPham();
+  //   }
+  // };
 };

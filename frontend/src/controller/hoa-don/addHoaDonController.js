@@ -18,6 +18,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.chonKhachHang = false;
   $scope.diaChiMacDinh = false;
   $scope.show = false;
+  $scope.addSanPham = false;
   $scope.showDropDownVoucher = false;
   $scope.showDropDownThanhPho = false;
   $scope.showDropDownPhuongXa = false;
@@ -116,6 +117,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     $scope.formHoaDonChiTiet.idHoaDon = id;
     $scope.maHoaDon = ma;
     $scope.selectedTab = tab;
+    $scope.addSanPham = true;
     $scope.getHoaDonChiTiet();
   };
 

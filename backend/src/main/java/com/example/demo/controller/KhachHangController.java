@@ -1,15 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.DiaChi;
 import com.example.demo.entity.KhachHang;
-import com.example.demo.model.response.KhachHangReponse;
 import com.example.demo.model.request.KhachHangRequest;
-import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,18 +37,11 @@ public class KhachHangController {
         return new ResponseEntity(khachHangService.importExcel(khachHang), HttpStatus.OK);
     }
 
-    //    @PostMapping("addid/{id}")
-//    public DiaChi postid(@RequestBody KhachHangRequest khachHangRequest, @PathVariable("id") String id) {
-//        System.out.println(khachHangRequest);
-//        return khachHangService.addid(khachHangRequest, UUID.fromString(id));
-//    }
-//
     @GetMapping("detail/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(khachHangService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
 
-    //
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody KhachHang khachHang, @PathVariable("id") String id) {
         return new ResponseEntity(khachHangService.update(khachHang, UUID.fromString(id)), HttpStatus.OK);

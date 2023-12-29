@@ -4,8 +4,7 @@
             <div class="card flex-fill">
                 <div class="card-body d-flex">
                     <div class="align-self-center w-100">
-                        <h4>DANH SÁCH SẢN PHẨM </h4>
-
+                        <h4 class="pb-5">DANH SÁCH SẢN PHẨM </h4>
                         <div class="row pb-4 pr-2">
                             <div class="search-container col-md-10">
                                 <i class="fas fa-search search-icon"></i>
@@ -45,17 +44,17 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Mã Sản Phẩm</th>
-                                    <th>Tên Sản Phẩm</th>
-                                    <th>Số Lượng</th>
-                                    <th>Mô Tả</th>
-                                    <th>Trạng Thái</th>
-                                    <th>Thao Tác</th>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Mô tả</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody ng-repeat="sanPham in listSanPham">
                                 <tr>
-                                    <th>{{$index+1}}</th>
+                                    <th>{{customIndex +$index+1}}</th>
                                     <th>{{sanPham.maSanPham}}</th>
                                     <th>{{sanPham.tenSanPham}} </th>
                                     <th>{{sanPham.soLuong}}</th>

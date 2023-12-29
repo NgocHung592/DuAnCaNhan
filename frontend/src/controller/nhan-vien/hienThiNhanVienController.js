@@ -1,22 +1,52 @@
-window.hienThiNhanVienController = function ($http, $scope, $location) {
+window.hienThiNhanVienController = function (
+  $http,
+  $scope,
+  $rootScope,
+  $timeout
+) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $scope.randoom = "NV" + Math.floor(Math.random() * 10000) + 1;
   $scope.listNhanVien = [];
-  $scope.searchKeyword = "";
-  $scope.selectedOption = "";
   $scope.totalPages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
+  $scope.message = $rootScope.message;
+
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   $scope.getNhanVien = function () {
+    if ($scope.message !== undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(nhanVienAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listNhanVien = response?.data.content;
-        console.log($scope.listNhanVien);
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
   };
   $scope.getNhanVien();
-
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $rootScope.message = undefined;
+    }, 1000);
+  }
   function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
@@ -26,11 +56,10 @@ window.hienThiNhanVienController = function ($http, $scope, $location) {
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
-      var active = pos === curPage ? "active" : "";
+      var active = pos - 1 === curPage ? "active" : "";
 
       if (totalPages >= 2 * range - 1) {
         if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
@@ -46,12 +75,21 @@ window.hienThiNhanVienController = function ($http, $scope, $location) {
         });
       }
     }
-
     return visiblePages;
   }
 
   $scope.changePage = function (index) {
-    if (index >= 0 && index < $scope.totalPages.length) {
+    if ($scope.selectedOption === false || $scope.selectedOption === true) {
+      $scope.currentPage = index;
+      $scope.loc();
+    } else if (
+      $scope.searchKeyword !== undefined &&
+      $scope.searchKeyword !== null &&
+      $scope.searchKeyword !== ""
+    ) {
+      $scope.currentPage = index;
+      $scope.search();
+    } else {
       $scope.currentPage = index;
       $scope.getNhanVien();
     }
@@ -59,87 +97,147 @@ window.hienThiNhanVienController = function ($http, $scope, $location) {
 
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.totalPages.length - 1) {
-      $scope.currentPage++;
-      $scope.getNhanVien();
+      if ($scope.selectedOption === false || $scope.selectedOption === true) {
+        $scope.currentPage++;
+        $scope.loc();
+      } else if (
+        $scope.searchKeyword !== undefined &&
+        $scope.searchKeyword !== null &&
+        $scope.searchKeyword !== ""
+      ) {
+        $scope.currentPage++;
+        $scope.search();
+      } else {
+        $scope.currentPage++;
+        $scope.getNhanVien();
+      }
     }
   };
 
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
-      $scope.currentPage--;
-      $scope.getNhanVien();
+      if ($scope.selectedOption === false || $scope.selectedOption === true) {
+        $scope.currentPage--;
+        $scope.loc();
+      } else if (
+        $scope.searchKeyword !== undefined &&
+        $scope.searchKeyword !== null &&
+        $scope.searchKeyword !== ""
+      ) {
+        $scope.currentPage--;
+        $scope.search();
+      } else {
+        $scope.currentPage--;
+        $scope.getNhanVien();
+      }
     }
   };
-  $scope.$watch("searchKeyword", function (newVal, oldVal) {
-    if (newVal !== oldVal) {
-      $http
-        .get(nhanVienAPI + "/search?search=" + $scope.searchKeyword)
-        .then(function (response) {
-          $scope.list_nv = response.data;
-          console.log("thanh cong", response.data);
-        });
-    }
-  });
-  $scope.searchTT = function () {
+  $scope.search = function () {
     $http
-      .get(nhanVienAPI + "/hien-thiTT?search=" + $scope.selectedOption)
+      .get(
+        nhanVienAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&keyWord=" +
+          $scope.searchKeyword
+      )
       .then(function (response) {
-        $scope.list_nv = response.data;
+        $scope.listNhanVien = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
+      });
+  };
+  $scope.loc = function () {
+    $http
+      .get(
+        nhanVienAPI +
+          "/loc?pageNo=" +
+          $scope.currentPage +
+          "&trangThai=" +
+          $scope.selectedOption
+      )
+      .then(function (response) {
+        $scope.listNhanVien = response?.data.content;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
       });
   };
 
-  $scope.import = function (files) {
+  $scope.uploadExcel = function (files) {
     var reader = new FileReader();
-    reader.onload = async () => {
+    reader.onload = function () {
       var workbook = new ExcelJS.Workbook();
-      await workbook.xlsx.load(reader.result);
-      const worksheet = workbook.getWorksheet("Sheet1");
-      var date = new Date();
-      worksheet.eachRow((row, index) => {
-        if (index > 1) {
-          let nhanvien = {
-            ma: row.getCell(1).value,
-            hoten: row.getCell(2).value,
-            gioitinh: true && row.getCell(3).value,
-            chucVu: row.getCell(4).value,
-            email: row.getCell(5).value,
-            ngaysinh: row.getCell(6).value,
-            sodienthoai: row.getCell(7).value,
-            matkhau: "123",
-            ngaytao: date,
-            tinhthanhpho: row.getCell(8).value,
-            quanhuyen: row.getCell(9).value,
-            phuongxa: row.getCell(10).value,
-            mota: row.getCell(11).value,
-            trangthai: row.getCell(12).value,
-          };
-          $http.post(nhanVienAPI + "/add", nhanvien).then(function () {
-            $location.path("/nhan-vien/hien-thi");
+      workbook.xlsx.load(reader.result).then(function () {
+        var worksheet = workbook.getWorksheet("Sheet 1");
+        var data = [];
+
+        worksheet.eachRow(function (row, index) {
+          var gioiTinhText = row.getCell(3).text;
+          var gioiTinh = gioiTinhText === "Nam" ? true : false;
+          var soDienThoaiCell = row.getCell(4);
+
+          if (index > 1) {
+            data.push({
+              ma: $scope.randoom,
+              hoTen: row.getCell(1).text,
+              ngaysinh:
+                row.getCell(2).value instanceof Date
+                  ? row.getCell(2).value
+                  : null,
+              gioiTinh: gioiTinh,
+              soDienThoai: "0" + soDienThoaiCell,
+              email: row.getCell(5).text,
+              ngayTao: new Date(),
+              daXoa: false,
+            });
+          }
+        });
+
+        data.forEach((nhanVien) => {
+          $http.post(nhanVienAPI + "/import-excel", nhanVien).then(function () {
+            $scope.getNhanVien();
           });
-        }
+        });
+        $scope.successProgress();
+        $scope.message = "Thêm nhân viên thành công";
+        toastBootstrap.show();
       });
     };
+
     reader.readAsArrayBuffer(files[0]);
   };
   $scope.exportToExcel = function () {
-    // Lấy dữ liệu từ bảng (sử dụng jQuery, hoặc nguyên bản AngularJS)
-    var tableData = [];
-    $("table tr").each(function (rowIndex, row) {
-      var rowData = [];
-      $(row)
-        .find("td")
-        .each(function (colIndex, cell) {
-          rowData.push(angular.element(cell).text());
-        });
-      tableData.push(rowData);
+    var workbook = new ExcelJS.Workbook();
+    var sheet = workbook.addWorksheet("Sheet 1");
+
+    var headerRow = sheet.addRow([
+      "Tên nhân viên",
+      "Ngày sinh",
+      "Giới tính",
+      "Số điện thoại",
+      "Email",
+    ]);
+    headerRow.eachCell(function (cell, colNumber) {
+      sheet.getColumn(colNumber).width = Math.max(
+        sheet.getColumn(colNumber).width || 0,
+        cell.value.toString().length + 2
+      );
     });
 
-    // Tạo tệp Excel sử dụng SheetJS
-    var ws = XLSX.utils.aoa_to_sheet(tableData);
-    var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Danh sách");
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+      var blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
 
-    // Lưu tệp Excel
-    XLSX.writeFile(wb, "danh-sach.xlsx");
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = "danh-sach-nhan-vien.xlsx";
+
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+    });
   };
 };

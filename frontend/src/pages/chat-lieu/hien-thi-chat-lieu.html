@@ -16,16 +16,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã Chất Liệu</th>
-                                    <th scope="col">Tên Chất Liệu</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Thao Tác</th>
+                                    <th scope="col">Mã chất liệu</th>
+                                    <th scope="col">Tên chất liệu</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
 
                                 </tr>
                             </thead>
                             <tbody ng-repeat="chatLieu in listChatLieu">
                                 <tr>
-                                    <th scope="row">{{$index+1}}</th>
+                                    <th scope="row">{{customIndex +$index+1}}</th>
                                     <th scope="row">{{chatLieu.ma}}</th>
                                     <th scope="row">{{chatLieu.ten}}</th>
                                     <th>

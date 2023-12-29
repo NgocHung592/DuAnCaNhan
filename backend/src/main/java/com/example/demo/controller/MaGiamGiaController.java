@@ -31,6 +31,7 @@ public class MaGiamGiaController {
     public Page<MaGiamGia> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return maGiamGiaService.getAll(pageNo);
     }
+
     @GetMapping("trang-thai")
     public ResponseEntity getAllByStatus(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return new ResponseEntity(maGiamGiaService.getAllByStatus(pageNo), HttpStatus.OK);
@@ -54,12 +55,16 @@ public class MaGiamGiaController {
 
     @GetMapping("loc")
     public Page<MaGiamGia> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-                               @RequestParam(name = "trangThai") String trangThai) {
-        return maGiamGiaService.locMaGiamGia(pageNo,Integer.valueOf(trangThai));
+                               @RequestParam(name = "trangThai") String trangThai,
+                               @RequestParam(name = "hinhThuc") String hinhThuc) {
+        Integer hinhThucValue = "null".equals(hinhThuc) ? null : Integer.valueOf(hinhThuc);
+        Integer trangThaiValue = "null".equals(trangThai) ? null : Integer.valueOf(trangThai);
+        return maGiamGiaService.locMaGiamGia(pageNo, trangThaiValue, hinhThucValue);
     }
+
     @GetMapping("search")
     public Page<MaGiamGia> search(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
                                   @RequestParam(name = "keyWord") String keyWord) {
-        return maGiamGiaService.searchMaGiamGia(pageNo,keyWord);
+        return maGiamGiaService.searchMaGiamGia(pageNo, keyWord);
     }
 }

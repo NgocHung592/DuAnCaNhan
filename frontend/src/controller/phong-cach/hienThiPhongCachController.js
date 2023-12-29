@@ -4,14 +4,13 @@ window.hienThiPhongCachController = function (
   $rootScope,
   $timeout
 ) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.totalPages = [];
   $scope.visiblePages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
   $scope.listPhongCach = [];
-
-  const toastLiveExample = document.getElementById("liveToast");
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
@@ -37,6 +36,7 @@ window.hienThiPhongCachController = function (
       .get(phongCachAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listPhongCach = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });

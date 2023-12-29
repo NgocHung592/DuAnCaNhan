@@ -7,7 +7,7 @@ window.addKhachHangController = function (
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.randoom = "KH" + Math.floor(Math.random() * 10000) + 1;
-  $scope.list_kh = [];
+  $scope.listKhachHang = [];
   let check = true;
 
   $scope.matkhau = generateRandomPassword();
@@ -62,8 +62,8 @@ window.addKhachHangController = function (
   };
   $scope.getKhachHang = function () {
     $http.get(khachHangAPI + "/get-all").then(function (response) {
-      $scope.list_kh = response?.data;
-      console.log($scope.list_kh);
+      $scope.listKhachHang = response?.data;
+      console.log($scope.listKhachHang);
     });
   };
   $scope.getKhachHang();
@@ -82,10 +82,10 @@ window.addKhachHangController = function (
     let tinhThanhPho = $scope.form_kh.tinhThanhPho;
     let phuongXa = $scope.form_kh.phuongXa;
     let quanHuyen = $scope.form_kh.quanHuyen;
-    var sdtTonTai = $scope.list_kh.some(function (item) {
+    var sdtTonTai = $scope.listKhachHang.some(function (item) {
       return item.soDienThoai === soDienThoai;
     });
-    var emailTonTai = $scope.list_kh.some(function (item) {
+    var emailTonTai = $scope.listKhachHang.some(function (item) {
       return item.email === email;
     });
     const onlyLetters =

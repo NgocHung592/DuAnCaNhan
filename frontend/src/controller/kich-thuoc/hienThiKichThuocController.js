@@ -4,12 +4,13 @@ window.hienThiKichThuocController = function (
   $rootScope,
   $timeout
 ) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listKichThuoc = [];
   $scope.totalPages = [];
   $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
-  const toastLiveExample = document.getElementById("liveToast");
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
   $scope.message = $rootScope.message;
   $scope.successProgress = function () {
     let elem = document.getElementById("success");
@@ -34,6 +35,7 @@ window.hienThiKichThuocController = function (
       .get(kichThuocAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listKichThuoc = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
