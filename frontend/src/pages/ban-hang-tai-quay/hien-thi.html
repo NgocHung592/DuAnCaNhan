@@ -40,7 +40,7 @@
                                         </thead>
                                         <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
                                             <tr>
-                                                <th scope="row">{{$index+1}}</th>
+                                                <th scope="row">{{customIndex+$index+1}}</th>
                                                 <th scope="row"><img class="table_img"
                                                         src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
                                                         alt="Không có ảnh">
@@ -114,7 +114,7 @@
                                                     </thead>
                                                     <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet ">
                                                         <tr>
-                                                            <th scope="row">{{$index+1}}</th>
+                                                            <th scope="row">{{ customIndex+$index+1}}</th>
                                                             <th scope="row"><img class="table_img"
                                                                     src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
                                                                     alt="Không có ảnh"></th>
@@ -142,17 +142,25 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <nav aria-label="Page navigation example ">
+                                                <div ng-if="listSanPhamChiTiet.length===0">
+                                                    <p class="dataTables_empty_icon"><i
+                                                            class="fa-solid fa-inbox fa-2xl"></i></p>
+                                                    <p class="dataTables_empty_lable">
+                                                        No Data
+                                                    </p>
+                                                </div>
+                                                <nav aria-label="Page navigation example "
+                                                    ng-if="listSanPhamChiTiet.length!==0">
                                                     <ul class="pagination justify-content-center">
                                                         <li class="page-item">
-                                                            <a class="page-link" ng-click="previousPage()"
-                                                                aria-label="Previous">
+                                                            <a class="page-link" ng-click="previousPage()">
                                                                 <span aria-hidden="true">
                                                                     << </span>
                                                             </a>
                                                         </li>
                                                         <li class="page-item"
                                                             ng-repeat="page in totalPages track by $index"
+                                                            ng-class="{'active': $index === currentPage} "
                                                             ng-click="changePage($index);">
                                                             <a class="page-link">{{$index+1}}</a>
                                                         </li>

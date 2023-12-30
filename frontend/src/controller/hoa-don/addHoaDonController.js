@@ -33,6 +33,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.maxVisiblePages = 3;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  $scope.customIndex = 0;
   $scope.detailKhachHang = {
     id: "",
     hinhAnh: "",
@@ -160,6 +161,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listSanPhamChiTiet = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        console.log($scope.customIndex);
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
@@ -217,6 +220,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       )
       .then(function (response) {
         $scope.listHoaDonChiTiet = response?.data.content;
+        $scope.customIndex = $scope.currentPageHDCT * response.data.size;
+
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
         $scope.tienHang = $scope.calculateTotal();
