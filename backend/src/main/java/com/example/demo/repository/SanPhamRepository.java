@@ -55,8 +55,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             select sp.id, sp.ma, sp.ten, sum(spct.so_luong) as 'so_luong', sp.mo_ta, sp.da_xoa
             from san_pham_chi_tiet spct
             inner join san_pham sp on sp.id = spct.san_pham_id
-            where sp.ma like % :key %
-            or sp.ten like % :key %
+            where sp.ma like %:key%
+            or sp.ten like %:key%
             group by sp.id, sp.ma, sp.ten, sp.mo_ta, sp.da_xoa, sp.ngay_tao, sp.ngay_sua
             ORDER BY IIF(MAX(sp.ngay_sua) IS NULL, MAX(sp.ngay_tao), IIF(MAX(sp.ngay_tao) > MAX(sp.ngay_sua), MAX(sp.ngay_tao), MAX(sp.ngay_sua))) DESC;
                                         """, nativeQuery = true)

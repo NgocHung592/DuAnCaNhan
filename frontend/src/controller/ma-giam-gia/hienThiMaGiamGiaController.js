@@ -141,9 +141,9 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
-      if ($scope.selectOption != undefined) {
+      if ($scope.selectOption !== undefined) {
         $scope.loc();
-      } else if ($scope.searchKeyword != undefined) {
+      } else if ($scope.searchKeyword !== undefined) {
         $scope.search();
       }
       $scope.getMa();

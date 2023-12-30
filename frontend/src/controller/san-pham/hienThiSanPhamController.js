@@ -76,53 +76,72 @@ window.hienThiSanPhamController = function (
     }
     return visiblePages;
   };
-  // $scope.loc = function () {
-  //   $http
-  //     .get(
-  //       sanPhamAPI +
-  //         "/loc?pageNo=" +
-  //         $scope.currentPage +
-  //         "&loc=" +
-  //         $scope.selectOption
-  //     )
-  //     .then(function (response) {
-  //       $scope.listSanPham = response?.data.content;
-  //     });
-  // };
-  // $scope.$watch("searchKeyword", function (newVal, oldVal) {
-  //   if (newVal !== oldVal) {
-  //     $http
-  //       .get(
-  //         sanPhamAPI +
-  //           "/search?pageNo=" +
-  //           $scope.currentPage +
-  //           "&keyword=" +
-  //           $scope.searchKeyword
-  //       )
-  //       .then(function (response) {
-  //         $scope.listSanPham = response?.data.content;
-  //       });
-  //   }
-  // });
-  // $scope.changePage = function (index) {
-  //   $scope.showError = false;
-  //   if (index >= 0 && index < $scope.totalPages.length) {
-  //     $scope.currentPage = index;
-  //     $scope.getSanPham();
-  //   }
-  // };
+  $scope.loc = function () {
+    $http
+      .get(
+        sanPhamAPI +
+          "/loc?pageNo=" +
+          $scope.currentPage +
+          "&loc=" +
+          $scope.selectOption
+      )
+      .then(function (response) {
+        $scope.listSanPham = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
 
-  // $scope.nextPage = function () {
-  //   if ($scope.currentPage < $scope.totalPages.length - 1) {
-  //     $scope.currentPage++;
-  //     $scope.getSanPham();
-  //   }
-  // };
+  $scope.search = function () {
+    $http
+      .get(
+        sanPhamAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&keyword=" +
+          $scope.searchKeyword
+      )
+      .then(function (response) {
+        $scope.listSanPham = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
+  $scope.changePage = function (index) {
+    if (index >= 0 && index < $scope.totalPages.length) {
+      $scope.currentPage = index;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
+      $scope.getSanPham();
+    }
+  };
 
-  // $scope.previousPage = function () {
-  //   if ($scope.currentPage > 0) {
-  //     $scope.currentPage--;
-  //     $scope.getSanPham();
-  //   }
-  // };
+  $scope.nextPage = function () {
+    if ($scope.currentPage < $scope.totalPages.length - 1) {
+      $scope.currentPage++;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
+      $scope.getSanPham();
+    }
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+      if ($scope.selectOption != undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword != undefined) {
+        $scope.search();
+      }
+      $scope.getSanPham();
+    }
+  };
 };

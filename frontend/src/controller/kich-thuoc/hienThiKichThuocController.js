@@ -44,6 +44,7 @@ window.hienThiKichThuocController = function (
   $scope.getKichThuoc();
   if ($scope.message !== undefined) {
     $timeout(function () {
+      $scope.message = undefined;
       $rootScope.message = undefined;
     }, 1000);
   }
@@ -70,13 +71,12 @@ window.hienThiKichThuocController = function (
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {

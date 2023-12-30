@@ -43,9 +43,7 @@ public class DiaChiServiceImpl implements DiaChiService {
     @Override
     public DiaChi update(DiaChi diaChi, UUID id) {
         Optional<DiaChi> optionalDiaChi = diaChiRepository.findById(id);
-
         if (optionalDiaChi.isPresent()) {
-
             optionalDiaChi.map(diaChiUpdate -> {
                 diaChiUpdate.setDiaChiMacDinh(diaChi.getDiaChiMacDinh());
                 diaChiUpdate.setDiaChiCuThe(diaChi.getDiaChiCuThe());
@@ -62,7 +60,11 @@ public class DiaChiServiceImpl implements DiaChiService {
     public DiaChi updateMacDinh(DiaChi diaChi, UUID id) {
         Optional<DiaChi> optional = diaChiRepository.findById(id);
         if (optional.isPresent()) {
+            optional.map(diaChiUpdate -> {
+                diaChiUpdate.setDiaChiMacDinh(false);
 
+                return diaChiRepository.save(diaChiUpdate);
+            }).orElse(null);
         }
         return null;
     }

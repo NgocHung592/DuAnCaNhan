@@ -39,6 +39,7 @@ window.hienThiTayAoController = function ($http, $scope, $rootScope, $timeout) {
   $scope.getTayAo();
   if ($scope.message !== undefined) {
     $timeout(function () {
+      $scope.message = undefined;
       $rootScope.message = undefined;
     }, 1000);
   }

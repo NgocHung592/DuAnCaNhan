@@ -52,7 +52,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
     @Override
     public Page<SanPhamChiTietResponse> getAll(Integer pageNo, UUID id) {
-        Pageable pageable = PageRequest.of(pageNo, 10);
+        Pageable pageable = PageRequest.of(pageNo, 5);
         return sanPhamChiTietRepository.getPage(pageable, id);
     }
 

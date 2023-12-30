@@ -19,7 +19,7 @@ public class MaGiamGiaChiTietImpl implements MaGiamGiaChiTietService {
 
     @Override
     public Page<MaGiamGiaChiTiet> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return maGiamGiaChiTietRepositioy.findAll(pageable);
     }
 

@@ -8,7 +8,7 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
   $scope.showDropDownQuanHuyen = false;
   $scope.showDropDownPhuongXa = false;
   $scope.form_dc = {
-    diaChiMacDinh: false,
+    diaChiMacDinh: "",
     diaChiCuThe: "",
     tinhThanhPho: "",
     quanHuyen: "",
@@ -28,7 +28,6 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       .get(diaChiAPI + "/detail/" + $routeParams.id)
       .then(function (response) {
         $scope.detailAdress = response?.data;
-        console.log($scope.detailAdress);
       });
   };
   $scope.detailAdress();
@@ -80,6 +79,14 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
               $scope.detailAdress = response?.data;
             });
         });
+      $scope.detailAdress.find((diaChi) => {
+        if ($scope.form_dc.diaChiMacDinh == true) {
+          $http
+            .put(diaChiAPI + "/update-ma-dinh/" + diaChi.id, diaChi)
+            .then(function () {});
+        }
+      });
+      $scope.form_dc = null;
     } else {
       alert("them that bai");
     }
@@ -100,14 +107,10 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
         alert("cap nhat thanh cong");
       });
     $scope.detailAdress.find((diaChi) => {
-      if (diaChi.id !== idDiaChi) {
-        if ($scope.updateDC.diaChiMacDinh == true) {
-          $http
-            .put(diaChiAPI + "/update-ma-dinh/" + diaChi.id, diaChi)
-            .then(function () {
-              alert("cap nhat thanh cong");
-            });
-        }
+      if ($scope.updateDC.diaChiMacDinh == true) {
+        $http
+          .put(diaChiAPI + "/update-ma-dinh/" + diaChi.id, diaChi)
+          .then(function () {});
       }
     });
   };

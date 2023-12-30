@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,9 +41,18 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
 
     @Override
     public MaGiamGia update(MaGiamGia maGiamGia, UUID id) {
-        if (maGiamGiaRepository.existsById(id)) {
-            return maGiamGiaRepository.save(maGiamGia);
-        }
+        Optional<MaGiamGia> optional = maGiamGiaRepository.findById(id);
+        optional.map(maGiamGiaUpdate -> {
+            maGiamGiaUpdate.setTenKM(maGiamGia.getTenKM());
+            maGiamGiaUpdate.setHinhThucGiam(maGiamGia.getHinhThucGiam());
+            maGiamGiaUpdate.setGiaTriDonToiThieu(maGiamGia.getGiaTriDonToiThieu());
+            maGiamGiaUpdate.setGiaTriGiam(maGiamGia.getGiaTriGiam());
+            maGiamGiaUpdate.setNgayBatDau(maGiamGia.getNgayBatDau());
+            maGiamGiaUpdate.setNgayKetThuc(maGiamGia.getNgayKetThuc());
+            maGiamGiaUpdate.setNgaySua(maGiamGia.getNgaySua());
+            maGiamGiaUpdate.setNguoiSua(maGiamGia.getNguoiSua());
+            return maGiamGiaRepository.save(maGiamGiaUpdate);
+        }).orElse(null);
         return null;
     }
 

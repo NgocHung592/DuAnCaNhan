@@ -11,9 +11,9 @@ public interface MaGiamGiaService {
 
     Page<MaGiamGia> getAllByStatus(Integer pageNo);
 
-    MaGiamGia add(MaGiamGia khuyenMai) throws Exception;
+    MaGiamGia add(MaGiamGia maGiamGia) throws Exception;
 
-    MaGiamGia update(MaGiamGia khuyenMai, UUID id);
+    MaGiamGia update(MaGiamGia maGiamGia, UUID id);
 
     MaGiamGia detail(UUID id);
 

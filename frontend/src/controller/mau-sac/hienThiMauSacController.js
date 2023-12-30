@@ -46,6 +46,7 @@ window.hienThiMauSacController = function (
   if ($scope.message !== undefined) {
     $timeout(function () {
       $rootScope.message = undefined;
+      $scope.message = undefined;
     }, 1000);
   }
 
@@ -71,13 +72,12 @@ window.hienThiMauSacController = function (
   };
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {

@@ -42,7 +42,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public Page<KhachHang> getPage(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return khachHangRepository.getALl(pageable);
     }
 
@@ -93,6 +93,7 @@ public class KhachHangServiceImpl implements KhachHangService {
                 khachHangUpdate.setGioiTinh(khachHang.getGioiTinh());
                 khachHangUpdate.setEmail(khachHang.getEmail());
                 khachHangUpdate.setSoDienThoai(khachHang.getSoDienThoai());
+                khachHangUpdate.setAnhDaiDien(khachHang.getAnhDaiDien());
                 khachHangUpdate.setDaXoa(khachHang.getDaXoa());
                 return khachHangRepository.save(khachHangUpdate);
             }).orElse(null);
@@ -108,7 +109,7 @@ public class KhachHangServiceImpl implements KhachHangService {
             helper.setTo(khachHang.getEmail());
             helper.setSubject("Chào mừng bạn đến với cửa hàng Simple");
             helper.setText("Xin chào " + khachHang.getHoTen() + ",\n\n" +
-                    "Chúc mừng bạn đã trở thành khách hàng của cửa hàng chúng tôi.\n" +
+                    "Cảm ơn bạn đã trở thành khách hàng của cửa hàng chúng tôi.\n" +
                     "Dưới đây là một số thông tin về tài khoản của bạn:\n\n" +
                     "Mã khách hàng: " + khachHang.getMa() + "\n" +
                     "Mật khẩu: " + khachHang.getMatKhau() + "\n\n" +
@@ -122,13 +123,13 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public Page<KhachHang> loc(Integer pageNo, String trangThai) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return khachHangRepository.loc(pageable, trangThai);
     }
 
     @Override
     public Page<KhachHang> search(Integer pageNo, String keyWord) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return khachHangRepository.searchByKeyword(pageable, keyWord);
     }
 

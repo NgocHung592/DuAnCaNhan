@@ -3,6 +3,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
   $scope.listNewSanPhamChiTiet = [];
+  $scope.showSPCT = false;
 
   $scope.getSanPhamChiTiet = function () {
     $http
@@ -14,7 +15,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
           $scope.currentPage
       )
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response.data.content;
+        $scope.listSanPhamChiTiet = response?.data.content;
         console.log($scope.listSanPhamChiTiet);
         const groupedSanPham = {};
         $scope.listSanPhamChiTiet.forEach((sanPham) => {
@@ -69,31 +70,25 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
   $scope.getSanPhamChiTiet();
   $scope.selectdMauSac = function (mauSac) {
     $scope.searchMauSac = mauSac;
-    console.log($scope.searchMauSac);
-    console.log($scope.searchKichThuoc);
     $scope.listSanPhamChiTiet.filter((sanPham) => {
       if (
         sanPham.tenKichThuoc == $scope.searchKichThuoc &&
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
-        $scope.listNewSanPhamChiTiet.giaMin = sanPham.donGia;
-        console.log($scope.listNewSanPhamChiTiet.giaMin);
+        $scope.sanPhamCT = sanPham;
+        $scope.showSPCT = true;
       }
     });
   };
   $scope.selectdKichThuoc = function (kichThuoc) {
     $scope.searchKichThuoc = kichThuoc;
-    console.log($scope.searchMauSac);
-    console.log($scope.searchKichThuoc);
     $scope.listSanPhamChiTiet.filter((sanPham) => {
       if (
         sanPham.tenKichThuoc == $scope.searchKichThuoc &&
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
-        $scope.listNewSanPhamChiTiet.giaMin = sanPham.donGia;
-        $scope.listNewSanPhamChiTiet.soLuong = sanPham.soLuong;
-
-        console.log($scope.listNewSanPhamChiTiet);
+        $scope.sanPhamCT = sanPham;
+        $scope.showSPCT = true;
       }
     });
   };

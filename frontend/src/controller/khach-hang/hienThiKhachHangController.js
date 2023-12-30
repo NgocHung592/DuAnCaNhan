@@ -47,18 +47,18 @@ window.hienThiKhachHangController = function (
   if ($scope.message !== undefined) {
     $timeout(function () {
       $rootScope.message = undefined;
+      $scope.message = undefined;
     }, 1000);
   }
   function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
@@ -82,57 +82,38 @@ window.hienThiKhachHangController = function (
   }
 
   $scope.changePage = function (index) {
-    if ($scope.selectedOption === false || $scope.selectedOption === true) {
+    if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
-      $scope.loc();
-    } else if (
-      $scope.searchKeyword !== undefined &&
-      $scope.searchKeyword !== null &&
-      $scope.searchKeyword !== ""
-    ) {
-      $scope.currentPage = index;
-      $scope.search();
-    } else {
-      $scope.currentPage = index;
+      if ($scope.selectOption !== undefined) {
+        $scope.loc();
+      } else if ($scope.searchKeyword !== undefined) {
+        $scope.search();
+      }
       $scope.getKhachHang();
     }
   };
 
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.totalPages.length - 1) {
-      if ($scope.selectedOption === false || $scope.selectedOption === true) {
-        $scope.currentPage++;
+      $scope.currentPage++;
+      if ($scope.selectOption != undefined) {
         $scope.loc();
-      } else if (
-        $scope.searchKeyword !== undefined &&
-        $scope.searchKeyword !== null &&
-        $scope.searchKeyword !== ""
-      ) {
-        $scope.currentPage++;
+      } else if ($scope.searchKeyword != undefined) {
         $scope.search();
-      } else {
-        $scope.currentPage++;
-        $scope.getKhachHang();
       }
+      $scope.getKhachHang();
     }
   };
 
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
-      if ($scope.selectedOption === false || $scope.selectedOption === true) {
-        $scope.currentPage--;
+      $scope.currentPage--;
+      if ($scope.selectOption != undefined) {
         $scope.loc();
-      } else if (
-        $scope.searchKeyword !== undefined &&
-        $scope.searchKeyword !== null &&
-        $scope.searchKeyword !== ""
-      ) {
-        $scope.currentPage--;
+      } else if ($scope.searchKeyword != undefined) {
         $scope.search();
-      } else {
-        $scope.currentPage--;
-        $scope.getKhachHang();
       }
+      $scope.getKhachHang();
     }
   };
   $scope.search = function () {

@@ -40,7 +40,6 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getAll(Integer.valueOf(pageNo), UUID.fromString(id)), HttpStatus.OK);
     }
 
-
     @GetMapping("detail/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);

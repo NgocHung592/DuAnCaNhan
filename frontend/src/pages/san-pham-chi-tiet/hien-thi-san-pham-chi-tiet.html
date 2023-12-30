@@ -51,7 +51,7 @@
                                                         </label>
                                                         <input type="radio" value="true" ng-model="detailSanPham.daXoa"
                                                             ng-checked="detailSanPham.daXoa==true"
-                                                            class="form-check-input">
+                                                            class="form-check-input ms-3">
                                                         <label class="form-check-label">
                                                             Ngừng Kinh Doanh
                                                         </label>
@@ -81,7 +81,7 @@
                                     <th>Thao Tác</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet.content">
+                            <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet">
                                 <tr>
                                     <th>{{$index+1}}</th>
                                     <th><img class="table_img"
@@ -97,7 +97,7 @@
                                         {{sanPhamChiTiet.daXoa?"Ngừng kinh
                                         Doanh":"Đang Kinh Doanh"}}
                                     </th>
-                                    <th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Cập nhật">
                                         <a ng-click="detailSanPhamChiTietF($event,sanPhamChiTiet.idSanPhamChiTiet);"
                                             data-bs-toggle="modal" data-bs-target="#updateSanPhamChiTiet">
                                             <i class="align-middle me-2 fas fa-fw fa-edit"></i>
@@ -258,18 +258,14 @@
                             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
                                 data-bs-delay="1100">
                                 <div class="toast-body">
-                                    <span class="success" ng-hide="showError==false">
+                                    <span class="success">
                                         <i class="fa-solid fa-check fa-xl"></i>
-                                    </span>
-                                    <span class="icon_error" ng-hide="showError">
-                                        <i class="fa-solid fa-xmark fa-xl"></i>
                                     </span>
                                     <span class="message_error">
                                         {{message}}
                                     </span>
                                     <div id="myProgress">
-                                        <div id="success" ng-hide="showError==false"></div>
-                                        <div id="error" ng-hide="showError"></div>
+                                        <div id="success"></div>
                                     </div>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ window.hienThiSanPhamChiTietController = function (
           $scope.currentPage
       )
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response.data;
+        $scope.listSanPhamChiTiet = response?.data.content;
         console.log($scope.listSanPhamChiTiet);
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
@@ -95,6 +95,7 @@ window.hienThiSanPhamChiTietController = function (
     $http
       .put(sanPhamAPI + "/update/" + id, $scope.sanPhamUpdate)
       .then(function () {
+        $scope.message = "Cập nhật sản phẩm thành công";
         $scope.getSanPhamChiTiet();
       });
   };

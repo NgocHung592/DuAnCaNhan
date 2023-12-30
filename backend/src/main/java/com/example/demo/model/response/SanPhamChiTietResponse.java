@@ -39,4 +39,7 @@ public interface SanPhamChiTietResponse {
     @Value("#{target.ten_hoa_tiet}")
     String getTenHoaTiet();
 
+    @Value("#{target.da_xoa}")
+    Boolean getDaXoa();
+
 }

@@ -5,8 +5,8 @@ window.hienThiChatLieuController = function (
   $timeout
 ) {
   $scope.listChatLieu = [];
-  $scope.currentPage = 0;
   $scope.totalPages = [];
+  $scope.currentPage = 0;
   $scope.maxVisiblePages = 3;
 
   const toastLiveExample = document.getElementById("liveToast");
@@ -45,12 +45,12 @@ window.hienThiChatLieuController = function (
   $scope.getChatLieu();
   if ($scope.message !== undefined) {
     $timeout(function () {
+      $scope.message = undefined;
       $rootScope.message = undefined;
     }, 1000);
   }
 
   $scope.changePage = function (index) {
-    $scope.message = undefined;
     if (index >= 0) {
       $scope.currentPage = index;
       $scope.getChatLieu();
@@ -58,8 +58,6 @@ window.hienThiChatLieuController = function (
   };
 
   $scope.nextPage = function () {
-    $scope.message = undefined;
-
     let length = $scope.totalPages.length;
     if ($scope.currentPage < length - 1) {
       $scope.currentPage++;
@@ -68,7 +66,6 @@ window.hienThiChatLieuController = function (
   };
 
   $scope.previousPage = function () {
-    $scope.message = undefined;
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
       $scope.getChatLieu();
@@ -77,13 +74,12 @@ window.hienThiChatLieuController = function (
   function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var range = $scope.maxVisiblePages;
     var curPage = $scope.currentPage;
 
     var numberTruncateLeft = curPage - Math.floor(range / 2);
     var numberTruncateRight = curPage + Math.floor(range / 2);
 
-    // Tạo danh sách trang hiển thị
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {

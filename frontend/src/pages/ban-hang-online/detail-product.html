@@ -11,8 +11,11 @@
                                     <div class="carousel-inner">
                                         <div class="carousel-item " ng-class="{'active': $index===0}"
                                             data-bs-interval="3000" ng-repeat="hinhAnh in sanPhamChiTiet.duongDan">
-                                            <img src="../../../assets/anh-san-pham/{{hinhAnh}}" class="d-block w-100"
-                                                alt="...">
+                                            <img ng-if="!showSPCT" src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                                                class="d-block w-100">
+                                            <img ng-if="showSPCT"
+                                                src="../../../assets/anh-san-pham/{{sanPhamCT.duongDan}}"
+                                                class="d-block w-100">
                                         </div>
 
                                     </div>
@@ -117,7 +120,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-md-6 midle">
-                                                    <p>{{sanPhamChiTiet.soLuong}} sản phẩm có sẵn trong cửa hàng</p>
+                                                    <p>{{sanPhamCT.soLuong}} sản phẩm có sẵn trong cửa hàng</p>
                                                 </div>
                                             </div>
 

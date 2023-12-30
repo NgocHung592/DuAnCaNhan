@@ -1,8 +1,10 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.SanPham;
+import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.response.SanPhamMoi;
 import com.example.demo.model.response.SanPhamReponse;
+import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.repository.SanPhamRepository;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Autowired
     private SanPhamRepository sanPhamRepository;
+    @Autowired
+    private SanPhamChiTietRepository sanPhamChiTietRepository;
 
 
     @Override
@@ -60,6 +64,7 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public SanPham update(SanPham sanPham, UUID id) {
         Optional<SanPham> optional = sanPhamRepository.findById(id);
+        List<SanPhamChiTiet> sanPhamChiTietList = sanPhamChiTietRepository.getAllBySanPham(id);
         if (optional.isPresent()) {
             optional.map(sanPhamUpdate -> {
                 sanPhamUpdate.setTen(sanPham.getTen());
@@ -69,6 +74,11 @@ public class SanPhamServiceImpl implements SanPhamService {
                 sanPhamUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
                 return sanPhamRepository.save(sanPhamUpdate);
             }).orElse(null);
+            System.out.println(sanPhamChiTietList);
+           sanPhamChiTietList.forEach(sanPhamChiTiet -> {
+               sanPhamChiTiet.setDaXoa(sanPham.getDaXoa());
+               sanPhamChiTietRepository.save(sanPhamChiTiet);
+           });
         }
         return null;
     }
