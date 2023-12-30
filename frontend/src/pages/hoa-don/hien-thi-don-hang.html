@@ -3,7 +3,80 @@
     <div class="container-fluid p-0">
       <div class="row">
         <h1>Chi tiết đơn</h1>
-        <div class="card flex-fill">
+        <!-- <div class="card flex-fill">
+          <div class="tab-content mt-2">
+            <div ng-repeat="hoaDon in listHoaDon" class="tab-pane"
+                ng-class="{ 'active': isSelectedTab(hoaDon) }">
+                <table class="table align-self-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ảnh sản phẩm</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
+                        <tr>
+                            <th scope="row">{{$index+1}}</th>
+                            <th scope="row"><img class="table_img"
+                                    src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
+                                    alt="Không có ảnh">
+                            </th>
+                            <th scope="row">{{hoaDonChiTiet.tenSanPham}} [
+                                {{hoaDonChiTiet.tenMauSac}} -
+                                {{hoaDonChiTiet.tenKichThuoc}} ]</th>
+                            <th scope="row">
+                                <input type="number" ng-model="hoaDonChiTiet.soLuong"
+                                    id="liveToastBtn"
+                                    ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                                    class="form-control form-control-sm"
+                                    style="width: 100px; height: 30px;" />
+                            </th>
+                            <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
+                            <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
+
+                            <th data-toggle="tooltip" data-placement="top" title="Xóa">
+                                <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="listHoaDonChiTiet.length===0">
+                    <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                    <p class="dataTables_empty_lable">
+                        No Data
+                    </p>
+                </div>
+                <nav aria-label="Page navigation example " ng-if="listHoaDonChiTiet.length!==0">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" ng-click="previousPageHDCT()">
+                                <span aria-hidden="true">
+                                    << </span>
+                            </a>
+                        </li>
+                        <li class="page-item" ng-repeat="page in totalPagesHDCT track by $index"
+                            ng-class="{'active': $index === currentPageHDCT} "
+                            ng-click="changePageHDCT($index);">
+                            <a class="page-link">{{$index+1}}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" ng-click="nextPageHDCT()">>></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div> -->
+          <button class="btn btn-warning" ng-click="changeState()" ng-class="{'state-pending': formHoaDon.trangThai === '0', 'state-paid': formHoaDon.trangThai === '1', 'state-shipped': formHoaDon.trangThai === '2', 'state-delivered': formHoaDon.trangThai === '3'}">{{formHoaDon.trangThai==0?"Xác nhận
+            đơn":formHoaDon.trangThai==1?"Chuẩn bị
+            hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}</button>
           <br />
   </section>
   <section>
@@ -20,14 +93,14 @@
                   <div class="row">
                     <div class="col-3">Trạng thái</div>
                     <div class="col-9">
-                      <!-- <button class="btn btn-warning">
+                      <button class="btn btn-warning">
                         {{formHoaDon.trangThai==0?"Xác nhận
                         đơn":formHoaDon.trangThai==1?"Chuẩn bị
                         hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}
-                      </button> -->
-                      <button class="btn btn-warning">
-                        {{formHoaDon.trangThai==0?"Đang chờ":"Đã duyệt"}}
                       </button>
+                      <!-- <button class="btn btn-warning">
+                        {{formHoaDon.trangThai==0?"Đang chờ":"Đã duyệt"}}
+                      </button> -->
                     </div>
                   </div>
                 </div>
@@ -44,7 +117,7 @@
                   <div class="row">
                     <div class="col-3">Loại</div>
                     <div class="col-9">
-                      <button class="btn btn-warning">{{formHoaDon.loai_hoa_don}}</button>
+                      <button class="btn btn-warning">{{formHoaDon.loaiHoaDon}}</button>
                     </div>
                   </div>
                 </div>
@@ -108,7 +181,9 @@
                 <th scope="row">{{formHoaDon.tongTien}}</th>
                 <th scope="row">{{formHoaDon.ngayThanhToan | date: 'dd/MM/yyyy hh:mm a'}}</th>
                 <th scope="row">
-                  {{formHoaDon.trangThai==0?"Đang chờ":"Đã duyệt"}}
+                  {{formHoaDon.trangThai==0?"Xác nhận
+            đơn":formHoaDon.trangThai==1?"Chuẩn bị
+            hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}
                 </th>
                 <th scope="row">Phí ship: {{formHoaDon.phiShip}} VNĐ</th>
                 <th>

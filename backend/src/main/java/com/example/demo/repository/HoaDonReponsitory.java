@@ -36,4 +36,12 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
                                                                 hd.ma like %:search% or hd.ten_khach_hang like %:search% or hd.loai_hoa_don like %:search% or hd.tong_tien like %:search%
                                                                 order by hd.ngay_tao desc """, nativeQuery = true)
     Page<HoaDonRepone> searchByKeyword(Pageable pageable, @Param("search") String search);
+
+    @Query(value = """
+            select * from hoa_don hd
+            where trang_thai = ?1
+            group by hd.id, hd.ma, hd.ten_khach_hang, hd.loai_hoa_don, hd.tong_tien, hd.trang_thai, hd.ngay_dat_hang , hd.ngay_tao
+            ORDER BY hd.ngay_dat_hang DESC;        
+            """, nativeQuery = true)
+    Page<HoaDonRepone> loc(Pageable pageable, String trangThai);
 }

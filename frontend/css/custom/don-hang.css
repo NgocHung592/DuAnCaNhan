@@ -126,3 +126,27 @@ button {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+.tab.active {
+  background-color: #fff;
+  border-color: #333;
+}
+
+.tab-content {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.state-pending {
+  background-color: yellow;
+  color: black;
+}
+
+.state-paid {
+  background-color: green;
+  color: white;
+}
+
+.state-shipped {
+  background-color: blue;
+  color: white;
+}

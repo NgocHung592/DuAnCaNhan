@@ -20,6 +20,20 @@ window.DonHangController = function ($http, $scope, $routeParams) {
     if (response.status == 200) {
       $scope.formHoaDon = response.data;
       console.log("response.data", response.data);
+      $scope.changeState = function () {
+        // Đổi trạng thái hóa đơn theo một logic nào đó
+        switch ($scope.formHoaDon.trangThai) {
+          case 0:
+            $scope.formHoaDon.trangThai = 1;
+            break;
+          case 1:
+            $scope.formHoaDon.trangThai = 2;
+            break;
+          case 2:
+            $scope.formHoaDon.trangThai = 3;
+            break;
+        }
+      };
     }
   });
   // $scope.getLichSuDonHang = function (id) {
