@@ -43,7 +43,7 @@
                                                 {{sanPhamChiTiet.tenCoAo}}</h1>
 
                                         </div>
-                                        <div class="product-price" id="price-preview">
+                                        <div ng-if="!showSPCT" class="product-price" id="price-preview">
 
                                             <span class="pro-price"
                                                 ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin
@@ -54,6 +54,12 @@
                                                 ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin
                                                 |
                                                 number}}₫</span>
+                                        </div>
+                                        <div ng-if="showSPCT" class="product-price" id="price-preview">
+                                            <span class="pro-price">{{sanPhamCT.donGia
+                                                |
+                                                number}}₫</span>
+
                                         </div>
                                         <div class="select-swatch clearfix">
 

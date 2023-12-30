@@ -76,6 +76,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
         $scope.sanPhamCT = sanPham;
+        console.log(sanPham);
         $scope.showSPCT = true;
       }
     });
@@ -88,6 +89,7 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
         $scope.sanPhamCT = sanPham;
+        console.log(sanPham);
         $scope.showSPCT = true;
       }
     });
