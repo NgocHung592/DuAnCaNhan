@@ -31,7 +31,7 @@ public class GioHangServiceImpl implements GioHangService {
     private TaiKhoanRepository taiKhoanRepository;
     @Override
     @Transactional
-    public void GioHang(UUID sanPhamChiTietId, UUID khachHangId, int soLuong) {
+    public void GioHang(UUID sanPhamChiTietId, UUID khachHangId, Integer soLuong) {
         // Lấy thông tin khách hàng từ khóa chính (ID).
         KhachHang khachHang = getKhachHangById(khachHangId);
 
@@ -66,12 +66,14 @@ public class GioHangServiceImpl implements GioHangService {
             gioHangChiTietRepository.save(gioHangChiTiet);
         } else {
             // Nếu sản phẩm chi tiết chưa tồn tại trong giỏ hàng chi tiết, tạo mới đối tượng GioHangChiTiet.
+
             gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setSoLuong(soLuongMoi);
-            gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia());
+            gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia().multiply(BigDecimal.valueOf(soLuongMoi)));
             gioHangChiTiet.setGioHang(gioHang);
             gioHangChiTiet.setSanPhamChiTiet(sanPhamChiTiet);
             gioHangChiTietRepository.save(gioHangChiTiet);
+
         }
 
         // Liên kết đối tượng GioHang với khách hàng và lưu đối tượng GioHang.

@@ -21,12 +21,16 @@ public class GioHangController {
     private GioHangService gioHangService;
 
     @PostMapping("them")
-    public ResponseEntity<?> themSanPhamVaKhachHangVaoGioHang(@RequestBody GioHangRequset request)
-    {
-        gioHangService.GioHang(request.getSanPhamChiTietId(),request.getKhachHangId(),request.getSoLuong());
+    public ResponseEntity<Map<String, Object>> themSanPhamVaKhachHangVaoGioHang(@RequestBody GioHangRequset request) {
+        gioHangService.GioHang(request.getSanPhamChiTietId(), request.getKhachHangId(), request.getSoLuong());
 
-        return ResponseEntity.ok("San pham va khach hang da duoc them vao gio hang.");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Sản phẩm đã được thêm vào giỏ hàng ");
+
+        return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("xoa")
     public ResponseEntity<?> xoaGioHang(@RequestParam UUID gioHangId) {
         gioHangService.Xoa(gioHangId);

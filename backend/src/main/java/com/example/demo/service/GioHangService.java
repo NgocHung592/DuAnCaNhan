@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GioHangService {
-    void GioHang(UUID sanPhamChiTietId, UUID khachHangId,int soLuong);
+    void GioHang(UUID sanPhamChiTietId, UUID khachHangId,Integer soLuong);
     void Xoa(UUID gioHangId);
     KhachHang getKhachHangById(UUID id);
     List<GioHangChiTietReponse> getAll(UUID id);

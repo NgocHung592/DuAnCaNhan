@@ -7,16 +7,22 @@ window.GioHangController = function (
   $window,
   $rootScope
 ) {
+  // $scope.dataFromGioHang = "Dữ liệu từ GioHangController";
+
   if (!$rootScope.idKhachHang) {
     console.error("idKhachHang is not set in $rootScope.");
     return;
   }
+
   $scope.idKhachHang = $rootScope.idKhachHang;
+  console.log("id khach hang:", $rootScope.idKhachHang);
   $http
     .get(gioHangAPI + "/hien-thi/" + $scope.idKhachHang)
     .then(function (response) {
       $scope.gioHangList = response.data;
       console.log("response.data", response.data);
+      $scope.dataFromGioHang = $scope.gioHangList.length;
+      $rootScope.$emit("dataFromGioHang", $scope.gioHangList.length);
       $rootScope.soLuongGioHangList = $scope.gioHangList.length;
       console.log("so luong gio hang:", $rootScope.soLuongGioHangList);
 

@@ -1,4 +1,9 @@
-window.detailSanPhamController = function ($scope, $http, $routeParams) {
+window.detailSanPhamController = function (
+  $scope,
+  $http,
+  $routeParams,
+  $rootScope
+) {
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
@@ -76,7 +81,12 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
         $scope.sanPhamCT = sanPham;
-        console.log(sanPham);
+        console.log("list spct", sanPham);
+        $scope.idSPCT = sanPham.idSanPhamChiTiet;
+        console.log("id san pham chi tiet:", $scope.idSPCT);
+        $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
+        $scope.soLuongSp = sanPham.soLuong;
+        console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
       }
     });
@@ -88,9 +98,55 @@ window.detailSanPhamController = function ($scope, $http, $routeParams) {
         sanPham.tenKichThuoc == $scope.searchKichThuoc &&
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
+        $scope.idSPCT = sanPham.idSanPhamChiTiet;
+        console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.sanPhamCT = sanPham;
-        console.log(sanPham);
+        console.log("list spct", sanPham);
+        $scope.soLuongSp = sanPham.soLuong;
+        $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
+        console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
+      }
+    });
+  };
+  if (!$rootScope.idKhachHang) {
+    console.error("idKhachHang is not set in $rootScope.");
+    return;
+  }
+  $scope.idKhachHang = $rootScope.idKhachHang;
+  console.log("id:", $rootScope.idKhachHang);
+  $scope.goiHang = {
+    sanPhamChiTietId: $scope.idSPCT,
+    khachHangId: $scope.idKhachHang,
+    soLuong: 1,
+  };
+
+  $scope.incrementQuantity = function () {
+    console.log("Incrementing quantity");
+    $scope.goiHang.soLuong++;
+  };
+
+  $scope.decrementQuantity = function () {
+    console.log("Decrementing quantity");
+    if ($scope.goiHang.soLuong > 1) {
+      $scope.goiHang.soLuong--;
+    }
+  };
+  $scope.addGioHang = function () {
+    $http.post(gioHangAPI + "/them", $scope.goiHang).then(function (response) {
+      if (response.data && typeof response.data === "object") {
+        if (response.data.status === "success") {
+          // Hiển thị thông báo thành công
+          alert(response.data.message);
+        } else {
+          // Hiển thị thông báo lỗi
+          alert(
+            "Có lỗi xảy ra khi thêm vào giỏ hàng: " + response.data.message
+          );
+        }
+      } else {
+        // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
+        alert("Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ.");
       }
     });
   };
