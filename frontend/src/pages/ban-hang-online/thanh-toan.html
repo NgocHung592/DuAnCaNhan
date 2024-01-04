@@ -1,72 +1,290 @@
 <main class="wrapperMain_content">
-    <div id="layout-cart">
-        <div class="wrapper-mainCart">
-          <div class="content-bodyCart">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-8 col-sm-12 col-xs-12 contentCart-detail">
-                  <div class="mainCart-detail">
-                    <div class="heading-cart">
-                        <h1>8YO Studio</h1>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#gio-hang">Giỏ hàng</a>
-                            </li>
-                            
-                                <li class="breadcrumb-item breadcrumb-item-current">
-                                    Thông tin giao hàng
-                                </li>
-                            
-                        </ul>
+  <div id="layout-cart">
+    <div class="wrapper-mainCart">
+      <div class="content-bodyCart">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12 contentCart-detail">
+              <div class="mainCart-detail">
+                <div class="heading-cart">
+                  <h1>8YO Studio</h1>
+                  <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="#gio-hang">Giỏ hàng</a>
+                    </li>
+
+                    <li class="breadcrumb-item breadcrumb-item-current">
+                      Thông tin giao hàng
+                    </li>
+                  </ul>
+                </div>
+                <div class="list-pageform-cart">
+                  <form id="cartformpage">
+                    <h5>Thông tin giao hàng</h5>
+                    <br />
+                    <span>Bạn đã có tài khoản?</span
+                    ><a href="#login">Đăng nhập</a>
+                    <br />
+                    <br />
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        placeholder="Họ và Tên "
+                        class="form-control"
+                      />
                     </div>
-                    <div class="list-pageform-cart">
-                      <form id="cartformpage">
-                        <h5>Thông tin giao hàng</h5>
-                        <br>
-                        <span>Bạn đã có tài khoản?</span><a href="#login">Đăng nhập</a>
-                        <br>
-                        <br>
-                        <div class="mb-3">
-                          <input type="text" placeholder="Họ và Tên " class="form-control" >
+                    <div class="mb-3">
+                      <div class="row mb-3">
+                        <div class="col-md-8">
+                          <input
+                            type="email"
+                            placeholder="Email"
+                            class="form-control"
+                          />
                         </div>
-                        <div class="mb-3">
-                          <div class="row mb-3">
-                          <div class="col-md-8">
-                            <input type="email" placeholder="Email" class="form-control" >
+                        <div class="col-md-4">
+                          <input
+                            type="number"
+                            placeholder="Số điện thoại"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          placeholder="Địa chỉ"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <div class="row mb-3">
+                          <div class="col-md-4">
+                            <select
+                              class="form-control"
+                              id="customer_shipping_province"
+                              name="customer_shipping_province"
+                            >
+                              <option data-code="null" value="null" selected="">
+                                Chọn tỉnh / thành
+                              </option>
+                            </select>
                           </div>
                           <div class="col-md-4">
-                            <input type="number" placeholder="Số điện thoại" class="form-control" >
+                            <select
+                              class="form-control"
+                              id="customer_shipping_district"
+                              name="customer_shipping_district"
+                            >
+                              <option data-code="null" value="null" selected="">
+                                Chọn quận / huyện
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-4">
+                            <select
+                              class="form-control"
+                              id="customer_shipping_ward"
+                              name="customer_shipping_ward"
+                            >
+                              <option data-code="null" value="null" selected="">
+                                Chọn phường / xã
+                              </option>
+                            </select>
                           </div>
                         </div>
-                        <div class="mb-3">
-                          <input type="text" placeholder="Địa chỉ" class="form-control" >
+                      </div>
+                    </div>
+                    <h5>Phương thức vận chuyển</h5>
+                    <div class="border">
+                      <div class="content-box blank-slate">
+                        <div class="row text-center">
+                          <div><br /></div>
+                          <i class="fas fa-shipping-fast shipping-icon"></i>
+                          <p>Phương thức vận chuyển.</p>
                         </div>
+                      </div>
+                    </div>
+                    <br />
+                    <h5>Phương thức thanh toán</h5>
+                    <div class="border">
+                      <div class="radio-input payment-method-checkbox">
+                        <div class="radio-content-input">
+                          <div class="row mb-3">
+                            <div><br /></div>
 
+                            <div class="col-md-1 text-center">
+                              <input
+                                type-id="1"
+                                id="payment_method_id_1002905878"
+                                class="input-radio"
+                                name="payment_method_id"
+                                type="radio"
+                                value="1002905878"
+                                checked=""
+                              />
+                            </div>
+                            <div class="col-md-8">
+                              <img
+                                class="main-img"
+                                src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=6"
+                              />
 
+                              <span class="radio-label-primary"
+                                >Thanh toán khi giao hàng (COD)</span
+                              >
+                            </div>
+                          </div>
                         </div>
-                      </form>
+                      </div>
+                    </div>
+                    <br />
+                    <button type="button" class="btn btn-primary">
+                      Hoàn tất đơn hàng
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12 sidebarCart-sticky">
+              <div class="mainCart-sidebar wrap-order-summary">
+                <div class="order-summary-block">
+                  <h2 class="summary-title">Thông tin đơn hàng</h2>
+                  <form id="cartformpage">
+                    <div class="cart-row">
+                      <div class="table-cart" ng-repeat="item in gioHangList">
+                        <div
+                          class="media-line-item line-item"
+                          data-variant-id="1116772352"
+                          data-product-id="1051838542"
+                        >
+                          <div class="media-left">
+                            <div class="item-img">
+                              <img
+                                src="../../../assets/anh-san-pham/{{item.duongDan}}"
+                                alt="8YO MÃ ĐÁO THÀNH CÔNG ART TEE"
+                              />
+                            </div>
+                          </div>
+                          <div class="media-right">
+                            <div class="item-info">
+                              <h3 class="item--title">
+                                <a
+                                  href="/products/8yo-ma-dao-thanh-cong-art-tee"
+                                >
+                                  {{item.tenSanPham}} {{item.tenChatLieu}}
+                                  {{item.tenPhongCach}} {{item.tenTayAo}}
+                                  {{item.tenCoAo}} {{item.tenHoaTiet}}</a
+                                >
+                              </h3>
+
+                              <div class="item--variant">
+                                <span>
+                                  {{item.tenMauSac}} /
+                                  {{item.tenKichThuoc}}</span
+                                >
+                              </div>
+                            </div>
+                            <div class="item-price">
+                              <p>
+                                <span> {{item.donGiaSp | number:0}}₫</span>
+
+                                <!-- <del>350,000₫</del> -->
+                              </p>
+                            </div>
+                          </div>
+                          <div class="media-total">
+                            <div class="item-total-price">
+                              <span class="line-item-total"
+                                >{{item.donGia}}₫</span
+                              >
+                            </div>
+
+                            <div class="item-qty">
+                              <div
+                                class="qty quantity-partent qty-click clearfix"
+                              >
+                                <input
+                                  ng-model="item.soLuong"
+                                  type="text"
+                                  size="4"
+                                  name="updates[]"
+                                  min="1"
+                                  class="tc line-item-qty item-quantity"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <div class="summary-total">
+                    <div class="row">
+                      <div class="dropdown-container col-md-11 mb-4">
+                        <input
+                          type="text"
+                          ng-model="searchKeyword"
+                          placeholder="Tìm kiếm theo mã, tên"
+                          ng-click="toggleVoucher($event)"
+                          class="form-control"
+                        />
+                        <ul ng-show="showDropDownVoucher" id="dropDownVoucher">
+                          <li
+                            ng-repeat="maGiamGia in listMaGiamGia"
+                            ng-click="selectedVoucher($index,maGiamGia)"
+                          >
+                            <span> {{maGiamGia.ma}} </span>
+                            <span class="text-end"> {{maGiamGia.tenKM}} </span>
+                            <br />
+                            <span
+                              >Giảm: {{ maGiamGia.hinhThucGiam === 0 ?
+                              (maGiamGia.giaTriGiam | number) + ' VND' :
+                              maGiamGia.giaTriGiam + ' %' }}
+                            </span>
+                            <span>Số lượng: {{maGiamGia.soLuong}}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="title">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <p>Tiền Hàng</p>
+                        <p>Phí Vận Chuyển</p>
+                        <p>Giảm Giá</p>
+                      </div>
+                      <div class="col-md-3"></div>
+                      <div class="col-md-4">
+                        <p>
+                          {{ tienHang ? (tienHang | number) + ' VNĐ' : '0 VNĐ'
+                          }}
+                        </p>
+                        <p ng-if="show">
+                          {{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' :
+                          '0 VNĐ' }}
+                        </p>
+                        <p>
+                          {{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-sm-12 col-xs-12 sidebarCart-sticky">
-                  <div class="mainCart-sidebar wrap-order-summary">
-                    <div class="order-summary-block">
-                      <h2 class="summary-title">Thông tin đơn hàng</h2>
-    
-                      <div class="summary-total">
-                        
+                <div class="order-summary-block order-summary-notify">
+                  <div class="summary-warning alert-order">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <p>Tổng Số Tiền</p>
                       </div>
-                      <div class="summary-action">
-                       
-    
-                        <div class="summary-button">
-                         
-                        </div>
-                      </div>
-                    </div>
-                    <div class="order-summary-block order-summary-notify">
-                      <div class="summary-warning alert-order">
-                        
+                      <div class="col-md-3"></div>
+                      <div class="col-md-4">
+                        <p>
+                          {{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ'
+                          }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -75,4 +293,7 @@
             </div>
           </div>
         </div>
-      </div></main>
+      </div>
+    </div>
+  </div>
+</main>
