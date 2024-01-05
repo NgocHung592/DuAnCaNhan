@@ -211,6 +211,7 @@
                                   name="updates[]"
                                   min="1"
                                   class="tc line-item-qty item-quantity"
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -259,12 +260,10 @@
                       <div class="col-md-3"></div>
                       <div class="col-md-4">
                         <p>
-                          {{ tienHang ? (tienHang | number) + ' VNĐ' : '0 VNĐ'
-                          }}
+                          <span>{{tongGiaTri | number:0}}₫</span>
                         </p>
-                        <p ng-if="show">
-                          {{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' :
-                          '0 VNĐ' }}
+                        <p >
+                          {{'30,000 VNĐ' }}
                         </p>
                         <p>
                           {{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}
@@ -282,8 +281,7 @@
                       <div class="col-md-3"></div>
                       <div class="col-md-4">
                         <p>
-                          {{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ'
-                          }}
+                          <span>{{tongGiaTri | number:0}}₫ </span>
                         </p>
                       </div>
                     </div>

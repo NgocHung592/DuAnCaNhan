@@ -4,7 +4,7 @@
         <div class="wrapper-mainCollection">
             <div class="collection-heading">
                 <div class="container">
-                    <div class="bgwhite-heading">
+                    <div class="bgwhite-heading border ">
                         <div class="flexbox-heading">
                             <div class=" col-md-9  col-sm-12 col-xs-12">
                                 <h1 class="title">Tất cả sản phẩm</h1>
@@ -371,51 +371,16 @@
                                 </span>
                             </div>
 
-                            <div class="filter_tags filter_tags_remove_all"><span>Xóa hết </span></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            
             <div class="collection-listproduct" id="collection-body">
                 <div class="container">
                     <div class="wraplist-collection ">
                         <div class="listProduct-row listProduct-resize listProduct-filter">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                             <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="topSanPham in listTopSanPham" data-id="1114414061">
@@ -423,16 +388,23 @@
                                 <div class="proloop-image ">
                                     <div class="product--image image-resize">
                                         <div class="product--image__inner">
-                                            <div class="prod-img first-image">
+                                            <div class="">
+                                                <div id="carouselExampleSlidesOnly" class="carousel slide"
+                                                    data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                        <div class="carousel-item " ng-class="{'active': $index===0}"
+                                                            data-bs-interval="2000"
+                                                            ng-repeat="hinhAnh in topSanPham.duongDan">
+                                                            <a href="#/detail-product/{{topSanPham.idSanPham}}">
+                                                                <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                                                                    class="d-block w-100" alt="...">
+                                                                    <div class="prod-img second-image hovered-img hidden-xs">
+                                                                        <img class="hover img-loop " src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
+                                                                </div>                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                                <img class=" img-loop "
-                                                     src="../../assets/anh-san-pham/{{topSanPham.duongDan}}">
-
-                                            </div>
-                                            <div class="prod-img second-image hovered-img hidden-xs">
-                                                <a href="#/detail-product/{{topSanPham.idSanPham}}">
-                                                    <img class="hover img-loop " src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
-                                                </a>
                                             </div>
 
                                         </div>
