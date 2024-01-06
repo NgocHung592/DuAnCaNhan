@@ -27,7 +27,7 @@ public class TaiKhoanController {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @PostMapping("login")
+    @PostMapping("loginfake")
     public ResponseEntity<?> login(@RequestBody KhachHang khachHang) {
         KhachHang existingUser = taiKhoanService.login(khachHang.getEmail());
 
@@ -37,6 +37,21 @@ public class TaiKhoanController {
             return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
         }
 
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> loginreal(@RequestBody KhachHang khachHang) {
+        String emailOrPhone = khachHang.getEmail();
+        String password = khachHang.getMatKhau();
+
+        KhachHang authenticatedUser = taiKhoanService.loginreal(emailOrPhone, password);
+
+        if (authenticatedUser != null) {
+            // Đăng nhập thành công, trả về thông tin khách hàng
+            return new ResponseEntity<>(authenticatedUser, HttpStatus.OK);
+        } else {
+            // Đăng nhập thất bại
+            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping("forgot-password")
