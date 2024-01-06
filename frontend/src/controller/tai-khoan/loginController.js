@@ -2,7 +2,7 @@ angular
   .module("myApp")
   .controller(
     "loginController",
-    function ($http, $scope, $window, $route, $rootScope, $location) {
+    function ($http, $scope, $window, $route, $rootScope, $location, $timeout) {
       $scope.user = {
         email: "",
         matKhau: "",
@@ -67,6 +67,9 @@ angular
               $scope.list = response.data;
               $scope.isLoggedIn = true;
               $location.path("/trang-chu");
+              $timeout(function () {
+                $window.location.reload();
+              }, 0);
 
               localStorage.setItem("loggedInUser", JSON.stringify($scope.list));
             } else {
