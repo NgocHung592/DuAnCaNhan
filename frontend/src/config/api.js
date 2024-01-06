@@ -27,17 +27,21 @@ window.khachHangAPI = url + "/khach-hang";
 
 window.magiamgiaAPI = url + "/ma-giam-gia";
 
+window.maGiamGiaChiTietAPI = url + "/ma-giam-gia-chi-tiet";
+
 window.nhanVienAPI = url + "/nhan-vien";
 
 window.thuChiAPI = url + "/thu-chi";
 
 window.gioHangAPI = url + "/gio-hang";
 
-window.thanhtoanAPI = url+ "/thanh-toan-onl";
+window.thanhtoanAPI = url + "/thanh-toan-onl";
 
 window.hangKhachHangAPI = url + "/hang-khach-hang";
 
 window.vaiTroAPI = url + "/vai-tro";
+
+window.hinhThucThanhToanAPI = url + "/hinh-thuc-thanh-toan";
 
 window.diaChiAPI = url + "/api/v1/dia-chi";
 

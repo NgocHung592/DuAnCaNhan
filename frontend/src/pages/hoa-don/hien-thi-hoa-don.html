@@ -1,182 +1,115 @@
-<!-- <main class="content">
-  <div class="container-fluid p-0">
-    <div class="row">
-      <div class="card flex-fill">
-        <div class="card-header">
-          <h5 class="card-title mb-0">Hóa đơn</h5>
-        </div>
-        <div class="card-body d-flex">
-          <div class="align-self-center w-100">
-            <form>
-              <div class="mb-3">
-                <label class="form-label">Mã hóa đơn</label>
-                <input type="text" class="form-control" aria-describedby="emailHelp" ng-model="formHoaDon.ma" />
-              </div>
-              <div class="mb-3" class="form-check">
-                <label class="form-label">Trạng thái</label><br />
-                <input type="radio" value="1" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==0"
-                  class="form-check-input" />
-                <label class="form-check-label"> Xác nhận đơn </label>
-                <input type="radio" value="0" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==1"
-                  class="form-check-input" />
-                <label class="form-check-label"> Chuẩn bị hàng </label>
-                <input type="radio" value="2" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==2"
-                  class="form-check-input" />
-                <label class="form-check-label"> Đang giao </label>
-                <input type="radio" value="3" ng-model="formHoaDon.trangThai" ng-checked="formHoaDon.trangThai==3"
-                  class="form-check-input" />
-                <label class="form-check-label"> Đã giao </label>
-              </div>
-            </form>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <a type="button" class="btn btn-primary" ng-click="add()">Add</a>
-              <a type="button" class="btn btn-primary" ng-click="update(formHoaDon.id)">Update</a>
-            </div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Mã</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody ng-repeat="hoaDon in listHoaDon.content">
-                <tr>
-                  <th scope="row">{{$index+1}}</th>
-                  <th scope="row">{{hoaDon.ma}}</th>
-                  <th scope="row">
-                    {{hoaDon.trangThai==0?"Xác nhận đơn":1?"Chuẩn bị hàng":2?"Đang giao":"Đã giao"}}
-                  </th>
-                  <th>
-                    <a type="button" class="btn btn-warning" ng-click="detail(hoaDon.id)">Detail</a>
-                    <a type="button" class="btn btn-danger" ng-click="delete(hoaDon.id)">Delete</a>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main> -->
 <main class="content">
   <div class="container-fluid p-0">
     <div class="row">
       <div class="card flex-fill">
-        <div class="card-header">
-          <h5 class="card-title mb-0">Hóa đơn</h5>
-        </div>
         <div class="card-body d-flex">
           <div class="align-self-center w-100">
-            <div class="search-and-radio-container">
-              <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input
-                  type="text"
-                  ng-model="searchKeyword"
-                  placeholder="Tìm kiếm theo mã, tên khách hàng, loại hóa đơn, tổng tiền"
-                  class="search-input"
-                  style="width: 350px; padding: 6px"
-                />
-              </div>
-
-              <div class="radio-container">
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  ng-change="getData()"
-                  required
-                  id="option-all"
-                />
-                <label for="option-all">Tất cả</label>
-
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  value="1"
-                  ng-change="searchTT()"
-                  id="option-active"
-                  checked
-                />
-                <label for="option-active">Đang hoạt động</label>
-
-                <input
-                  type="radio"
-                  ng-model="selectedOption"
-                  value="2"
-                  ng-change="searchTT()"
-                  id="option-inactive"
-                />
-                <label for="option-inactive">Đã khóa</label>
+            <h4 class="mb-4">DANH SÁCH ĐƠN HÀNG</h4>
+            <div class="container mb-5">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a ng-click="selectTab(null)" class="nav-link" ng-class="{ 'active': isSelectedTab(null) }">
+                    Tất cả
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a ng-click="selectTab(0)" class="nav-link" ng-class="{ 'active': isSelectedTab(0) }">
+                    Chờ xác nhận
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a ng-click="selectTab(1)" class="nav-link" ng-class="{ 'active': isSelectedTab(1) }">
+                    Chờ giao hàng
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a ng-click="selectTab(2)" class="nav-link" ng-class="{ 'active': isSelectedTab(2) }">
+                    Đang giao hàng
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a ng-click="selectTab(3)" class="nav-link" ng-class="{ 'active': isSelectedTab(3) }">
+                    Hoàn thành
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content mt-4">
+                <div class="tab-pane"
+                  ng-class="{ 'active': isSelectedTab(null) || isSelectedTab(0) || isSelectedTab(2) || isSelectedTab(3) || isSelectedTab(1)  }">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Mã đơn hàng</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Loại hóa đơn</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="hoaDon in listHoaDon">
+                      <tr>
+                        <th scope="row">{{customIndex +$index+1}}</th>
+                        <th scope="row">{{hoaDon.ma}}</th>
+                        <th scope="row">{{hoaDon.tenKhachHang}}</th>
+                        <th scope="row">{{hoaDon.soDienThoai}}</th>
+                        <th scope="row">{{hoaDon.loaiHoaDon}}</th>
+                        <th scope="row">
+                          {{hoaDon.ngayTao | date:'dd/MM/yyyy hh:mm a'}}
+                        </th>
+                        <th scope="row">{{hoaDon.tongTien ?(hoaDon.tongTien | number) +' VND': '0 VND'}}</th>
+                        <th>
+                          <a data-toggle="tooltip" data-placement="top" title="Chi tiết đơn hàng"
+                            href="#hoa-don/update/{{hoaDon.id}}">
+                            <i class="align-middle me-2 fas fa-fw fa-edit"></i></a>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div ng-if="listHoaDon.length === 0">
+                    <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                    <p class="dataTables_empty_lable">
+                      No Data
+                    </p>
+                  </div>
+                  <nav aria-label="Page navigation example" ng-if="listHoaDon.length !== 0">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        <a class="page-link" ng-click="previousPage()" aria-label="Previous">
+                          <span aria-hidden="true">
+                            << </span>
+                        </a>
+                      </li>
+                      <li class="page-item" ng-repeat="page in visiblePages"
+                        ng-class="{ 'active': page.active === 'active' }">
+                        <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                          }}</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" ng-click="nextPage()"> >> </a>
+                      </li>
+                    </ul>
+                    <p>Tổng số trang: {{ totalPages.length }}</p>
+                  </nav>
+                </div>
               </div>
             </div>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Mã đơn hàng</th>
-                  <th scope="col">Ngày đặt hàng</th>
-                  <th scope="col">Tên khách hàng</th>
-                  <th scope="col">Loại hóa đơn</th>
-                  <th scope="col">Tổng tiền</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody ng-repeat="hoaDon in listHoaDon.content">
-                <tr>
-                  <th scope="row">{{$index+1}}</th>
-                  <th scope="row">{{hoaDon.ma}}</th>
-                  <th scope="row">
-                    {{hoaDon.ngayDatHang | date: 'dd/MM/yyyy hh:mm a'}}
-                  </th>
-                  <th scope="row">{{hoaDon.tenKhachHang}}</th>
-                  <th scope="row">{{hoaDon.loaiHoaDon}}</th>
-                  <th scope="row">{{hoaDon.tongTien}}</th>
-                  <th scope="row">
-                    {{hoaDon.trangThai==0?"Xác nhận
-                    đơn":hoaDon.trangThai==1?"Chuẩn bị
-                    hàng":hoaDon.trangThai==2?"Đang giao":"Đã giao"}}
-                  </th>
-                  <th>
-                    <a
-                      type="button"
-                      class="btn btn-warning"
-                      href="#hoa-don/update/{{hoaDon.id}}"
-                      >Chi tiết đơn hàng</a
-                    >
-                    <!-- <a
-                      type="button"
-                      class="btn btn-danger"
-                      ng-click="delete(hoaDon.id)"
-                      >Xóa</a
-                    > -->
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-            <div
-              class="no-data-message"
-              ng-if="listHoaDon.content.length === 0"
-            >
-              Không tìm thấy dữ liệu phù hợp
-            </div>
-
-            <div class="row mt-4">
-              <div class="col-md-12">
-                <nav aria-label="Page navigation example center">
-                  <ul class="pagination justify-content-center">
-                    <li
-                      class="page-item"
-                      ng-repeat="page in totalPages track by $index"
-                      ng-click="changePage($index);"
-                    >
-                      <a class="page-link">{{$index+1}}</a>
-                    </li>
-                  </ul>
-                </nav>
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+              <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-delay="1100">
+                <div class="toast-body">
+                  <span class="success">
+                    <i class="fa-solid fa-check fa-xl"></i>
+                  </span>
+                  <span class="message_error">
+                    {{message}}
+                  </span>
+                  <div id="myProgress">
+                    <div id="success"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -185,191 +118,3 @@
     </div>
   </div>
 </main>
-<style>
-  .checkbox-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .checkbox-item {
-    margin-right: 20px;
-    margin-bottom: 10px;
-  }
-
-  .checkbox-label {
-    display: inline-block;
-    margin-left: 5px;
-  }
-
-  .text-glow {
-    color: red; /* Màu của văn bản */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Màu sáng, độ mờ và màu ánh sáng */
-  }
-  .text-g {
-    color: green; /* Màu của văn bản */
-    text-shadow: 0 0 10px rgba(0, 255, 17, 0.5); /* Màu sáng, độ mờ và màu ánh sáng */
-  }
-
-  /* CSS cho phần header */
-  .card-header {
-    background-color: #f11515;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .card-title {
-    font-size: 24px;
-  }
-
-  .btn-success:hover {
-    background-color: #218838;
-  }
-
-  /* CSS cho bảng dữ liệu */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .table th,
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-
-  .table th {
-    background-color: #f2f2f2;
-  }
-
-  .table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  /* CSS cho phân trang */
-  .pagination {
-    margin: 0;
-    padding: 0;
-  }
-
-  .page-item {
-    list-style: none;
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  .page-link {
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-  }
-
-  .page-link:hover {
-    background-color: #0056b3;
-  }
-
-  /* CSS cho ảnh nhân viên */
-  img.employee-image {
-    max-width: 100px;
-    max-height: 100px;
-    border-radius: 50%;
-  }
-  /* CSS cho khung tìm kiếm và radio buttons */
-  .search-and-radio-container {
-    display: flex;
-    align-items: center;
-  }
-
-  .search-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 5px 10px;
-    transition: border-color 0.3s;
-  }
-
-  .search-input {
-    border: none;
-    outline: none;
-    width: 100%;
-  }
-
-  .search-icon {
-    margin-right: 10px;
-    color: #333;
-    font-size: 16px;
-  }
-
-  .radio-container {
-    display: flex;
-    align-items: center;
-    margin-left: 50px; /* Điều chỉnh khoảng cách giữa khung tìm kiếm và radio buttons */
-  }
-
-  /* Thay đổi màu khi focus vào khung tìm kiếm */
-  .search-container:focus-within {
-    border-color: #007bff;
-  }
-
-  /* Ẩn radio buttons */
-  .radio-container input[type="radio"] {
-    display: none;
-  }
-
-  /* Tạo sự tương tác với label */
-  .radio-container label {
-    padding: 5px 10px;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  /* Tô màu khi radio được chọn */
-  .radio-container input[type="radio"]:checked + label {
-    background-color: #ff000d;
-    color: #fff;
-    border-color: #007bff;
-  }
-
-  /* Thay đổi màu khi hover vào label */
-  .radio-container label:hover {
-    background-color: #2200ff;
-    color: #fff;
-  }
-  .no-data-message {
-    text-align: center; /* Căn giữa theo chiều ngang */
-    margin-top: 20px; /* Điều chỉnh khoảng cách từ trên xuống để căn giữa theo chiều dọc */
-    font-size: 20px; /* Tùy chỉnh kích thước chữ */
-    color: rgb(112, 111, 111); /* Tùy chỉnh màu sắc chữ */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng glow */
-  }
-  /* Ẩn trường input file gốc */
-  input[type="file"] {
-    display: none;
-  }
-
-  /* Tùy chỉnh nút tải lên */
-  .custom-file-upload {
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-  }
-
-  /* Khi hover trên nút tải lên */
-  .custom-file-upload:hover {
-    background-color: #2980b9;
-  }
-</style>

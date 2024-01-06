@@ -2,14 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
 import com.example.demo.model.request.HoaDonRequest;
-import com.example.demo.model.response.HoaDonRepone;
+import com.example.demo.model.response.HoaDonResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface HoaDonService {
-    Page<HoaDon> getAll(Integer pageNo);
+
+    Page<HoaDonResponse> getPage(Integer pageNo);
 
     List<HoaDon> getHoaDonCho();
 
@@ -17,14 +18,10 @@ public interface HoaDonService {
 
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
-
     HoaDon detail(UUID id);
 
-    HoaDon delete(UUID id);
+    Page<HoaDonResponse> search(Integer pageNo, String search);
 
-    List<HoaDon> getExcel();
+    Page<HoaDonResponse> loc(Integer pageNo, String trangThai);
 
-    Page<HoaDonRepone> getAlll(Integer pageNo);
-
-    Page<HoaDonRepone> getSearch(Integer pageNo, String serch);
 }

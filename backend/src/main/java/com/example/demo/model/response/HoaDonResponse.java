@@ -2,7 +2,9 @@ package com.example.demo.model.response;
 
 import org.springframework.beans.factory.annotation.Value;
 
-public interface HoaDonRepone {
+import java.util.Date;
+
+public interface HoaDonResponse {
 
     @Value("#{target.id}")
     String getID();
@@ -10,11 +12,11 @@ public interface HoaDonRepone {
     @Value("#{target.ma}")
     String getMa();
 
-    @Value("#{target.ngay_dat_hang}")
-    String getNgayDatHang();
-
     @Value("#{target.ten_khach_hang}")
     String getTenKhachHang();
+
+    @Value("#{target.so_dien_thoai_khach_hang}")
+    String getSoDienThoai();
 
     @Value("#{target.loai_hoa_don}")
     String getLoaiHoaDon();
@@ -22,6 +24,9 @@ public interface HoaDonRepone {
     @Value("#{target.tong_tien}")
     String getTongTien();
 
+    @Value("#{target.ngay_tao}")
+    Date getNgayTao();
+
     @Value("#{target.trang_thai}")
-    String getTrangThai();
+    Integer getTrangThai();
 }

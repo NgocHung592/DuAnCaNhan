@@ -16,5 +16,9 @@ import java.util.UUID;
 @Repository
 public interface MaGiamGiaChiTietRepositioy extends JpaRepository<MaGiamGiaChiTiet, UUID> {
 
-    Optional<MaGiamGiaChiTiet> findMaGiamGiaChiTietByMaGiamGia_Id(UUID id);
+    @Query(value = """
+            select * from ma_giam_gia_chi_tiet where ma_giam_gia_id=?1
+            """, nativeQuery = true)
+    Page<MaGiamGiaChiTiet> getPage(Pageable pageable, UUID id);
+
 }

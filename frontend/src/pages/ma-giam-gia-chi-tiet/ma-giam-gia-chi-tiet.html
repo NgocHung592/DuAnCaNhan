@@ -9,63 +9,38 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Mã</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Hình thức </th>
-                                    <th scope="col">Đơn tối thiểu</th>
+                                    <th scope="col">Mã hóa đơn</th>
+                                    <th scope="col">Tổng tiền</th>
                                     <th scope="col">Giảm</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Thao tác</th>
+                                    <th scope="col">Tổng tiền sau khi giảm</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="maGiamGia in listMaGiamGia">
+                            <tbody ng-repeat="maGiamGiaChiTiet in listMaGiamGiaChiTiet">
                                 <tr>
                                     <th>{{$index+1}}</th>
 
-                                    <th>{{maGiamGia.ma}}</th>
-                                    <th>{{maGiamGia.tenKM}}</th>
-                                    <th>
-                                        <p>
-                                            {{maGiamGia.hinhThucGiam =='0'? "Tiền mặt" : "Phần trăm"}}
-                                        </p>
-                                    </th>
-                                    <th>{{maGiamGia.giaTriDonToiThieu | number}} VND</th>
+                                    <th>{{maGiamGiaChiTiet.hoaDon.ma}}</th>
+                                    <th>{{maGiamGiaChiTiet.donGia | number}} VND</th>
                                     <th><span>
-                                            {{ maGiamGia.hinhThucGiam === 0 ?
-                                            (maGiamGia.giaTriGiam | number) + ' VND' :
-                                            maGiamGia.giaTriGiam + ' %'
+                                            {{ maGiamGiaChiTiet.maGiamGia.hinhThucGiam === 0 ?
+                                            (maGiamGiaChiTiet.maGiamGia.giaTriGiam | number) + ' VND' :
+                                            maGiamGiaChiTiet.maGiamGia.giaTriGiam + ' %'
                                             }}
                                         </span></th>
+                                    <th>{{maGiamGiaChiTiet.donGiaSauKhiGiam | number}} VND</th>
 
-                                    <th>{{maGiamGia.soLuong}}</th>
-                                    <th>
-
-                                        <p class="text-g" ng-if="maGiamGia.trangThai ===1">Sắp diễn ra</p>
-                                        <p class="text-gl" ng-if="maGiamGia.trangThai ===2">Đang diễn ra</p>
-                                        <p class="text-glow" ng-if="maGiamGia.trangThai ===3">Đã kết thúc</p>
-                                    </th>
-                                    <th>
-                                        <a ng-if="maGiamGia.trangThai===1" href="#ma-giam-gia/update/{{maGiamGia.id}}">
-                                            <i class="align-middle me-2 fas fa-fw fa-edit"></i>
-                                        </a>
-                                        <a ng-if="maGiamGia.trangThai===2 || maGiamGia.trangThai===3"
-                                            href="#/ma-giam-gia-chi-tiet/detail/{{maGiamGia.id}}">
-                                            <i class="align-middle me-2 fas fa-fw fa-info-circle"></i>
-                                        </a>
-                                    </th>
 
                                 </tr>
                             </tbody>
                         </table>
-                        <div ng-if="listMaGiamGia.length === 0">
+                        <div ng-if="listMaGiamGiaChiTiet.length === 0">
                             <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
                             <p class="dataTables_empty_lable">
                                 No Data
                             </p>
                         </div>
 
-                        <div class="row mt-4" ng-if="listMaGiamGia.length !== 0">
+                        <div class="row mt-4" ng-if="listMaGiamGiaChiTiet.length !== 0">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
@@ -90,7 +65,6 @@
 
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a type="button" class="btn btn-primary" id="liveToastBtn" ng-click="add($event)">Thêm</a>
                             <a type="button" class="btn btn-warning" href="#/ma-giam-gia/hien-thi">Quay lại</a>
                         </div>
                         <div class="toast-container position-fixed top-0 end-0 p-3">

@@ -391,6 +391,23 @@
                                             <p>{{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ' }}
                                         </div>
                                     </div>
+                                    <div class="select-swatch clearfix">
+                                        <div class="swatch">
+                                            <div class="select-swap">
+                                                <div class="n-sd swatch-element m"
+                                                    ng-repeat="method in ['Tiền mặt', 'Chuyển khoản']"
+                                                    ng-click="hinhThucThanhToan(method)">
+                                                    <input ng-model="searchHinhThucThanhToan" type="radio"
+                                                        value="{{method}}" />
+                                                    <label
+                                                        ng-class="{ 'sd': searchHinhThucThanhToan === method, 'other-class': searchHinhThucThanhToan !== method }">
+                                                        <span>{{method}}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="d-grid gap-2 col-6 mx-auto">
                                         <button class="btn btn-primary " ng-click="thanhToan($event)">Thanh
                                             Toán</button>
@@ -424,3 +441,46 @@
             </div>
         </div>
 </main>
+<style>
+    .select-swatch .swatch .select-swap {
+        display: flex;
+    }
+
+    .select-swatch .swatch input {
+        display: none;
+    }
+
+    .select-swatch .swatch .swatch-element {
+        display: flex;
+        position: relative;
+        vertical-align: bottom;
+        padding: 20px 0px;
+    }
+
+    .select-swatch .swatch .swatch-element label {
+        margin: 0;
+        padding: 7px 10px;
+        font-size: 20px;
+        color: var(--shop-color-main);
+        background-color: #f2f2f2;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        margin-right: 50px;
+        margin-left: 35px;
+        cursor: pointer;
+
+    }
+
+    .select-swatch .swatch .swatch-element label span {
+        position: relative;
+        z-index: 2;
+        display: block;
+        color: #242424;
+    }
+
+    .select-swatch .swatch .swatch-element label.sd {
+        border: 1px solid var(--shop-color-main);
+        background-color: rgba(72, 137, 201, 0.06);
+    }
+</style>

@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,11 +18,12 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "lich_su_hoa_don")
+@Table(name = "hinh_thuc_thanh_toan")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class HinhThucThanhToan {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
 import com.example.demo.model.request.HoaDonRequest;
-import com.example.demo.model.response.HoaDonRepone;
+import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,18 +19,10 @@ public class HoaDonController {
     @Autowired
     private HoaDonService hoaDonService;
 
-    //    @GetMapping("hien-thi")
-//    public Page<HoaDon> hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-//        return hoaDonService.getAll(pageNo);
-//    }
-    @GetMapping("hien-thi")
-    public Page<HoaDonRepone> getAlll(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        return hoaDonService.getAlll(pageNo);
-    }
 
-    @GetMapping("/search")
-    public Page<HoaDonRepone> searchProductsByName(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search) {
-        return hoaDonService.getSearch(pageNo, search);
+    @GetMapping("hien-thi")
+    public Page<HoaDonResponse> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+        return hoaDonService.getPage(pageNo);
     }
 
     @GetMapping("get-list")
@@ -53,8 +45,14 @@ public class HoaDonController {
         return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") String id) {
-        return new ResponseEntity(hoaDonService.delete(UUID.fromString(id)), HttpStatus.OK);
+    @GetMapping("/search")
+    public Page<HoaDonResponse> search(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search) {
+        return hoaDonService.search(pageNo, search);
     }
+
+    @GetMapping("/loc")
+    public Page<HoaDonResponse> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "trangThai") String trangThai) {
+        return hoaDonService.loc(pageNo, trangThai);
+    }
+
 }

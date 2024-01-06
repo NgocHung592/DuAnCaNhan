@@ -11,7 +11,10 @@ window.DonHangController = function ($http, $scope, $routeParams) {
   };
   $scope.getData = function () {
     $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
-      $scope.listHoaDon = response.data;
+      $scope.listHoaDon = response?.data.content;
+      $scope.customIndex = $scope.currentPage * response.data.size;
+      $scope.totalPages = new Array(response.data.totalPages);
+      $scope.visiblePages = $scope.getVisiblePages();
     });
   };
   //detai hoa don
