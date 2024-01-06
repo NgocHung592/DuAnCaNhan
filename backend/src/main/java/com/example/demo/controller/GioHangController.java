@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
+import com.example.demo.model.response.GioHangReponse;
 import com.example.demo.service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,16 @@ public class GioHangController {
 
         return ResponseEntity.ok(response);
     }
+    @PostMapping("themsanpham")
+    public ResponseEntity<Map<String, Object>> themSanPhamVaoGioHangChiTiet(@RequestParam("sanPhamChiTietId") UUID idsanphamchitet,
+                                                               @RequestParam("soLuong") Integer soLuong) {
+        gioHangService.GioHangK(idsanphamchitet,soLuong);
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Sản phẩm đã được thêm vào giỏ hàng ");
+
+        return ResponseEntity.ok(response);
+    }
 
     @DeleteMapping("xoa")
     public ResponseEntity<?> xoaGioHang(@RequestParam UUID gioHangId) {
@@ -39,6 +50,12 @@ public class GioHangController {
     @GetMapping("hien-thi/{id}")
     public ResponseEntity<List<GioHangChiTietReponse>> getAll( @PathVariable UUID id){
         List<GioHangChiTietReponse> gioHangChiTietReponses=gioHangService.getAll(id);
+        return ResponseEntity.ok(gioHangChiTietReponses);
+
+    }
+    @GetMapping("hien-thiN")
+    public ResponseEntity<List<GioHangReponse>> getAllK(){
+        List<GioHangReponse> gioHangChiTietReponses=gioHangService.getAllK();
         return ResponseEntity.ok(gioHangChiTietReponses);
 
     }

@@ -47,7 +47,7 @@ angular
       if (storedUser) {
         $scope.list = JSON.parse(storedUser);
         $scope.isLoggedIn = true;
-        $rootScope.idKhachHang = $scope.list;
+        $rootScope.idKhachHang = $scope.list.id;
         $rootScope.$on("dataFromGioHang", function (event, data) {
           $scope.dataFromGioHang = data;
           console.log("số lượng giỏ hàng :", $scope.dataFromGioHang);
