@@ -17,6 +17,12 @@ myApp.config(function ($routeProvider, $locationProvider) {
     .when("/gioi-thieu", {
       templateUrl: "ban-hang-online/gioi-thieu.html",
     })
+    .when("/dieu-khoan-dich-vu", {
+      templateUrl: "ban-hang-online/dieu-khoan-dich-vu.html",
+    })
+    .when("/chinh-sach-bao-mat", {
+      templateUrl: "ban-hang-online/chinh-sach-bao-mat.html",
+    })
     .when("/detail-product/:id", {
       templateUrl: "ban-hang-online/detail-product.html",
       controller: detailSanPhamController,
