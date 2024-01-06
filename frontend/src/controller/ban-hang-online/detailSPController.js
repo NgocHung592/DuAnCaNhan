@@ -146,4 +146,20 @@ window.detailSanPhamController = function (
       }
     });
   };
+  $scope.search = function () {
+    $http
+      .get(
+        sanPhamAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&keyword=" +
+          $scope.searchKeyword
+      )
+      .then(function (response) {
+        $scope.listSanPham = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
 };

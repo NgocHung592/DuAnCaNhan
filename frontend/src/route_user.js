@@ -33,8 +33,19 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "tai-khoan/login.html",
       // controller: loginController,
     })
+    .when("/thong-tin-khach-hang", {
+      templateUrl: "ban-hang-online/thong-tin-khach-hang.html",
+      // controller: loginController,
+    })
     .when("/thong-tin", {
       templateUrl: "tai-khoan/thong-tin.html",
+    })
+
+    .when("/don-hang", {
+      templateUrl: "tai-khoan/don-hang.html",
+    })
+    .when("/dia-chi", {
+      templateUrl: "tai-khoan/dia-chi.html",
     })
     .when("/singup", {
       templateUrl: "tai-khoan/dang-ky.html",
