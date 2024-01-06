@@ -6,22 +6,16 @@
           <div class="row">
             <div class="col-md-8 col-sm-12 col-xs-12 contentCart-detail">
               <div class="mainCart-detail">
-                <div class="heading-cart">
-                  <h1>8YO Studio</h1>
-                  <ul class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="#gio-hang">Giỏ hàng</a>
-                    </li>
-
-                    <li class="breadcrumb-item breadcrumb-item-current">
-                      Thông tin giao hàng
-                    </li>
-                  </ul>
-                </div>
                 <div class="list-pageform-cart">
+                  <a href="#gio-hang"
+                    ><span
+                      ><i class="fas fa-arrow-left" style="color: black"></i
+                    ></span>
+                    <span style="color: black">Giỏ hàng</span></a
+                  >
                   <form id="cartformpage">
-                    <h5>Thông tin giao hàng</h5>
                     <br />
+                    <h5>Thông tin giao hàng</h5>
                     <span>Bạn đã có tài khoản?</span
                     ><a href="#login">Đăng nhập</a>
                     <br />
@@ -262,9 +256,7 @@
                         <p>
                           <span>{{tongGiaTri | number:0}}₫</span>
                         </p>
-                        <p >
-                          {{'30,000 VNĐ' }}
-                        </p>
+                        <p>{{'30,000 VNĐ' }}</p>
                         <p>
                           {{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}
                         </p>
