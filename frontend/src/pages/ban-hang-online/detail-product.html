@@ -1,34 +1,68 @@
-<main class="wrapperMain_content">
+<main class="wrapperMain_content" ng-controller="loginController">
   <div class="layout-productDetail layout-pageProduct">
-    <section class="productDetail-information productDetail_style__01"
-      ng-repeat="sanPhamChiTiet in listNewSanPhamChiTiet">
+    <section
+      class="productDetail-information productDetail_style__01"
+      ng-repeat="sanPhamChiTiet in listNewSanPhamChiTiet"
+    >
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-sm-12 col-xs-12 productDetail--gallery">
             <div class="product-container-gallery">
               <div class="wrapbox-image">
-                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div
+                  id="carouselExampleInterval"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                >
                   <div class="carousel-inner">
-                    <div class="carousel-item" ng-class="{'active': $index===0}" data-bs-interval="3000"
-                      ng-repeat="hinhAnh in sanPhamChiTiet.duongDan">
-                      <img ng-if="!showSPCT" src="../../../assets/anh-san-pham/{{hinhAnh}}" class="d-block w-100" />
-                      <img ng-if="showSPCT" src="../../../assets/anh-san-pham/{{sanPhamCT.duongDan}}"
-                        class="d-block w-100" />
+                    <div
+                      class="carousel-item"
+                      ng-class="{'active': $index===0}"
+                      data-bs-interval="3000"
+                      ng-repeat="hinhAnh in sanPhamChiTiet.duongDan"
+                    >
+                      <img
+                        ng-if="!showSPCT"
+                        src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                        class="d-block w-100"
+                      />
+                      <img
+                        ng-if="showSPCT"
+                        src="../../../assets/anh-san-pham/{{sanPhamCT.duongDan}}"
+                        class="d-block w-100"
+                      />
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-sm-12 col-xs-12 productDetail--content" id="detail-product">
+          <div
+            class="col-md-6 col-sm-12 col-xs-12 productDetail--content"
+            id="detail-product"
+          >
             <div class="product-container-detail">
               <div class="product-container-order">
                 <div class="product-variants">
@@ -42,15 +76,31 @@
                         {{sanPhamChiTiet.tenTayAo}} {{sanPhamChiTiet.tenCoAo}}
                       </h1>
                     </div>
-                    <div ng-if="!showSPCT" class="product-price" id="price-preview">
-                      <span class="pro-price"
-                        ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}}₫ -
-                        {{sanPhamChiTiet.giaMax | number}}₫</span>
-                      <span class="pro-price"
-                        ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}}₫</span>
+                    <div
+                      ng-if="!showSPCT"
+                      class="product-price"
+                      id="price-preview"
+                    >
+                      <span
+                        class="pro-price"
+                        ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin"
+                        >{{sanPhamChiTiet.giaMin | number}}₫ -
+                        {{sanPhamChiTiet.giaMax | number}}₫</span
+                      >
+                      <span
+                        class="pro-price"
+                        ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin"
+                        >{{sanPhamChiTiet.giaMin | number}}₫</span
+                      >
                     </div>
-                    <div ng-if="showSPCT" class="product-price" id="price-preview">
-                      <span class="pro-price">{{sanPhamCT.donGia | number}}₫</span>
+                    <div
+                      ng-if="showSPCT"
+                      class="product-price"
+                      id="price-preview"
+                    >
+                      <span class="pro-price"
+                        >{{sanPhamCT.donGia | number}}₫</span
+                      >
                     </div>
                     <div class="select-swatch clearfix">
                       <div class="swatch">
@@ -58,17 +108,33 @@
                           Màu sắc: <strong></strong>
                         </div>
                         <div class="select-swap">
-                          <div class="n-sd swatch-element m" ng-repeat="mauSac in sanPhamChiTiet.tenMauSac"
-                            ng-click="selectdMauSac(mauSac)">
-                            <input class="variant-1" ng-model="searchMauSac" type="radio" ng-value="mauSac" />
-                            <label ng-if="searchMauSac == mauSac" class="sd" for="swatch-1-m">
+                          <div
+                            class="n-sd swatch-element m"
+                            ng-repeat="mauSac in sanPhamChiTiet.tenMauSac"
+                            ng-click="selectdMauSac(mauSac)"
+                          >
+                            <input
+                              class="variant-1"
+                              ng-model="searchMauSac"
+                              type="radio"
+                              ng-value="mauSac"
+                            />
+                            <label
+                              ng-if="searchMauSac == mauSac"
+                              class="sd"
+                              for="swatch-1-m"
+                            >
                               <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
+                              >
                                 <i class="fa-solid fa-check"></i>
                               </span>
                               <span>{{mauSac}}</span>
                             </label>
-                            <label ng-if="searchMauSac != mauSac" for="swatch-1-m">
+                            <label
+                              ng-if="searchMauSac != mauSac"
+                              for="swatch-1-m"
+                            >
                               <span>{{mauSac}}</span>
                             </label>
                           </div>
@@ -77,18 +143,34 @@
                       <div class="swatch">
                         <div class="title-swap header">Kích thước:</div>
                         <div class="select-swap">
-                          <div class="n-sd swatch-element m" ng-repeat="kichThuoc in sanPhamChiTiet.tenKichThuoc"
-                            ng-click="selectdKichThuoc(kichThuoc)">
-                            <input class="variant-1" ng-model="searchKichThuoc" type="radio" ng-value="kichThuoc" />
+                          <div
+                            class="n-sd swatch-element m"
+                            ng-repeat="kichThuoc in sanPhamChiTiet.tenKichThuoc"
+                            ng-click="selectdKichThuoc(kichThuoc)"
+                          >
+                            <input
+                              class="variant-1"
+                              ng-model="searchKichThuoc"
+                              type="radio"
+                              ng-value="kichThuoc"
+                            />
 
-                            <label ng-if="searchKichThuoc == kichThuoc" class="sd" for="swatch-1-m">
+                            <label
+                              ng-if="searchKichThuoc == kichThuoc"
+                              class="sd"
+                              for="swatch-1-m"
+                            >
                               <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
+                              >
                                 <i class="fa-solid fa-check"></i>
                               </span>
                               <span>{{kichThuoc}}</span>
                             </label>
-                            <label ng-if="searchKichThuoc != kichThuoc" for="swatch-1-m">
+                            <label
+                              ng-if="searchKichThuoc != kichThuoc"
+                              for="swatch-1-m"
+                            >
                               <span>{{kichThuoc}}</span>
                             </label>
                           </div>
@@ -97,18 +179,57 @@
                     </div>
                     <div class="select-actions hidden-xs hidden-sm clearfix">
                       <div class="row">
-                        <div class="d-flex flex-row col-md-3">
-                          <button class="btn btn-link px-2" ng-click="decrementQuantity()">
+                        <div
+                          class="d-flex flex-row col-md-3"
+                          ng-if="isLoggedIn==true"
+                        >
+                          <button
+                            class="btn btn-link px-2"
+                            ng-click="decrementQuantity()"
+                          >
                             <i class="fas fa-minus"></i>
                           </button>
-                          <input type="number" ng-model="goiHang.soLuong" class="form-control form-control-sm"
-                            style="width: 60px" />
-                          <button class="btn btn-link px-2" ng-click="incrementQuantity()">
+                          <input
+                            type="number"
+                            ng-model="goiHang.soLuong"
+                            class="form-control form-control-sm"
+                            style="width: 60px"
+                          />
+                          <button
+                            class="btn btn-link px-2"
+                            ng-click="incrementQuantity()"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <div
+                          class="d-flex flex-row col-md-3"
+                          ng-if="isLoggedIn==false"
+                        >
+                          <button
+                            class="btn btn-link px-2"
+                            ng-click="decrementQuantity1()"
+                          >
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <input
+                            type="number"
+                            ng-model="goiHangNoLogin.soLuong"
+                            class="form-control form-control-sm"
+                            style="width: 60px"
+                          />
+                          <button
+                            class="btn btn-link px-2"
+                            ng-click="incrementQuantity1()"
+                          >
                             <i class="fas fa-plus"></i>
                           </button>
                         </div>
 
-                        <div class="col-md-6 midle" ng-if="sanPhamCT.soLuong > 0">
+                        <div
+                          class="col-md-6 midle"
+                          ng-if="sanPhamCT.soLuong > 0"
+                        >
                           <p>
                             {{sanPhamCT.soLuong}} sản phẩm có sẵn trong cửa hàng
                           </p>
@@ -116,15 +237,32 @@
                       </div>
 
                       <div class="row mr-3 mt-3">
-                        <div class="col-md-4">
-                          <button type="button" ng-click="addGioHang()"
-                            class="add-to-cartProduct btnred button dark btn-addtocart addtocart-modal" name="add">
+                        <div class="col-md-4" ng-if="isLoggedIn==true">
+                          <button
+                            type="button"
+                            ng-click="addGioHang()"
+                            class="add-to-cartProduct btnred button dark btn-addtocart addtocart-modal"
+                            name="add"
+                          >
+                            Thêm vào giỏ hàng
+                          </button>
+                        </div>
+                        <div class="col-md-4" ng-if="isLoggedIn==false">
+                          <button
+                            type="button"
+                            ng-click="addGioHangNoLogin()"
+                            class="add-to-cartProduct btnred button dark btn-addtocart addtocart-modal"
+                            name="add"
+                          >
                             Thêm vào giỏ hàng
                           </button>
                         </div>
                         <div class="col-md-6">
-                          <button type="button"
-                            class="add-to-cartProduct button dark btn-addtocart addtocart-modal hidden" name="add">
+                          <button
+                            type="button"
+                            class="add-to-cartProduct button dark btn-addtocart addtocart-modal hidden"
+                            name="add"
+                          >
                             Mua ngay
                           </button>
                         </div>
@@ -252,8 +390,10 @@
           <h2>Có thể bạn cũng thích</h2>
         </div>
         <div class="listprod-content">
-          <div class="listProduct-related listProduct-resize owl-carousel owlCarousel-style" id="owlProduct-related">
-          </div>
+          <div
+            class="listProduct-related listProduct-resize owl-carousel owlCarousel-style"
+            id="owlProduct-related"
+          ></div>
         </div>
       </div>
     </section>

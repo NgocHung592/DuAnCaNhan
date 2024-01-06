@@ -16,8 +16,6 @@
                   <form id="cartformpage">
                     <br />
                     <h5>Thông tin giao hàng</h5>
-                    <span>Bạn đã có tài khoản?</span
-                    ><a href="#login">Đăng nhập</a>
                     <br />
                     <br />
                     <div class="mb-3">
@@ -25,7 +23,7 @@
                         type="text"
                         placeholder="Họ và Tên "
                         class="form-control"
-                        ng-model="idKhachHang"
+                        ng-model="ten"
                       />
                     </div>
                     <div class="mb-3">
@@ -35,13 +33,15 @@
                             type="email"
                             placeholder="Email"
                             class="form-control"
+                            ng-model="email"
                           />
                         </div>
                         <div class="col-md-4">
                           <input
-                            type="number"
+                            type="text"
                             placeholder="Số điện thoại"
                             class="form-control"
+                            ng-model="sdt"
                           />
                         </div>
                       </div>

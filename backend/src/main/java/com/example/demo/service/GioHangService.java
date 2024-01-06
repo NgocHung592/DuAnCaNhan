@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.KhachHang;
+import com.example.demo.model.request.GioHangNoLoginRequset;
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.GioHangReponse;
@@ -17,4 +18,5 @@ public interface GioHangService {
     List<GioHangReponse> getAllK();
     void delete(UUID id);
     void update(GioHangRequset gioHangRequset);
+    void updateNoLogin(GioHangNoLoginRequset gioHangNoLoginRequset);
 }

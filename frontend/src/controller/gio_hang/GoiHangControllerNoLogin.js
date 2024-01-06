@@ -7,15 +7,6 @@ window.GioHangControllerNoLogin = function (
   $window,
   $rootScope
 ) {
-  // $scope.dataFromGioHang = "Dữ liệu từ GioHangController";
-
-  //   if (!$rootScope.idKhachHang) {
-  //     console.error("idKhachHang is not set in $rootScope.");
-  //     return;
-  //   }
-
-  //   $scope.idKhachHang = $rootScope.idKhachHang;
-  //   console.log("id khach hang:", $rootScope.idKhachHang);
   $http
     .get(gioHangAPI + "/hien-thiN")
     .then(function (response) {
@@ -53,61 +44,60 @@ window.GioHangControllerNoLogin = function (
       console.error("Error fetching gio hang:", error);
     });
 
-  //   $scope.xoaGioHang = function (goiHangId) {
-  //     // Hộp thoại xác nhận trước khi xóa
-  //     var xacNhan = confirm("Bạn có chắc chắn muốn xóa giỏ hàng này không?");
-  //     if (!xacNhan) {
-  //       return; // Người dùng đã hủy xác nhận
-  //     }
+  $scope.xoaGioHang = function (goiHangId) {
+    // Hộp thoại xác nhận trước khi xóa
+    var xacNhan = confirm("Bạn có chắc chắn muốn xóa giỏ hàng này không?");
+    if (!xacNhan) {
+      return; // Người dùng đã hủy xác nhận
+    }
 
-  //     $http
-  //       .delete(gioHangAPI + "/delete/" + goiHangId)
-  //       .then(function (response) {
-  //         console.log("Xóa gio hang thành công:", response.data);
-  //         $route.reload();
-  //       })
-  //       .catch(function (error) {
-  //         console.error("Lỗi xóa sản phẩm:", error.data);
-  //       });
-  //   };
-  //   $scope.increaseQuantity = function (item) {
-  //     if (item.soLuong < item.soLuongSp) {
-  //       item.soLuong++; // Tăng số lượng
+    $http
+      .delete(gioHangAPI + "/delete/" + goiHangId)
+      .then(function (response) {
+        console.log("Xóa gio hang thành công:", response.data);
+        $route.reload();
+      })
+      .catch(function (error) {
+        console.error("Lỗi xóa sản phẩm:", error.data);
+      });
+  };
+  $scope.increaseQuantity = function (item) {
+    if (item.soLuong < item.soLuongSp) {
+      item.soLuong++; // Tăng số lượng
 
-  //       $scope.capNhatGioHangChiTiet(item); // Cập nhật giỏ hàng
-  //       $route.reload();
-  //     } else {
-  //       window.alert("Số lượng vượt quá tồn kho của sản phẩm");
-  //       // Hoặc có thể sử dụng một thư viện cảnh báo như SweetAlert2 để tạo thông báo đẹp hơn.
-  //     }
-  //   };
+      $scope.capNhatGioHangChiTiet(item); // Cập nhật giỏ hàng
+      $route.reload();
+    } else {
+      window.alert("Số lượng vượt quá tồn kho của sản phẩm");
+      // Hoặc có thể sử dụng một thư viện cảnh báo như SweetAlert2 để tạo thông báo đẹp hơn.
+    }
+  };
 
-  //   $scope.decreaseQuantity = function (item) {
-  //     if (item.soLuong > 1) {
-  //       item.soLuong--; // Giảm số lượng, nhưng không thể dưới 1
-  //       $scope.capNhatGioHangChiTiet(item); // Cập nhật giỏ hàng
-  //       $route.reload();
-  //     } else {
-  //       // Nếu số lượng là 1, gọi hàm xóa sản phẩm
-  //       $scope.xoaGioHang(item.idGioHang);
-  //     }
-  //   };
+  $scope.decreaseQuantity = function (item) {
+    if (item.soLuong > 1) {
+      item.soLuong--; // Giảm số lượng, nhưng không thể dưới 1
+      $scope.capNhatGioHangChiTiet(item); // Cập nhật giỏ hàng
+      $route.reload();
+    } else {
+      // Nếu số lượng là 1, gọi hàm xóa sản phẩm
+      $scope.xoaGioHang(item.idGioHang);
+    }
+  };
 
-  //   $scope.capNhatGioHangChiTiet = function (item) {
-  //     var gioHangChiTietRequest = {
-  //       gioHangChiTietId: item.idGioHangChiTiet,
-  //       sanPhamChiTietId: item.idSanPhamChiTiet,
-  //       khachHangId: item.idKhachHang,
-  //       soLuong: item.soLuong,
-  //     };
+  $scope.capNhatGioHangChiTiet = function (item) {
+    var gioHangChiTietRequest = {
+      gioHangChiTietId: item.idGioHangChiTiet,
+      sanPhamChiTietId: item.idSanPhamChiTiet,
+      soLuong: item.soLuong,
+    };
 
-  //     $http
-  //       .put(gioHangAPI + "/update", gioHangChiTietRequest)
-  //       .then(function (response) {
-  //         console.log("Cập nhật gio hang chi tiet thành công:", response.data);
-  //       })
-  //       .catch(function (error) {
-  //         console.error("Lỗi cập nhật giỏ hàng chi tiết:", error.data);
-  //       });
-  //   };
+    $http
+      .put(gioHangAPI + "/update", gioHangChiTietRequest)
+      .then(function (response) {
+        console.log("Cập nhật gio hang chi tiet thành công:", response.data);
+      })
+      .catch(function (error) {
+        console.error("Lỗi cập nhật giỏ hàng chi tiết:", error.data);
+      });
+  };
 };

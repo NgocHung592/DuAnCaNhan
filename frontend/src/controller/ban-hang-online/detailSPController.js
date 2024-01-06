@@ -14,6 +14,10 @@ window.detailSanPhamController = function (
     khachHangId: $scope.idKhachHang,
     soLuong: 1,
   };
+  $scope.goiHangNoLogin = {
+    sanPhamChiTietId: $scope.idSPCT,
+    soLuong: 1,
+  };
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(
@@ -86,6 +90,8 @@ window.detailSanPhamController = function (
         $scope.idSPCT = sanPham.idSanPhamChiTiet;
         console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
+        $scope.goiHangNoLogin.sanPhamChiTietId = $scope.idSPCT;
+        console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.soLuongSp = sanPham.soLuong;
         console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
@@ -105,23 +111,27 @@ window.detailSanPhamController = function (
         console.log("list spct", sanPham);
         $scope.soLuongSp = sanPham.soLuong;
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
+        $scope.goiHangNoLogin.sanPhamChiTietId = $scope.idSPCT;
         console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
       }
     });
   };
-  if (!$rootScope.idKhachHang) {
-    console.error("idKhachHang is not set in $rootScope.");
-    return;
+
+  if ($rootScope.trangthai == true) {
+    if (!$rootScope.idKhachHang) {
+      console.error("idKhachHang is not set in $rootScope.");
+      return;
+    }
+    $scope.idKhachHang = $rootScope.idKhachHang;
+    console.log("id khach hang:", $rootScope.idKhachHang);
+    $scope.goiHang = {
+      sanPhamChiTietId: $scope.idSPCT,
+      khachHangId: $scope.idKhachHang,
+      soLuong: 1,
+    };
+    console.log("id:", $rootScope.idKhachHang);
   }
-  $scope.idKhachHang = $rootScope.idKhachHang;
-  console.log("id khach hang:", $rootScope.idKhachHang);
-  $scope.goiHang = {
-    sanPhamChiTietId: $scope.idSPCT,
-    khachHangId: $scope.idKhachHang,
-    soLuong: 1,
-  };
-  console.log("id:", $rootScope.idKhachHang);
 
   $scope.incrementQuantity = function () {
     console.log("Incrementing quantity");
@@ -130,10 +140,46 @@ window.detailSanPhamController = function (
 
   $scope.decrementQuantity = function () {
     console.log("Decrementing quantity");
-    if ($scope.goiHang.soLuong > 1) {
-      $scope.goiHang.soLuong--;
+    if ($scope.goiHangNoLogin.soLuong > 1) {
+      $scope.goiHangNoLogin.soLuong--;
     }
   };
+  if ($rootScope.trangthai == false) {
+    $scope.incrementQuantity1 = function () {
+      console.log("Incrementing quantity");
+      $scope.goiHangNoLogin.soLuong++;
+    };
+
+    $scope.decrementQuantity1 = function () {
+      console.log("Decrementing quantity");
+      if ($scope.goiHangNoLogin.soLuong > 1) {
+        $scope.goiHangNoLogin.soLuong--;
+      }
+    };
+    $scope.addGioHangNoLogin = function () {
+      $http
+        .post(gioHangAPI + "/themsanpham", $scope.goiHangNoLogin)
+        .then(function (response) {
+          if (response.data && typeof response.data === "object") {
+            if (response.data.status === "success") {
+              // Hiển thị thông báo thành công
+              alert(response.data.message);
+            } else {
+              // Hiển thị thông báo lỗi
+              alert(
+                "Có lỗi xảy ra khi thêm vào giỏ hàng: " + response.data.message
+              );
+            }
+          } else {
+            // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
+            alert(
+              "Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ."
+            );
+          }
+        });
+    };
+  }
+
   $scope.addGioHang = function () {
     $http.post(gioHangAPI + "/them", $scope.goiHang).then(function (response) {
       if (response.data && typeof response.data === "object") {
@@ -152,6 +198,7 @@ window.detailSanPhamController = function (
       }
     });
   };
+
   $scope.search = function () {
     $http
       .get(

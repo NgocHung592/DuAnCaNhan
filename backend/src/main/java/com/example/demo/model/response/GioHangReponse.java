@@ -37,6 +37,9 @@ public interface GioHangReponse {
     @Value("#{target.ten_mau_sac}")
     String getTenMauSac();
 
+    @Value("#{target.id_gio_hang}")
+    String getIdGioHang();
+
     @Value("#{target.ten_chat_lieu}")
     String getTenChatLieu();
 

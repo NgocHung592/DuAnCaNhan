@@ -4,6 +4,7 @@ import com.example.demo.entity.GioHang;
 import com.example.demo.entity.GioHangChiTiet;
 import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.SanPhamChiTiet;
+import com.example.demo.model.request.GioHangNoLoginRequset;
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.GioHangReponse;
@@ -188,6 +189,31 @@ public class GioHangServiceImpl implements GioHangService {
         gioHangChiTietRepository.save(gioHangChiTiet);
     }
 
+    @Override
+    public void updateNoLogin(GioHangNoLoginRequset gioHangNoLoginRequset) {
+        UUID goiHangChiTietId = gioHangNoLoginRequset.getGioHangChiTietId();
+        int soLuongMoi = gioHangNoLoginRequset.getSoLuong();
+
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(goiHangChiTietId)
+                .orElseThrow(() -> new RuntimeException("Gio hàng chi tiết không tồn tại"));
+
+        // Lấy thông tin số lượng tồn kho từ sản phẩm chi tiết
+        int tonKho = gioHangChiTiet.getSanPhamChiTiet().getSoLuong();
+
+        // Kiểm tra xem số lượng mới có nhỏ hơn hoặc bằng tồn kho không
+        if (soLuongMoi > tonKho) {
+            throw new RuntimeException("Số lượng vượt quá tồn kho của sản phẩm");
+        }
+
+        // Cập nhật thông tin số lượng và đơn giá
+        gioHangChiTiet.setSoLuong(soLuongMoi);
+        BigDecimal donGiaBanDau = gioHangChiTiet.getSanPhamChiTiet().getDonGia();
+        BigDecimal donGiaMoi = donGiaBanDau.multiply(BigDecimal.valueOf(soLuongMoi));
+        gioHangChiTiet.setDonGia(donGiaMoi);
+
+        gioHangChiTietRepository.save(gioHangChiTiet);
+
+    }
 
 
 }

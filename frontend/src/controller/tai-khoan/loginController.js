@@ -10,6 +10,7 @@ angular
 
       $scope.list = {};
       $scope.isLoggedIn = false;
+      $rootScope.trangthai = $scope.isLoggedIn;
       $scope.notification = ""; // Biến để chứa thông báo
       $scope.redirectToPage = function () {
         if ($scope.isLoggedIn) {
@@ -47,8 +48,11 @@ angular
       if (storedUser) {
         $scope.list = JSON.parse(storedUser);
         $scope.isLoggedIn = true;
+
         $rootScope.idKhachHang = $scope.list.id;
         $rootScope.ten = $scope.list.hoTen;
+        $rootScope.email = $scope.list.email;
+        $rootScope.sdt = $scope.list.soDienThoai;
         $rootScope.$on("dataFromGioHang", function (event, data) {
           $scope.dataFromGioHang = data;
           console.log("số lượng giỏ hàng :", $scope.dataFromGioHang);

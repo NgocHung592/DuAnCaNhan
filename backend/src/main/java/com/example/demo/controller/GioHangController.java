@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.request.GioHangNoLoginRequset;
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.GioHangReponse;
@@ -32,9 +33,8 @@ public class GioHangController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("themsanpham")
-    public ResponseEntity<Map<String, Object>> themSanPhamVaoGioHangChiTiet(@RequestParam("sanPhamChiTietId") UUID idsanphamchitet,
-                                                               @RequestParam("soLuong") Integer soLuong) {
-        gioHangService.GioHangK(idsanphamchitet,soLuong);
+    public ResponseEntity<Map<String, Object>> themSanPhamVaoGioHangChiTiet(@RequestBody GioHangNoLoginRequset gioHangNoLoginRequset) {
+        gioHangService.GioHangK(gioHangNoLoginRequset.getSanPhamChiTietId(),gioHangNoLoginRequset.getSoLuong());
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
         response.put("message", "Sản phẩm đã được thêm vào giỏ hàng ");
@@ -74,6 +74,15 @@ public class GioHangController {
     public ResponseEntity<?> updateCartItem(@RequestBody GioHangRequset gioHangChiTietRequest) {
         try {
             gioHangService.update(gioHangChiTietRequest);
+            return ResponseEntity.ok("Cập nhật giỏ hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
+        }
+    }
+    @PutMapping("/updateNoLogin")
+    public ResponseEntity<?> updateCartItemN(@RequestBody GioHangNoLoginRequset gioHangChiTietRequest) {
+        try {
+            gioHangService.updateNoLogin(gioHangChiTietRequest);
             return ResponseEntity.ok("Cập nhật giỏ hàng thành công");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
