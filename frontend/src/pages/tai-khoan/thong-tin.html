@@ -10,31 +10,27 @@
                   <form id="cartformpage">
                     <div class="header-wrap">
                       <div class="image-wrap">
-                        <img
-                          src="https://5sfashion.vn/storage/upload/images/avatars/ACg8ocK_Ht7tmgxLGoPVXv7jZIdmwDnxNK7eV13cf1xPY5yG=s96-c.jpg"
-                          alt="Phượng Vũ"
-                          id="action-upload"
-                        />
+                        <div class="row">
+                          <div class="col-md-4">
+                            <span
+                              ><img src="" alt="imgacc" id="action-upload"
+                            /></span>
+                          </div>
 
-                        <input
-                          type="text"
-                          id="csrf-token"
-                          class="d-none"
-                          value="phMPvmBDoha1z0yhgL2CIPIg9kQCBxsobGQbTzcR"
-                        />
-                        <input type="file" id="upload-file" class="d-none" />
-                      </div>
-                      <div class="text-header">
-                        <p>Xin chào,</p>
-                        <p class="name">Phượng Vũ</p>
+                          <div class="col-md-8">
+                            <div class="text-header">
+                              <p>Xin chào,</p>
+                              <p class="name">Ten acc</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
                     <div class="menu-nav-wrap">
                       <ul>
                         <li class="item-wrap">
                           <span><i class="fas fa-shopping-cart"></i> </span>
-                          <a class="text" href="#donhang">
+                          <a class="text" href="#don-hang">
                             Đơn hàng của tôi (0)</a
                           >
                         </li>
@@ -45,8 +41,8 @@
                       <ul>
                         <li class="item-wrap">
                           <span><i class="fas fa-user"></i> </span>
-                          <a class="text" href="#thongtincanhan">
-                            Chỉnh sửa thông tin cá nhân</a
+                          <a class="text" href="#thong-tin">
+                            Thông tin cá nhân</a
                           >
                         </li>
                       </ul>
@@ -55,7 +51,7 @@
                       <ul>
                         <li class="item-wrap">
                           <span><i class="fas fa-map-marker-alt"></i> </span>
-                          <a class="text" href="#diachi"> Địa chỉ</a>
+                          <a class="text" href="#dia-chi"> Địa chỉ</a>
                         </li>
                       </ul>
                     </div>
@@ -63,13 +59,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-8 content-children item-row" id="thongtincanhan">
+            <div class="col-8 content-children item-row">
               <div class="mainCart-sidebar wrap-order-summary">
                 <div class="order-summary-block">
                   <form>
-                    <div class="information-wrap">
+                    <div class="information-wrap" id="thong-tin">
                       <div class="header-wrap">
-                        <span class="title">Chỉnh sửa thông tin cá nhân</span>
+                        <span class="title">Thông tin cá nhân</span>
                       </div>
                       <div class="form-wrap">
                         <form
@@ -92,7 +88,6 @@
                               placeholder="Nhập họ và tên"
                               class="input__info input"
                               name="name"
-                              value="Phượng Vũ"
                             />
                           </div>
 
@@ -102,9 +97,6 @@
                               class="input"
                               type="email"
                               placeholder="Nhập email"
-                              readonly=""
-                              disabled=""
-                              value="hanap428@gmail.com"
                             />
                           </div>
 
@@ -350,301 +342,6 @@
                         >
                           Lưu thông tin
                         </button>
-                      </div>
-                    </div>
-                    <div class="col-8 content-children item-row" id="donhang">
-                      <div class="order-wrap">
-                        <div
-                          class="nav nav-tabs menu-tab"
-                          id="myTab"
-                          role="tablist"
-                        >
-                          <a
-                            class="nav-link active"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab-all"
-                            role="tab"
-                            aria-selected="true"
-                          >
-                            Tất cả
-                          </a>
-                          <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab1"
-                            role="tab"
-                            aria-selected="false"
-                            tabindex="-1"
-                          >
-                            Chờ thanh toán
-                          </a>
-                          <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab5"
-                            role="tab"
-                            aria-selected="false"
-                            tabindex="-1"
-                          >
-                            Đã xác nhận
-                          </a>
-                          <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab2"
-                            role="tab"
-                            aria-selected="false"
-                            tabindex="-1"
-                          >
-                            Đang giao hàng
-                          </a>
-                          <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab3"
-                            role="tab"
-                            aria-selected="false"
-                            tabindex="-1"
-                          >
-                            Hoàn thành
-                          </a>
-                          <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tab4"
-                            role="tab"
-                            aria-selected="false"
-                            tabindex="-1"
-                          >
-                            Đã hủy
-                          </a>
-                        </div>
-
-                        <div class="order-list">
-                          <div class="tab-content clearfix" id="nav-tabContent">
-                            <div
-                              class="tab-pane fade show active"
-                              id="tab-all"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-
-                            <div
-                              class="tab-pane fade"
-                              id="tab1"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-                            <div
-                              class="tab-pane fade"
-                              id="tab5"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-                            <div
-                              class="tab-pane fade"
-                              id="tab2"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-                            <div
-                              class="tab-pane fade"
-                              id="tab3"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-                            <div
-                              class="tab-pane fade"
-                              id="tab4"
-                              role="tabpanel"
-                            >
-                              <div class="empty-content">
-                                <img
-                                  src="/images/empty-product.png"
-                                  alt="no data"
-                                />
-                                <p>Không có đơn hàng nào</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          class="modal fade modal-md"
-                          id="reviewModal"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1
-                                  class="modal-title fs-5"
-                                  id="exampleModalLabel"
-                                >
-                                  Đánh giá sản phẩm
-                                </h1>
-                                <button
-                                  type="button"
-                                  class="btn-close btn-close-modal-review"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <form
-                                action="https://5sfashion.vn/product-rating/store"
-                                id="reviewForm"
-                                method="POST"
-                                enctype="multipart/form-data"
-                                class="form-review"
-                              >
-                                <div
-                                  class="modal-body"
-                                  id="modal-body-rating"
-                                ></div>
-                                <div class="modal-footer">
-                                  <button
-                                    type="button"
-                                    class="btn btn-secondary btn-close-modal"
-                                    data-bs-dismiss="modal"
-                                  >
-                                    Huỷ
-                                  </button>
-                                  <button
-                                    type="button"
-                                    class="btn btn-primary btn-submit-form"
-                                  >
-                                    Đánh giá
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          class="modal fade modal-md view-rating"
-                          id="viewRating"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1
-                                  class="modal-title fs-5"
-                                  id="exampleModalLabel"
-                                >
-                                  Đánh giá sản phẩm
-                                </h1>
-                                <button
-                                  type="button"
-                                  class="btn-close btn-close-modal-review"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <div
-                                class="modal-body"
-                                id="modal-view-rating"
-                              ></div>
-                              <div class="modal-footer">
-                                <button
-                                  type="button"
-                                  class="btn btn-secondary btn-close-modal"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Đóng
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-8 content-children item-row" id="diachi">
-                      <div class="address-wrap">
-                        <div class="header-wrap">
-                          <span class="title">Địa chỉ</span>
-                        </div>
-                        <div class="box-address"></div>
-
-                        <a
-                          href="https://5sfashion.vn/profile/new-address"
-                          class="btn-wrap"
-                        >
-                          <span>Thêm địa chỉ mới</span>
-                          <img
-                            src="/images/icons/plus.svg"
-                            alt="icon add address"
-                          />
-                        </a>
-
-                        <div
-                          class="modal fade"
-                          id="delete-address-modal"
-                          data-bs-keyboard="false"
-                        >
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header subs-header">
-                                <span class="modal-title">Cảnh báo</span>
-                              </div>
-                              <div class="modal-sub-title">
-                                Bạn có chắc chắn muốn xóa địa chỉ này?
-                              </div>
-                              <div class="modal-delete-address-footer">
-                                <div
-                                  class="btn-cancel"
-                                  id="btn-close-modal"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Hủy bỏ
-                                </div>
-                                <div class="btn-submit" id="btn-delete">
-                                  Xóa
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </form>
