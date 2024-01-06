@@ -47,6 +47,10 @@ public class MaGiamGiaController {
     public MaGiamGia update(@RequestBody MaGiamGia maGiamGia, @PathVariable("id") String id) {
         return maGiamGiaService.update(maGiamGia, UUID.fromString(id));
     }
+//    @PutMapping("update-so-luong/{id}")
+//    public MaGiamGia updateSoLuong(@RequestBody MaGiamGia maGiamGia, @PathVariable("id") String id) {
+//        return maGiamGiaService.updateSoLuong(maGiamGia, UUID.fromString(id));
+//    }
 
     @GetMapping("detail/{id}")
     public MaGiamGia detail(@PathVariable("id") String id) {

@@ -25,7 +25,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
               inner join kich_thuoc kt on kt.id = spct.kich_thuoc_id
               inner join mau_sac ms on ms.id = spct.mau_sac_id
               inner join co_ao ca on spct.co_ao_id = ca.id
-              where sp.id=?1
+              where sp.id=?1 and da_xoa='false'
               group by sp.id,spct.id, sp.ten,kt.ten,ms.ten, cl.ten, pc.ten, ht.ten, ta.ten, ca.ten, spct.da_xoa,spct.ngay_tao,spct.don_gia,hinh_anh
               ORDER BY IIF(MAX(spct.ngay_sua) IS NULL, MAX(spct.ngay_tao), IIF(MAX(spct.ngay_tao) > MAX(spct.ngay_sua), MAX(spct.ngay_tao), MAX(spct.ngay_sua))) DESC; 
             """, nativeQuery = true)

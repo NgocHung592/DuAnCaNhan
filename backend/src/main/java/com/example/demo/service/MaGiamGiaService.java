@@ -15,12 +15,13 @@ public interface MaGiamGiaService {
 
     MaGiamGia update(MaGiamGia maGiamGia, UUID id);
 
+    MaGiamGia updateSoLuong(MaGiamGia maGiamGia, UUID id);
+
     MaGiamGia detail(UUID id);
 
     void delete(UUID id);
 
     Page<MaGiamGia> locMaGiamGia(Integer pageNo, Integer trangThai, Integer hinhThuc);
-
 
     Page<MaGiamGia> searchMaGiamGia(Integer pageNo, String keyWord);
 

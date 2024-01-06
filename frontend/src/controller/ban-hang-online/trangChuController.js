@@ -19,9 +19,8 @@ window.trangChuController = function ($scope, $http) {
   };
   $scope.getTopSanPhamMoi = function () {
     $http.get(sanPhamChiTietAPI + "/trang-chu").then(function (response) {
-      $scope.listTopSanPham = response.data;
+      $scope.listTopSanPham = response?.data;
       console.log($scope.listTopSanPham);
-      // Gộp các sản phẩm có cùng tên
       const groupedSanPham = {};
       $scope.listTopSanPham.forEach((sanPham) => {
         const tenSanPham = sanPham.tenSanPham;

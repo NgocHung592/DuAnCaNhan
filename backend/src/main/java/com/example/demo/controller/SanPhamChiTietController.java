@@ -31,7 +31,7 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
     @GetMapping("trang-chu")
-    public ResponseEntity getSanPhamTranChu(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
+    public ResponseEntity getSanPhamTranChu() {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(),HttpStatus.OK);
     }
 

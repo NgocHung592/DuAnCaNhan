@@ -1,181 +1,123 @@
 <main class="content">
-  <section>
-    <div class="container-fluid p-0">
-      <div class="row">
-
-        <button class="btn btn-warning" ng-click="changeState()"
-          ng-class="{'state-pending': formHoaDon.trangThai === '0', 'state-paid': formHoaDon.trangThai === '1', 'state-shipped': formHoaDon.trangThai === '2', 'state-delivered': formHoaDon.trangThai === '3'}">{{formHoaDon.trangThai==0?"Xác
-          nhận
-          đơn":formHoaDon.trangThai==1?"Chuẩn bị
-          hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}</button>
-        <br />
-  </section>
-  <section>
-    <div class="container-fluid p-0">
-      <div class="row">
-        <div class="card flex-fill">
-          <br />
-          <h1>THÔNG TIN ĐƠN HÀNG</h1>
-          <hr />
-          <div class="container">
-            <table ng-repeat="hoaDon in listHoaDon">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Trạng thái</div>
-                    <div class="col-9">
-                      <button class="btn btn-warning">
-                        {{formHoaDon.trangThai==0?"Xác nhận
-                        đơn":formHoaDon.trangThai==1?"Chuẩn bị
-                        hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}
-                      </button>
-                      <button class="btn btn-warning">
-                        {{formHoaDon.trangThai==0?"Đang chờ":"Đã duyệt"}}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Họ và tên</div>
-                    <div class="col-9">{{formHoaDon.tenKhachHang}}</div>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Loại</div>
-                    <div class="col-9">
-                      <button class="btn btn-warning">{{formHoaDon.loaiHoaDon}}</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Số điện thoại</div>
-                    <div class="col-9">{{formHoaDon.soDienThoaiKhachHang}}</div>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Mã đơn hàng</div>
-                    <div class="col-9">{{formHoaDon.ma}}</div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="row">
-                    <div class="col-3">Địa chỉ</div>
-                    <div class="col-9">{{formHoaDon.diaChiKhachHang}}</div>
-                  </div>
-                </div>
-              </div>
-              <br />
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="container-fluid p-0">
-      <div class="row">
-        <div class="card flex-fill">
-          <br />
-          <div class="row">
-            <div class="col-10">
-              <h1 style="text-align: left">LỊCH SỬ THANH TOÁN</h1>
-            </div>
-            <div class="col-2">
-              <button class="btn btn-warning" style="text-align: right">
-                Xác nhận thanh toán
-              </button>
-            </div>
-          </div>
-          <hr />
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Số tiền</th>
-                <th scope="col">Thời gian</th>
-                <th scope="col">Trạng thái</th>
-                <th scope="col">Ghi chú</th>
-                <th scope="col">Nhân viên xác nhận</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">{{formHoaDon.tongTien}}</th>
-                <th scope="row">{{formHoaDon.ngayThanhToan | date: 'dd/MM/yyyy hh:mm a'}}</th>
-                <th scope="row">
-                  {{formHoaDon.trangThai==0?"Xác nhận
-                  đơn":formHoaDon.trangThai==1?"Chuẩn bị
-                  hàng":formHoaDon.trangThai==2?"Đang giao":"Đã giao"}}
-                </th>
-                <th scope="row">Phí ship: {{formHoaDon.phiShip}} VNĐ</th>
-                <th>
-                  <a type="button" class="btn btn-warning">{{formHoaDon.nhanVien}}</a>
-                </th>
-              </tr>
-            </tbody>
-          </table>
-          <hr />
-        </div>
-      </div>
-    </div>
-  </section>
-  <script src="../../../js/custom/don-hang.js"></script>
-  <link rel="stylesheet" href="../../../css/custom/don-hang.css">
-</main>
-<main class="content">
   <div class="container-fluid p-0">
     <div class="row">
       <div class="card flex-fill">
         <div class="card-body d-flex">
           <div class="timeline-container">
             <ul class="timeline">
-              <li class="timeline-item">
+              <li class="timeline-item"
+                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
                 <div class="timeline-content">
-                  <h1>Day 1</h1>
-                  <h3>Classroomaaaaaaa</h3>
-                  <a href="#">Download </a>
+                  <h3>Tạo đơn hàng</h3>
+                  <p style="align-items: center;">{{detailHoaDon.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}</p>
+                </div>
+              </li>
+              <li class="timeline-item"
+                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
+                <div class="timeline-content">
+                  <h3>Chờ xác nhận</h3>
                 </div>
               </li>
               <li class="timeline-item">
                 <div class="timeline-content">
-                  <h1>Day 1</h1>
-                  <h3>Classroom</h3>
-                  <a href="#">Download materials</a>
+                  <h3>Chờ giao hàng</h3>
                 </div>
               </li>
               <li class="timeline-item">
                 <div class="timeline-content">
-                  <h1>Day 1</h1>
-                  <h3>Classroom</h3>
-                  <a href="#">Download materials</a>
+                  <h3>Đang giao hàng</h3>
                 </div>
               </li>
               <li class="timeline-item">
                 <div class="timeline-content">
-                  <h1>Day 1</h1>
-                  <h3>Classroom</h3>
-                  <a href="#">Download materials</a>
+                  <h3>Hoàn thành</h3>
                 </div>
               </li>
-              <li class="timeline-item">
-                <div class="timeline-content">
-                  <h1>Day 1</h1>
-                  <h3>Classroom</h3>
-                  <a href="#">Download materials</a>
-                </div>
-              </li>
+
             </ul>
           </div>
+
         </div>
+        <div class="text-end m-3">
+          <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="add($event)">Chi tiết</a>
+        </div>
+      </div>
+      <div class="card flex-fill">
+        <h1>THÔNG TIN ĐƠN HÀNG</h1>
+        <hr />
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-3 mb-5">Mã đơn hàng</div>
+                <div class="col-md-9">
+                  <p>{{detailHoaDon.ma}}</p>
+                </div>
+                <div class="col-md-3 mb-5">Loại</div>
+                <div class="col-md-9">
+                  <p>{{detailHoaDon.loaiHoaDon}}</p>
+
+                </div>
+                <div class="col-md-3 mb-5">Trạng thái</div>
+                <div class="col-md-9">
+                  <p>
+                    {{detailHoaDon.trangThai==0?"Chờ xác nhận":detailHoaDon.trangThai==1?"Chờ giao
+                    hàng":detailHoaDon.trangThai==2?"Đang giao hàng":"Đã hoàn thành"}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-3  mb-5">Tên khách hàng</div>
+                <div class="col-md-9">
+                  <p>{{detailHoaDon.tenKhachHang}}</p>
+                </div>
+                <div class="col-md-3  mb-5">Số điện thoại</div>
+                <div class="col-md-9">
+                  <p>{{detailHoaDon.soDienThoaiKhachHang}}</p>
+                </div>
+                <div class="col-md-3  mb-5">Địa chỉ</div>
+                <div class="col-md-9">
+                  <p>
+                    {{detailHoaDon.diaChiKhachHang}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card flex-fill">
+        <h1 style="text-align: left">LỊCH SỬ THANH TOÁN</h1>
+        <hr>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Số tiền</th>
+              <th scope="col">Thời gian</th>
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Nhân viên xác nhận</th>
+              <th scope="col">Ghi chú</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>{{$index+1}}</th>
+              <th scope="row">{{detailHoaDon.tongTien| number}} VND</th>
+              <th scope="row">{{detailHoaDon.ngayThanhToan | date: 'dd/MM/yyyy hh:mm a'}}</th>
+              <th scope="row">
+                {{detailHoaDon.trangThai==0?"Chờ xác nhận":detailHoaDon.trangThai==1?"Chờ giao
+                hàng":detailHoaDon.trangThai==2?"Đang giao hàng":"Đã hoàn thành"}}
+              </th>
+              <th scope="row"></th>
+              <th>
+              </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 window.DonHangController = function ($http, $scope, $routeParams) {
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
-  $scope.formHoaDon = {
+  $scope.detailHoaDon = {
     id: "",
     ma: "",
     tenKhachHang: "",
@@ -21,31 +21,11 @@ window.DonHangController = function ($http, $scope, $routeParams) {
 
   $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
-      $scope.formHoaDon = response.data;
-      console.log("response.data", response.data);
-      $scope.changeState = function () {
-        // Đổi trạng thái hóa đơn theo một logic nào đó
-        switch ($scope.formHoaDon.trangThai) {
-          case 0:
-            $scope.formHoaDon.trangThai = 1;
-            break;
-          case 1:
-            $scope.formHoaDon.trangThai = 2;
-            break;
-          case 2:
-            $scope.formHoaDon.trangThai = 3;
-            break;
-        }
-      };
+      $scope.detailHoaDon = response.data;
+      console.log($scope.detailHoaDon);
     }
   });
-  // $scope.getLichSuDonHang = function (id) {
-  //   var lichSuHoaDon = listLichSuHoaDon.find(function (c) {
-  //     return c.id === id;
-  //   });
-  //   console.log("lichSuHoaDon.loaiHoaDon", lichSuHoaDon.loaiHoaDon);
-  //   return lichSuHoaDon ? lichSuHoaDon.loaiHoaDon : "Unknown";
-  // };
+
   //update hoa don
   $scope.update = function (id) {
     $http

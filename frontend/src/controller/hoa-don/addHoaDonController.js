@@ -135,6 +135,23 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.getMaGiamGia = function () {
     $http.get(magiamgiaAPI + "/trang-thai").then(function (response) {
       $scope.listMaGiamGia = response?.data.content;
+      $scope.listMaGiamGia.forEach((maGiamGia) => {
+        $http
+          .get(
+            maGiamGiaChiTietAPI +
+              "/hien-thi/" +
+              maGiamGia.id +
+              "?pageNo=" +
+              $scope.currentPage
+          )
+          .then(function (response) {
+            if (response.status == 200) {
+              $scope.listMaGiamGiaChiTiet = response?.data.content;
+              maGiamGia.soLuong =
+                maGiamGia.soLuong - $scope.listMaGiamGiaChiTiet.length;
+            }
+          });
+      });
     });
   };
   $scope.getMaGiamGia();
@@ -509,6 +526,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
         $scope.tongTien =
           $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
       } else {
+        $scope.giamGia = option.giaTriGiam;
         $scope.tongTien =
           $scope.tienHang + $scope.phiVanChuyen - option.giaTriGiam;
       }
@@ -578,12 +596,13 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
               );
             }
           })
+
+          //add hinh thuc thanh toan
           .then(function () {
             $scope.addHinhThucThanhToan = {
               tenHinhThuc: $scope.searchHinhThucThanhToan,
               hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
             };
-            console.log($scope.addHinhThucThanhToan);
             return $http.post(
               hinhThucThanhToanAPI + "/add",
               $scope.addHinhThucThanhToan
@@ -626,6 +645,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
               $scope.listHoaDonChiTiet
             );
           });
+        $location.path("/hoa-don/hien-thi");
       }
     }
   };
