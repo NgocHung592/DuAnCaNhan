@@ -182,41 +182,12 @@
                       class="header-action-item header-action_account"
                     >
                       <div class="header-action_text">
-                        <div></div>
                         <a
-                          ng-if="isLoggedIn==false"
+                          ng-mouseenter="handleMouseEnter()"
+                          ng-mouseleave="handleMouseLeave()"
+                          ng-click="redirectToPage()"
                           class="header-action__link header-action_clicked"
-                          href="#/login"
-                        >
-                          <span class="box-icon">
-                            <svg
-                              class="svg-ico-account"
-                              viewBox="0 0 1024 1024"
-                            >
-                              <path
-                                class="path1"
-                                d="M486.4 563.2c-155.275 0-281.6-126.325-281.6-281.6s126.325-281.6 281.6-281.6 281.6 126.325 281.6 281.6-126.325 281.6-281.6 281.6zM486.4 51.2c-127.043 0-230.4 103.357-230.4 230.4s103.357 230.4 230.4 230.4c127.042 0 230.4-103.357 230.4-230.4s-103.358-230.4-230.4-230.4z"
-                              ></path>
-                              <path
-                                class="path2"
-                                d="M896 1024h-819.2c-42.347 0-76.8-34.451-76.8-76.8 0-3.485 0.712-86.285 62.72-168.96 36.094-48.126 85.514-86.36 146.883-113.634 74.957-33.314 168.085-50.206 276.797-50.206 108.71 0 201.838 16.893 276.797 50.206 61.37 27.275 110.789 65.507 146.883 113.634 62.008 82.675 62.72 165.475 62.72 168.96 0 42.349-34.451 76.8-76.8 76.8zM486.4 665.6c-178.52 0-310.267 48.789-381 141.093-53.011 69.174-54.195 139.904-54.2 140.61 0 14.013 11.485 25.498 25.6 25.498h819.2c14.115 0 25.6-11.485 25.6-25.6-0.006-0.603-1.189-71.333-54.198-140.507-70.734-92.304-202.483-141.093-381.002-141.093z"
-                              ></path>
-                            </svg>
-                            <span class="box-icon--close">
-                              <svg viewBox="0 0 19 19" role="presentation">
-                                <path
-                                  d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
-                                  fill-rule="evenodd"
-                                ></path>
-                              </svg>
-                            </span>
-                          </span>
-                          <p>Tài khoản</p>
-                        </a>
-                        <a
-                          ng-if="isLoggedIn==true"
-                          class="header-action__link header-action_clicked"
-                          href="#/login"
+                          href=""
                           data-bs-toggle="dropdown"
                         >
                           <span class="box-icon">
@@ -233,31 +204,31 @@
                                 d="M896 1024h-819.2c-42.347 0-76.8-34.451-76.8-76.8 0-3.485 0.712-86.285 62.72-168.96 36.094-48.126 85.514-86.36 146.883-113.634 74.957-33.314 168.085-50.206 276.797-50.206 108.71 0 201.838 16.893 276.797 50.206 61.37 27.275 110.789 65.507 146.883 113.634 62.008 82.675 62.72 165.475 62.72 168.96 0 42.349-34.451 76.8-76.8 76.8zM486.4 665.6c-178.52 0-310.267 48.789-381 141.093-53.011 69.174-54.195 139.904-54.2 140.61 0 14.013 11.485 25.498 25.6 25.498h819.2c14.115 0 25.6-11.485 25.6-25.6-0.006-0.603-1.189-71.333-54.198-140.507-70.734-92.304-202.483-141.093-381.002-141.093z"
                               ></path>
                             </svg>
-                            <span class="box-icon--close">
-                              <svg viewBox="0 0 19 19" role="presentation">
-                                <path
-                                  d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
-                                  fill-rule="evenodd"
-                                ></path>
-                              </svg>
-                            </span>
-                          </span>
-                          <span class="txtbl">
-                            <p>{{list.hoTen}}</p>
                           </span>
                         </a>
                         <a>
-                          <div class="dropdown-menu dropdown-menu-end">
-                            <!-- Các mục trong menu -->
-
+                          <div
+                            ng-class="{ 'show': isDropdownOpen }"
+                            class="dropdown-menu dropdown-menu-end"
+                            ng-if="isLoggedIn==true"
+                            ng-mouseleave="handleDropdownLeave()"
+                          >
+                            <span></span>
+                            <a
+                              class="dropdown-item"
+                              href=""
+                              style="font-weight: bold; font-size: 16px"
+                            >
+                              {{list.hoTen}}
+                            </a>
+                            <hr />
                             <a class="dropdown-item" href="#thong-tin">
-                              <i
-                                class="align-middle me-1"
-                                data-feather="user"
-                              ></i>
                               Thông tin tài khoản
                             </a>
-                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#thong-tin">
+                              Đơn hàng của tôi
+                            </a>
+                            <hr />
                             <a
                               class="dropdown-item"
                               href="#"
@@ -302,12 +273,6 @@
                                 ></path>
                               </svg>
                             </span>
-                            <span class="count-holder">
-                              <span class="count">{{ dataFromGioHang }}</span>
-                            </span>
-                          </span>
-                          <span class="box-text">
-                            <span class="txtbl">Giỏ hàng</span>
                           </span>
                         </a>
                         <span class="box-triangle">

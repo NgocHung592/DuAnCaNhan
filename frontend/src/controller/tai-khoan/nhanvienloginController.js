@@ -35,7 +35,7 @@ angular
         .catch(function (error) {
           // Xử lý lỗi
           console.error(error);
-          alert("Email hoặc mật khẩu không đúng");
+          alert("Email, số điện thoại hoặc mật khẩu không đúng");
         });
     };
     $scope.logout = function () {

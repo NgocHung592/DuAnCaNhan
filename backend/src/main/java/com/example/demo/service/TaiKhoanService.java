@@ -7,6 +7,9 @@ import java.util.UUID;
 
 public interface TaiKhoanService {
     KhachHang login(String email);
+
+    KhachHang loginreal(String sdt_email,String mat_khau);
+
     Optional<KhachHang> forgetPassword(String email) ;
     void save(KhachHang khachHang);
     Optional<KhachHang> findByResetToken(String resetToken);

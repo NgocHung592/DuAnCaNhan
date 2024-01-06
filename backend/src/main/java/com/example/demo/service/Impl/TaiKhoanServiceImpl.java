@@ -24,6 +24,12 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public KhachHang login(String email) {
         return taiKhoanRepository.findByEmail(email);
     }
+
+    @Override
+    public KhachHang loginreal(String sdt_email, String mat_khau) {
+        return taiKhoanRepository.findByEmailOrSoDienThoaiAndMatKhau(sdt_email,mat_khau);
+    }
+
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -47,8 +53,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         if (optionalKhachHang.isPresent()){
             throw new Exception("Email is already present!");
         }
-            KhachHang khachHang1=taiKhoanRepository.save(khachHang);
-            sendEmail(khachHang1);
+        Optional<KhachHang> optionalKhachHang1 = taiKhoanRepository.findKhachHangBySoDienThoai(khachHang.getSoDienThoai());
+        if (optionalKhachHang1.isPresent()){
+            throw new Exception("Sodienthoai is already present!");
+        }
+        KhachHang khachHang1=taiKhoanRepository.save(khachHang);
+
+        sendEmail(khachHang1);
         return khachHang1;
     }
 
