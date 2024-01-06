@@ -9,7 +9,11 @@ window.detailSanPhamController = function (
   $scope.listSanPhamChiTiet = [];
   $scope.listNewSanPhamChiTiet = [];
   $scope.showSPCT = false;
-
+  $scope.goiHang = {
+    sanPhamChiTietId: $scope.idSPCT,
+    khachHangId: $scope.idKhachHang,
+    soLuong: 1,
+  };
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(
@@ -76,10 +80,7 @@ window.detailSanPhamController = function (
   $scope.selectdMauSac = function (mauSac) {
     $scope.searchMauSac = mauSac;
     $scope.listSanPhamChiTiet.filter((sanPham) => {
-      if (
-        sanPham.tenKichThuoc == $scope.searchKichThuoc &&
-        sanPham.tenMauSac == $scope.searchMauSac
-      ) {
+      if (sanPham.tenMauSac == $scope.searchMauSac) {
         $scope.sanPhamCT = sanPham;
         console.log("list spct", sanPham);
         $scope.idSPCT = sanPham.idSanPhamChiTiet;
@@ -115,11 +116,6 @@ window.detailSanPhamController = function (
   }
   $scope.idKhachHang = $rootScope.idKhachHang;
   console.log("id:", $rootScope.idKhachHang);
-  $scope.goiHang = {
-    sanPhamChiTietId: $scope.idSPCT,
-    khachHangId: $scope.idKhachHang,
-    soLuong: 1,
-  };
 
   $scope.incrementQuantity = function () {
     console.log("Incrementing quantity");

@@ -39,12 +39,12 @@
               <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="false" ng-change="loc()"
                 ng-model="selectedOption">
               <label class="form-check-label">
-                Kích hoạt
+                Đang làm
               </label>
               <input type="radio" class="form-check-input ms-3" name="trang_thai" ng-value="true" ng-change="loc()"
                 ng-model="selectedOption">
               <label class="form-check-label">
-                Hủy kích hoạt
+                Đã nghỉ
               </label>
 
             </div>
@@ -73,7 +73,7 @@
                   <th>
                     <p ng-class="{' text-g ': !nhanVien.daXoa
                     ,'text-glow':nhanVien.daXoa}">
-                      {{nhanVien.daXoa ? "Hủy kích hoạt" : "Kích hoạt"}}
+                      {{nhanVien.daXoa ? "Đã nghỉ" : "Đang làm"}}
 
                     </p>
                   </th>

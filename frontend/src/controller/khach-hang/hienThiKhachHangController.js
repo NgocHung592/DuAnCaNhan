@@ -38,6 +38,7 @@ window.hienThiKhachHangController = function (
       .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listKhachHang = response?.data.content;
+        console.log($scope.listKhachHang);
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
