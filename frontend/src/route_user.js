@@ -37,6 +37,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "tai-khoan/login.html",
       // controller: loginController,
     })
+    .when("/thong-tin-khach-hang", {
+      templateUrl: "ban-hang-online/thong-tin-khach-hang.html",
+      // controller: loginController,
+    })
     .when("/thong-tin", {
       templateUrl: "tai-khoan/thong-tin.html",
     })
