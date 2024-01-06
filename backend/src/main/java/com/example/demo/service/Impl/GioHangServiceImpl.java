@@ -51,7 +51,7 @@ public class GioHangServiceImpl implements GioHangService {
 
         // Tạo mới đối tượng GioHang.
         GioHang gioHang = GioHang.builder().ten("GioHang").khachHang(khachHang).build();
-        gioHangRepository.save(gioHang);
+
 
         // Tìm kiếm GioHangChiTiet bằng Id của SanPhamChiTiet.
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findBySanPhamChiTiet_Id(sanPhamChiTietId);
@@ -75,6 +75,7 @@ public class GioHangServiceImpl implements GioHangService {
             gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia().multiply(BigDecimal.valueOf(soLuongMoi)));
             gioHangChiTiet.setGioHang(gioHang);
             gioHangChiTiet.setSanPhamChiTiet(sanPhamChiTiet);
+            gioHangRepository.save(gioHang);
             gioHangChiTietRepository.save(gioHangChiTiet);
 
         }

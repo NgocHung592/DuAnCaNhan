@@ -67,14 +67,13 @@ angular
           .post(taiKhoanAPI + "/login", $scope.user)
           .then(function (response) {
             if (response.status === 200) {
-              alert("Đăng nhập thành công");
-
               $scope.list = response.data;
               $scope.isLoggedIn = true;
               $location.path("/trang-chu");
               $timeout(function () {
                 $window.location.reload();
               }, 0);
+              alert("Đăng nhập thành công");
 
               localStorage.setItem("loggedInUser", JSON.stringify($scope.list));
             } else {
@@ -90,7 +89,11 @@ angular
       $scope.logout = function () {
         localStorage.removeItem("loggedInUser");
         $scope.isLoggedIn = false;
-        $window.location.reload();
+        $location.path("/trang-chu");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+        alert("Đã đăng xuất");
       };
     }
   );
