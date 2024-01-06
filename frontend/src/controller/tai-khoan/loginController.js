@@ -2,7 +2,7 @@ angular
   .module("myApp")
   .controller(
     "loginController",
-    function ($http, $scope, $window, $route, $rootScope, $location) {
+    function ($http, $scope, $window, $route, $rootScope, $location, $timeout) {
       $scope.user = {
         email: "",
         matKhau: "",
@@ -47,7 +47,8 @@ angular
       if (storedUser) {
         $scope.list = JSON.parse(storedUser);
         $scope.isLoggedIn = true;
-        $rootScope.idKhachHang = $scope.list;
+        $rootScope.idKhachHang = $scope.list.id;
+        $rootScope.ten = $scope.list.hoTen;
         $rootScope.$on("dataFromGioHang", function (event, data) {
           $scope.dataFromGioHang = data;
           console.log("số lượng giỏ hàng :", $scope.dataFromGioHang);
@@ -67,6 +68,9 @@ angular
               $scope.list = response.data;
               $scope.isLoggedIn = true;
               $location.path("/trang-chu");
+              $timeout(function () {
+                $window.location.reload();
+              }, 0);
 
               localStorage.setItem("loggedInUser", JSON.stringify($scope.list));
             } else {

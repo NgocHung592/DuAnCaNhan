@@ -14,8 +14,8 @@ window.thanhToanController = function (
     return;
   }
 
-  $scope.idKhachHang = $rootScope.idKhachHang.id;
-  console.log("id khach hang:", $rootScope.idKhachHang.id);
+  $scope.idKhachHang = $rootScope.idKhachHang;
+  console.log("id khach hang:", $rootScope.idKhachHang);
   $http
     .get(gioHangAPI + "/hien-thi/" + $scope.idKhachHang)
     .then(function (response) {

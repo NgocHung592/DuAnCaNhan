@@ -6,6 +6,7 @@ import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
+import com.example.demo.model.response.GioHangReponse;
 import com.example.demo.repository.*;
 import com.example.demo.service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class GioHangServiceImpl implements GioHangService {
 
         // Tạo mới đối tượng GioHang.
         GioHang gioHang = GioHang.builder().ten("GioHang").khachHang(khachHang).build();
+        gioHangRepository.save(gioHang);
 
         // Tìm kiếm GioHangChiTiet bằng Id của SanPhamChiTiet.
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findBySanPhamChiTiet_Id(sanPhamChiTietId);
@@ -78,8 +80,55 @@ public class GioHangServiceImpl implements GioHangService {
 
         // Liên kết đối tượng GioHang với khách hàng và lưu đối tượng GioHang.
         gioHang.setKhachHang(khachHang);
-        gioHangRepository.save(gioHang);
+
     }
+
+
+    @Override
+    public void GioHangK(UUID sanPhamChiTietId, Integer soLuong) {
+
+            // Lấy thông tin sản phẩm chi tiết từ khóa chính (ID).
+            SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(sanPhamChiTietId)
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
+        GioHang gioHang = GioHang.builder().ten("GioHang").build();
+
+
+            // Kiểm tra số lượng tồn kho.
+            int tonKho = sanPhamChiTiet.getSoLuong();
+
+            if (soLuong > tonKho) {
+                throw new RuntimeException("Số lượng vượt quá tồn kho của sản phẩm");
+            }
+
+            // Tạo mới đối tượng GioHangChiTiet.
+            GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findBySanPhamChiTiet_Id(sanPhamChiTietId);
+
+            if (gioHangChiTiet != null) {
+                // Nếu sản phẩm chi tiết đã tồn tại trong giỏ hàng chi tiết, kiểm tra số lượng mới.
+                int soLuongMoiTrongGioHang = gioHangChiTiet.getSoLuong() + soLuong;
+                if (soLuongMoiTrongGioHang > tonKho) {
+                    throw new RuntimeException("Số lượng vượt quá tồn kho của sản phẩm trong giỏ hàng");
+                }
+
+                // Cập nhật số lượng trong giỏ hàng chi tiết.
+                gioHangChiTiet.setSoLuong(soLuongMoiTrongGioHang);
+                gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia().multiply(BigDecimal.valueOf(soLuongMoiTrongGioHang)));
+                gioHangChiTietRepository.save(gioHangChiTiet);
+            } else {
+                // Nếu sản phẩm chi tiết chưa tồn tại trong giỏ hàng chi tiết, tạo mới đối tượng GioHangChiTiet.
+                gioHangChiTiet = new GioHangChiTiet();
+                gioHangChiTiet.setSoLuong(soLuong);
+                gioHangChiTiet.setGioHang(gioHang);
+                gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia().multiply(BigDecimal.valueOf(soLuong)));
+                gioHangChiTiet.setSanPhamChiTiet(sanPhamChiTiet);
+                gioHangRepository.save(gioHang);
+                gioHangChiTietRepository.save(gioHangChiTiet);
+
+
+            }
+        }
+
+
 
 
 
@@ -96,6 +145,11 @@ public class GioHangServiceImpl implements GioHangService {
     @Override
     public List<GioHangChiTietReponse> getAll(UUID id) {
         return gioHangChiTietRepository.getAll(id);
+    }
+
+    @Override
+    public List<GioHangReponse> getAllK() {
+        return gioHangChiTietRepository.getAllK();
     }
 
     @Override

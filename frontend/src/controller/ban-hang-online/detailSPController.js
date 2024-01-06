@@ -115,6 +115,12 @@ window.detailSanPhamController = function (
     return;
   }
   $scope.idKhachHang = $rootScope.idKhachHang;
+  console.log("id khach hang:", $rootScope.idKhachHang);
+  $scope.goiHang = {
+    sanPhamChiTietId: $scope.idSPCT,
+    khachHangId: $scope.idKhachHang,
+    soLuong: 1,
+  };
   console.log("id:", $rootScope.idKhachHang);
 
   $scope.incrementQuantity = function () {
