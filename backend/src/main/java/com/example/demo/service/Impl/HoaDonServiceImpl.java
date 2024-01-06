@@ -2,7 +2,7 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDon;
 import com.example.demo.model.request.HoaDonRequest;
-import com.example.demo.model.response.HoaDonRepone;
+import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.service.HoaDonService;
@@ -13,23 +13,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
+
     @Autowired
     private HoaDonReponsitory hoaDonReponsitory;
+
     @Autowired
     private KhachHangRepository khachHangRepository;
-
-    @Override
-    public Page<HoaDon> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        return hoaDonReponsitory.findAll(pageable);
-    }
 
     @Override
     public List<HoaDon> getHoaDonCho() {
@@ -53,7 +48,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
         if (hoaDonRequest.getIdKhachHang() == null) {
             optional.map(hoaDon -> {
-                hoaDon.setTrangThai(1);
+                hoaDon.setTrangThai(Integer.valueOf(hoaDonRequest.getTrangThai()));
                 hoaDon.setTenKhachHang(hoaDonRequest.getTenKhachHang());
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
@@ -63,7 +58,7 @@ public class HoaDonServiceImpl implements HoaDonService {
             }).orElse(null);
         } else {
             optional.map(hoaDon -> {
-                hoaDon.setTrangThai(1);
+                hoaDon.setTrangThai(Integer.valueOf(hoaDonRequest.getTrangThai()));
                 hoaDon.setTenKhachHang(hoaDonRequest.getTenKhachHang());
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
@@ -83,29 +78,20 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon delete(UUID id) {
-        Optional<HoaDon> optional = hoaDonReponsitory.findById(id);
-
-        return optional.map(hoaDon -> {
-            hoaDonReponsitory.delete(hoaDon);
-            return hoaDon;
-        }).orElse(null);
-    }
-
-    @Override
-    public List<HoaDon> getExcel() {
-        return hoaDonReponsitory.findAll();
-    }
-
-    @Override
-    public Page<HoaDonRepone> getAlll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 5);
+    public Page<HoaDonResponse> getPage(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
         return hoaDonReponsitory.getPage(pageable);
     }
 
     @Override
-    public Page<HoaDonRepone> getSearch(Integer pageNo, String seach) {
+    public Page<HoaDonResponse> search(Integer pageNo, String search) {
         Pageable pageable = PageRequest.of(pageNo, 5);
-        return hoaDonReponsitory.searchByKeyword(pageable, seach);
+        return hoaDonReponsitory.searchByKeyword(pageable, search);
+    }
+
+    @Override
+    public Page<HoaDonResponse> loc(Integer pageNo, String trangThai) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return hoaDonReponsitory.loc(pageable, trangThai);
     }
 }

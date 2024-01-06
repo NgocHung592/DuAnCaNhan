@@ -27,10 +27,10 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.giamGia = 0;
   $scope.tienHang = 0;
   $scope.phiVanChuyen = 0;
-  // $scope.showError = undefined;
   $scope.currentPage = 0;
   $scope.currentPageHDCT = 0;
   $scope.maxVisiblePages = 3;
+  $scope.searchHinhThucThanhToan = null;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.customIndex = 0;
@@ -140,7 +140,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.getMaGiamGia();
   $scope.addHoaDon = function (event) {
     event.preventDefault();
-
     $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
     $scope.formHoaDon = {
       ma: $scope.randomHoaDon,
@@ -162,7 +161,6 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       .then(function (response) {
         $scope.listSanPhamChiTiet = response?.data.content;
         $scope.customIndex = $scope.currentPage * response.data.size;
-        console.log($scope.customIndex);
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
@@ -500,6 +498,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     event.stopPropagation();
   };
   $scope.selectedVoucher = function (index, option) {
+    $scope.maGiamGiaId = option.id;
     if ($scope.formHoaDonChiTiet.idHoaDon === "") {
       showError("Hãy chọn 1 hóa đơn để áp dụng mã giảm giá");
     } else if ($scope.tienHang < option.giaTriDonToiThieu) {
@@ -511,7 +510,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
           $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
       } else {
         $scope.tongTien =
-          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+          $scope.tienHang + $scope.phiVanChuyen - option.giaTriGiam;
       }
     }
 
@@ -545,7 +544,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       showError("Chọn 1 hóa đơn để thanh toán");
     } else {
       if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
-        console.log($scope.hoaDonThanhToan);
+        $scope.hoaDonThanhToan.trangThai = 3;
+        //update hoa don
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -554,12 +554,42 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
           .then(function () {
             $scope.getListHoaDon();
           })
+          //update so luong san pham
           .then(function () {
             return $http.put(
               sanPhamChiTietAPI + "/update-so-luong",
               $scope.listHoaDonChiTiet
             );
+          })
+          //add ma giam gia
+          .then(function () {
+            if ($scope.maGiamGiaId === undefined) {
+              return;
+            } else {
+              $scope.addMaGiamGia = {
+                tongTien: $scope.tienHang,
+                tongTienSauKhiGiam: $scope.tongTien,
+                hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+                maGiamGiaId: $scope.maGiamGiaId,
+              };
+              return $http.post(
+                maGiamGiaChiTietAPI + "/add",
+                $scope.addMaGiamGia
+              );
+            }
+          })
+          .then(function () {
+            $scope.addHinhThucThanhToan = {
+              tenHinhThuc: $scope.searchHinhThucThanhToan,
+              hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+            };
+            console.log($scope.addHinhThucThanhToan);
+            return $http.post(
+              hinhThucThanhToanAPI + "/add",
+              $scope.addHinhThucThanhToan
+            );
           });
+        $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
         $scope.show == true
@@ -579,6 +609,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
               $scope.listHoaDonChiTiet
             );
           });
+        $location.path("/hoa-don/hien-thi");
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $http
@@ -648,5 +679,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
         ", " +
         $scope.hoaDonThanhToan.tinhThanhPho;
     });
+  };
+  $scope.hinhThucThanhToan = function (hinhThuc) {
+    $scope.searchHinhThucThanhToan = hinhThuc;
   };
 };

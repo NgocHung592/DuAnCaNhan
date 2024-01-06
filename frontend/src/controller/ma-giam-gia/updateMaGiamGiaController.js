@@ -9,14 +9,13 @@ window.updateMaGiamGiaController = function (
     ma: "",
     tenKM: "",
     hinhThucGiam: "",
-    trangThai: "",
     soLuong: "",
     giaTriDonToiThieu: "",
     giaTriGiam: "",
     ngayBatDau: "",
     ngayKetThuc: "",
     ngaySua: new Date(),
-    nguoiSua: "Huwng",
+    nguoiSua: "Hưng",
   };
 
   $http
@@ -164,6 +163,7 @@ window.updateMaGiamGiaController = function (
     //   $scope.showSoLuong = false;
     //   check = false;
     // }
+    console.log($scope.detailMaGiamGia);
     if (check) {
       $http
         .put(

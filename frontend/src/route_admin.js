@@ -134,17 +134,17 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
 
     .when("/hoa-don/hien-thi", {
       templateUrl: "hoa-don/hien-thi-hoa-don.html",
-      controller: HoaDonController,
+      controller: hienThiHoaDonController,
     })
 
     .when("/hoa-don/update/:id", {
       templateUrl: "hoa-don/hien-thi-don-hang.html",
       controller: DonHangController,
     })
-    .when("/thu-chi/hien-thi", {
-      templateUrl: "quan-ly-thu-chi.html",
-      controller: ThuChiController,
-    })
+    // .when("/thu-chi/hien-thi", {
+    //   templateUrl: "quan-ly-thu-chi.html",
+    //   controller: ThuChiController,
+    // })
 
     .when("/ma-giam-gia/hien-thi", {
       templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
@@ -161,7 +161,7 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     })
     .when("/ma-giam-gia-chi-tiet/detail/:id", {
       templateUrl: "ma-giam-gia-chi-tiet/ma-giam-gia-chi-tiet.html",
-      controller: MaGiamGiaChiTietController,
+      controller: maGiamGiaChiTietController,
     })
     .when("/ban-hang/tai-quay", {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",

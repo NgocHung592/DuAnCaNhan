@@ -1,44 +1,83 @@
-window.MaGiamGiaChiTietController = function ($http, $scope, $routeParams) {
-    $scope.listMaGiamGiaCT = [];
-    $scope.currentPage = 0;
-    $scope.totalPages = [];
-    $scope.searchDat = {"search":"", "type":"", "select":""};
-    $scope.detailProduct = {
-        id: "",
-        dongia:"",
-        dongiasaugiam:"",
-        idma: "",
-        hoaDon: "",
+window.maGiamGiaChiTietController = function ($http, $scope, $routeParams) {
+  $scope.listMaGiamGiaChiTiet = [];
+  $scope.currentPage = 0;
+  $scope.totalPages = [];
+  $scope.detailProduct = {
+    id: "",
+    dongia: "",
+    dongiasaugiam: "",
+    idma: "",
+    hoaDon: "",
+  };
 
-
-    };
-
+  $scope.getMaGiamGiaChiTiet = function () {
     $http
-        .get(magiamgiaAPI + "/ma-giam-gia-chi-tiet/detail/" + $routeParams.id)
-        .then(function (response) {
-            if (response.status == 200) {
-                $scope.detailProduct = response.data;
-                if($scope.detailProduct.toString() === "") {
-                    $scope.detailProduct = {}
-                }
-                $http
-                    .get(magiamgiaAPI + "/detail/" + $routeParams.id).then(function (response2) {
-                    if (response2.status == 200) {
-                        $scope.detailProduct.ma = response2.data.ma;
-                        $scope.detailProduct.tenKM = response2.data.tenKM;
-                    }
-                });
-                $http
-                    .get(hoaDonAPI + "/detail/" + $scope.detailProduct.hoaDon).then(function (response2) {
-                    if (response2.status == 200) {
-                        $scope.detailProduct.maHoaDon = response2.data.ma;
-                        $scope.detailProduct.trangThai = response2.data.trangThai;
-                    }
-                });
-                //alert($scope.detailProduct.ngayKetThuc.split("+"));
+      .get(
+        maGiamGiaChiTietAPI +
+          "/hien-thi/" +
+          $routeParams.id +
+          "?pageNo=" +
+          $scope.currentPage
+      )
+      .then(function (response) {
+        if (response.status == 200) {
+          $scope.listMaGiamGiaChiTiet = response?.data.content;
+          $scope.customIndex = $scope.currentPage * response.data.size;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
+        }
+      });
+  };
+  $scope.getMaGiamGiaChiTiet();
+  $scope.changePage = function (index) {
+    if (index >= 0) {
+      $scope.currentPage = index;
+      $scope.getMaGiamGiaChiTiet();
+    }
+  };
 
-            }
+  $scope.nextPage = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getMaGiamGiaChiTiet();
+    }
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+      $scope.getMaGiamGiaChiTiet();
+    }
+  };
+  $scope.getVisiblePages = function () {
+    var totalPages = $scope.totalPages.length;
+
+    var range = $scope.maxVisiblePages;
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
         });
-
-
-}
+      }
+    }
+    return visiblePages;
+  };
+};
