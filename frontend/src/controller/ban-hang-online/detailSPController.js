@@ -2,7 +2,8 @@ window.detailSanPhamController = function (
   $scope,
   $http,
   $routeParams,
-  $rootScope
+  $rootScope,
+  $location
 ) {
   $scope.currentPage = 0;
   $scope.totalPages = [];
@@ -14,10 +15,7 @@ window.detailSanPhamController = function (
     khachHangId: $scope.idKhachHang,
     soLuong: 1,
   };
-  $scope.goiHangNoLogin = {
-    sanPhamChiTietId: $scope.idSPCT,
-    soLuong: 1,
-  };
+
   $scope.getSanPhamChiTiet = function () {
     $http
       .get(
@@ -93,7 +91,7 @@ window.detailSanPhamController = function (
         $scope.idSPCT = sanPham.idSanPhamChiTiet;
         console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
-        $scope.goiHangNoLogin.sanPhamChiTietId = $scope.idSPCT;
+
         console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.soLuongSp = sanPham.soLuong;
         console.log("so luong san pham chi tiet:", $scope.soLuongSp);
@@ -114,7 +112,7 @@ window.detailSanPhamController = function (
         console.log("list spct", sanPham);
         $scope.soLuongSp = sanPham.soLuong;
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
-        $scope.goiHangNoLogin.sanPhamChiTietId = $scope.idSPCT;
+
         console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
       }
@@ -138,68 +136,65 @@ window.detailSanPhamController = function (
 
   $scope.incrementQuantity = function () {
     console.log("Incrementing quantity");
+
+    // Kiểm tra xem số lượng sau khi tăng có vượt quá giới hạn không
+    if ($scope.goiHang.soLuong + 1 > $scope.soLuongSp) {
+      window.alert("Số lượng vượt quá tồn kho của sản phẩm");
+      return; // Ngừng thực hiện nếu vượt quá giới hạn
+    }
+
     $scope.goiHang.soLuong++;
   };
 
   $scope.decrementQuantity = function () {
     console.log("Decrementing quantity");
-    if ($scope.goiHangNoLogin.soLuong > 1) {
-      $scope.goiHangNoLogin.soLuong--;
+    if ($scope.goiHang.soLuong > 1) {
+      $scope.goiHang.soLuong--;
     }
   };
-  if ($rootScope.trangthai == false) {
-    $scope.incrementQuantity1 = function () {
-      console.log("Incrementing quantity");
-      $scope.goiHangNoLogin.soLuong++;
-    };
+  $scope.redirectToPage = function () {
+    if ($scope.isLoggedIn) {
+      // Nếu đã đăng nhập, xử lý logic cho trường hợp này
+    } else {
+      // Nếu chưa đăng nhập, chuyển hướng đến trang khác (ví dụ: #/login)
+      $location.path("/login"); // Đảm bảo bạn đã inject $location vào controller của bạn
+    }
+  };
+  $scope.addGioHang = function () {
+    if (!$scope.searchMauSac || !$scope.searchKichThuoc) {
+      // Hiển thị thông báo yêu cầu chọn màu sắc và kích thước
+      alert("Vui lòng chọn màu sắc và kích thước trước khi thêm vào giỏ hàng.");
+      return;
+    }
 
-    $scope.decrementQuantity1 = function () {
-      console.log("Decrementing quantity");
-      if ($scope.goiHangNoLogin.soLuong > 1) {
-        $scope.goiHangNoLogin.soLuong--;
-      }
-    };
-    $scope.addGioHangNoLogin = function () {
-      $http
-        .post(gioHangAPI + "/themsanpham", $scope.goiHangNoLogin)
-        .then(function (response) {
-          if (response.data && typeof response.data === "object") {
-            if (response.data.status === "success") {
-              // Hiển thị thông báo thành công
-              alert(response.data.message);
-            } else {
-              // Hiển thị thông báo lỗi
-              alert(
-                "Có lỗi xảy ra khi thêm vào giỏ hàng: " + response.data.message
-              );
-            }
+    $http
+      .post(gioHangAPI + "/them", $scope.goiHang)
+      .then(function (response) {
+        if (response.data && typeof response.data === "object") {
+          if (response.data.status === "success") {
+            // Hiển thị thông báo thành công
+            alert(response.data.message);
           } else {
-            // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
+            // Hiển thị thông báo lỗi
             alert(
-              "Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ."
+              "Có lỗi xảy ra khi thêm vào giỏ hàng: " + response.data.message
             );
           }
-        });
-    };
-  }
-
-  $scope.addGioHang = function () {
-    $http.post(gioHangAPI + "/them", $scope.goiHang).then(function (response) {
-      if (response.data && typeof response.data === "object") {
-        if (response.data.status === "success") {
-          // Hiển thị thông báo thành công
-          alert(response.data.message);
         } else {
-          // Hiển thị thông báo lỗi
-          alert(
-            "Có lỗi xảy ra khi thêm vào giỏ hàng: " + response.data.message
-          );
+          // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
+          alert("Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ.");
         }
-      } else {
-        // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
-        alert("Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ.");
-      }
-    });
+      })
+      .catch(function (error) {
+        // Bắt lỗi từ phản hồi HTTP
+        if (error && error.data && error.data.message) {
+          // Hiển thị thông báo lỗi cụ thể từ phản hồi
+          alert("Lỗi từ server: " + error.data.message);
+        } else {
+          // Hiển thị thông báo lỗi chung nếu không có thông báo cụ thể
+          alert("Có lỗi xảy ra khi thêm vào giỏ hàng: " + error.statusText);
+        }
+      });
   };
 
   $scope.search = function () {
