@@ -10,6 +10,7 @@ window.detailSanPhamController = function (
   $scope.listSanPhamChiTiet = [];
   $scope.listNewSanPhamChiTiet = [];
   $scope.showSPCT = false;
+  $scope.trangThai = false;
   $scope.goiHang = {
     sanPhamChiTietId: $scope.idSPCT,
     khachHangId: $scope.idKhachHang,
@@ -18,15 +19,9 @@ window.detailSanPhamController = function (
 
   $scope.getSanPhamChiTiet = function () {
     $http
-      .get(
-        sanPhamChiTietAPI +
-          "/hien-thi/" +
-          $routeParams.id +
-          "?pageNo=" +
-          $scope.currentPage
-      )
+      .get(sanPhamChiTietAPI + "/detail-trang-chu/" + $routeParams.id)
       .then(function (response) {
-        $scope.listSanPhamChiTiet = response?.data.content;
+        $scope.listSanPhamChiTiet = response?.data;
         console.log($scope.listSanPhamChiTiet);
         const groupedSanPham = {};
         $scope.listSanPhamChiTiet.forEach((sanPham) => {
@@ -79,44 +74,61 @@ window.detailSanPhamController = function (
       });
   };
   $scope.getSanPhamChiTiet();
+
   $scope.selectdMauSac = function (mauSac) {
+    let tonTai = false;
     $scope.searchMauSac = mauSac;
+    console.log($scope.searchKichThuoc);
+    console.log($scope.searchMauSac);
     $scope.listSanPhamChiTiet.filter((sanPham) => {
       if (
-        sanPham.tenMauSac == $scope.searchMauSac &&
-        sanPham.tenMauSac == $scope.searchMauSac
+        sanPham.tenKichThuoc === $scope.searchKichThuoc &&
+        sanPham.tenMauSac === $scope.searchMauSac
       ) {
         $scope.sanPhamCT = sanPham;
-        console.log("list spct", sanPham);
         $scope.idSPCT = sanPham.idSanPhamChiTiet;
-        console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
-
-        console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.soLuongSp = sanPham.soLuong;
-        console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
+        $scope.trangThai = false;
+        tonTai = true;
+      } else if ($scope.searchKichThuoc === undefined) {
+        $scope.trangThai = false;
+        tonTai = true;
       }
     });
+    if (tonTai == false) {
+      $scope.trangThai = true;
+      $scope.soLuong = 0;
+    }
   };
   $scope.selectdKichThuoc = function (kichThuoc) {
+    let tonTai = false;
     $scope.searchKichThuoc = kichThuoc;
+    console.log($scope.searchKichThuoc);
+    console.log($scope.searchMauSac);
+
     $scope.listSanPhamChiTiet.filter((sanPham) => {
       if (
         sanPham.tenKichThuoc == $scope.searchKichThuoc &&
         sanPham.tenMauSac == $scope.searchMauSac
       ) {
         $scope.idSPCT = sanPham.idSanPhamChiTiet;
-        console.log("id san pham chi tiet:", $scope.idSPCT);
         $scope.sanPhamCT = sanPham;
-        console.log("list spct", sanPham);
         $scope.soLuongSp = sanPham.soLuong;
         $scope.goiHang.sanPhamChiTietId = $scope.idSPCT;
-
-        console.log("so luong san pham chi tiet:", $scope.soLuongSp);
         $scope.showSPCT = true;
+        $scope.trangThai = false;
+        tonTai = true;
+      } else if ($scope.searchMauSac === undefined) {
+        $scope.trangThai = false;
+        tonTai = true;
       }
     });
+    if (tonTai == false) {
+      $scope.trangThai = true;
+      $scope.soLuong = 0;
+    }
   };
 
   if ($rootScope.trangthai == true) {

@@ -17,6 +17,8 @@ public interface SanPhamChiTietService {
 
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
 
+    List<SanPhamChiTietResponse> detailSanPham(UUID id);
+
     SanPhamChiTiet getOne(UUID id);
 
     List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);

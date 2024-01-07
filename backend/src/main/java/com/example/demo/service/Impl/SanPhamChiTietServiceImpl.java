@@ -69,6 +69,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
+    public List<SanPhamChiTietResponse> detailSanPham(UUID id) {
+        return sanPhamChiTietRepository.detailSanPham(id);
+    }
+
+    @Override
     public SanPhamChiTiet getOne(UUID id) {
         return sanPhamChiTietRepository.findById(id).orElse(null);
     }

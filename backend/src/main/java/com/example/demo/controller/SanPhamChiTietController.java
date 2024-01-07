@@ -30,9 +30,10 @@ public class SanPhamChiTietController {
     public ResponseEntity getSanPhamBanHang(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
+
     @GetMapping("trang-chu")
     public ResponseEntity getSanPhamTranChu() {
-        return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(),HttpStatus.OK);
+        return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(), HttpStatus.OK);
     }
 
     @GetMapping("hien-thi/{id}")
@@ -43,6 +44,11 @@ public class SanPhamChiTietController {
     @GetMapping("detail/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("detail-trang-chu/{id}")
+    public ResponseEntity detailTrangChu(@PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.detailSanPham(UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PostMapping("add")
