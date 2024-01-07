@@ -43,6 +43,23 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonReponsitory.save(hoaDonSave);
     }
 
+
+    @Override
+    public HoaDon addOnline(HoaDon hoaDon) {
+        HoaDon hoaDonSave = HoaDon.builder()
+                .tenKhachHang(hoaDon.getTenKhachHang())
+                .soDienThoaiKhachHang(hoaDon.getSoDienThoaiKhachHang())
+                .ngayThanhToan(hoaDon.getNgayThanhToan())
+                .tongTien(hoaDon.getTongTien())
+                .ma(hoaDon.getMa())
+                .ngayTao(hoaDon.getNgayTao())
+                .loaiHoaDon("Online")
+                .nguoiTao("P")
+                .trangThai(hoaDon.getTrangThai())
+                .build();
+        return hoaDonReponsitory.save(hoaDonSave);
+    }
+
     @Override
     public HoaDon update(HoaDonRequest hoaDonRequest, UUID id) {
         Optional<HoaDon> optional = hoaDonReponsitory.findById(id);

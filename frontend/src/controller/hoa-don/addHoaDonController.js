@@ -265,6 +265,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       thanhTien: $scope.listSanPhamChiTiet[index].donGia,
       soLuong: 1,
     };
+    console.log($scope.formHoaDonChiTiet);
     detailChiTietSanPham(idSanPhamChiTiet).then(function (
       detailSanPhamChiTiet
     ) {

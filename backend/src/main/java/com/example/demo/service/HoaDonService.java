@@ -16,6 +16,8 @@ public interface HoaDonService {
 
     HoaDon add(HoaDon hoaDon);
 
+    HoaDon addOnline(HoaDon hoaDon);
+
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
     HoaDon detail(UUID id);

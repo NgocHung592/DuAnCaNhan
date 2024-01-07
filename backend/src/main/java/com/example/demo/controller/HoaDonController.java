@@ -40,6 +40,11 @@ public class HoaDonController {
         return hoaDonService.add(hoaDon);
     }
 
+    @PostMapping("addonline")
+    public HoaDon addOnline(@RequestBody HoaDon hoaDon) {
+        return hoaDonService.addOnline(hoaDon);
+    }
+
     @PutMapping("update/{id}")
     public HoaDon updateKhachCoSan(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
         return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
