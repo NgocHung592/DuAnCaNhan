@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
 import com.example.demo.model.request.HoaDonRequest;
+import com.example.demo.model.response.DonHangKhachHangReponse;
+import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -58,6 +61,12 @@ public class HoaDonController {
     @GetMapping("/loc")
     public Page<HoaDonResponse> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "trangThai") String trangThai) {
         return hoaDonService.loc(pageNo, trangThai);
+    }
+    @GetMapping("hien-thiKh/{id}")
+    public ResponseEntity<List<DonHangKhachHangReponse>> getAll(@PathVariable UUID id){
+        List<DonHangKhachHangReponse> gioHangChiTietReponses=hoaDonService.getAll(id);
+        return ResponseEntity.ok(gioHangChiTietReponses);
+
     }
 
 }
