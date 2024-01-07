@@ -68,9 +68,12 @@
                                         </tbody>
                                     </table>
                                     <div ng-if="listHoaDonChiTiet.length===0">
-                                        <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                                        <p class="dataTables_empty_icon">
+                                            <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                                        </p>
+
                                         <p class="dataTables_empty_lable">
-                                            No Data
+                                            Không có sản phẩm nào
                                         </p>
                                     </div>
                                     <nav aria-label="Page navigation example " ng-if="listHoaDonChiTiet.length!==0">
@@ -107,7 +110,6 @@
                                                             <th scope="col">Tên Sản Phẩm</th>
                                                             <th scope="col">Số Lượng</th>
                                                             <th scope="col">Đơn Giá</th>
-                                                            <th scope="col">Trạng Thái</th>
                                                             <th scope="col">Thao Tác</th>
 
                                                         </tr>
@@ -123,15 +125,7 @@
                                                                 - {{sanPhamChiTiet.tenKichThuoc}}]</th>
                                                             <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
                                                             <th scope="row">{{sanPhamChiTiet.donGia | number}} VND</th>
-                                                            <th scope="row">
 
-                                                                <p ng-class="{' text-g ': !sanPhamChiTiet.daXoa
-                                                            ,'text-glow':sanPhamChiTiet.daXoa}">
-                                                                    {{sanPhamChiTiet.daXoa?"Ngừng kinh
-                                                                    Doanh":"Đang Kinh Doanh"}}
-
-                                                                </p>
-                                                            </th>
                                                             <th>
 
                                                                 <a type="button" class="btn btn-warning "

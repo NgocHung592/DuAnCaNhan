@@ -84,7 +84,10 @@ window.detailSanPhamController = function (
   $scope.selectdMauSac = function (mauSac) {
     $scope.searchMauSac = mauSac;
     $scope.listSanPhamChiTiet.filter((sanPham) => {
-      if (sanPham.tenMauSac == $scope.searchMauSac) {
+      if (
+        sanPham.tenMauSac == $scope.searchMauSac &&
+        sanPham.tenMauSac == $scope.searchMauSac
+      ) {
         $scope.sanPhamCT = sanPham;
         console.log("list spct", sanPham);
         $scope.idSPCT = sanPham.idSanPhamChiTiet;

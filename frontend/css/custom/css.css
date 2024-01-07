@@ -138,10 +138,9 @@
 }
 
 .dataTables_empty_icon {
-    text-align: center;
-    padding-top: 50px;
-    font-size: 25px;
-    color: gray;
+    display: flex;
+    justify-content: center;
+    height: 200px;
 }
 
 .has-error {

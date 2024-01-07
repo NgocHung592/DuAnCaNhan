@@ -87,7 +87,7 @@ window.addMaGiamGiaController = function (
       showError("Tên sai định dạng");
     } else if (sl.length == 0) {
       showError("Số lượng không được trống");
-    } else if (parseInt(sl) < 0) {
+    } else if (parseInt(sl) <= 0) {
       showError("Số lượng không được nhỏ hơn 0");
     } else if (parseInt(sl) != parseFloat(sl)) {
       showError("Số lượng phải là số tự nhiên");
