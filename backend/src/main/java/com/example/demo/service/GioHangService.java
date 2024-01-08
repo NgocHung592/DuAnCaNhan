@@ -13,6 +13,7 @@ public interface GioHangService {
     void GioHang(UUID sanPhamChiTietId, UUID khachHangId,Integer soLuong);
     void GioHangK(UUID sanPhamChiTietId,Integer soLuong);
     void Xoa(UUID gioHangId);
+    void deleteByKH(UUID id);
     KhachHang getKhachHangById(UUID id);
     List<GioHangChiTietReponse> getAll(UUID id);
     List<GioHangReponse> getAllK();

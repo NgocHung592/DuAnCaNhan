@@ -15,15 +15,23 @@ public interface SanPhamChiTietService {
 
     Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo);
 
+    Page<SanPhamChiTietResponse> search(Integer pageNo, String key,UUID mauSacId, UUID kichThuocId);
+
+
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
+
+    List<SanPhamChiTietResponse> detailSanPham(UUID id);
 
     SanPhamChiTiet getOne(UUID id);
 
     List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);
 
+    SanPhamChiTiet updateSL(int soLuong, UUID id);
+
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
 
     SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
+
 
 
 }

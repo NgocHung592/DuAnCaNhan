@@ -30,9 +30,18 @@ public class SanPhamChiTietController {
     public ResponseEntity getSanPhamBanHang(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
+
+    @GetMapping("search")
+    public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                                 @RequestParam(name = "key") String key,
+                                 @RequestParam(name = "mauSacId") String mauSacId,
+                                 @RequestParam(name = "kichThuocId") String kichThuocId) {
+        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key,UUID.fromString(mauSacId),UUID.fromString(mauSacId)), HttpStatus.OK);
+    }
+
     @GetMapping("trang-chu")
-    public ResponseEntity getSanPhamTranChu(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
-        return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(),HttpStatus.OK);
+    public ResponseEntity getSanPhamTranChu() {
+        return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(), HttpStatus.OK);
     }
 
     @GetMapping("hien-thi/{id}")
@@ -45,6 +54,11 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getOne(UUID.fromString(id)), HttpStatus.OK);
     }
 
+    @GetMapping("detail-trang-chu/{id}")
+    public ResponseEntity detailTrangChu(@PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.detailSanPham(UUID.fromString(id)), HttpStatus.OK);
+    }
+
     @PostMapping("add")
     public ResponseEntity add(@RequestBody List<SanPhamChiTietRequest> sanPhamChiTietRequests) {
         return new ResponseEntity(sanPhamChiTietService.add(sanPhamChiTietRequests), HttpStatus.OK);
@@ -53,6 +67,11 @@ public class SanPhamChiTietController {
     @PutMapping("update/{id}")
     public ResponseEntity update(@RequestBody SanPhamChiTietRequest sanPhamChiTietRequest, @PathVariable("id") String id) {
         return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
+    }
+
+    @PutMapping("updatesl/{id}")
+    public ResponseEntity updateSL(@RequestBody int soLuong, @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.updateSL(soLuong, UUID.fromString(id)), HttpStatus.OK);
     }
 
     @PutMapping("update-so-luong")

@@ -54,9 +54,12 @@
                                                             <a href="#/detail-product/{{topSanPham.idSanPham}}">
                                                                 <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
                                                                     class="d-block w-100" alt="...">
-                                                                    <div class="prod-img second-image hovered-img hidden-xs">
-                                                                        <img class="hover img-loop " src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
-                                                                </div>                                                            </a>
+                                                                <div
+                                                                    class="prod-img second-image hovered-img hidden-xs">
+                                                                    <img class="hover img-loop "
+                                                                        src="../../../assets/anh-size/z2291209325080_43f69694609403993f8785c47f15a2ef_7fd113850f9745b583c229f2b1d194d2_grande.jpg">
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,17 +70,17 @@
 
                                 </div>
                                 <div class="proloop-detail">
-                                    <h3><a href="#/detail-product/{{topSanPham.idSanPham}}"
-                                            class=" quickview-product ">{{topSanPham.tenSanPham}}
+                                    <h3><a href="#/detail-product/{{topSanPham.idSanPham}}" class=" quickview-product "
+                                            style="text-transform: uppercase;">{{topSanPham.tenSanPham}}
                                             {{topSanPham.tenPhongCach}} {{topSanPham.tenHoaTiet}}
                                         </a>
                                     </h3>
                                     <p class="proloop--price">
                                         <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
-                                            class="price">{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
-                                            number}}₫</span>
+                                            class="price">{{topSanPham.giaMin | number}} ₫ - {{topSanPham.giaMax |
+                                            number}} ₫</span>
                                         <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
-                                            class="price">{{topSanPham.giaMin | number}}₫</span>
+                                            class="price">{{topSanPham.giaMin | number}} ₫</span>
 
                                     </p>
                                 </div>
@@ -105,9 +108,9 @@
 
         </div>
     </section>
-   
-   
-     <section class="section-index-collection " data-feature="home-collection-1">
+
+
+    <section class="section-index-collection " data-feature="home-collection-1">
         <div class="container">
             <div class="section-heading text-center">
                 <h2 class="hTitle">
@@ -116,6 +119,6 @@
                     </a>
                 </h2>
             </div>
-            </div>
-     </section>
+        </div>
+    </section>
 </main>

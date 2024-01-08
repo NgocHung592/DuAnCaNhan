@@ -138,10 +138,9 @@
 }
 
 .dataTables_empty_icon {
-    text-align: center;
-    padding-top: 50px;
-    font-size: 25px;
-    color: gray;
+    display: flex;
+    justify-content: center;
+    height: 200px;
 }
 
 .has-error {
@@ -186,7 +185,7 @@ h4 {
     max-height: 200px;
     overflow-y: auto;
     cursor: pointer;
-    padding: 0px 5px;
+    padding: 20px 5px;
 }
 
 #dropDown li {
@@ -474,7 +473,6 @@ img.employee-image {
 .san-pham-cung-mau {
     text-align: center;
     padding: 10px 0;
-    background-color: #ccc;
 }
 
 .anh_san_pham {

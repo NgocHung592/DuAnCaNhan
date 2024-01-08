@@ -129,12 +129,6 @@
                                                 </div>
                                                 <div class="filter_group-content filter-color">
                                                     <ul class="checkbox-list clearfix">
-
-
-
-
-
-
                                                         <li>
                                                             <input type="checkbox" id="data-color-p1" value="Tím"
                                                                 name="color-filter"
@@ -376,57 +370,62 @@
                 </div>
             </div>
 
-            
+
             <div class="collection-listproduct" id="collection-body">
                 <div class="container">
                     <div class="wraplist-collection ">
                         <div class="listProduct-row listProduct-resize listProduct-filter">
 
 
-                            <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " ng-repeat="topSanPham in listTopSanPham" data-id="1114414061">
-                            <div class="product-inner product-resize ">
-                                <div class="proloop-image ">
-                                    <div class="product--image image-resize">
-                                        <div class="product--image__inner">
-                                            <div class="">
-                                                <div id="carouselExampleSlidesOnly" class="carousel slide"
-                                                    data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
-                                                        <div class="carousel-item " ng-class="{'active': $index===0}"
-                                                            data-bs-interval="2000"
-                                                            ng-repeat="hinhAnh in topSanPham.duongDan">
-                                                            <a href="#/detail-product/{{topSanPham.idSanPham}}">
-                                                                <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
-                                                                    class="d-block w-100" alt="...">
-                                                                    <div class="prod-img second-image hovered-img hidden-xs">
-                                                                        <img class="hover img-loop " src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
-                                                                </div>                                                            </a>
+                            <div class="col-md-3 col-sm-6 col-xs-6 product-loop  "
+                                ng-repeat="topSanPham in listTopSanPham" data-id="1114414061">
+                                <div class="product-inner product-resize ">
+                                    <div class="proloop-image ">
+                                        <div class="product--image image-resize">
+                                            <div class="product--image__inner">
+                                                <div class="">
+                                                    <div id="carouselExampleSlidesOnly" class="carousel slide"
+                                                        data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            <div class="carousel-item "
+                                                                ng-class="{'active': $index===0}"
+                                                                data-bs-interval="2000"
+                                                                ng-repeat="hinhAnh in topSanPham.duongDan">
+                                                                <a href="#/detail-product/{{topSanPham.idSanPham}}">
+                                                                    <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                                                                        class="d-block w-100" alt="...">
+                                                                    <div
+                                                                        class="prod-img second-image hovered-img hidden-xs">
+                                                                        <img class="hover img-loop "
+                                                                            src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
+                                                                    </div>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
 
                                             </div>
-
                                         </div>
+
                                     </div>
+                                    <div class="proloop-detail">
+                                        <h3><a href="#/detail-product/{{topSanPham.idSanPham}}"
+                                                class=" quickview-product ">{{topSanPham.tenSanPham}}
+                                                {{topSanPham.tenPhongCach}} {{topSanPham.tenHoaTiet}}
+                                            </a>
+                                        </h3>
+                                        <p class="proloop--price">
+                                            <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
+                                                class="price">{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
+                                                number}}₫</span>
+                                            <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
+                                                class="price">{{topSanPham.giaMin | number}}₫</span>
 
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="proloop-detail">
-                                    <h3><a href="#/detail-product/{{topSanPham.idSanPham}}"
-                                           class=" quickview-product ">{{topSanPham.tenSanPham}}
-                                        {{topSanPham.tenPhongCach}} {{topSanPham.tenHoaTiet}}
-                                    </a>
-                                    </h3>
-                                    <p class="proloop--price">
-                                        <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
-                                              class="price">{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
-                                            number}}₫</span>
-                                        <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
-                                              class="price">{{topSanPham.giaMin | number}}₫</span>
-
-                                    </p>
-                                </div>
-                            </div>
                             </div>
 
 

@@ -51,7 +51,7 @@ public class GioHangServiceImpl implements GioHangService {
 
         // Tạo mới đối tượng GioHang.
         GioHang gioHang = GioHang.builder().ten("GioHang").khachHang(khachHang).build();
-        gioHangRepository.save(gioHang);
+
 
         // Tìm kiếm GioHangChiTiet bằng Id của SanPhamChiTiet.
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findBySanPhamChiTiet_Id(sanPhamChiTietId);
@@ -75,6 +75,7 @@ public class GioHangServiceImpl implements GioHangService {
             gioHangChiTiet.setDonGia(sanPhamChiTiet.getDonGia().multiply(BigDecimal.valueOf(soLuongMoi)));
             gioHangChiTiet.setGioHang(gioHang);
             gioHangChiTiet.setSanPhamChiTiet(sanPhamChiTiet);
+            gioHangRepository.save(gioHang);
             gioHangChiTietRepository.save(gioHangChiTiet);
 
         }
@@ -151,6 +152,20 @@ public class GioHangServiceImpl implements GioHangService {
     @Override
     public List<GioHangReponse> getAllK() {
         return gioHangChiTietRepository.getAllK();
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteByKH(UUID id) {
+        List<GioHang> gioHang = gioHangRepository.findAllByKhachHangId(id);
+
+        for (int i = 0; i < gioHang.size(); i++) {
+            gioHangChiTietRepository.deleteByGioHang(gioHang.get(i));
+        }
+
+        gioHangRepository.deleteByKhachHangId(id);
+
     }
 
     @Override

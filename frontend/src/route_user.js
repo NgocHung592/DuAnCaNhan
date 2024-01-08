@@ -31,10 +31,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "ban-hang-online/gio-hang.html",
       controller: GioHangController,
     })
-    .when("/gio-hangnolgin", {
-      templateUrl: "ban-hang-online/gio-hang-no-login.html",
-      controller: GioHangControllerNoLogin,
-    })
+    // .when("/gio-hangnolgin", {
+    //   templateUrl: "ban-hang-online/gio-hang-no-login.html",
+    //   controller: GioHangControllerNoLogin,
+    // })
     .when("/thanh-toan-onl", {
       templateUrl: "ban-hang-online/thanh-toan.html",
       controller: thanhToanController,
@@ -53,6 +53,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
 
     .when("/don-hang", {
       templateUrl: "tai-khoan/don-hang.html",
+      controller: hienThiHoaDonController,
     })
     .when("/dia-chi", {
       templateUrl: "tai-khoan/dia-chi.html",

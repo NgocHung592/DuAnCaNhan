@@ -58,6 +58,21 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
     }
 
     @Override
+    public MaGiamGia updateSoLuong(MaGiamGia maGiamGia, UUID id) {
+        Optional<MaGiamGia> optional = maGiamGiaRepository.findById(id);
+        optional.map(maGiamGiaUpdate -> {
+            Integer soLuongNew = optional.get().getSoLuong() - maGiamGia.getSoLuong();
+            maGiamGiaUpdate.setSoLuong(soLuongNew);
+            if (soLuongNew == 0) {
+                maGiamGiaUpdate.setTrangThai(3);
+            }
+            return maGiamGiaRepository.save(maGiamGiaUpdate);
+        }).orElse(null);
+
+        return null;
+    }
+
+    @Override
     public MaGiamGia detail(UUID id) {
         MaGiamGia m = maGiamGiaRepository.findById(id).orElse(null);
         return m;

@@ -64,8 +64,19 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
+    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, UUID mauSacId, UUID kichThuocId) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamChiTietRepository.search(pageable, key, mauSacId, kichThuocId);
+    }
+
+    @Override
     public List<SanPhamChiTietResponse> getSanPhamTrangChu() {
         return sanPhamChiTietRepository.getSanPhamTrangChu();
+    }
+
+    @Override
+    public List<SanPhamChiTietResponse> detailSanPham(UUID id) {
+        return sanPhamChiTietRepository.detailSanPham(id);
     }
 
     @Override
@@ -136,6 +147,18 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
+
+    @Override
+    public SanPhamChiTiet updateSL(int soLuong, UUID id) {
+        Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(id);
+        optional.map(sanPhamChiTietUpdate -> {
+            sanPhamChiTietUpdate.setSoLuong(sanPhamChiTietUpdate.getSoLuong() - Integer.valueOf(soLuong));
+            return sanPhamChiTietRepository.save(sanPhamChiTietUpdate);
+        }).orElse(null);
+
+        return null;
+    }
+
     @Override
     public SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
         Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(id);
@@ -165,13 +188,13 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
             if (optional.isPresent()) {
                 Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-                    optional.map(sanPhamChiTiet -> {
-                        sanPhamChiTiet.setSoLuong(soLuongNew);
-                        if(soLuongNew==0){
-                            sanPhamChiTiet.setDaXoa(true);
-                        }
-                        return sanPhamChiTietRepository.save(sanPhamChiTiet);
-                    }).orElse(null);
+                optional.map(sanPhamChiTiet -> {
+                    sanPhamChiTiet.setSoLuong(soLuongNew);
+                    if (soLuongNew == 0) {
+                        sanPhamChiTiet.setDaXoa(true);
+                    }
+                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
+                }).orElse(null);
             }
         });
 
