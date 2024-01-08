@@ -75,15 +75,19 @@ window.thanhToanController = function (
       ma: $scope.randomHoaDon,
       ngayTao: new Date(),
       trangThai: 0,
+      idKhachHang: $scope.idKhachHang,
       tenKhachHang: $scope.ten,
-      soDienThoaiKhachHang: $rootScope.soDienThoaiKhachHang,
+      soDienThoaiKhachHang: $scope.sdt,
+
       ngayThanhToan: new Date(),
       tongTien: $scope.tongGiaTri,
     };
+    console.log($scope.formHoaDon);
     $http.post(hoaDonAPI + "/addonline", $scope.formHoaDon).then(function () {
       $scope.getListHoaDon();
     });
   };
+
   $scope.getListHoaDon = function () {
     $http.get(hoaDonAPI + "/get-list").then(function (response) {
       $scope.listHoaDon = response.data;
