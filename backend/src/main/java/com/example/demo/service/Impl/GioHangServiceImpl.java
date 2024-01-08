@@ -154,6 +154,20 @@ public class GioHangServiceImpl implements GioHangService {
         return gioHangChiTietRepository.getAllK();
     }
 
+
+    @Override
+    @Transactional
+    public void deleteByKH(UUID id) {
+        List<GioHang> gioHang = gioHangRepository.findAllByKhachHangId(id);
+
+        for (int i = 0; i < gioHang.size(); i++) {
+            gioHangChiTietRepository.deleteByGioHang(gioHang.get(i));
+        }
+
+        gioHangRepository.deleteByKhachHangId(id);
+
+    }
+
     @Override
     @Transactional
     public void delete(UUID id) {

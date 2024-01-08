@@ -91,8 +91,11 @@ window.thanhToanController = function (
   $scope.getListHoaDon = function () {
     $http.get(hoaDonAPI + "/get-list").then(function (response) {
       $scope.listHoaDon = response.data;
-      for (var i = 0; i < $scope.gioHangList.length; i++) {
-        $scope.formHoaDonChiTiet = {
+      var giohang = $scope.gioHangList;
+      console.log(giohang);
+      for (var i = 0; i < giohang.length; i++) {
+        console.log(giohang[i]);
+        var formHoaDonChiTiet = {
           idHoaDon: $scope.listHoaDon[0].id,
           idSanPhamChiTiet: $scope.gioHangList[i].idSanPhamChiTiet,
           donGia: parseInt($scope.gioHangList[i].donGiaSp),
@@ -101,31 +104,29 @@ window.thanhToanController = function (
         };
         $http
           .put(
-            sanPhamChiTietAPI +
-              "/updatesl/" +
-              $scope.gioHangList[i].idSanPhamChiTiet,
-            $scope.gioHangList[i].soLuong
+            sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,
+            giohang[i].soLuong
           )
           .then(function () {
             console.log("Xóa so luong thanh cong");
           });
-        console.log($scope.gioHangList[i].idGioHang);
-        $http
-          .delete(gioHangAPI + "/delete/" + $scope.gioHangList[i].idGioHang)
-          .then(function (response) {
-            console.log("Xóa gio hang thành công:", response.data);
-            //$route.reload();
-          });
         //console.log($scope.formHoaDonChiTiet);
         $http
-          .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
+          .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)
           .then(function () {
             console.log("success");
             //$route.path("don-hang");
           });
       }
+      $http
+        .delete(gioHangAPI + "/xoakh/" + $scope.idKhachHang)
+        .then(function (response) {
+          console.log("Xóa gio hang thành công:", response.data);
+          //$route.reload();
+        });
       setTimeout(function () {
-        $location.path("/don-hang");
+        console.log($scope.gioHangList);
+        //$location.path("/don-hang");
       }, $scope.gioHangList.length * 3);
     });
   };

@@ -59,6 +59,20 @@ public class GioHangController {
         return ResponseEntity.ok(gioHangChiTietReponses);
 
     }
+
+    @DeleteMapping("/xoakh/{id}")
+    public ResponseEntity<Map<String, String>> xoaByKH(@PathVariable UUID id) {
+        try {
+            gioHangService.delete(id);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Xóa giỏ hàng thành công");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> xoa(@PathVariable UUID id) {
         try {
@@ -67,6 +81,7 @@ public class GioHangController {
             response.put("message", "Xóa giỏ hàng thành công");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
