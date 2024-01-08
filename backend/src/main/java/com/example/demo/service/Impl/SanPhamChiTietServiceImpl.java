@@ -63,11 +63,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.getSanPhamBanHangTaiQuay(pageable);
     }
 
-    @Override
-    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, UUID mauSacId, UUID kichThuocId) {
-        Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.search(pageable, key, mauSacId, kichThuocId);
-    }
+//    @Override
+//    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, UUID mauSacId, UUID kichThuocId) {
+//        Pageable pageable = PageRequest.of(pageNo, 10);
+//        return sanPhamChiTietRepository.search(pageable, key, mauSacId, kichThuocId);
+//    }
 
     @Override
     public List<SanPhamChiTietResponse> getSanPhamTrangChu() {
