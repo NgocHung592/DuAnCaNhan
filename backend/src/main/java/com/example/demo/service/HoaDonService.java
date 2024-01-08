@@ -19,6 +19,8 @@ public interface HoaDonService {
 
     List<DonHangKhachHangReponse> getAll(UUID id);
 
+    List<DonHangKhachHangReponse> getSearch(String id,String trangThai);
+
     HoaDon add(HoaDon hoaDon);
 
     HoaDon addOnline(HoaDonOnlineRequest hoaDon);
@@ -26,6 +28,8 @@ public interface HoaDonService {
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
     HoaDon detail(UUID id);
+
+    void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai);
 
     Page<HoaDonResponse> search(Integer pageNo, String search);
 

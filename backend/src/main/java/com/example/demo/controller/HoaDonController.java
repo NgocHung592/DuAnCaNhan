@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,11 +64,37 @@ public class HoaDonController {
     public Page<HoaDonResponse> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "trangThai") String trangThai) {
         return hoaDonService.loc(pageNo, trangThai);
     }
+
+
     @GetMapping("hien-thiKh/{id}")
     public ResponseEntity<List<DonHangKhachHangReponse>> getAll(@PathVariable UUID id){
         List<DonHangKhachHangReponse> gioHangChiTietReponses=hoaDonService.getAll(id);
         return ResponseEntity.ok(gioHangChiTietReponses);
 
     }
+    @GetMapping("searchhd")
+    public ResponseEntity<List<DonHangKhachHangReponse>> getSearch(
+            @RequestParam(name = "id") String id,
+            @RequestParam(name = "trangThai") String trangThai
+    ) {
+            List<DonHangKhachHangReponse> gioHangChiTietReponses = hoaDonService.getSearch(id, trangThai);
+            return ResponseEntity.ok(gioHangChiTietReponses);
+
+    }
+    @PostMapping("huy-don-hang")
+    public ResponseEntity<String> updateTrangThaiDonHang(@RequestParam(name = "idKhachHang") String idKhachHang,
+                                                         @RequestParam(name = "idDonHang") String idDonHang) {
+        try {
+            UUID khachHangId = UUID.fromString(idKhachHang);
+            UUID donHangId = UUID.fromString(idDonHang);
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 5); // 5 là trạng thái mặc định mới
+
+            return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
+        }
+    }
+
 
 }

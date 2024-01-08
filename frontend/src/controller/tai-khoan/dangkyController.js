@@ -14,14 +14,14 @@ window.dangkyController = function ($http, $scope, $rootScope, $location) {
     $http
       .post(taiKhoanAPI + "/singup", $scope.form_kh)
       .then(function () {
-        alert("Đăng nhập thành công ");
+        alert("Đăng ký thành công ");
         $location.path("/login");
       })
       .catch(function (errorResponse) {
         if (errorResponse && errorResponse.preventDefault) {
           errorResponse.preventDefault();
         }
-        alert("Email đã tồn tại");
+        alert("Email hoắc số điện thoại đã tồn tại");
         $scope.show = true;
       });
   };
