@@ -16,6 +16,7 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listMaGiamGia = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });
@@ -70,35 +71,72 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
     $scope.successProgress();
     toastBootstrap.show();
   }
-  $scope.getMa = function () {
+  $scope.getMaTrangThai = function () {
     setTimeout(() => {
       clearInterval($scope.intervalId);
     });
-    // $scope.selectOption = null;
-    // $scope.selectOptionHinhThuc = null;
+    $scope.selectOption = null;
 
-    $http
-      .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-      .then(function (response) {
-        $scope.listMaGiamGia = response?.data.content;
-        $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = $scope.getVisiblePages();
-      });
+    if ($scope.selectOptionHinhThuc == null) {
+      $http
+        .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+        .then(function (response) {
+          $scope.listMaGiamGia = response?.data.content;
+          $scope.customIndex = $scope.currentPage * response.data.size;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
+        });
+    } else {
+      $http
+        .get(
+          magiamgiaAPI +
+            "/loc?pageNo=" +
+            $scope.currentPage +
+            "&trangThai=" +
+            $scope.selectOption +
+            "&hinhThuc=" +
+            $scope.selectOptionHinhThuc
+        )
+        .then(function (response) {
+          $scope.listMaGiamGia = response?.data.content;
+          $scope.customIndex = $scope.currentPage * response.data.size;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
+        });
+    }
   };
   $scope.getMaHinhThuc = function () {
     setTimeout(() => {
       clearInterval($scope.intervalId);
     });
     $scope.selectOptionHinhThuc = null;
-    console.log($scope.selectOption);
-    console.log($scope.selectOptionHinhThuc);
-    $http
-      .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-      .then(function (response) {
-        $scope.listMaGiamGia = response?.data.content;
-        $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = $scope.getVisiblePages();
-      });
+    if ($scope.selectOption == null) {
+      $http
+        .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+        .then(function (response) {
+          $scope.listMaGiamGia = response?.data.content;
+          $scope.customIndex = $scope.currentPage * response.data.size;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
+        });
+    } else {
+      $http
+        .get(
+          magiamgiaAPI +
+            "/loc?pageNo=" +
+            $scope.currentPage +
+            "&trangThai=" +
+            $scope.selectOption +
+            "&hinhThuc=" +
+            $scope.selectOptionHinhThuc
+        )
+        .then(function (response) {
+          $scope.listMaGiamGia = response?.data.content;
+          $scope.customIndex = $scope.currentPage * response.data.size;
+          $scope.totalPages = new Array(response.data.totalPages);
+          $scope.visiblePages = $scope.getVisiblePages();
+        });
+    }
   };
   $scope.loc = function () {
     setTimeout(() => {
@@ -116,6 +154,7 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
       )
       .then(function (response) {
         $scope.listMaGiamGia = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
       });

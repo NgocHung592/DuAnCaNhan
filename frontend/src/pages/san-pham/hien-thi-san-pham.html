@@ -73,12 +73,14 @@
                             </tbody>
                         </table>
                         <div ng-if="listSanPham.length === 0">
-                            <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                            <p class="dataTables_empty_icon">
+                                <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                            </p>
                             <p class="dataTables_empty_lable">
-                                No Data
+                                Không có dữ liệu
                             </p>
                         </div>
-                        <nav aria-label="Page navigation example" ng-if="listSanPham.length !== 0">
+                        <nav aria-label="Page navigation example" ng-if="listSanPham.length > 0">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">

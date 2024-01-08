@@ -87,8 +87,11 @@ window.hienThiKhachHangController = function (
       $scope.currentPage = index;
       if ($scope.selectOption !== undefined) {
         $scope.loc();
-      } else if ($scope.searchKeyword !== undefined) {
+        return;
+      }
+      if ($scope.searchKeyword !== undefined) {
         $scope.search();
+        return;
       }
       $scope.getKhachHang();
     }
@@ -97,10 +100,13 @@ window.hienThiKhachHangController = function (
   $scope.nextPage = function () {
     if ($scope.currentPage < $scope.totalPages.length - 1) {
       $scope.currentPage++;
-      if ($scope.selectOption != undefined) {
+      if ($scope.selectOption !== undefined) {
         $scope.loc();
-      } else if ($scope.searchKeyword != undefined) {
+        return;
+      }
+      if ($scope.searchKeyword !== undefined) {
         $scope.search();
+        return;
       }
       $scope.getKhachHang();
     }
@@ -109,10 +115,13 @@ window.hienThiKhachHangController = function (
   $scope.previousPage = function () {
     if ($scope.currentPage > 0) {
       $scope.currentPage--;
-      if ($scope.selectOption != undefined) {
+      if ($scope.selectOption !== undefined) {
         $scope.loc();
-      } else if ($scope.searchKeyword != undefined) {
+        return;
+      }
+      if ($scope.searchKeyword !== undefined) {
         $scope.search();
+        return;
       }
       $scope.getKhachHang();
     }

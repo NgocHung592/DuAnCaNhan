@@ -31,6 +31,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.currentPageHDCT = 0;
   $scope.maxVisiblePages = 3;
   $scope.searchHinhThucThanhToan = null;
+  $scope.searchKeyword = undefined;
+
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.customIndex = 0;
@@ -184,8 +186,16 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
   $scope.getSanPhamChiTiet();
   $scope.changePage = function (index) {
-    if (index >= 0) {
+    if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
+      if ($scope.selectOption !== undefined) {
+        $scope.loc();
+        return;
+      }
+      if ($scope.searchKeyword !== undefined) {
+        $scope.search();
+        return;
+      }
       $scope.getSanPhamChiTiet();
     }
   };
@@ -350,37 +360,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
       $scope.getHoaDonChiTiet();
     });
   };
-  function getVisiblePages() {
-    var totalPages = $scope.totalPages.length;
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
-    var curPage = $scope.currentPage;
-
-    var numberTruncateLeft = curPage - Math.floor(range / 2);
-    var numberTruncateRight = curPage + Math.floor(range / 2);
-
-    // Tạo danh sách trang hiển thị
-    var visiblePages = [];
-
-    for (var pos = 1; pos <= totalPages; pos++) {
-      var active = pos - 1 === curPage ? "active" : "";
-
-      if (totalPages >= 2 * range - 1) {
-        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
-          visiblePages.push({
-            page: pos,
-            active: active,
-          });
-        }
-      } else {
-        visiblePages.push({
-          page: pos,
-          active: active,
-        });
-      }
-    }
-    return visiblePages;
-  }
   $scope.giaoHang = function () {
     $scope.show = !$scope.show;
   };
@@ -703,4 +683,99 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.hinhThucThanhToan = function (hinhThuc) {
     $scope.searchHinhThucThanhToan = hinhThuc;
   };
+  $scope.getMauSac = function () {
+    $http.get(mauSacAPI + "/get-all").then(function (response) {
+      $scope.listMauSac = response?.data;
+    });
+  };
+
+  $scope.getMauSac();
+  $scope.getMauSac = function () {
+    $http.get(kichThuocAPI + "/get-all").then(function (response) {
+      $scope.listKichThuoc = response?.data;
+    });
+  };
+
+  $scope.getMauSac();
+
+  $scope.search = function () {
+    $http
+      .get(
+        sanPhamChiTietAPI +
+          "/search?pageNo=" +
+          $scope.currentPage +
+          "&key=" +
+          $scope.searchKeyword
+      )
+      .then(function (response) {
+        $scope.listSanPhamChiTiet = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = getVisiblePages();
+      });
+  };
+  $scope.locSanPham = function (kichThuoc) {
+    console.log(kichThuoc);
+  };
+  $scope.locSanPhamTheoMau = function (mauSac) {
+    console.log(mauSac);
+  };
+  function getVisiblePages() {
+    var totalPages = $scope.totalPages.length;
+
+    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
+    var curPage = $scope.currentPage;
+
+    var numberTruncateLeft = curPage - Math.floor(range / 2);
+    var numberTruncateRight = curPage + Math.floor(range / 2);
+
+    // Tạo danh sách trang hiển thị
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === curPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+    return visiblePages;
+  }
+  const video = document.getElementById("scanner");
+
+  // Khởi tạo Instascan
+  const scanner = new Instascan.Scanner({ video: video });
+
+  // Bắt sự kiện quét mã QR thành công
+  scanner.addListener("scan", function (content) {
+    console.log(content);
+    scanner.stop();
+    function closeModal() {
+      $("#quetQR").modal("hide");
+    }
+  });
+
+  // Bắt sự kiện khi có lỗi trong quá trình quét
+  scanner.addListener("error", function (error) {
+    console.error(error);
+  });
+
+  // Bắt đầu quét
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      console.error("No cameras found.");
+    }
+  });
 };

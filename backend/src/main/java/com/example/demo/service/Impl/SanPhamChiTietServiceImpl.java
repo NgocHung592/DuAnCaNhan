@@ -64,6 +64,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
+    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamChiTietRepository.search(pageable, key);
+    }
+
+    @Override
     public List<SanPhamChiTietResponse> getSanPhamTrangChu() {
         return sanPhamChiTietRepository.getSanPhamTrangChu();
     }
@@ -170,13 +176,13 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
             if (optional.isPresent()) {
                 Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-                    optional.map(sanPhamChiTiet -> {
-                        sanPhamChiTiet.setSoLuong(soLuongNew);
-                        if(soLuongNew==0){
-                            sanPhamChiTiet.setDaXoa(true);
-                        }
-                        return sanPhamChiTietRepository.save(sanPhamChiTiet);
-                    }).orElse(null);
+                optional.map(sanPhamChiTiet -> {
+                    sanPhamChiTiet.setSoLuong(soLuongNew);
+                    if (soLuongNew == 0) {
+                        sanPhamChiTiet.setDaXoa(true);
+                    }
+                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
+                }).orElse(null);
             }
         });
 

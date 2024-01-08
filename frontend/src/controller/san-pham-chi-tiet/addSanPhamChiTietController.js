@@ -12,6 +12,8 @@ window.addSanPhamChiTietController = function (
   $scope.sizeAndColors = [];
   $scope.newSizeAndColors = [];
   $scope.selectedFiles = [];
+  $scope.selectedMauSac = [];
+  $scope.selectedKichThuoc = [];
 
   $scope.currentPage = 0;
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
@@ -29,80 +31,217 @@ window.addSanPhamChiTietController = function (
     idMauSac: "",
     daXoa: false,
   };
-  $scope.sizeAndQuantity = {
-    tenKichThuoc: "",
-    soLuong: "",
-    gia: "",
-    urlImage: "",
+  $scope.getChatLieu = function (chatLieu) {
+    $scope.product.idChatLieu = chatLieu.id;
+    $scope.selectedChatLieu = chatLieu.ten;
   };
-  $scope.color = {
-    tenMauSac: "",
+  $scope.getPhongCach = function (phongCach) {
+    $scope.product.idPhongCach = phongCach.id;
+    $scope.selectedPhongCach = phongCach.ten;
+  };
+  $scope.getHoaTiet = function (hoaTiet) {
+    $scope.product.idHoaTiet = hoaTiet.id;
+    $scope.selectedHoaTiet = hoaTiet.ten;
+  };
+  $scope.getCoAo = function (coAo) {
+    $scope.product.idCoAo = coAo.id;
+    $scope.selectedCoAo = coAo.ten;
+  };
+  $scope.getTayAo = function (tayAo) {
+    $scope.product.idTayAo = tayAo.id;
+    $scope.selectedTayAo = tayAo.ten;
+  };
+  $scope.getMauSac = function (tayAo) {
+    $scope.product.idTayAo = tayAo.id;
+    $scope.selectedTayAo = tayAo.ten;
+  };
+  $scope.displaySelectedMauSac = function (selectedMauSac) {
+    if (selectedMauSac && selectedMauSac.length > 0) {
+      return selectedMauSac.join(", ");
+    } else {
+      return "Chọn màu sắc";
+    }
+  };
+  $scope.displaySelectedKichThuoc = function (selectedKichThuoc) {
+    if (selectedKichThuoc && selectedKichThuoc.length > 0) {
+      return selectedKichThuoc.join(", ");
+    } else {
+      return "Chọn kích thước";
+    }
   };
 
   $scope.selectFile = function (tenMauSac, index) {
     var productImageInput = document.getElementById("product-image");
 
+    // Tạo một hàm để giữ tham chiếu đến handleImageChange
+    var handleImageChangeCallback = function (event) {
+      $scope.handleImageChange(event, tenMauSac, index);
+    };
+
+    // Thêm người nghe sự kiện
+    productImageInput.addEventListener("change", handleImageChangeCallback);
+
+    // Gỡ bỏ người nghe sự kiện sau khi sự kiện đã xảy ra
+    productImageInput.addEventListener(
+      "change",
+      function removeEventListenerCallback() {
+        productImageInput.removeEventListener(
+          "change",
+          handleImageChangeCallback
+        );
+        productImageInput.removeEventListener(
+          "change",
+          removeEventListenerCallback
+        );
+      }
+    );
+
+    // Kích hoạt sự kiện click
     productImageInput.click();
+  };
 
-    productImageInput.addEventListener("change", handleImageChange);
+  $scope.handleImageChange = function (event, tenMauSac, index) {
+    var file = event.target.files[0];
 
-    function handleImageChange(event) {
-      $scope.$apply(function () {
-        var selectedFiles = event.target.files;
-        if (
-          $scope.groupedProducts[tenMauSac] &&
-          $scope.groupedProducts[tenMauSac].length > index
-        ) {
-          var product = $scope.groupedProducts[tenMauSac];
-          product.forEach((product) => {
-            for (const file of selectedFiles) {
-              if (file == "") {
-                $scope.newSizeAndColors.push(product);
-                return;
-              } else {
-                var newProduct = Object.assign({}, product);
-                newProduct.urlImage = file.name;
-                $scope.newSizeAndColors.push(newProduct);
-                return;
-              }
-            }
-          });
-        }
-      });
-
-      productImageInput.removeEventListener("change", handleImageChange);
+    if (file) {
+      if (
+        $scope.groupedProducts[tenMauSac] &&
+        $scope.groupedProducts[tenMauSac].length > index
+      ) {
+        var products = $scope.groupedProducts[tenMauSac];
+        console.log(products);
+        products.forEach((product) => {
+          var newProduct = angular.copy(product);
+          newProduct.urlImage = file.name;
+          $scope.newSizeAndColors.push(newProduct);
+        });
+        console.log($scope.newSizeAndColors);
+      }
     }
   };
 
   $scope.addKichThuoc = function (index) {
     $scope.listKichThuocTrangThai[index].checked =
       !$scope.listKichThuocTrangThai[index].checked;
+
+    const size = $scope.listKichThuocTrangThai[index].ten;
+
+    const newSizeAndQuantity = {
+      tenKichThuoc: size,
+      soLuong: 10,
+      gia: 100000,
+      daXoa: false,
+    };
+
     if ($scope.listKichThuocTrangThai[index].checked) {
-      $scope.sizeAndQuantity = {
-        tenKichThuoc: $scope.listKichThuocTrangThai[index].ten,
-        soLuong: 10,
-        gia: 100000,
-        daXoa: false,
-      };
-      let newSizeAndQuantity = angular.copy($scope.sizeAndQuantity);
-      $scope.sizeAndQuantitys.push(newSizeAndQuantity);
+      $scope.sizeAndQuantitys.push(angular.copy(newSizeAndQuantity));
+      $scope.selectedKichThuoc.push(size);
     } else {
-      $scope.sizeAndQuantitys.splice(index, 1);
+      const indexOfItemToRemove = $scope.sizeAndQuantitys.findIndex(
+        (item) => item.tenKichThuoc === size
+      );
+      if (indexOfItemToRemove !== -1) {
+        $scope.sizeAndQuantitys.splice(indexOfItemToRemove, 1);
+        $scope.selectedKichThuoc.splice(indexOfItemToRemove, 1);
+
+        $scope.sizeAndColors = $scope.sizeAndColors.filter(
+          (item) => item.tenKichThuoc !== size
+        );
+      }
     }
+
+    $scope.sizeAndQuantitys.forEach((size) => {
+      $scope.colors.forEach((color) => {
+        const newSizeAndColor = {
+          tenKichThuoc: size.tenKichThuoc,
+          tenMauSac: color.tenMauSac,
+          maMau: color.maMau,
+          soLuong: size.soLuong,
+          gia: size.gia,
+          urlImage: null,
+        };
+
+        const exists = $scope.sizeAndColors.some((existingItem) =>
+          angular.equals(existingItem, newSizeAndColor)
+        );
+        if (!exists) {
+          $scope.sizeAndColors.push(angular.copy(newSizeAndColor));
+        }
+      });
+    });
+
+    $scope.groupedProducts = $scope.sizeAndColors.reduce((acc, product) => {
+      acc[product.tenMauSac] = acc[product.tenMauSac] || [];
+      acc[product.tenMauSac].push(product);
+      return acc;
+    }, {});
+    console.log($scope.groupedProducts);
   };
   $scope.addMauSac = function (index) {
     $scope.listMauSacTrangThai[index].checked =
       !$scope.listMauSacTrangThai[index].checked;
+
+    const color = $scope.listMauSacTrangThai[index];
+    const colorObject = {
+      tenMauSac: color.ten,
+      maMau: color.ma,
+    };
+
     if ($scope.listMauSacTrangThai[index].checked) {
-      $scope.color = {
-        tenMauSac: $scope.listMauSacTrangThai[index].ten,
-      };
-      let newColor = angular.copy($scope.color);
-      $scope.colors.push(newColor);
+      $scope.colors.push(angular.copy(colorObject));
+      $scope.selectedMauSac.push(color.ten);
     } else {
-      $scope.colors.splice(index, 1);
+      // Xóa màu khỏi $scope.colors
+      const indexOfItemToRemove = $scope.colors.findIndex(
+        (item) => item.tenMauSac === color
+      );
+      if (indexOfItemToRemove !== -1) {
+        $scope.colors.splice(indexOfItemToRemove, 1);
+        $scope.selectedMauSac.splice(indexOfItemToRemove, 1);
+
+        // Xóa sản phẩm liên quan từ $scope.sizeAndColors
+        $scope.sizeAndColors = $scope.sizeAndColors.filter(
+          (item) => item.tenMauSac !== color
+        );
+
+        // Xóa sản phẩm liên quan từ $scope.groupedProducts
+        Object.keys($scope.groupedProducts).forEach((key) => {
+          $scope.groupedProducts[key] = $scope.groupedProducts[key].filter(
+            (item) => item.tenMauSac !== color
+          );
+        });
+      }
     }
+    // Cập nhật $scope.sizeAndColors dựa trên trạng thái hiện tại
+    $scope.sizeAndQuantitys.forEach((size) => {
+      $scope.colors.forEach((color) => {
+        const newSizeAndColor = {
+          tenKichThuoc: size.tenKichThuoc,
+          tenMauSac: color.tenMauSac,
+          maMau: color.maMau,
+          soLuong: size.soLuong,
+          gia: size.gia,
+          urlImage: null,
+        };
+
+        const exists = $scope.sizeAndColors.some((existingItem) =>
+          angular.equals(existingItem, newSizeAndColor)
+        );
+
+        if (!exists) {
+          $scope.sizeAndColors.push(angular.copy(newSizeAndColor));
+        }
+      });
+    });
+
+    // Cập nhật $scope.groupedProducts dựa trên trạng thái hiện tại
+    $scope.groupedProducts = $scope.sizeAndColors.reduce((acc, product) => {
+      acc[product.tenMauSac] = acc[product.tenMauSac] || [];
+      acc[product.tenMauSac].push(product);
+      return acc;
+    }, {});
   };
+
   $scope.renderMota = function () {
     if ($scope.product.tenSanPham) {
       $http
@@ -118,50 +257,17 @@ window.addSanPhamChiTietController = function (
       $scope.product.moTa = null;
     }
   };
-  $scope.addSizeAndColor = function () {
-    $scope.sizeAndQuantitys.forEach((size) => {
-      $scope.colors.forEach((color) => {
-        $scope.sizeAndColor = {
-          tenKichThuoc: size.tenKichThuoc,
-          tenMauSac: color.tenMauSac,
-          soLuong: size.soLuong,
-          gia: size.gia,
-          urlImage: "",
-        };
-        let newSizeAndColor = angular.copy($scope.sizeAndColor);
-        let exists = false;
-        for (let i = 0; i < $scope.sizeAndColors.length; i++) {
-          let existingItem = $scope.sizeAndColors[i];
-
-          if (angular.equals(existingItem, newSizeAndColor)) {
-            exists = true;
-            break;
-          }
-        }
-
-        if (exists) {
-          // console.log(newSizeAndColor);
-        } else {
-          $scope.sizeAndColors.push(newSizeAndColor);
-        }
-        $scope.groupedProducts = {};
-
-        $scope.sizeAndColors.forEach((product) => {
-          if (!$scope.groupedProducts[product.tenMauSac]) {
-            $scope.groupedProducts[product.tenMauSac] = [];
-          }
-          $scope.groupedProducts[product.tenMauSac].push(product);
-        });
-      });
-    });
-  };
+  $scope.addSizeAndColor = function () {};
   $scope.removeSize = function (tenMauSac, index) {
     if (
       $scope.groupedProducts[tenMauSac] &&
       $scope.groupedProducts[tenMauSac].length > index
     ) {
       $scope.groupedProducts[tenMauSac].splice(index, 1);
-      console.log($scope.groupedProducts);
+    }
+
+    if ($scope.groupedProducts[tenMauSac].length <= 0) {
+      $scope.sizeAndColors.length = 0;
     }
   };
   $scope.addSanPhamChiTiet = function (event) {
@@ -186,7 +292,7 @@ window.addSanPhamChiTietController = function (
       };
       $scope.productDetails.push(newProductDetail);
     });
-
+    console.log($scope.productDetails);
     if ($scope.product.tenSanPham == "") {
       toastBootstrap.show();
       $scope.message = "Tên sản phẩm không được trống";
@@ -265,7 +371,20 @@ window.addSanPhamChiTietController = function (
       }
     }
   };
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
 
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {
     $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
@@ -333,9 +452,17 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addChatLieu = function () {
-    $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
-      $scope.getChatLieuTrangThai();
-    });
+    if ($scope.formChatLieu.ten === "") {
+      toastBootstrap.show();
+      $scope.message = "Tên chất liệu không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
+        $scope.formChatLieu = null;
+        $scope.getChatLieuTrangThai();
+      });
+    }
   };
 
   $scope.randoomPC = "PC" + Math.floor(Math.random() * 10000) + 1;
@@ -347,9 +474,17 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addPhongCach = function () {
-    $http.post(phongCachAPI + "/add", $scope.formPhongCach).then(function () {
-      $scope.getPhongCachTrangThai();
-    });
+    if ($scope.formPhongCach.ten === "") {
+      toastBootstrap.show();
+      $scope.message = "Tên phong cách không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.post(phongCachAPI + "/add", $scope.formPhongCach).then(function () {
+        $scope.getPhongCachTrangThai();
+        $scope.formPhongCach = null;
+      });
+    }
   };
   $scope.randoomHT = "HT" + Math.floor(Math.random() * 10000) + 1;
 
@@ -360,9 +495,17 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addHoaTiet = function () {
-    $http.post(hoaTietAPI + "/add", $scope.formHoaTiet).then(function () {
-      $scope.getHoaTietTrangThai();
-    });
+    if ($scope.formHoaTiet.ten === "") {
+      toastBootstrap.show();
+      $scope.message = "Tên họa tiết không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.post(hoaTietAPI + "/add", $scope.formHoaTiet).then(function () {
+        $scope.getHoaTietTrangThai();
+        $scope.formHoaTiet = null;
+      });
+    }
   };
   $scope.randoomCA = "CA" + Math.floor(Math.random() * 10000) + 1;
 
@@ -373,9 +516,17 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addCoAo = function () {
-    $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
-      $scope.getCoAoTrangThai();
-    });
+    if ($scope.formCoAo.ten === "") {
+      toastBootstrap.show();
+      $scope.message = "Tên cổ áo không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
+        $scope.getCoAoTrangThai();
+        $scope.formCoAo = null;
+      });
+    }
   };
   $scope.randoomTA = "TA" + Math.floor(Math.random() * 10000) + 1;
 
@@ -386,9 +537,17 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addTayAo = function () {
-    $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
-      $scope.getTayAoTrangThai();
-    });
+    if ($scope.formTayAo.ten === "") {
+      toastBootstrap.show();
+      $scope.message = "Tên tay áo không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
+        $scope.getTayAoTrangThai();
+        $scope.formTayAo = null;
+      });
+    }
   };
   $scope.randoomKT = "KT" + Math.floor(Math.random() * 10000) + 1;
 
@@ -399,12 +558,15 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addNewKichThuoc = function () {
-    console.log("a");
     if ($scope.formKichThuoc.ten === "") {
-      return;
+      toastBootstrap.show();
+      $scope.message = "Tên kích thước không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
     } else {
       $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
         $scope.getKichThuocTrangThai();
+        $scope.formKichThuoc = null;
       });
     }
   };
@@ -417,12 +579,19 @@ window.addSanPhamChiTietController = function (
   $scope.addNewMauSac = function () {
     let colorStr = document.getElementById("color").value;
     let color = colorStr.slice(1, 7);
-
-    $http.get(api_url + "/id?hex=" + color).then(function (response) {
-      $scope.formMauSac.ten = response.data.name.value;
-      $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
-        $scope.getMauSacTrangThai();
+    if ($scope.formMauSac.ma === "") {
+      toastBootstrap.show();
+      $scope.message = "Mã màu không được trống";
+      $scope.errorProgress();
+      $scope.showError = false;
+    } else {
+      $http.get(api_url + "/id?hex=" + color).then(function (response) {
+        $scope.formMauSac.ten = response.data.name.value;
+        $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
+          $scope.getMauSacTrangThai();
+          $scope.formMauSac = null;
+        });
       });
-    });
+    }
   };
 };

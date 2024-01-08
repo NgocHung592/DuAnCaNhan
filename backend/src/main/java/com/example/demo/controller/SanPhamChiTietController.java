@@ -31,6 +31,12 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
 
+    @GetMapping("search")
+    public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                                 @RequestParam(name = "key") String key) {
+        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key), HttpStatus.OK);
+    }
+
     @GetMapping("trang-chu")
     public ResponseEntity getSanPhamTranChu() {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(), HttpStatus.OK);

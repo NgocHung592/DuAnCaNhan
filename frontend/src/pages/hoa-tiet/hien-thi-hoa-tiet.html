@@ -42,9 +42,11 @@
                             </tbody>
                         </table>
                         <div ng-if="listHoaTiet.length === 0">
-                            <p class="dataTables_empty_icon"><i class="fa-solid fa-inbox fa-2xl"></i></p>
+                            <p class="dataTables_empty_icon">
+                                <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                            </p>
                             <p class="dataTables_empty_lable">
-                                No Data
+                                Không có dữ liệu
                             </p>
                         </div>
                         <nav aria-label="Page navigation example" ng-if="listHoaTiet.length !== 0">
