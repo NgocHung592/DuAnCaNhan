@@ -185,7 +185,7 @@ Create table [dia_chi](
 	nguoi_sua nvarchar(250),
     da_xoa bit,
 	ten_khach_hang nvarchar(70),
-	so_dien_thoai_khach_hang varchar(10),
+	so_dien_thoai_khach_hang varchar(15),
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     )
 
