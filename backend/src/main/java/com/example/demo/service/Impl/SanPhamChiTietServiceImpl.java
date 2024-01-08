@@ -147,6 +147,18 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
+
+    @Override
+    public SanPhamChiTiet updateSL(int soLuong, UUID id) {
+        Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(id);
+        optional.map(sanPhamChiTietUpdate -> {
+            sanPhamChiTietUpdate.setSoLuong(sanPhamChiTietUpdate.getSoLuong() - Integer.valueOf(soLuong));
+            return sanPhamChiTietRepository.save(sanPhamChiTietUpdate);
+        }).orElse(null);
+
+        return null;
+    }
+
     @Override
     public SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
         Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(id);

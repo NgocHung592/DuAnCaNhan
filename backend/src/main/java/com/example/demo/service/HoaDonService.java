@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
+import com.example.demo.model.response.DonHangKhachHangReponse;
+import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import org.springframework.data.domain.Page;
 
@@ -14,7 +17,11 @@ public interface HoaDonService {
 
     List<HoaDon> getHoaDonCho();
 
+    List<DonHangKhachHangReponse> getAll(UUID id);
+
     HoaDon add(HoaDon hoaDon);
+
+    HoaDon addOnline(HoaDonOnlineRequest hoaDon);
 
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 

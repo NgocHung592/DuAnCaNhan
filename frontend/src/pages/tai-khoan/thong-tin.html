@@ -1,4 +1,4 @@
-<main class="wrapperMain_content">
+<main class="wrapperMain_content" ng-controller="loginController">
   <div id="layout-cart">
     <div class="wrapper-mainCart">
       <div class="content-bodyCart">
@@ -12,15 +12,40 @@
                       <div class="image-wrap">
                         <div class="row">
                           <div class="col-md-4">
-                            <span
-                              ><img src="" alt="imgacc" id="action-upload"
-                            /></span>
+                            <div class="row">
+                              <div class="ms-4 mb-5">
+                                <div class="uploadfile">
+                                  <label for="product-image">
+                                    <i
+                                      ng-if="!list.anhDaiDien"
+                                      style="font-size: 80px"
+                                      class="fas fa-user-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                    <img
+                                      ng-if="list.anhDaiDien"
+                                      src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
+                                      alt="Employee Image"
+                                      class="table_img"
+                                    />
+                                    <input
+                                      type="file"
+                                      multiple
+                                      class="file-upload-input"
+                                      id="product-image"
+                                      data-mdb-file-upload="file-upload"
+                                      style="display: none"
+                                    />
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
                           </div>
 
                           <div class="col-md-8">
                             <div class="text-header">
                               <p>Xin chào,</p>
-                              <p class="name">Ten acc</p>
+                              <p class="name">{{list.hoTen}}</p>
                             </div>
                           </div>
                         </div>
@@ -354,3 +379,11 @@
     </div>
   </div>
 </main>
+<style>
+  .table_img {
+    width: 80px; /* Đặt chiều rộng mong muốn */
+    height: 80px; /* Đặt chiều cao mong muốn, nên giữ chiều rộng và chiều cao bằng nhau */
+    border-radius: 80%;
+    object-fit: cover; /* Tùy chọn, giữ tỷ lệ khung hình khi ảnh không phải là hình vuông */
+  }
+</style>

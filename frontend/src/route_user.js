@@ -53,6 +53,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
 
     .when("/don-hang", {
       templateUrl: "tai-khoan/don-hang.html",
+      controller: hienThiHoaDonController,
     })
     .when("/dia-chi", {
       templateUrl: "tai-khoan/dia-chi.html",

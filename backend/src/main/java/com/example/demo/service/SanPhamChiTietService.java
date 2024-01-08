@@ -26,6 +26,8 @@ public interface SanPhamChiTietService {
 
     List<SanPhamChiTiet> add(List<SanPhamChiTietRequest> sanPhamChiTietRequests);
 
+    SanPhamChiTiet updateSL(int soLuong, UUID id);
+
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
 
     SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);

@@ -1,7 +1,9 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
+import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.KhachHangRepository;
@@ -32,12 +34,36 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public List<DonHangKhachHangReponse> getAll(UUID id) {
+        return hoaDonReponsitory.getDonHangKhachHang(id);
+    }
+
+    @Override
     public HoaDon add(HoaDon hoaDon) {
         HoaDon hoaDonSave = HoaDon.builder()
                 .ma(hoaDon.getMa())
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Tại quầy")
                 .nguoiTao("Hưng")
+                .trangThai(hoaDon.getTrangThai())
+                .build();
+        return hoaDonReponsitory.save(hoaDonSave);
+    }
+
+
+    @Override
+    public HoaDon addOnline(HoaDonOnlineRequest hoaDon) {
+        HoaDon hoaDonSave = HoaDon.builder()
+                .khachHang(khachHangRepository.findById(hoaDon.getIdKhachHang()).orElse(null))
+                .tenKhachHang(hoaDon.getTenKhachHang())
+                .soDienThoaiKhachHang(hoaDon.getSoDienThoaiKhachHang())
+                .ngayThanhToan(hoaDon.getNgayThanhToan())
+                .tongTien(BigDecimal.valueOf(hoaDon.getTongTien()))
+                .diaChiKhachHang(hoaDon.getDiaChiKhachHang())
+                .ma(hoaDon.getMa())
+                .ngayTao(hoaDon.getNgayTao())
+                .loaiHoaDon("Online")
+                .nguoiTao("P")
                 .trangThai(hoaDon.getTrangThai())
                 .build();
         return hoaDonReponsitory.save(hoaDonSave);

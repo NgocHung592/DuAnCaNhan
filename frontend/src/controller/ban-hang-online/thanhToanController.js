@@ -5,8 +5,22 @@ window.thanhToanController = function (
   $route,
   $filter,
   $window,
-  $rootScope
+  $rootScope,
+  $location
 ) {
+  $scope.hoaDonThanhToan = {
+    idKhachHang: "",
+    tenKhachHang: "Khách lẻ",
+    soDienThoaiKhachHang: "",
+    diaChiKhachHang: "",
+    diaChiCuThe: "",
+    tinhThanhPho: "",
+    quanHuyen: "",
+    phuongXa: "",
+    tongTien: "",
+    ngayThanhToan: new Date(),
+    trangThai: 1,
+  };
   // $scope.dataFromGioHang = "Dữ liệu từ GioHangController";
 
   if (!$rootScope.idKhachHang) {
@@ -52,4 +66,68 @@ window.thanhToanController = function (
     .catch(function (error) {
       console.error("Error fetching gio hang:", error);
     });
+  $scope.listHoaDon = [];
+  $scope.formHoaDonChiTiet = {};
+  //thanh toan
+  $scope.addHoaDon = function (event) {
+    $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
+    $scope.formHoaDon = {
+      ma: $scope.randomHoaDon,
+      ngayTao: new Date(),
+      trangThai: 0,
+      idKhachHang: $scope.idKhachHang,
+      tenKhachHang: $scope.ten,
+      soDienThoaiKhachHang: $scope.sdt,
+      diaChiKhachHang: "",
+      ngayThanhToan: new Date(),
+      tongTien: $scope.tongGiaTri,
+    };
+    console.log($scope.formHoaDon);
+    $http.post(hoaDonAPI + "/addonline", $scope.formHoaDon).then(function () {
+      $scope.getListHoaDon();
+    });
+  };
+
+  $scope.getListHoaDon = function () {
+    $http.get(hoaDonAPI + "/get-list").then(function (response) {
+      $scope.listHoaDon = response.data;
+      var giohang = $scope.gioHangList;
+      console.log(giohang);
+      for (var i = 0; i < giohang.length; i++) {
+        console.log(giohang[i]);
+        var formHoaDonChiTiet = {
+          idHoaDon: $scope.listHoaDon[0].id,
+          idSanPhamChiTiet: $scope.gioHangList[i].idSanPhamChiTiet,
+          donGia: parseInt($scope.gioHangList[i].donGiaSp),
+          thanhTien: parseInt($scope.gioHangList[i].donGia.replace(",", "")),
+          soLuong: $scope.gioHangList[i].soLuong,
+        };
+        $http
+          .put(
+            sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,
+            giohang[i].soLuong
+          )
+          .then(function () {
+            console.log("Xóa so luong thanh cong");
+          });
+        //console.log($scope.formHoaDonChiTiet);
+        $http
+          .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)
+          .then(function () {
+            console.log("success");
+            //$route.path("don-hang");
+          });
+      }
+      $http
+        .delete(gioHangAPI + "/xoakh/" + $scope.idKhachHang)
+        .then(function (response) {
+          console.log("Xóa gio hang thành công:", response.data);
+          //$route.reload();
+        });
+      setTimeout(function () {
+        console.log($scope.gioHangList);
+        $location.path("/don-hang");
+      }, $scope.gioHangList.length * 3);
+    });
+  };
 };
