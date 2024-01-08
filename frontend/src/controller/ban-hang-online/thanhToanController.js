@@ -78,7 +78,7 @@ window.thanhToanController = function (
       idKhachHang: $scope.idKhachHang,
       tenKhachHang: $scope.ten,
       soDienThoaiKhachHang: $scope.sdt,
-
+      diaChiKhachHang: "",
       ngayThanhToan: new Date(),
       tongTien: $scope.tongGiaTri,
     };
@@ -109,6 +109,7 @@ window.thanhToanController = function (
           .then(function () {
             console.log("Xóa so luong thanh cong");
           });
+        console.log($scope.gioHangList[i].idGioHang);
         $http
           .delete(gioHangAPI + "/delete/" + $scope.gioHangList[i].idGioHang)
           .then(function (response) {
@@ -125,7 +126,7 @@ window.thanhToanController = function (
       }
       setTimeout(function () {
         $location.path("/don-hang");
-      }, $scope.gioHangList.length);
+      }, $scope.gioHangList.length * 3);
     });
   };
 };

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.GioHangChiTietReponse;
@@ -44,7 +45,7 @@ public class HoaDonController {
     }
 
     @PostMapping("addonline")
-    public HoaDon addOnline(@RequestBody HoaDon hoaDon) {
+    public HoaDon addOnline(@RequestBody HoaDonOnlineRequest hoaDon) {
         return hoaDonService.addOnline(hoaDon);
     }
 

@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.HoaDonResponse;
@@ -51,12 +52,14 @@ public class HoaDonServiceImpl implements HoaDonService {
 
 
     @Override
-    public HoaDon addOnline(HoaDon hoaDon) {
+    public HoaDon addOnline(HoaDonOnlineRequest hoaDon) {
         HoaDon hoaDonSave = HoaDon.builder()
+                .khachHang(khachHangRepository.findById(hoaDon.getIdKhachHang()).orElse(null))
                 .tenKhachHang(hoaDon.getTenKhachHang())
                 .soDienThoaiKhachHang(hoaDon.getSoDienThoaiKhachHang())
                 .ngayThanhToan(hoaDon.getNgayThanhToan())
-                .tongTien(hoaDon.getTongTien())
+                .tongTien(BigDecimal.valueOf(hoaDon.getTongTien()))
+                .diaChiKhachHang(hoaDon.getDiaChiKhachHang())
                 .ma(hoaDon.getMa())
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Online")

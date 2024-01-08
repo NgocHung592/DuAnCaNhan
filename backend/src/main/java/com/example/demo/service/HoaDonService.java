@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.GioHangChiTietReponse;
@@ -20,7 +21,7 @@ public interface HoaDonService {
 
     HoaDon add(HoaDon hoaDon);
 
-    HoaDon addOnline(HoaDon hoaDon);
+    HoaDon addOnline(HoaDonOnlineRequest hoaDon);
 
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
