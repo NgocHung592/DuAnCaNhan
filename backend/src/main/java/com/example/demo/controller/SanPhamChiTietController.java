@@ -33,8 +33,10 @@ public class SanPhamChiTietController {
 
     @GetMapping("search")
     public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
-                                 @RequestParam(name = "key") String key) {
-        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key), HttpStatus.OK);
+                                 @RequestParam(name = "key") String key,
+                                 @RequestParam(name = "mauSacId") String mauSacId,
+                                 @RequestParam(name = "kichThuocId") String kichThuocId) {
+        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key,UUID.fromString(mauSacId),UUID.fromString(mauSacId)), HttpStatus.OK);
     }
 
     @GetMapping("trang-chu")

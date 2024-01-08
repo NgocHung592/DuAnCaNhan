@@ -64,9 +64,9 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key) {
+    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, UUID mauSacId, UUID kichThuocId) {
         Pageable pageable = PageRequest.of(pageNo, 10);
-        return sanPhamChiTietRepository.search(pageable, key);
+        return sanPhamChiTietRepository.search(pageable, key, mauSacId, kichThuocId);
     }
 
     @Override
