@@ -69,7 +69,6 @@ myApp.config(function ($routeProvider, $locationProvider) {
       templateUrl: "tai-khoan/dat-lai-mat-khau.html",
       controller: resetController,
     })
-
     .otherwise({
       redirectTo: "/trang-chu",
     });
