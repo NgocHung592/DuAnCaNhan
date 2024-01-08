@@ -126,7 +126,7 @@ window.thanhToanController = function (
         });
       setTimeout(function () {
         console.log($scope.gioHangList);
-        //$location.path("/don-hang");
+        $location.path("/don-hang");
       }, $scope.gioHangList.length * 3);
     });
   };

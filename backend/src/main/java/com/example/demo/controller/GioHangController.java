@@ -63,7 +63,7 @@ public class GioHangController {
     @DeleteMapping("/xoakh/{id}")
     public ResponseEntity<Map<String, String>> xoaByKH(@PathVariable UUID id) {
         try {
-            gioHangService.delete(id);
+            gioHangService.deleteByKH(id);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Xóa giỏ hàng thành công");
             return ResponseEntity.ok(response);
