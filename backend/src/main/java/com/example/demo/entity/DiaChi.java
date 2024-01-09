@@ -50,6 +50,11 @@ public class DiaChi {
 
     @Column(name = "da_xoa")
     private Boolean daXoa;
+    @Column(name = "ten_khach_hang")
+    private String tenKhachHang;
+    @Column(name = "so_dien_thoai_khach_hang")
+    private String soDienThoai;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "khach_hang_id", referencedColumnName = "id")

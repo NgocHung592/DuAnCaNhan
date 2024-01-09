@@ -1,4 +1,4 @@
-window.updateKhachHangController = function ($http, $scope, $routeParams) {
+window.diaChiController = function ($http, $scope, $routeParams, $rootScope) {
   $scope.cityOptions = [];
   $scope.districtOptions = [];
   $scope.wardOptions = [];
@@ -12,58 +12,24 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
     diaChiCuThe: "",
     tinhThanhPho: "",
     quanHuyen: "",
+    tenKhachHang: "",
+    soDienThoai: "",
     phuongXa: "",
     tenKhachHang: "",
     soDienThoai: "",
     ngayTao: new Date(),
     daXoa: false,
   };
-  $http
-    .get(khachHangAPI + "/detail/" + $routeParams.id)
-    .then(function (response) {
-      $scope.detailKhachHang = response?.data;
-      $scope.detailKhachHang.ngaySinh = new Date(response.data.ngaySinh);
-      console.log($scope.detailKhachHang);
-    });
+
   $scope.detailAdress = function () {
     $http
-      .get(diaChiAPI + "/detail/" + $routeParams.id)
+      .get(diaChiAPI + "/detail/" + $rootScope.idKhachHang)
       .then(function (response) {
-        $scope.detailAdress = response?.data;
+        $scope.detailAdress = response.data;
+        console.log($scope.detailAdress);
       });
   };
   $scope.detailAdress();
-
-  $scope.updateKhachHang = function (event) {
-    event.preventDefault();
-    let check = true;
-    const hinhanh = document.getElementById("product-image");
-    for (const image of hinhanh.files) {
-      $scope.detailKhachHang.anhDaiDien = image.name;
-      console.log(image.name);
-    }
-    $scope.khachHangUpdate = {
-      hoTen: $scope.detailKhachHang.hoTen,
-      email: $scope.detailKhachHang.email,
-      gioiTinh: $scope.detailKhachHang.gioiTinh,
-      ngaySinh: $scope.detailKhachHang.ngaySinh,
-      anhDaiDien: $scope.detailKhachHang.anhDaiDien,
-      soDienThoai: $scope.detailKhachHang.soDienThoai,
-      ngaySua: new Date(),
-      daXoa: $scope.detailKhachHang.daXoa,
-    };
-    if (check) {
-      $http
-        .put(
-          khachHangAPI + "/update/" + $routeParams.id,
-          $scope.khachHangUpdate
-        )
-        .then(function () {
-          alert("Cập nhật thành công");
-        });
-    }
-  };
-
   $scope.addDiaChi = function () {
     if (
       $scope.form_dc.tinhThanhPho != "" &&
@@ -74,13 +40,13 @@ window.updateKhachHangController = function ($http, $scope, $routeParams) {
       $scope.form_dc.diaChiCuThe != ""
     ) {
       $http
-        .post(diaChiAPI + "/add/" + $routeParams.id, $scope.form_dc)
+        .post(diaChiAPI + "/add/" + $rootScope.idKhachHang, $scope.form_dc)
         .then(function () {
           alert("them thanh cong");
           $http
             .get(diaChiAPI + "/detail/" + $routeParams.id)
             .then(function (response) {
-              $scope.detailAdress = response?.data;
+              $scope.detailAdress = response.data;
             });
         });
       $scope.detailAdress.find((diaChi) => {

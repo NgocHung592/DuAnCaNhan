@@ -57,6 +57,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/dia-chi", {
       templateUrl: "tai-khoan/dia-chi.html",
+      controller: diaChiController,
     })
     .when("/singup", {
       templateUrl: "tai-khoan/dang-ky.html",

@@ -31,6 +31,8 @@ public class DiaChiServiceImpl implements DiaChiService {
                 .diaChiMacDinh(diaChi.getDiaChiMacDinh())
                 .diaChiCuThe(diaChi.getDiaChiCuThe())
                 .tinhThanhPho(diaChi.getTinhThanhPho())
+                .tenKhachHang(diaChi.getTenKhachHang())
+                .soDienThoai(diaChi.getSoDienThoai())
                 .quanHuyen(diaChi.getQuanHuyen())
                 .phuongXa(diaChi.getPhuongXa())
                 .ngayTao(diaChi.getNgayTao())
@@ -47,6 +49,8 @@ public class DiaChiServiceImpl implements DiaChiService {
             optionalDiaChi.map(diaChiUpdate -> {
                 diaChiUpdate.setDiaChiMacDinh(diaChi.getDiaChiMacDinh());
                 diaChiUpdate.setDiaChiCuThe(diaChi.getDiaChiCuThe());
+                diaChiUpdate.setTenKhachHang(diaChi.getTenKhachHang());
+                diaChiUpdate.setSoDienThoai(diaChi.getSoDienThoai());
                 diaChiUpdate.setTinhThanhPho(diaChi.getTinhThanhPho());
                 diaChiUpdate.setQuanHuyen(diaChi.getQuanHuyen());
                 diaChiUpdate.setPhuongXa(diaChi.getPhuongXa());
