@@ -102,14 +102,14 @@ window.thanhToanController = function (
           thanhTien: parseInt($scope.gioHangList[i].donGia.replace(",", "")),
           soLuong: $scope.gioHangList[i].soLuong,
         };
-        $http
-          .put(
-            sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,
-            giohang[i].soLuong
-          )
-          .then(function () {
-            console.log("Xóa so luong thanh cong");
-          });
+        // $http
+        //   .put(
+        //     sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,
+        //     giohang[i].soLuong
+        //   )
+        //   .then(function () {
+        //     console.log("Xóa so luong thanh cong");
+        //   });
         //console.log($scope.formHoaDonChiTiet);
         $http
           .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)

@@ -182,24 +182,24 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-    @Override
-    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
-        updateSanPhams.forEach(sanPham -> {
-            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
-            if (optional.isPresent()) {
-                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-                optional.map(sanPhamChiTiet -> {
-                    sanPhamChiTiet.setSoLuong(soLuongNew);
-                    if (soLuongNew == 0) {
-                        sanPhamChiTiet.setDaXoa(true);
-                    }
-                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
-                }).orElse(null);
-            }
-        });
-
-        return null;
-    }
+//    @Override
+//    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
+//        updateSanPhams.forEach(sanPham -> {
+//            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
+//            if (optional.isPresent()) {
+//                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
+//                optional.map(sanPhamChiTiet -> {
+//                    sanPhamChiTiet.setSoLuong(soLuongNew);
+//                    if (soLuongNew == 0) {
+//                        sanPhamChiTiet.setDaXoa(true);
+//                    }
+//                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
+//                }).orElse(null);
+//            }
+//        });
+//
+//        return null;
+//    }
 
     public UUID getIdSanPham(String ten) {
         for (SanPham sanPham : sanPhamRepository.findAll()) {

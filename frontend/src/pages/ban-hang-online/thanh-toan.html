@@ -24,6 +24,7 @@
                         placeholder="Họ và Tên "
                         class="form-control"
                         ng-model="ten"
+                        disabled
                       />
                     </div>
                     <div class="mb-3">
@@ -34,6 +35,7 @@
                             placeholder="Email"
                             class="form-control"
                             ng-model="email"
+                            disabled
                           />
                         </div>
                         <div class="col-md-4">
@@ -42,6 +44,7 @@
                             placeholder="Số điện thoại"
                             class="form-control"
                             ng-model="sdt"
+                            disabled
                           />
                         </div>
                       </div>
@@ -50,6 +53,7 @@
                           type="text"
                           placeholder="Địa chỉ"
                           class="form-control"
+                          disabled
                         />
                       </div>
                       <div class="mb-3">
@@ -59,6 +63,7 @@
                               class="form-control"
                               id="customer_shipping_province"
                               name="customer_shipping_province"
+                              disabled
                             >
                               <option data-code="null" value="null" selected="">
                                 Chọn tỉnh / thành
@@ -70,6 +75,7 @@
                               class="form-control"
                               id="customer_shipping_district"
                               name="customer_shipping_district"
+                              disabled
                             >
                               <option data-code="null" value="null" selected="">
                                 Chọn quận / huyện
@@ -81,6 +87,7 @@
                               class="form-control"
                               id="customer_shipping_ward"
                               name="customer_shipping_ward"
+                              disabled
                             >
                               <option data-code="null" value="null" selected="">
                                 Chọn phường / xã
@@ -89,6 +96,8 @@
                           </div>
                         </div>
                       </div>
+                      <a type="button" class="btn btn-secondary" href="#dia-chi">Sửa địa chỉ</a>
+
                     </div>
                     <h5>Phương thức vận chuyển</h5>
                     <div class="border">
@@ -138,6 +147,7 @@
                       type="button"
                       class="btn btn-primary"
                       ng-click="addHoaDon($event)"
+                      ng-if="gioHangList.leght !=0 "
                     >
                       Hoàn tất đơn hàng
                     </button>

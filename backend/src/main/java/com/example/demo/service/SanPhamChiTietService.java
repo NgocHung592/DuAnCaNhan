@@ -30,7 +30,7 @@ public interface SanPhamChiTietService {
 
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
 
-    SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
+//    SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
 
 
 

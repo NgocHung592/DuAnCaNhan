@@ -84,7 +84,7 @@
 
             <div
               class="col-8 content-children item-row"
-              ng-init="getDonHangKhachHang()"
+              ng-init="getLocHoaDon()"
             >
               <div class="mainCart-sidebar wrap-order-summary">
                 <div class="order-summary-block">
@@ -96,6 +96,9 @@
                         role="tablist"
                       >
                         <a
+                          ng-click="selectTabb(null)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(null) }"
                           class="nav-link active"
                           data-bs-toggle="tab"
                           data-bs-target="#tab-all"
@@ -105,6 +108,9 @@
                           Tất cả
                         </a>
                         <a
+                          ng-click="selectTabb(0)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(0) }"
                           class="nav-link"
                           data-bs-toggle="tab"
                           data-bs-target="#tab1"
@@ -112,9 +118,12 @@
                           aria-selected="false"
                           tabindex="-1"
                         >
-                          Chờ thanh toán
+                          Chờ xác nhận
                         </a>
                         <a
+                          ng-click="selectTabb(1)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(1) }"
                           class="nav-link"
                           data-bs-toggle="tab"
                           data-bs-target="#tab5"
@@ -125,6 +134,9 @@
                           Đã xác nhận
                         </a>
                         <a
+                          ng-click="selectTabb(2)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(2) }"
                           class="nav-link"
                           data-bs-toggle="tab"
                           data-bs-target="#tab2"
@@ -135,6 +147,9 @@
                           Đang giao hàng
                         </a>
                         <a
+                          ng-click="selectTabb(3)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(3) }"
                           class="nav-link"
                           data-bs-toggle="tab"
                           data-bs-target="#tab3"
@@ -145,6 +160,9 @@
                           Hoàn thành
                         </a>
                         <a
+                          ng-click="selectTabb(5)"
+                          class="nav-link"
+                          ng-class="{ 'active': isSelectedTabb(5) }"
                           class="nav-link"
                           data-bs-toggle="tab"
                           data-bs-target="#tab4"
@@ -159,7 +177,10 @@
 
                       <div>
                         <div class="mainCart-detail">
-                          <div class="list-pageform-cart">
+                          <div
+                            class="list-pageform-cart"
+                            ng-class="{ 'active': isSelectedTabb(null) || isSelectedTabb(0) || isSelectedTabb(2) || isSelectedTabb(3) || isSelectedTabb(1) || isSelectedTabb(5) }"
+                          >
                             <form id="cartformpage">
                               <div class="cart-row">
                                 <div
@@ -242,7 +263,11 @@
                                   >
                                     {{hang.tongTien | number:0}}₫
                                   </span>
-                                  <button ng-if="hang.trangThai == 0">
+
+                                  <button
+                                    ng-click="huyDonHang(hang)"
+                                    ng-if="hang.trangThai == 0"
+                                  >
                                     Hủy đơn hàng
                                   </button>
                                 </div>
@@ -292,6 +317,17 @@
   .color-da-huy {
     color: red;
   }
+  /* Add this CSS to your stylesheet */
+
+  .cart-row .table-cart .media-right .item-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-row .table-cart .media-right .item-info .item-price {
+    margin-top: 10px; /* Adjust the margin as needed */
+  }
 
   button {
     padding: 10px 20px;
@@ -311,9 +347,24 @@
   button:active {
     background-color: #cc0000; /* Màu đỏ sáng khi nhấn giữ */
   }
+  .cart-row .table-cart button {
+    float: right;
+  }
 
   /* Ẩn nút khi trạng thái khác 1 */
   button.ng-hide {
     display: none;
+  }
+  /* Add this CSS to your stylesheet */
+
+  .cart-row .table-cart {
+    position: relative;
+  }
+
+  .cart-row .table-cart span[ng-class="getStatusColor(hang.trangThai)"] {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    text-transform: uppercase;
   }
 </style>

@@ -8,6 +8,7 @@ import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.service.HoaDonService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<DonHangKhachHangReponse> getAll(UUID id) {
         return hoaDonReponsitory.getDonHangKhachHang(id);
+    }
+
+    @Override
+    public List<DonHangKhachHangReponse> getSearch(String id, String trangThai) {
+        return hoaDonReponsitory.getSearchDonHangKhachHang(id,trangThai);
     }
 
     @Override
@@ -101,6 +107,20 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon detail(UUID id) {
         return hoaDonReponsitory.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai) {
+        Optional<HoaDon> optionalHoaDon = hoaDonReponsitory.findByKhachHangIdAndId(khachHangId,donHangId);
+
+        if (optionalHoaDon.isPresent()) {
+            HoaDon hoaDon = optionalHoaDon.get();
+            hoaDon.setTrangThai(newTrangThai);
+            hoaDonReponsitory.save(hoaDon);
+        } else {
+            // Xử lý trường hợp không tìm thấy đơn hàng
+            throw new EntityNotFoundException("Không tìm thấy đơn hàng");
+        }
     }
 
     @Override
