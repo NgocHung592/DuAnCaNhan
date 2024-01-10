@@ -18,10 +18,10 @@
                                 </button>
                             </ul>
                             <div ng-if="addSanPham" class=" d-grid gap-2 d-md-flex justify-content-md-end">
-
+                                <!-- 
                                 <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#quetQR">
                                     Quét Qr Code
-                                </button>
+                                </button> -->
                                 <button class="btn btn-primary mb-3" data-bs-toggle="modal"
                                     data-bs-target="#addSanPham">
                                     Thêm Sản Phẩm
@@ -106,7 +106,7 @@
                                     <div class="modal-dialog modal-dialog-centered modal-xl">
                                         <div class="modal-content">
                                             <h4 class="p-3">DANH SÁCH SẢN PHẨM </h4>
-                                            <div class="wrapper_layered_filter">
+                                            <div class="wrapper_layered_filter ms-3">
                                                 <div class="layered_filter_parent ">
                                                     <div class="layered_filter_container">
                                                         <div class="layered_filter_group">
@@ -131,7 +131,7 @@
                                                                                 <li ng-repeat="mauSac in listMauSac">
                                                                                     <input type="checkbox"
                                                                                         id="{{mauSac.ma}}"
-                                                                                        ng-click="locSanPhamTheoMau(mauSac)" />
+                                                                                        ng-click="locSanPhamTheoMau($index)" />
                                                                                     <label for="{{mauSac.ma}}"
                                                                                         ng-value="mauSac.ten"
                                                                                         ng-style="{ 'background-color': mauSac.ma }"></label>
@@ -156,7 +156,7 @@
                                                                                     ng-repeat="kichThuoc in listKichThuoc">
                                                                                     <input type="checkbox"
                                                                                         id="{{kichThuoc.ma}}"
-                                                                                        ng-click="locSanPham(kichThuoc)" />
+                                                                                        ng-click="locSanPhamTheoKichThuoc($index)" />
                                                                                     <label
                                                                                         for="{{kichThuoc.ma}}">{{kichThuoc.ten}}</label>
                                                                                 </li>
@@ -466,10 +466,10 @@
                                             <p>{{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ' }}
                                         </div>
                                     </div>
-                                    <div class="select-swatch clearfix">
+                                    <!-- <div class="select-swatch clearfix">
                                         <div class="swatch">
                                             <div class="select-swap">
-                                                <div class="n-sd swatch-element m"
+                                                <div class="swatch-element"
                                                     ng-repeat="method in ['Tiền mặt', 'Chuyển khoản']"
                                                     ng-click="hinhThucThanhToan(method)">
                                                     <input ng-model="searchHinhThucThanhToan" type="radio"
@@ -481,7 +481,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="d-grid gap-2 col-6 mx-auto">
                                         <button class="btn btn-primary " ng-click="thanhToan($event)">Thanh
