@@ -443,107 +443,121 @@ window.addSanPhamChiTietController = function (
   $scope.getTayAoTrangThai();
 
   //add nhanh thuoc tinh
-  $scope.randoomCL = "CL" + Math.floor(Math.random() * 10000) + 1;
-
   $scope.formChatLieu = {
-    ma: $scope.randoomCL,
     ten: "",
-    ngayTao: new Date(),
-    daXoa: false,
   };
   $scope.addChatLieu = function () {
+    $scope.randoomCL = "CL" + Math.floor(Math.random() * 10000) + 1;
+    $scope.chatLieuSave = {
+      ma: $scope.randoomCL,
+      ten: $scope.formChatLieu.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formChatLieu.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên chất liệu không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(chatLieuAPI + "/add", $scope.formChatLieu).then(function () {
+      $http.post(chatLieuAPI + "/add", $scope.chatLieuSave).then(function () {
         $scope.formChatLieu = null;
         $scope.getChatLieuTrangThai();
       });
     }
   };
 
-  $scope.randoomPC = "PC" + Math.floor(Math.random() * 10000) + 1;
-
   $scope.formPhongCach = {
-    ma: $scope.randoomPC,
     ten: "",
-    ngayTao: new Date(),
-    daXoa: false,
   };
   $scope.addPhongCach = function () {
+    $scope.randoomPC = "PC" + Math.floor(Math.random() * 10000) + 1;
+    $scope.phongCachSave = {
+      ma: $scope.randoomPC,
+      ten: $scope.formPhongCach.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formPhongCach.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên phong cách không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(phongCachAPI + "/add", $scope.formPhongCach).then(function () {
+      $http.post(phongCachAPI + "/add", $scope.phongCachSave).then(function () {
         $scope.getPhongCachTrangThai();
         $scope.formPhongCach = null;
       });
     }
   };
-  $scope.randoomHT = "HT" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formHoaTiet = {
-    ma: $scope.randoomHT,
     ten: "",
-    ngayTao: new Date(),
-    daXoa: false,
   };
   $scope.addHoaTiet = function () {
+    $scope.randoomHT = "HT" + Math.floor(Math.random() * 10000) + 1;
+    $scope.hoaTietSave = {
+      ma: $scope.randoomHT,
+      ten: $scope.formHoaTiet.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formHoaTiet.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên họa tiết không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(hoaTietAPI + "/add", $scope.formHoaTiet).then(function () {
+      $http.post(hoaTietAPI + "/add", $scope.hoaTietSave).then(function () {
         $scope.getHoaTietTrangThai();
         $scope.formHoaTiet = null;
       });
     }
   };
-  $scope.randoomCA = "CA" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formCoAo = {
-    ma: $scope.randoomCA,
     ten: "",
-    ngayTao: new Date(),
-    daXoa: false,
   };
   $scope.addCoAo = function () {
+    $scope.random = "CA" + Math.floor(Math.random() * 10000) + 1;
+    $scope.coAoSave = {
+      ma: $scope.random,
+      ten: $scope.formCoAo.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formCoAo.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên cổ áo không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
+      $http.post(coAoAPI + "/add", $scope.coAoSave).then(function () {
         $scope.getCoAoTrangThai();
         $scope.formCoAo = null;
       });
     }
   };
-  $scope.randoomTA = "TA" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.formTayAo = {
-    ma: $scope.randoomTA,
     ten: "",
-    ngayTao: new Date(),
-    daXoa: false,
   };
   $scope.addTayAo = function () {
+    $scope.randoomTA = "TA" + Math.floor(Math.random() * 10000) + 1;
+
+    $scope.tayAoSave = {
+      ma: $scope.randoomTA,
+      ten: $scope.formTayAo.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formTayAo.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên tay áo không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(tayAoAPI + "/add", $scope.formTayAo).then(function () {
+      $http.post(tayAoAPI + "/add", $scope.tayAoSave).then(function () {
         $scope.getTayAoTrangThai();
         $scope.formTayAo = null;
       });
@@ -558,13 +572,21 @@ window.addSanPhamChiTietController = function (
     daXoa: false,
   };
   $scope.addNewKichThuoc = function () {
+    $scope.randoomKT = "KT" + Math.floor(Math.random() * 10000) + 1;
+
+    $scope.kichThuocSave = {
+      ma: $scope.randoomKT,
+      ten: $scope.formKichThuoc.ten,
+      ngayTao: new Date(),
+      daXoa: false,
+    };
     if ($scope.formKichThuoc.ten === "") {
       toastBootstrap.show();
       $scope.message = "Tên kích thước không được trống";
       $scope.errorProgress();
       $scope.showError = false;
     } else {
-      $http.post(kichThuocAPI + "/add", $scope.formKichThuoc).then(function () {
+      $http.post(kichThuocAPI + "/add", $scope.kichThuocSave).then(function () {
         $scope.getKichThuocTrangThai();
         $scope.formKichThuoc = null;
       });

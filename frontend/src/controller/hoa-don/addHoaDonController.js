@@ -1,4 +1,6 @@
 window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listHoaDon = [];
   $scope.sizeAndQuantitys = [];
   $scope.listKichThuoc = [];
@@ -15,6 +17,8 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.detailDiaChi = [];
   $scope.districts = [];
   $scope.wards = [];
+  $scope.sizes = [];
+  $scope.colors = [];
   $scope.chonKhachHang = false;
   $scope.diaChiMacDinh = false;
   $scope.show = false;
@@ -31,10 +35,10 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   $scope.currentPageHDCT = 0;
   $scope.maxVisiblePages = 3;
   $scope.searchHinhThucThanhToan = null;
-  $scope.searchKeyword = undefined;
+  $scope.searchKeyword = null;
+  $scope.searchMauSac = null;
+  $scope.searchKichThuoc = null;
 
-  const toastLiveExample = document.getElementById("liveToast");
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.customIndex = 0;
   $scope.detailKhachHang = {
     id: "",
@@ -698,28 +702,65 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
 
   $scope.getMauSac();
+  function callSearchAPI() {
+    var params = {
+      pageNo: $scope.currentPage,
+      key: $scope.searchKeyword,
+    };
 
-  $scope.search = function () {
+    if ($scope.colors) {
+      params.mauSacIds = $scope.colors;
+    }
+
+    if ($scope.sizes) {
+      params.kichThuocIds = $scope.sizes;
+    }
+    console.log(params);
     $http
-      .get(
-        sanPhamChiTietAPI +
-          "/search?pageNo=" +
-          $scope.currentPage +
-          "&key=" +
-          $scope.searchKeyword
-      )
+      .get(sanPhamChiTietAPI + "/search", { params: params })
       .then(function (response) {
         $scope.listSanPhamChiTiet = response?.data.content;
+        console.log($scope.listSanPhamChiTiet);
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
       });
+  }
+
+  $scope.search = function () {
+    callSearchAPI();
   };
-  $scope.locSanPham = function (kichThuoc) {
-    console.log(kichThuoc);
+  $scope.locSanPhamTheoKichThuoc = function (index) {
+    $scope.listKichThuoc[index].checked = !$scope.listKichThuoc[index].checked;
+    const size = $scope.listKichThuoc[index];
+
+    if ($scope.listKichThuoc[index].checked) {
+      $scope.sizes.push(angular.copy(size.id));
+    } else {
+      const indexOfItemToRemove = $scope.sizes.findIndex(
+        (item) => item.id === size.id
+      );
+      if (indexOfItemToRemove === -1) {
+        $scope.sizes.splice(indexOfItemToRemove, 1);
+      }
+    }
+    callSearchAPI();
   };
-  $scope.locSanPhamTheoMau = function (mauSac) {
-    console.log(mauSac);
+  $scope.locSanPhamTheoMau = function (index) {
+    $scope.listMauSac[index].checked = !$scope.listMauSac[index].checked;
+    const color = $scope.listMauSac[index];
+
+    if ($scope.listMauSac[index].checked) {
+      $scope.colors.push(angular.copy(color.id));
+    } else {
+      const indexOfItemToRemove = $scope.colors.findIndex(
+        (item) => item.id === color.id
+      );
+      if (indexOfItemToRemove === -1) {
+        $scope.colors.splice(indexOfItemToRemove, 1);
+      }
+    }
+    callSearchAPI();
   };
   function getVisiblePages() {
     var totalPages = $scope.totalPages.length;
@@ -752,31 +793,31 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     }
     return visiblePages;
   }
-  const video = document.getElementById("scanner");
+  // const video = document.getElementById("scanner");
 
-  // Khởi tạo Instascan
-  const scanner = new Instascan.Scanner({ video: video });
+  // // Khởi tạo Instascan
+  // const scanner = new Instascan.Scanner({ video: video });
 
-  // Bắt sự kiện quét mã QR thành công
-  scanner.addListener("scan", function (content) {
-    console.log(content);
-    scanner.stop();
-    function closeModal() {
-      $("#quetQR").modal("hide");
-    }
-  });
+  // // Bắt sự kiện quét mã QR thành công
+  // scanner.addListener("scan", function (content) {
+  //   console.log(content);
+  //   scanner.stop();
+  //   function closeModal() {
+  //     $("#quetQR").modal("hide");
+  //   }
+  // });
 
-  // Bắt sự kiện khi có lỗi trong quá trình quét
-  scanner.addListener("error", function (error) {
-    console.error(error);
-  });
+  // // Bắt sự kiện khi có lỗi trong quá trình quét
+  // scanner.addListener("error", function (error) {
+  //   console.error(error);
+  // });
 
-  // Bắt đầu quét
-  Instascan.Camera.getCameras().then(function (cameras) {
-    if (cameras.length > 0) {
-      scanner.start(cameras[0]);
-    } else {
-      console.error("No cameras found.");
-    }
-  });
+  // // Bắt đầu quét
+  // Instascan.Camera.getCameras().then(function (cameras) {
+  //   if (cameras.length > 0) {
+  //     scanner.start(cameras[0]);
+  //   } else {
+  //     console.error("No cameras found.");
+  //   }
+  // });
 };

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,13 +33,17 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
 
-//    @GetMapping("search")
-//    public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
-//                                 @RequestParam(name = "key") String key,
-//                                 @RequestParam(name = "mauSacId") String mauSacId,
-//                                 @RequestParam(name = "kichThuocId") String kichThuocId) {
-//        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key,UUID.fromString(mauSacId),UUID.fromString(kichThuocId)), HttpStatus.OK);
-//    }
+    @GetMapping("search")
+    public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                                 @RequestParam(name = "key", required = false) String key,
+                                 @RequestParam(name = "mauSacIds", required = false) List<UUID> mauSacIds,
+                                 @RequestParam(name = "kichThuocIds", required = false) List<UUID> kichThuocIds) {
+
+
+
+
+        return new ResponseEntity(sanPhamChiTietService.search(Integer.valueOf(pageNo), key, mauSacIds, kichThuocIds), HttpStatus.OK);
+    }
 
     @GetMapping("trang-chu")
     public ResponseEntity getSanPhamTranChu() {
@@ -74,9 +80,9 @@ public class SanPhamChiTietController {
 //        return new ResponseEntity(sanPhamChiTietService.updateSL(soLuong, UUID.fromString(id)), HttpStatus.OK);
 //    }
 
-//    @PutMapping("update-so-luong")
-//    public ResponseEntity update(@RequestBody List<UpdateSanPham> updateSanPhams) {
-//        return new ResponseEntity(sanPhamChiTietService.updateSoLuong(updateSanPhams), HttpStatus.OK);
-//    }
+    @PutMapping("update-so-luong")
+    public ResponseEntity update(@RequestBody List<UpdateSanPham> updateSanPhams) {
+        return new ResponseEntity(sanPhamChiTietService.updateSoLuong(updateSanPhams), HttpStatus.OK);
+    }
 
 }
