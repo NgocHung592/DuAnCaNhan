@@ -189,6 +189,7 @@ Create table [dia_chi](
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     )
 
+
 	Create table [chuc_vu](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,

@@ -5,6 +5,7 @@ import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.GioHangChiTietReponse;
+import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import org.springframework.data.domain.Page;
 
@@ -18,6 +19,8 @@ public interface HoaDonService {
     List<HoaDon> getHoaDonCho();
 
     List<DonHangKhachHangReponse> getAll(UUID id);
+
+    List<HienThiHoaDonReponse> getHienThi(UUID idKhachHang,UUID idHoaDon);
 
     List<DonHangKhachHangReponse> getSearch(String id,String trangThai);
 

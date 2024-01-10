@@ -5,6 +5,7 @@ import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.GioHangChiTietReponse;
+import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,16 @@ public class HoaDonController {
     @GetMapping("hien-thiKh/{id}")
     public ResponseEntity<List<DonHangKhachHangReponse>> getAll(@PathVariable UUID id){
         List<DonHangKhachHangReponse> gioHangChiTietReponses=hoaDonService.getAll(id);
+        return ResponseEntity.ok(gioHangChiTietReponses);
+
+    }
+
+    @PostMapping("hien-thi-hoa-don")
+    public ResponseEntity<List<HienThiHoaDonReponse>> getHienThi(@RequestParam(name = "idKhachHang") String idKhachHang,
+                                                                 @RequestParam(name = "idDonHang") String idDonHang){
+        UUID khachHangId = UUID.fromString(idKhachHang);
+        UUID donHangId = UUID.fromString(idDonHang);
+        List<HienThiHoaDonReponse> gioHangChiTietReponses=hoaDonService.getHienThi(khachHangId,donHangId);
         return ResponseEntity.ok(gioHangChiTietReponses);
 
     }

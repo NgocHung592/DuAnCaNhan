@@ -49,11 +49,16 @@ myApp.config(function ($routeProvider, $locationProvider) {
     })
     .when("/thong-tin", {
       templateUrl: "tai-khoan/thong-tin.html",
+      controller: thongtinController,
     })
 
     .when("/don-hang", {
       templateUrl: "tai-khoan/don-hang.html",
       controller: hienThiHoaDonController,
+    })
+    .when("/hoa-don-timeline", {
+      templateUrl: "tai-khoan/hoa-don-timeline.html",
+      controller: hienThiHoaDonTimeLineController,
     })
     .when("/dia-chi", {
       templateUrl: "tai-khoan/dia-chi.html",
