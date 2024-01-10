@@ -67,6 +67,8 @@ public class KhachHangServiceImpl implements KhachHangService {
                 .khachHang(KhachHang)
                 .diaChiCuThe(khachHangRequest.getDiaChiCuThe())
                 .diaChiMacDinh(Boolean.valueOf(khachHangRequest.getDiaChiMacDinh()))
+                .tenKhachHang(khachHangRequest.getHoTen())
+                .soDienThoai(khachHangRequest.getSoDienThoai())
                 .tinhThanhPho(khachHangRequest.getTinhThanhPho())
                 .quanHuyen(khachHangRequest.getQuanHuyen())
                 .phuongXa(khachHangRequest.getPhuongXa())
