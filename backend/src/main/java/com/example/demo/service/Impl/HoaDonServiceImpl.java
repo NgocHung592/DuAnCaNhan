@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.LichSuHoaDon;
 import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,6 +78,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Online")
                 .nguoiTao("P")
+//                .phiShip(BigDecimal.valueOf(hoaDon.getPhiShip()))
                 .trangThai(hoaDon.getTrangThai())
                 .build();
         return hoaDonReponsitory.save(hoaDonSave);
@@ -91,6 +94,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 return hoaDonReponsitory.save(hoaDon);
             }).orElse(null);

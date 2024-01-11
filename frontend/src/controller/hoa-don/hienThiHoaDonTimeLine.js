@@ -158,10 +158,41 @@ window.hienThiHoaDonTimeLineController = function (
       })
       .catch(function () {
         alert("Hủy đơn hàng thành công!");
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000);
-        // Xử lý lỗi nếu có
+        $location.path("/don-hang");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+      });
+  };
+  $scope.daNhanHang = function (hang) {
+    if (!$scope.idKhachHang) {
+      console.error("Giá trị idKhachHang không hợp lệ");
+      return;
+    }
+
+    var idDonHang = hang.hoaDonId;
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.idKhachHang,
+      idDonHang: idDonHang,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-nhan-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $location.path("/don-hang");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       });
   };
 };

@@ -8,6 +8,39 @@ window.thanhToanController = function (
   $rootScope,
   $location
 ) {
+  $scope.listHoaDon = [];
+  $scope.sizeAndQuantitys = [];
+  $scope.listKichThuoc = [];
+  $scope.totalPages = [];
+  $scope.totalPagesHDCT = [];
+  $scope.listMaGiamGia = [];
+  $scope.listSanPhamChiTiet = [];
+  $scope.listHoaDonChiTiet = [];
+  $scope.listKhachHang = [];
+  $scope.cityOptions = [];
+  $scope.districtOptions = [];
+  $scope.wardOptions = [];
+  $scope.visiblePages = [];
+  $scope.detailDiaChi = [];
+  $scope.districts = [];
+  $scope.wards = [];
+  $scope.chonKhachHang = false;
+  $scope.diaChiMacDinh = false;
+  $scope.show = false;
+  $scope.addSanPham = false;
+  $scope.showDropDownVoucher = false;
+  $scope.showDropDownThanhPho = false;
+  $scope.showDropDownPhuongXa = false;
+  $scope.showDropDownQuanHuyen = false;
+  $scope.tongTien = 0;
+  $scope.giamGia = 0;
+  $scope.tienHang = 0;
+  $scope.phiVanChuyen = 0;
+  $scope.currentPage = 0;
+  $scope.currentPageHDCT = 0;
+  $scope.maxVisiblePages = 3;
+  $scope.searchHinhThucThanhToan = null;
+  $scope.searchKeyword = undefined;
   $scope.hoaDonThanhToan = {
     idKhachHang: "",
     tenKhachHang: "",
@@ -66,42 +99,7 @@ window.thanhToanController = function (
       ", " +
       $scope.hoaDonThanhToan.tinhThanhPho;
   });
-  $http
-    .get(gioHangAPI + "/hien-thi/" + $rootScope.idKhachHang)
-    .then(function (response) {
-      $scope.gioHangList = response.data;
-      console.log("response.data", response.data);
-      $scope.dataFromGioHang = $scope.gioHangList.length;
-      $rootScope.$emit("dataFromGioHang", $scope.gioHangList.length);
-      $rootScope.soLuongGioHangList = $scope.gioHangList.length;
-      console.log("so luong gio hang:", $rootScope.soLuongGioHangList);
 
-      // Tính tổng giá trị từ đơn giá
-      $scope.tongGiaTri = 0;
-      angular.forEach($scope.gioHangList, function (item) {
-        // Chuyển đổi donGia sang kiểu số
-        var donGia = parseFloat(item.donGia);
-
-        // Kiểm tra xem có phải là số không
-        if (!isNaN(donGia)) {
-          item.donGia = $filter("number")(donGia, 0);
-          // Tính toán tổng giá trị từ đơn giá
-          $scope.tongGiaTri += donGia;
-
-          // In ra console log để kiểm tra từng bước tính toán
-          console.log("donGia:", donGia);
-          console.log("Partial tongGiaTri:", $scope.tongGiaTri);
-        } else {
-          console.error("Invalid donGia:", item);
-        }
-      });
-
-      // In ra console log để kiểm tra giá trị cuối cùng của tongGiaTri
-      console.log("Final tongGiaTri:", $scope.tongGiaTri);
-    })
-    .catch(function (error) {
-      console.error("Error fetching gio hang:", error);
-    });
   $scope.listHoaDon = [];
   $scope.formHoaDonChiTiet = {};
   // error check ma giam gia
@@ -136,13 +134,13 @@ window.thanhToanController = function (
   function showError(message) {
     $scope.errorProgress();
     $scope.message = message;
-    toastBootstrap.show();
+    // toastBootstrap.show();
     $scope.showError = true;
   }
   function showSuccess(message) {
     $scope.successProgress();
     $scope.message = message;
-    toastBootstrap.show();
+    // toastBootstrap.show();
     $scope.showError = false;
   }
   $scope.selectTab = function (tab, id, ma) {
@@ -181,19 +179,87 @@ window.thanhToanController = function (
     });
   };
   $scope.getMaGiamGia();
+  //Su kien click chon ma giam gia
+  $scope.selectedVoucher = function (index, option) {
+    $scope.maGiamGiaId = option.id;
+    console.log(option);
+    // if ($scope.formHoaDonChiTiet.idHoaDon === "") {
+    //   showError("Hãy chọn 1 hóa đơn để áp dụng mã giảm giá");
+    // } else if ($scope.tongGiaTri < option.giaTriDonToiThieu) {
+    //   showError("Chưa đủ giá trị đơn tối thiểu");
+    // } else {
+    if (option.hinhThucGiam === 1) {
+      $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
+    } else {
+      $scope.giamGia = option.giaTriGiam;
+    }
+    // }
+    console.log("giam gia:" + $scope.giamGia);
+    $scope.tongTienThanhToan -= $scope.giamGia;
+    $scope.showDropDownVoucher = false;
+  };
+  $http
+    .get(gioHangAPI + "/hien-thi/" + $rootScope.idKhachHang)
+    .then(function (response) {
+      $scope.gioHangList = response.data;
+      console.log("response.data", response.data);
+      $scope.dataFromGioHang = $scope.gioHangList.length;
+      $rootScope.$emit("dataFromGioHang", $scope.gioHangList.length);
+      $rootScope.soLuongGioHangList = $scope.gioHangList.length;
+      console.log("so luong gio hang:", $rootScope.soLuongGioHangList);
+
+      // Tính tổng giá trị từ đơn giá
+      $scope.tongGiaTri = 0;
+
+      angular.forEach($scope.gioHangList, function (item) {
+        // Chuyển đổi donGia sang kiểu số
+        var donGia = parseFloat(item.donGia);
+
+        // Kiểm tra xem có phải là số không
+        if (!isNaN(donGia)) {
+          item.donGia = $filter("number")(donGia, 0);
+          // Tính toán tổng giá trị từ đơn giá
+          $scope.tongGiaTri += donGia;
+          $scope.tongTienThanhToan = $scope.tongGiaTri + 30000;
+          // In ra console log để kiểm tra từng bước tính toán
+          console.log("donGia:", donGia);
+          console.log("Partial tongGiaTri:", $scope.tongGiaTri);
+        } else {
+          console.error("Invalid donGia:", item);
+        }
+      });
+      $scope.tongTienThanhToan -= $scope.giamGia;
+      // In ra console log để kiểm tra giá trị cuối cùng của tongGiaTri
+      console.log("Final tongTienThanhToan:", $scope.tongTienThanhToan);
+    })
+    .catch(function (error) {
+      console.error("Error fetching gio hang:", error);
+    });
+
   //thanh toan
   $scope.addHoaDon = function (event) {
+    $scope.tongTienThanhToan -= $scope.giamGia;
     $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
+
     $scope.formHoaDon = {
       ma: $scope.randomHoaDon,
       ngayTao: new Date(),
       trangThai: 0,
       idKhachHang: $scope.idKhachHang,
-      tenKhachHang: $scope.ten,
-      soDienThoaiKhachHang: $scope.sdt,
-      diaChiKhachHang: "",
+      tenKhachHang: $scope.hoaDonThanhToan.tenKhachHang,
+      soDienThoaiKhachHang: $scope.hoaDonThanhToan.soDienThoaiKhachHang,
+      diaChiKhachHang:
+        $scope.hoaDonThanhToan.diaChiCuThe +
+        ", " +
+        $scope.hoaDonThanhToan.phuongXa +
+        ", " +
+        $scope.hoaDonThanhToan.quanHuyen +
+        ", " +
+        $scope.hoaDonThanhToan.tinhThanhPho,
       ngayThanhToan: new Date(),
-      tongTien: $scope.tongGiaTri,
+
+      tongTien: $scope.tongTienThanhToan,
+      // phiShip: "30000",
     };
     console.log($scope.formHoaDon);
     $http.post(hoaDonAPI + "/addonline", $scope.formHoaDon).then(function () {
@@ -225,17 +291,17 @@ window.thanhToanController = function (
         //   });
         //console.log($scope.formHoaDonChiTiet);
 
-        if ($scope.maGiamGiaId === undefined) {
-          return;
-        } else {
-          $scope.addMaGiamGia = {
-            tongTien: $scope.tienHang,
-            tongTienSauKhiGiam: $scope.tongTien,
-            hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-            maGiamGiaId: $scope.maGiamGiaId,
-          };
-          return $http.post(maGiamGiaChiTietAPI + "/add", $scope.addMaGiamGia);
-        }
+        // if ($scope.maGiamGiaId === undefined) {
+        //   return;
+        // } else {
+        //   $scope.addMaGiamGia = {
+        //     tongTien: $scope.tienHang,
+        //     tongTienSauKhiGiam: $scope.tongTien,
+        //     hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+        //     maGiamGiaId: $scope.maGiamGiaId,
+        //   };
+        //   return $http.post(maGiamGiaChiTietAPI + "/add", $scope.addMaGiamGia);
+        // }
 
         $http
           .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)
@@ -257,40 +323,6 @@ window.thanhToanController = function (
     });
     //add ma giam gia
   };
-
-  $scope.listHoaDon = [];
-  $scope.sizeAndQuantitys = [];
-  $scope.listKichThuoc = [];
-  $scope.totalPages = [];
-  $scope.totalPagesHDCT = [];
-  $scope.listMaGiamGia = [];
-  $scope.listSanPhamChiTiet = [];
-  $scope.listHoaDonChiTiet = [];
-  $scope.listKhachHang = [];
-  $scope.cityOptions = [];
-  $scope.districtOptions = [];
-  $scope.wardOptions = [];
-  $scope.visiblePages = [];
-  $scope.detailDiaChi = [];
-  $scope.districts = [];
-  $scope.wards = [];
-  $scope.chonKhachHang = false;
-  $scope.diaChiMacDinh = false;
-  $scope.show = false;
-  $scope.addSanPham = false;
-  $scope.showDropDownVoucher = false;
-  $scope.showDropDownThanhPho = false;
-  $scope.showDropDownPhuongXa = false;
-  $scope.showDropDownQuanHuyen = false;
-  $scope.tongTien = 0;
-  $scope.giamGia = 0;
-  $scope.tienHang = 0;
-  $scope.phiVanChuyen = 0;
-  $scope.currentPage = 0;
-  $scope.currentPageHDCT = 0;
-  $scope.maxVisiblePages = 3;
-  $scope.searchHinhThucThanhToan = null;
-  $scope.searchKeyword = undefined;
 
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
@@ -404,26 +436,7 @@ window.thanhToanController = function (
 
     event.stopPropagation();
   };
-  $scope.selectedVoucher = function (index, option) {
-    $scope.maGiamGiaId = option.id;
-    if ($scope.formHoaDonChiTiet.idHoaDon === "") {
-      showError("Hãy chọn 1 hóa đơn để áp dụng mã giảm giá");
-    } else if ($scope.tienHang < option.giaTriDonToiThieu) {
-      showError("Chưa đủ giá trị đơn tối thiểu");
-    } else {
-      if (option.hinhThucGiam === 1) {
-        $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
-        $scope.tongTien =
-          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-      } else {
-        $scope.giamGia = option.giaTriGiam;
-        $scope.tongTien =
-          $scope.tienHang + $scope.phiVanChuyen - option.giaTriGiam;
-      }
-    }
 
-    $scope.showDropDownVoucher = false;
-  };
   document.addEventListener("click", function (event) {
     var dropdownContainer = document.querySelector(".dropdown-container");
 
@@ -438,107 +451,107 @@ window.thanhToanController = function (
   });
   $scope.getCity();
 
-  $scope.thanhToan = function () {
-    $scope.hoaDonThanhToan.tongTien = $scope.tongTien;
-    let diaChiKhachHang =
-      $scope.hoaDonThanhToan.diaChiCuThe +
-      ", " +
-      $scope.hoaDonThanhToan.phuongXa +
-      ", " +
-      $scope.hoaDonThanhToan.quanHuyen +
-      ", " +
-      $scope.hoaDonThanhToan.tinhThanhPho;
-    if ($scope.formHoaDonChiTiet.idHoaDon === "") {
-      showError("Chọn 1 hóa đơn để thanh toán");
-    } else {
-      if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
-        $scope.hoaDonThanhToan.trangThai = 3;
-        //update hoa don
-        $http
-          .put(
-            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-            $scope.hoaDonThanhToan
-          )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
-          //update so luong san pham
-          .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
-          })
-          //add ma giam gia
-          .then(function () {
-            if ($scope.maGiamGiaId === undefined) {
-              return;
-            } else {
-              $scope.addMaGiamGia = {
-                tongTien: $scope.tienHang,
-                tongTienSauKhiGiam: $scope.tongTien,
-                hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-                maGiamGiaId: $scope.maGiamGiaId,
-              };
-              return $http.post(
-                maGiamGiaChiTietAPI + "/add",
-                $scope.addMaGiamGia
-              );
-            }
-          })
+  // $scope.thanhToan = function () {
+  //   $scope.hoaDonThanhToan.tongTien = $scope.tongTien;
+  //   let diaChiKhachHang =
+  //     $scope.hoaDonThanhToan.diaChiCuThe +
+  //     ", " +
+  //     $scope.hoaDonThanhToan.phuongXa +
+  //     ", " +
+  //     $scope.hoaDonThanhToan.quanHuyen +
+  //     ", " +
+  //     $scope.hoaDonThanhToan.tinhThanhPho;
+  //   if ($scope.formHoaDonChiTiet.idHoaDon === "") {
+  //     showError("Chọn 1 hóa đơn để thanh toán");
+  //   } else {
+  //     if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
+  //       $scope.hoaDonThanhToan.trangThai = 3;
+  //       //update hoa don
+  //       $http
+  //         .put(
+  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+  //           $scope.hoaDonThanhToan
+  //         )
+  //         .then(function () {
+  //           $scope.getListHoaDon();
+  //         })
+  //         //update so luong san pham
+  //         .then(function () {
+  //           return $http.put(
+  //             sanPhamChiTietAPI + "/update-so-luong",
+  //             $scope.listHoaDonChiTiet
+  //           );
+  //         })
+  //         //add ma giam gia
+  //         .then(function () {
+  //           if ($scope.maGiamGiaId === undefined) {
+  //             return;
+  //           } else {
+  //             $scope.addMaGiamGia = {
+  //               tongTien: $scope.tienHang,
+  //               tongTienSauKhiGiam: $scope.tongTien,
+  //               hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+  //               maGiamGiaId: $scope.maGiamGiaId,
+  //             };
+  //             return $http.post(
+  //               maGiamGiaChiTietAPI + "/add",
+  //               $scope.addMaGiamGia
+  //             );
+  //           }
+  //         })
 
-          //add hinh thuc thanh toan
-          .then(function () {
-            $scope.addHinhThucThanhToan = {
-              tenHinhThuc: $scope.searchHinhThucThanhToan,
-              hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-            };
-            return $http.post(
-              hinhThucThanhToanAPI + "/add",
-              $scope.addHinhThucThanhToan
-            );
-          });
-        $location.path("/hoa-don/hien-thi");
-      } else if (
-        $scope.hoaDonThanhToan.idKhachHang === "" &&
-        $scope.show == true
-      ) {
-        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-        $http
-          .put(
-            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-            $scope.hoaDonThanhToan
-          )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
-          .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
-          });
-        $location.path("/hoa-don/hien-thi");
-      } else {
-        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-        $http
-          .put(
-            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-            $scope.hoaDonThanhToan
-          )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
-          .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
-          });
-        $location.path("/hoa-don/hien-thi");
-      }
-    }
-  };
+  //         //add hinh thuc thanh toan
+  //         .then(function () {
+  //           $scope.addHinhThucThanhToan = {
+  //             tenHinhThuc: $scope.searchHinhThucThanhToan,
+  //             hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+  //           };
+  //           return $http.post(
+  //             hinhThucThanhToanAPI + "/add",
+  //             $scope.addHinhThucThanhToan
+  //           );
+  //         });
+  //       $location.path("/hoa-don/hien-thi");
+  //     } else if (
+  //       $scope.hoaDonThanhToan.idKhachHang === "" &&
+  //       $scope.show == true
+  //     ) {
+  //       $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+  //       $http
+  //         .put(
+  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+  //           $scope.hoaDonThanhToan
+  //         )
+  //         .then(function () {
+  //           $scope.getListHoaDon();
+  //         })
+  //         .then(function () {
+  //           return $http.put(
+  //             sanPhamChiTietAPI + "/update-so-luong",
+  //             $scope.listHoaDonChiTiet
+  //           );
+  //         });
+  //       $location.path("/hoa-don/hien-thi");
+  //     } else {
+  //       $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+  //       $http
+  //         .put(
+  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+  //           $scope.hoaDonThanhToan
+  //         )
+  //         .then(function () {
+  //           $scope.getListHoaDon();
+  //         })
+  //         .then(function () {
+  //           return $http.put(
+  //             sanPhamChiTietAPI + "/update-so-luong",
+  //             $scope.listHoaDonChiTiet
+  //           );
+  //         });
+  //       $location.path("/hoa-don/hien-thi");
+  //     }
+  //   }
+  // };
 
   function detailKhachHang(idKhachHang) {
     return $http
