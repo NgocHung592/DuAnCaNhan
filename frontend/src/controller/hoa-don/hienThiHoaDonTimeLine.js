@@ -65,8 +65,8 @@ window.hienThiHoaDonTimeLineController = function (
       1: "Đơn hàng đã xác nhận thành công",
       2: "Đơn hàng đang giao hàng",
       3: "Đơn hàng đã giao thành công",
-      4: "Đơn hàng giao không thành công",
-      5: "đã hủy",
+      5: "Đơn hàng giao không thành công",
+      4: "đã hủy",
       // Thêm các ánh xạ khác nếu cần
     };
 
@@ -79,9 +79,9 @@ window.hienThiHoaDonTimeLineController = function (
         return "color-dang-giao-hang";
       } else if (trangThai == 3) {
         return "color-da-giao-thanh-cong";
-      } else if (trangThai == 4) {
-        return "color-giao-khong-thanh-cong";
       } else if (trangThai == 5) {
+        return "color-giao-khong-thanh-cong";
+      } else if (trangThai == 4) {
         return "color-da-huy";
       } else {
         return ""; // Nếu không phù hợp với bất kỳ trạng thái nào khác

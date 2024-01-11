@@ -42,6 +42,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
     @Override
     public HoaDonChiTiet add(HoaDonChiTietRequest hoaDonChiTietRequest) {
+        System.out.println(hoaDonChiTietRequest);
         HoaDonChiTiet hoaDonChiTietSave = HoaDonChiTiet.builder()
                 .soLuong(Integer.valueOf(hoaDonChiTietRequest.getSoLuong()))
                 .donGia(BigDecimal.valueOf(hoaDonChiTietRequest.getDonGia()))
