@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="card flex-fill">
-        <h1>THÔNG TIN ĐƠN HÀNG</h1>
+        <h4 class="mt-4">THÔNG TIN ĐƠN HÀNG</h4>
         <hr />
         <div class="container">
           <div class="row">
@@ -89,31 +89,42 @@
         </div>
       </div>
       <div class="card flex-fill">
-        <h1 style="text-align: left">LỊCH SỬ THANH TOÁN</h1>
+        <h4 class="mt-4">DANH SÁCH SẢN PHẨM</h4>
         <hr>
-
-        <table class="table">
+        <table class="table align-self-center">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Số tiền</th>
-              <th scope="col">Thời gian</th>
-              <th scope="col">Trạng thái</th>
-              <th scope="col">Nhân viên xác nhận</th>
-              <th scope="col">Ghi chú</th>
+              <th scope="col">Ảnh sản phẩm</th>
+              <th scope="col">Tên sản phẩm</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Đơn giá</th>
+              <th scope="col">Thành tiền</th>
+              <th scope="col">Thao tác</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
             <tr>
-              <th>{{$index+1}}</th>
-              <th scope="row">{{detailHoaDon.tongTien| number}} VND</th>
-              <th scope="row">{{detailHoaDon.ngayThanhToan | date: 'dd/MM/yyyy hh:mm a'}}</th>
-              <th scope="row">
-                {{detailHoaDon.trangThai==0?"Chờ xác nhận":detailHoaDon.trangThai==1?"Chờ giao
-                hàng":detailHoaDon.trangThai==2?"Đang giao hàng":"Đã hoàn thành"}}
+              <th scope="row">{{customIndex+$index+1}}</th>
+              <th scope="row"><img class="table_img" ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
+                  alt="Không có ảnh">
               </th>
-              <th scope="row"></th>
-              <th>
+              <th scope="row">{{hoaDonChiTiet.tenSanPham}} [
+                {{hoaDonChiTiet.tenMauSac}} -
+                {{hoaDonChiTiet.tenKichThuoc}} ]</th>
+              <th scope="row">
+                <input type="number" ng-model="hoaDonChiTiet.soLuong" id="liveToastBtn"
+                  ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)" class="form-control form-control-sm"
+                  style="width: 100px; height: 30px;" />
+              </th>
+              <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
+              <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
+
+              <th data-toggle="tooltip" data-placement="top" title="Xóa">
+                <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+
               </th>
             </tr>
           </tbody>

@@ -24,6 +24,11 @@ public class HoaDonChiTietController {
         return new ResponseEntity(hoaDonChiTietService.getGioHang(Integer.valueOf(pageNo), ma), HttpStatus.OK);
     }
 
+    @GetMapping("detail/{id}")
+    public ResponseEntity detail(@RequestParam(value = "pageNo", defaultValue = "0") String pageNo, @PathVariable("id") UUID id) {
+        return new ResponseEntity(hoaDonChiTietService.detail(Integer.valueOf(pageNo), id), HttpStatus.OK);
+    }
+
     @GetMapping("tinh-tong/{id}")
     public ResponseEntity hienThi(@PathVariable("id") String ma) {
         return new ResponseEntity(hoaDonChiTietService.getByMa(ma),HttpStatus.OK);

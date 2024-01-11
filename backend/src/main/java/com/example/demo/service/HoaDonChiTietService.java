@@ -19,7 +19,7 @@ public interface HoaDonChiTietService {
 
     HoaDonChiTiet update(HoaDonChiTietRequest hoaDonChiTietRequest, UUID id);
 
-//    HoaDonChiTiet detail(HoaDonChiTietId hoaDonChiTietId);
+    Page<HoaDonChiTietReponse> detail(Integer pageNo, UUID id);
 
     HoaDonChiTiet delete(UUID id);
 

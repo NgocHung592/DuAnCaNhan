@@ -167,7 +167,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
     $scope.formHoaDon = {
       ma: $scope.randomHoaDon,
       ngayTao: new Date(),
-      trangThai: 0,
+      trangThai: 5,
     };
     if ($scope.listHoaDon.length < 5) {
       $http.post(hoaDonAPI + "/add", $scope.formHoaDon).then(function () {
@@ -604,9 +604,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
+
           .then(function () {
             return $http.put(
               sanPhamChiTietAPI + "/update-so-luong",
@@ -621,9 +619,7 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
+
           .then(function () {
             return $http.put(
               sanPhamChiTietAPI + "/update-so-luong",

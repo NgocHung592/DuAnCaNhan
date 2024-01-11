@@ -63,6 +63,12 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         return null;
     }
 
+    @Override
+    public Page<HoaDonChiTietReponse> detail(Integer pageNo, UUID id) {
+        Pageable pageable = PageRequest.of(pageNo, 3);
+        return hoaDonChiTietRepository.getSanPhamHoaDon(pageable, id);
+    }
+
 
     @Override
     public HoaDonChiTiet delete(UUID id) {

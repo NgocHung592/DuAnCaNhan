@@ -18,8 +18,6 @@ window.hienThiHoaDonController = function (
       .get(hoaDonAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listHoaDon = response?.data.content;
-        console.log($scope.listHoaDon);
-        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.currentPage = Math.min(
           $scope.currentPage,
