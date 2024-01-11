@@ -327,9 +327,6 @@ window.hienThiHoaDonController = function (
       return;
     }
 
-    console.log("idKhachHang", $scope.idKhachHang);
-    console.log("idDonHang", hang.hoaDonId);
-
     if (!$scope.idKhachHang) {
       console.error("Giá trị idKhachHang không hợp lệ");
       return;
@@ -361,5 +358,10 @@ window.hienThiHoaDonController = function (
         }, 1000);
         // Xử lý lỗi nếu có
       });
+  };
+
+  $scope.hienThiHoaDonTimeLine = function (hang) {
+    $rootScope.hangg = hang.hoaDonId;
+    console.log("sao day", $rootScope.hangg);
   };
 };

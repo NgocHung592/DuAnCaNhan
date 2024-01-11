@@ -4,21 +4,21 @@
       <div class="content-bodyCart">
         <div class="container">
           <div class="row">
-            <div class="col-md-4 col-sm-12 col-xs-12 sidebarCart-sticky">
+            <div class="col-md-3 col-sm-12 col-xs-12 sidebarCart-sticky">
               <div class="mainCart-sidebar wrap-order-summary">
                 <div class="order-summary-block">
                   <form id="cartformpage">
                     <div class="header-wrap">
                       <div class="image-wrap">
                         <div class="row">
-                          <div class="col-md-4">
+                          <div class="col-md-5">
                             <div class="row">
                               <div class="ms-4 mb-5">
                                 <div class="uploadfile">
                                   <label for="product-image">
                                     <i
                                       ng-if="!list.anhDaiDien"
-                                      style="font-size: 80px"
+                                      style="font-size: 70px"
                                       class="fas fa-user-circle"
                                       aria-hidden="true"
                                     ></i>
@@ -42,10 +42,9 @@
                             </div>
                           </div>
 
-                          <div class="col-md-8">
+                          <div class="col-md-7">
                             <div class="text-header">
-                              <p>Xin chào,</p>
-                              <p class="name">{{list.hoTen}}</p>
+                              <p>Xin chào, {{list.hoTen}}</p>
                             </div>
                           </div>
                         </div>
@@ -365,8 +364,8 @@
 </main>
 <style>
   .table_img {
-    width: 80px; /* Đặt chiều rộng mong muốn */
-    height: 80px; /* Đặt chiều cao mong muốn, nên giữ chiều rộng và chiều cao bằng nhau */
+    width: 70px; /* Đặt chiều rộng mong muốn */
+    height: 70px; /* Đặt chiều cao mong muốn, nên giữ chiều rộng và chiều cao bằng nhau */
     border-radius: 80%;
     object-fit: cover; /* Tùy chọn, giữ tỷ lệ khung hình khi ảnh không phải là hình vuông */
   }

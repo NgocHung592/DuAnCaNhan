@@ -10,19 +10,6 @@ window.thanhToanController = function (
 ) {
   $scope.hoaDonThanhToan = {
     idKhachHang: "",
-    tenKhachHang: "Khách lẻ",
-    soDienThoaiKhachHang: "",
-    diaChiKhachHang: "",
-    diaChiCuThe: "",
-    tinhThanhPho: "",
-    quanHuyen: "",
-    phuongXa: "",
-    tongTien: "",
-    ngayThanhToan: new Date(),
-    trangThai: 1,
-  };
-  $scope.hoaDonThanhToan = {
-    idKhachHang: "",
     tenKhachHang: "",
     soDienThoaiKhachHang: "",
     diaChiKhachHang: "",
@@ -57,8 +44,6 @@ window.thanhToanController = function (
   let diaChiMacDinh = "";
   detailKhachHang($scope.idKhachHang).then(function (detailKhachHang) {
     $scope.hoaDonThanhToan.idKhachHang = detailKhachHang.id;
-    $scope.hoaDonThanhToan.tenKhachHang = detailKhachHang.hoTen;
-    $scope.hoaDonThanhToan.soDienThoaiKhachHang = detailKhachHang.soDienThoai;
   });
   detailDiaChi($scope.idKhachHang).then(function (detailDiaChi) {
     if (detailDiaChi) {
@@ -66,7 +51,8 @@ window.thanhToanController = function (
         return diaChi.diaChiMacDinh === true;
       });
     }
-
+    $scope.hoaDonThanhToan.tenKhachHang = diaChiMacDinh.tenKhachHang;
+    $scope.hoaDonThanhToan.soDienThoaiKhachHang = diaChiMacDinh.soDienThoai;
     $scope.hoaDonThanhToan.diaChiCuThe = diaChiMacDinh.diaChiCuThe;
     $scope.hoaDonThanhToan.tinhThanhPho = diaChiMacDinh.tinhThanhPho;
     $scope.hoaDonThanhToan.quanHuyen = diaChiMacDinh.quanHuyen;
@@ -118,6 +104,83 @@ window.thanhToanController = function (
     });
   $scope.listHoaDon = [];
   $scope.formHoaDonChiTiet = {};
+  // error check ma giam gia
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  function showError(message) {
+    $scope.errorProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = true;
+  }
+  function showSuccess(message) {
+    $scope.successProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = false;
+  }
+  $scope.selectTab = function (tab, id, ma) {
+    $scope.formHoaDonChiTiet.idHoaDon = id;
+    $scope.maHoaDon = ma;
+    $scope.selectedTab = tab;
+    $scope.addSanPham = true;
+    $scope.getHoaDonChiTiet();
+  };
+
+  $scope.isSelectedTab = function (tab) {
+    return tab === $scope.selectedTab;
+  };
+
+  // hien thi ma giam gia
+  $scope.getMaGiamGia = function () {
+    $http.get(magiamgiaAPI + "/trang-thai").then(function (response) {
+      $scope.listMaGiamGia = response?.data.content;
+      $scope.listMaGiamGia.forEach((maGiamGia) => {
+        $http
+          .get(
+            maGiamGiaChiTietAPI +
+              "/hien-thi/" +
+              maGiamGia.id +
+              "?pageNo=" +
+              $scope.currentPage
+          )
+          .then(function (response) {
+            if (response.status == 200) {
+              $scope.listMaGiamGiaChiTiet = response?.data.content;
+              maGiamGia.soLuong =
+                maGiamGia.soLuong - $scope.listMaGiamGiaChiTiet.length;
+            }
+          });
+      });
+    });
+  };
+  $scope.getMaGiamGia();
   //thanh toan
   $scope.addHoaDon = function (event) {
     $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
@@ -161,6 +224,19 @@ window.thanhToanController = function (
         //     console.log("Xóa so luong thanh cong");
         //   });
         //console.log($scope.formHoaDonChiTiet);
+
+        if ($scope.maGiamGiaId === undefined) {
+          return;
+        } else {
+          $scope.addMaGiamGia = {
+            tongTien: $scope.tienHang,
+            tongTienSauKhiGiam: $scope.tongTien,
+            hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+            maGiamGiaId: $scope.maGiamGiaId,
+          };
+          return $http.post(maGiamGiaChiTietAPI + "/add", $scope.addMaGiamGia);
+        }
+
         $http
           .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)
           .then(function () {
@@ -179,6 +255,7 @@ window.thanhToanController = function (
         $location.path("/don-hang");
       }, $scope.gioHangList.length * 3);
     });
+    //add ma giam gia
   };
 
   $scope.listHoaDon = [];
@@ -217,7 +294,7 @@ window.thanhToanController = function (
 
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  $scope.customIndex = 0;
+
   $scope.detailKhachHang = {
     id: "",
     hinhAnh: "",
@@ -245,30 +322,6 @@ window.thanhToanController = function (
     tenQuanHuyen: "",
     tenPhuongXa: "",
   };
-
-  $scope.getMaGiamGia = function () {
-    $http.get(magiamgiaAPI + "/trang-thai").then(function (response) {
-      $scope.listMaGiamGia = response?.data.content;
-      $scope.listMaGiamGia.forEach((maGiamGia) => {
-        $http
-          .get(
-            maGiamGiaChiTietAPI +
-              "/hien-thi/" +
-              maGiamGia.id +
-              "?pageNo=" +
-              $scope.currentPage
-          )
-          .then(function (response) {
-            if (response.status == 200) {
-              $scope.listMaGiamGiaChiTiet = response?.data.content;
-              maGiamGia.soLuong =
-                maGiamGia.soLuong - $scope.listMaGiamGiaChiTiet.length;
-            }
-          });
-      });
-    });
-  };
-  $scope.getMaGiamGia();
 
   $scope.getCity = function () {
     const api = api_giaoHang + "?depth=1";
@@ -486,14 +539,7 @@ window.thanhToanController = function (
       }
     }
   };
-  $scope.getKhachHangByTrangThai = function (e) {
-    e.preventDefault();
-    $http
-      .get(khachHangAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-      .then(function (response) {
-        $scope.listKhachHang = response?.data.content;
-      });
-  };
+
   function detailKhachHang(idKhachHang) {
     return $http
       .get(khachHangAPI + "/detail/" + idKhachHang)

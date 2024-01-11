@@ -4,6 +4,7 @@ import com.example.demo.entity.HoaDon;
 import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
+import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.KhachHangRepository;
@@ -37,6 +38,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<DonHangKhachHangReponse> getAll(UUID id) {
         return hoaDonReponsitory.getDonHangKhachHang(id);
+    }
+
+    @Override
+    public List<HienThiHoaDonReponse> getHienThi(UUID idKhachHang, UUID idHoaDon) {
+        return hoaDonReponsitory.getDetailDonHangKhachHang(idKhachHang,idHoaDon);
     }
 
     @Override
