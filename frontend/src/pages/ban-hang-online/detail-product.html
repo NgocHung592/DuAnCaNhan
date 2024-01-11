@@ -11,8 +11,8 @@
                   <div class="carousel-inner">
                     <div class="carousel-item" ng-class="{'active': $index===0}" data-bs-interval="3000"
                       ng-repeat="hinhAnh in sanPhamChiTiet.duongDan">
-                      <img ng-if="!showSPCT" src="../../../assets/anh-san-pham/{{hinhAnh}}" class="d-block w-100" />
-                      <img ng-if="showSPCT" src="../../../assets/anh-san-pham/{{sanPhamCT.duongDan}}"
+                      <img ng-if="!showSPCT" ng-src="../../../assets/anh-san-pham/{{hinhAnh}}" class="d-block w-100" />
+                      <img ng-if="showSPCT" ng-src="../../../assets/anh-san-pham/{{sanPhamCT.duongDan}}"
                         class="d-block w-100" />
                     </div>
                   </div>
@@ -53,13 +53,14 @@
                     </div>
                     <div ng-if="!showSPCT" class="product-price" id="price-preview">
                       <span class="pro-price"
-                        ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}} ₫ -
-                        {{sanPhamChiTiet.giaMax | number}} ₫</span>
+                        ng-if="sanPhamChiTiet.giaMax!=sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}} VND -
+                        {{sanPhamChiTiet.giaMax | number}} VND</span>
                       <span class="pro-price"
-                        ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}} ₫</span>
+                        ng-if="sanPhamChiTiet.giaMax==sanPhamChiTiet.giaMin">{{sanPhamChiTiet.giaMin | number}}
+                        VND</span>
                     </div>
                     <div ng-if="showSPCT" class="product-price" id="price-preview">
-                      <span class="pro-price">{{sanPhamCT.donGia | number}} ₫</span>
+                      <span class="pro-price">{{sanPhamCT.donGia | number}} VND</span>
                     </div>
                     <div class="select-swatch clearfix">
                       <div class="swatch">

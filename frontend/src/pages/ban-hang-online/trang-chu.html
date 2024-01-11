@@ -52,7 +52,7 @@
                                                             data-bs-interval="2000"
                                                             ng-repeat="hinhAnh in topSanPham.duongDan">
                                                             <a href="#/detail-product/{{topSanPham.idSanPham}}">
-                                                                <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                                                                <img ng-src="../../../assets/anh-san-pham/{{hinhAnh}}"
                                                                     class="d-block w-100" alt="...">
                                                                 <div
                                                                     class="prod-img second-image hovered-img hidden-xs">
@@ -77,10 +77,10 @@
                                     </h3>
                                     <p class="proloop--price">
                                         <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
-                                            class="price">{{topSanPham.giaMin | number}} ₫ - {{topSanPham.giaMax |
-                                            number}} ₫</span>
+                                            class="price">{{topSanPham.giaMin | number}} VND - {{topSanPham.giaMax |
+                                            number}} VND</span>
                                         <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
-                                            class="price">{{topSanPham.giaMin | number}} ₫</span>
+                                            class="price">{{topSanPham.giaMin | number}} VND</span>
 
                                     </p>
                                 </div>

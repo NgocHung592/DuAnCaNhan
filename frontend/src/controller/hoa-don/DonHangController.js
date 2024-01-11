@@ -1,11 +1,22 @@
 window.DonHangController = function ($http, $scope, $routeParams) {
+  const toastLiveExample = document.getElementById("liveToast");
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
-  $scope.listHoaDonChiTiet = [];
+  $scope.sizes = [];
+  $scope.colors = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.visiblePages = [];
   $scope.maxVisiblePages = 3;
+  $scope.totalPages = [];
+  $scope.listSanPhamChiTiet = [];
+  $scope.listHoaDonChiTiet = [];
+  $scope.totalPagesHDCT = [];
+  $scope.currentPageHDCT = 0;
+  $scope.customIndexHDCT = 0;
+  $scope.customIndex = 0;
+  $scope.tienHang = 0;
   $scope.detailHoaDon = {
     id: "",
     ma: "",
@@ -14,6 +25,53 @@ window.DonHangController = function ($http, $scope, $routeParams) {
     loaiHoaDon: "",
     trangThai: Number,
   };
+  $scope.formHoaDonChiTiet = {
+    idHoaDon: "",
+    idSanPhamChiTiet: "",
+    soLuong: 1,
+    donGia: "",
+    thanhTien: "",
+  };
+  $scope.successProgress = function () {
+    let elem = document.getElementById("success");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  $scope.errorProgress = function () {
+    let elem = document.getElementById("error");
+    let width = 100;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+      if (width <= 0) {
+        clearInterval(id);
+      } else {
+        width--;
+        elem.style.width = width + "%";
+      }
+    }
+  };
+  function showError(message) {
+    $scope.errorProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = true;
+  }
+  function showSuccess(message) {
+    $scope.successProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = false;
+  }
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
@@ -51,21 +109,6 @@ window.DonHangController = function ($http, $scope, $routeParams) {
       $scope.totalPages = new Array(response.data.totalPages);
       $scope.visiblePages = $scope.getVisiblePages();
     });
-    $http
-      .get(
-        hoaDonChiTietAPI +
-          "/detail/" +
-          $routeParams.id +
-          "&pageNo=?" +
-          $scope.currentPage
-      )
-      .then(function (response) {
-        $scope.listHoaDonChiTiet = response?.data.content;
-        console.log($scope.listHoaDonChiTiet);
-        $scope.customIndex = $scope.currentPage * response.data.size;
-        $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = $scope.getVisiblePages();
-      });
   };
   //detai hoa don
   $scope.getData();
@@ -74,8 +117,268 @@ window.DonHangController = function ($http, $scope, $routeParams) {
       $scope.detailHoaDon = response.data;
     }
   });
-
+  $scope.getHoaDonChiTiet = function () {
+    $http
+      .get(
+        hoaDonChiTietAPI +
+          "/detail/" +
+          $routeParams.id +
+          "?pageNo=" +
+          $scope.currentPageHDCT
+      )
+      .then(function (response) {
+        $scope.listHoaDonChiTiet = response?.data.content;
+        console.log($scope.listHoaDonChiTiet);
+        $scope.customIndexHDCT = $scope.currentPageHDCT * response.data.size;
+        $scope.totalPagesHDCT = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+        $scope.tienHang = $scope.calculateTotal();
+        $scope.tongTien = $scope.calculateTotal();
+      });
+  };
+  $scope.getHoaDonChiTiet();
   //update hoa don
+  $scope.changePage = function (index) {
+    if (index >= 0 && index < $scope.totalPages.length) {
+      $scope.currentPage = index;
+      if ($scope.selectOption !== undefined) {
+        $scope.loc();
+        return;
+      }
+      if ($scope.searchKeyword !== undefined) {
+        $scope.search();
+        return;
+      }
+      $scope.getSanPhamChiTiet();
+    }
+  };
+  $scope.changePageHDCT = function (index) {
+    if ($scope.currentPage < $scope.totalPages.length - 1) {
+      $scope.currentPageHDCT = index;
+      $scope.getHoaDonChiTiet();
+    }
+  };
+
+  $scope.nextPage = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPage < length - 1) {
+      $scope.currentPage++;
+      $scope.getSanPhamChiTiet();
+    }
+  };
+  $scope.nextPageHDCT = function () {
+    let length = $scope.totalPages.length;
+    if ($scope.currentPageHDCT < length - 1) {
+      $scope.currentPageHDCT++;
+      $scope.getHoaDonChiTiet();
+    }
+  };
+
+  $scope.previousPage = function () {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+      $scope.getSanPhamChiTiet();
+    }
+  };
+  $scope.previousPageHDCT = function () {
+    if ($scope.currentPageHDCT > 0) {
+      $scope.currentPageHDCT--;
+      $scope.getHoaDonChiTiet();
+    }
+  };
+  $scope.getSanPhamChiTiet = function () {
+    $http
+      .get(sanPhamChiTietAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .then(function (response) {
+        $scope.listSanPhamChiTiet = response?.data.content;
+        console.log($scope.listSanPhamChiTiet);
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
+  $scope.getSanPhamChiTiet();
+  $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
+    var matchingItem = $scope.listHoaDonChiTiet.find(
+      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
+    );
+    $scope.formHoaDonChiTiet = {
+      idHoaDon: $routeParams.id,
+      idSanPhamChiTiet: idSanPhamChiTiet,
+      donGia: $scope.listSanPhamChiTiet[index].donGia,
+      thanhTien: $scope.listSanPhamChiTiet[index].donGia,
+      soLuong: 1,
+    };
+    console.log($scope.formHoaDonChiTiet);
+    detailChiTietSanPham(idSanPhamChiTiet).then(function (
+      detailSanPhamChiTiet
+    ) {
+      if (matchingItem) {
+        matchingItem.soLuong += 1;
+        if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
+          $scope.hoaDonUpdate = {
+            soLuong: matchingItem.soLuong,
+            thanhTien: matchingItem.soLuong * detailSanPhamChiTiet.donGia,
+          };
+          $http
+            .put(
+              hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
+              $scope.hoaDonUpdate
+            )
+            .then(function () {
+              $scope.getHoaDonChiTiet();
+              $scope.tienHang = $scope.calculateTotal();
+              $scope.tongTien = $scope.calculateTotal();
+              showSuccess("Cập nhật thành công");
+            });
+        } else {
+          showError(
+            "Chỉ còn " +
+              detailSanPhamChiTiet.soLuong +
+              " sản phẩm trong cửa hàng"
+          );
+        }
+      } else {
+        $http
+          .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
+          .then(function () {
+            $scope.getHoaDonChiTiet();
+            $scope.tienHang = $scope.calculateTotal();
+            $scope.tongTien = $scope.calculateTotal();
+            showSuccess("Thêm sản phẩm mới thành công");
+          });
+      }
+    });
+  };
+  $scope.calculateTotal = function () {
+    return $scope.listHoaDonChiTiet
+      .filter((item) => item.maHoaDon === $scope.detailHoaDon.ma)
+      .reduce((total, item) => total + item.thanhTien, 0);
+  };
+  $scope.changeSoLuong = function (idSanPhamChiTiet) {
+    var matchingItem = $scope.listHoaDonChiTiet.find(
+      (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
+    );
+    detailChiTietSanPham(idSanPhamChiTiet).then(function (
+      detailSanPhamChiTiet
+    ) {
+      if (matchingItem.soLuong === null || matchingItem.soLuong === undefined) {
+        showError("Số lượng không được nhỏ hơn 0");
+      } else if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
+        $scope.hoaDonUpdate = {
+          soLuong: matchingItem.soLuong,
+          thanhTien: matchingItem.soLuong * matchingItem.donGia,
+        };
+
+        $http
+          .put(
+            hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
+            $scope.hoaDonUpdate
+          )
+          .then(function () {
+            $scope.getHoaDonChiTiet();
+            $scope.tienHang = $scope.calculateTotal();
+            $scope.tongTien = $scope.calculateTotal();
+            showSuccess("Cập nhật thành công");
+          });
+      } else {
+        showError(
+          "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"
+        );
+      }
+    });
+  };
+  $scope.xoaSanPhamGioHang = function (id) {
+    $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
+      showError("Xóa thành công ");
+      $scope.getHoaDonChiTiet();
+    });
+  };
+  function detailChiTietSanPham(idSanPhamChiTiet) {
+    return $http
+      .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
+      .then(function (response) {
+        return response?.data;
+      })
+      .catch(function (error) {
+        console.error("Error fetching product details:", error);
+        throw error; // Chuyển tiếp lỗi để xử lý ở nơi gọi
+      });
+  }
+  $scope.getMauSac = function () {
+    $http.get(mauSacAPI + "/get-all").then(function (response) {
+      $scope.listMauSac = response?.data;
+    });
+  };
+
+  $scope.getMauSac();
+  $scope.getKichThuoc = function () {
+    $http.get(kichThuocAPI + "/get-all").then(function (response) {
+      $scope.listKichThuoc = response?.data;
+    });
+  };
+
+  $scope.getKichThuoc();
+  function callSearchAPI() {
+    var params = {
+      pageNo: $scope.currentPage,
+      key: $scope.searchKeyword,
+    };
+
+    if ($scope.colors) {
+      params.mauSacIds = $scope.colors;
+    }
+
+    if ($scope.sizes) {
+      params.kichThuocIds = $scope.sizes;
+    }
+    console.log(params);
+    $http
+      .get(sanPhamChiTietAPI + "/search", { params: params })
+      .then(function (response) {
+        $scope.listSanPhamChiTiet = response?.data.content;
+        console.log($scope.listSanPhamChiTiet);
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  }
+
+  $scope.search = function () {
+    callSearchAPI();
+  };
+  $scope.locSanPhamTheoKichThuoc = function (index) {
+    $scope.listKichThuoc[index].checked = !$scope.listKichThuoc[index].checked;
+    const size = $scope.listKichThuoc[index];
+
+    if ($scope.listKichThuoc[index].checked) {
+      $scope.sizes.push(angular.copy(size.id));
+    } else {
+      const indexOfItemToRemove = $scope.sizes.findIndex(
+        (item) => item.id === size.id
+      );
+      if (indexOfItemToRemove === -1) {
+        $scope.sizes.splice(indexOfItemToRemove, 1);
+      }
+    }
+    callSearchAPI();
+  };
+  $scope.locSanPhamTheoMau = function (index) {
+    $scope.listMauSac[index].checked = !$scope.listMauSac[index].checked;
+    const color = $scope.listMauSac[index];
+
+    if ($scope.listMauSac[index].checked) {
+      $scope.colors.push(angular.copy(color.id));
+    } else {
+      const indexOfItemToRemove = $scope.colors.findIndex(
+        (item) => item.id === color.id
+      );
+      if (indexOfItemToRemove === -1) {
+        $scope.colors.splice(indexOfItemToRemove, 1);
+      }
+    }
+    callSearchAPI();
+  };
   $scope.update = function (id) {
     $http
       .put(hoaDonAPI + "/update/" + id, $scope.formHoaDon)

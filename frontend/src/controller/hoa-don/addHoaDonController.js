@@ -1,4 +1,11 @@
-window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
+window.addHoaDonController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $location,
+  $timeout,
+  $window
+) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listHoaDon = [];
@@ -580,20 +587,23 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
                 $scope.addMaGiamGia
               );
             }
-          })
-
-          //add hinh thuc thanh toan
-          .then(function () {
-            $scope.addHinhThucThanhToan = {
-              tenHinhThuc: $scope.searchHinhThucThanhToan,
-              hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-            };
-            return $http.post(
-              hinhThucThanhToanAPI + "/add",
-              $scope.addHinhThucThanhToan
-            );
           });
+
+        //add hinh thuc thanh toan
+        // .then(function () {
+        //   $scope.addHinhThucThanhToan = {
+        //     tenHinhThuc: $scope.searchHinhThucThanhToan,
+        //     hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+        //   };
+        //   return $http.post(
+        //     hinhThucThanhToanAPI + "/add",
+        //     $scope.addHinhThucThanhToan
+        //   );
+        // });
         $location.path("/hoa-don/hien-thi");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
         $scope.show == true
@@ -612,14 +622,18 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
             );
           });
         $location.path("/hoa-don/hien-thi");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        //update hoa don
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-
+          //update so luong
           .then(function () {
             return $http.put(
               sanPhamChiTietAPI + "/update-so-luong",
@@ -627,6 +641,9 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
             );
           });
         $location.path("/hoa-don/hien-thi");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       }
     }
   };
@@ -691,13 +708,13 @@ window.addHoaDonController = function ($http, $scope, $routeParams, $location) {
   };
 
   $scope.getMauSac();
-  $scope.getMauSac = function () {
+  $scope.getKichThuoc = function () {
     $http.get(kichThuocAPI + "/get-all").then(function (response) {
       $scope.listKichThuoc = response?.data;
     });
   };
 
-  $scope.getMauSac();
+  $scope.getKichThuoc();
   function callSearchAPI() {
     var params = {
       pageNo: $scope.currentPage,

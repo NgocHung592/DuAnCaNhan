@@ -25,8 +25,8 @@ public class HoaDonChiTietController {
     }
 
     @GetMapping("detail/{id}")
-    public ResponseEntity detail(@RequestParam(value = "pageNo", defaultValue = "0") String pageNo, @PathVariable("id") UUID id) {
-        return new ResponseEntity(hoaDonChiTietService.detail(Integer.valueOf(pageNo), id), HttpStatus.OK);
+    public ResponseEntity detail(@RequestParam(value = "pageNo", defaultValue = "0") String pageNo, @PathVariable("id") String id) {
+        return new ResponseEntity(hoaDonChiTietService.detail(Integer.valueOf(pageNo), UUID.fromString(id)), HttpStatus.OK);
     }
 
     @GetMapping("tinh-tong/{id}")

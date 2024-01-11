@@ -18,6 +18,7 @@ window.hienThiHoaDonController = function (
       .get(hoaDonAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
         $scope.listHoaDon = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
         $scope.currentPage = Math.min(
           $scope.currentPage,
@@ -327,6 +328,9 @@ window.hienThiHoaDonController = function (
       return;
     }
 
+    console.log("idKhachHang", $scope.idKhachHang);
+    console.log("idDonHang", hang.hoaDonId);
+
     if (!$scope.idKhachHang) {
       console.error("Giá trị idKhachHang không hợp lệ");
       return;
@@ -358,10 +362,5 @@ window.hienThiHoaDonController = function (
         }, 1000);
         // Xử lý lỗi nếu có
       });
-  };
-
-  $scope.hienThiHoaDonTimeLine = function (hang) {
-    $rootScope.hangg = hang.hoaDonId;
-    console.log("sao day", $rootScope.hangg);
   };
 };
