@@ -99,34 +99,19 @@
               <th scope="col">Giảm giá</th>
               <th scope="col">Phí vận chuyển</th>
               <th scope="col">Tổng tiền</th>
-              <th scope="col">Đơn giá</th>
-              <th scope="col">Thành tiền</th>
               <th scope="col">Thao tác</th>
             </tr>
           </thead>
-          <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
+          <tbody>
             <tr>
-              <th scope="row">{{customIndexHDCT+$index+1}}</th>
-              <th scope="row"><img class="table_img" ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
-                  alt="Không có ảnh">
+              <th>{{ tienHang ? (tienHang | number) + ' VNĐ' : '0 VNĐ' }}</th>
+              <th> {{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}</th>
+              <th>{{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' : '0 VNĐ'
+                }}</th>
+              <th>
+                {{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ' }}
               </th>
-              <th scope="row">{{hoaDonChiTiet.tenSanPham}} [
-                {{hoaDonChiTiet.tenMauSac}} -
-                {{hoaDonChiTiet.tenKichThuoc}} ]</th>
-              <th scope="row">
-                <input type="number" ng-model="hoaDonChiTiet.soLuong" id="liveToastBtn"
-                  ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)" class="form-control form-control-sm"
-                  style="width: 100px; height: 30px;" />
-              </th>
-              <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
-              <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
 
-              <th data-toggle="tooltip" data-placement="top" title="Xóa">
-                <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
-                  <i class="fa-solid fa-trash"></i>
-                </a>
-
-              </th>
             </tr>
           </tbody>
         </table>
@@ -135,8 +120,7 @@
         <h4 class="mt-4">DANH SÁCH SẢN PHẨM</h4>
         <hr>
         <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-          <p>{{ tienHang ? (tienHang | number) + ' VNĐ' : '0 VNĐ' }}
-          </p>
+
           <!-- 
           <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#quetQR">
               Quét Qr Code
@@ -208,6 +192,8 @@
               <a class="page-link" ng-click="nextPageHDCT()">>></a>
             </li>
           </ul>
+          <p>Tổng số trang: {{ totalPagesHDCT.length }}</p>
+
         </nav>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <div class="modal fade" id="addSanPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -39,6 +39,7 @@ window.hienThiThongKeController = function ($http, $scope, $routeParams) {
         $scope.chartLabels = $scope.listThongKe.map(function (item) {
           return moment()
             .month(item.thang - 1)
+            .year(2023)
             .format("MM/YYYY");
         });
         var ctx = document.getElementById("myChart").getContext("2d");
