@@ -516,6 +516,31 @@
         </div>
 </main>
 <style>
+    .dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    #dropDownVoucher {
+        position: absolute;
+        background-color: #f0f0f0;
+        z-index: 1000;
+        width: 410px;
+        max-height: 200px;
+        overflow-y: auto;
+        cursor: pointer;
+        /* padding: 0px 0px; */
+    }
+
+    #dropDownVoucher li {
+        /* margin: 10px; */
+        list-style: none;
+    }
+
+    #dropDownVoucher li:hover {
+        background-color: #fff;
+    }
+
     .select-swatch .swatch .select-swap {
         display: flex;
     }

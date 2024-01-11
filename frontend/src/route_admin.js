@@ -180,6 +180,6 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     })
 
     .otherwise({
-      redirectTo: "/admin",
+      redirectTo: "/thong-ke/hien-thi",
     });
 });
