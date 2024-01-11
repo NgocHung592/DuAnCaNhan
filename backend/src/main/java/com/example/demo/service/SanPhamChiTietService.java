@@ -15,7 +15,7 @@ public interface SanPhamChiTietService {
 
     Page<SanPhamChiTietResponse> getSanPhamBanHang(Integer pageNo);
 
-//    Page<SanPhamChiTietResponse> search(Integer pageNo, String key,UUID mauSacId, UUID kichThuocId);
+    Page<SanPhamChiTietResponse> search(Integer pageNo, String key,List<UUID> mauSacIds, List<UUID> kichThuocIds);
 
 
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
@@ -30,7 +30,7 @@ public interface SanPhamChiTietService {
 
     SanPhamChiTiet update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id);
 
-//    SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
+    SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams);
 
 
 

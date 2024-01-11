@@ -63,11 +63,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.getSanPhamBanHangTaiQuay(pageable);
     }
 
-//    @Override
-//    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, UUID mauSacId, UUID kichThuocId) {
-//        Pageable pageable = PageRequest.of(pageNo, 10);
-//        return sanPhamChiTietRepository.search(pageable, key, mauSacId, kichThuocId);
-//    }
+    @Override
+    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, List<UUID> mauSacIds, List<UUID>  kichThuocIds) {
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        return sanPhamChiTietRepository.search(pageable, key, mauSacIds, kichThuocIds);
+    }
 
     @Override
     public List<SanPhamChiTietResponse> getSanPhamTrangChu() {
@@ -182,24 +182,24 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return null;
     }
 
-//    @Override
-//    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
-//        updateSanPhams.forEach(sanPham -> {
-//            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
-//            if (optional.isPresent()) {
-//                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
-//                optional.map(sanPhamChiTiet -> {
-//                    sanPhamChiTiet.setSoLuong(soLuongNew);
-//                    if (soLuongNew == 0) {
-//                        sanPhamChiTiet.setDaXoa(true);
-//                    }
-//                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
-//                }).orElse(null);
-//            }
-//        });
-//
-//        return null;
-//    }
+    @Override
+    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
+        updateSanPhams.forEach(sanPham -> {
+            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
+            if (optional.isPresent()) {
+                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
+                optional.map(sanPhamChiTiet -> {
+                    sanPhamChiTiet.setSoLuong(soLuongNew);
+                    if (soLuongNew == 0) {
+                        sanPhamChiTiet.setDaXoa(true);
+                    }
+                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
+                }).orElse(null);
+            }
+        });
+
+        return null;
+    }
 
     public UUID getIdSanPham(String ten) {
         for (SanPham sanPham : sanPhamRepository.findAll()) {

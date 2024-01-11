@@ -81,118 +81,94 @@
               </div>
             </div>
 
-            <div
-              class="col-9 content-children item-row"
-              ng-init="getLocHoaDon()"
-            >
+            <div class="col-9 content-children item-row">
               <div class="mainCart-sidebar wrap-order-summary">
                 <div class="order-summary-block">
                   <form action="">
                     <div class="order-wrap" id="donhang">
-                      <div
-                        class="nav nav-tabs menu-tab"
-                        id="myTab"
-                        role="tablist"
-                      >
-                        <a
-                          ng-click="selectTabb(null)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(null) }"
-                          class="nav-link active"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab-all"
-                          role="tab"
-                          aria-selected="true"
-                        >
-                          Tất cả
-                        </a>
-                        <a
-                          ng-click="selectTabb(0)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(0) }"
-                          class="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab1"
-                          role="tab"
-                          aria-selected="false"
-                          tabindex="-1"
-                        >
-                          Chờ xác nhận
-                        </a>
-                        <a
-                          ng-click="selectTabb(1)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(1) }"
-                          class="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab5"
-                          role="tab"
-                          aria-selected="false"
-                          tabindex="-1"
-                        >
-                          Đã xác nhận
-                        </a>
-                        <a
-                          ng-click="selectTabb(2)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(2) }"
-                          class="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab2"
-                          role="tab"
-                          aria-selected="false"
-                          tabindex="-1"
-                        >
-                          Đang giao hàng
-                        </a>
-                        <a
-                          ng-click="selectTabb(3)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(3) }"
-                          class="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab3"
-                          role="tab"
-                          aria-selected="false"
-                          tabindex="-1"
-                        >
-                          Hoàn thành
-                        </a>
-                        <a
-                          ng-click="selectTabb(5)"
-                          class="nav-link"
-                          ng-class="{ 'active': isSelectedTabb(5) }"
-                          class="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tab4"
-                          role="tab"
-                          aria-selected="false"
-                          tabindex="-1"
-                        >
-                          Đã hủy
-                        </a>
-                      </div>
                       <br />
 
                       <div>
                         <div class="mainCart-detail">
-                          <div
-                            class="list-pageform-cart"
-                            ng-class="{ 'active': isSelectedTabb(null) || isSelectedTabb(0) || isSelectedTabb(2) || isSelectedTabb(3) || isSelectedTabb(1) || isSelectedTabb(5) }"
-                          >
+                          <div class="list-pageform-cart">
                             <form id="cartformpage">
                               <div class="cart-row">
                                 <div
                                   class="table-cart"
                                   ng-repeat="hang in donHangListMerged"
                                 >
-                                  <!-- Trong template HTML -->
-                                  <span
-                                    ng-class="getStatusColor(hang.trangThai)"
-                                  >
-                                    {{ statusMapping[hang.trangThai] || 'Không
-                                    xác định' }}
-                                  </span>
+                                  <div class="order-details">
+                                    <div class="order-id">
+                                      MÃ ĐƠN HÀNG: {{ hang.hoaDonId }}
+                                    </div>
+                                    <span
+                                      ng-class="getStatusColor(hang.trangThai)"
+                                    >
+                                      {{ statusMapping[hang.trangThai] || 'Không
+                                      xác định' }}
+                                    </span>
+                                  </div>
+
+                                  <hr />
+
+                                  <div class="timeline-container">
+                                    <ul class="timeline">
+                                      <li class="timeline-item">
+                                        <div class="timeline-content">
+                                          <span class="order-label"
+                                            >Đơn hàng đã đặt</span
+                                          ><br />
+                                          <p>
+                                            {{ beautifyDate(hang.ngayThanhToan)
+                                            }}
+                                          </p>
+                                        </div>
+                                      </li>
+                                      <li class="timeline-item">
+                                        <div class="timeline-content">
+                                          <span class="order-label"
+                                            >Đã xác nhận</span
+                                          ><br />
+                                          <p>
+                                            {{ beautifyDate(hang.ngayThanhToan)
+                                            }}
+                                          </p>
+                                        </div>
+                                      </li>
+                                      <li class="timeline-item">
+                                        <div class="timeline-content">
+                                          <span class="order-label"
+                                            >Đang giao hàng</span
+                                          ><br />
+                                          <p>
+                                            {{ beautifyDate(hang.ngayThanhToan)
+                                            }}
+                                          </p>
+                                        </div>
+                                      </li>
+                                      <li class="timeline-item">
+                                        <div class="timeline-content">
+                                          <span class="order-label"
+                                            >Đã nhận hàng</span
+                                          ><br />
+                                          <p>
+                                            {{ beautifyDate(hang.ngayThanhToan)
+                                            }}
+                                          </p>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <hr />
+                                  <br />
+                                  <h3>Địa chỉ nhận hàng</h3>
+                                  <br />
+                                  <h5>{{hang.tenKhachHang}}</h5>
+                                  <span>{{hang.soDienThoai}}</span><br />
+                                  <span>{{hang.diaChi}}</span>
+                                  <br />
+                                  <hr />
+                                  <br />
                                   <div ng-repeat="item in hang.products">
                                     <div
                                       class="media-line-item line-item"
@@ -213,7 +189,7 @@
                                           <h3 class="item--title">
                                             <a
                                               href="#hoa-don-timeline"
-                                              ng-click="hienThiHoaDonTimeLine(item)"
+                                              ng-click="hienThiHoaDonTimeLine(hang)"
                                             >
                                               {{item.tenSanPham}}
                                               {{item.tenChatLieu}}
@@ -288,6 +264,100 @@
   </div>
 </main>
 <style>
+  .timeline-content {
+    text-align: center;
+  }
+  .timeline-content .order-label {
+    display: block;
+    font-size: 18px; /* Đặt kích thước chữ cho span */
+    margin-bottom: 2px;
+  }
+
+  .timeline-content span {
+    margin-bottom: 3px; /* Khoảng cách giữa span và đoạn p */
+  }
+  .order-details {
+    display: flex;
+    align-items: center;
+  }
+
+  .order-id,
+  .status {
+    margin-right: 0px; /* Khoảng cách giữa mã đơn hàng và trạng thái */
+  }
+
+  .status {
+    font-weight: bold; /* In đậm trạng thái */
+    /* Thêm các thuộc tính CSS khác tùy thuộc vào yêu cầu thiết kế của bạn */
+  }
+  .timeline-container {
+    overflow-x: hidden;
+    white-space: nowrap;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .timeline {
+    display: flex;
+    list-style: none;
+    padding: 20px;
+    position: relative;
+    overflow: hidden; /* Ẩn phần thừa nằm ngoài giới hạn */
+  }
+
+  .timeline::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: #000000;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 70%, 0% 100%);
+  }
+
+  .timeline::before {
+    display: none;
+  }
+
+  .timeline-item {
+    position: relative;
+    width: 400px;
+    margin-right: 24px;
+    padding: 15px;
+    background: #3dd014;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 3;
+    font-size: 14px;
+    color: #333333;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #ffe600;
+  }
+
+  .timeline-item::after {
+    display: none;
+  }
+
+  .timeline-item:hover {
+    transform: translateY(-5px);
+    background: #fff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  }
+
   .table_img {
     width: 70px; /* Đặt chiều rộng mong muốn */
     height: 70px; /* Đặt chiều cao mong muốn, nên giữ chiều rộng và chiều cao bằng nhau */
