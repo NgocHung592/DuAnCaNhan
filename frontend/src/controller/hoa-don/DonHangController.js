@@ -1,4 +1,11 @@
-window.DonHangController = function ($http, $scope, $routeParams) {
+window.DonHangController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $httpParamSerializerJQLike,
+  $timeout,
+  $window
+) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listHoaDon = [];
@@ -115,6 +122,8 @@ window.DonHangController = function ($http, $scope, $routeParams) {
   $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
       $scope.detailHoaDon = response.data;
+      $scope.vai = $scope.detailHoaDon.khachHang.id;
+      console.log($scope.vai);
     }
   });
   $scope.getHoaDonChiTiet = function () {
@@ -385,8 +394,65 @@ window.DonHangController = function ($http, $scope, $routeParams) {
       .then(function (response) {
         $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
           $scope.listHoaDon = response.data;
+
           alert(response.data);
         });
+      });
+  };
+  $scope.daXacNhan = function (detailHoaDon) {
+    $scope.hoaDonId = $routeParams.id;
+
+    console.log("Id hoadon", $scope.hoaDonId);
+    console.log("Id hoadon", $scope.vai);
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-xac-nhan", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+      });
+  };
+  $scope.xacNhanDonHang = function (detailHoaDon) {
+    $scope.hoaDonId = $routeParams.id;
+
+    console.log("Id hoadon", $scope.hoaDonId);
+    console.log("Id hoadon", $scope.vai);
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/xac-nhan-don-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       });
   };
 };
