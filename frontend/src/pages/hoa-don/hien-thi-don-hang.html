@@ -5,16 +5,14 @@
         <div class="card-body d-flex">
           <div class="timeline-container">
             <ul class="timeline">
-              <li class="timeline-item"
-                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
-                <div class="timeline-content">
+              <li class="timeline-item">
+                <div class=" timeline-content">
                   <h3>Tạo đơn hàng</h3>
                   <p style="align-items: center;">{{detailHoaDon.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}</p>
                 </div>
               </li>
-              <li class="timeline-item"
-                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
-                <div class="timeline-content">
+              <li class="timeline-item">
+                <div class=" timeline-content">
                   <h3>Chờ xác nhận</h3>
                 </div>
               </li>
@@ -109,7 +107,7 @@
               <th>{{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' : '0 VNĐ'
                 }}</th>
               <th>
-                {{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ' }}
+                {{ detailHoaDon.tongTien ? (detailHoaDon.tongTien | number) + ' VNĐ' : '0 VNĐ' }}
               </th>
 
             </tr>
@@ -125,7 +123,8 @@
           <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#quetQR">
               Quét Qr Code
           </button> -->
-          <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSanPham">
+          <button ng-if="detailHoaDon.trangThai==0" class="btn btn-primary mb-3" data-bs-toggle="modal"
+            data-bs-target="#addSanPham">
             Thêm Sản Phẩm
           </button>
         </div>
@@ -138,7 +137,8 @@
               <th scope="col">Số lượng</th>
               <th scope="col">Đơn giá</th>
               <th scope="col">Thành tiền</th>
-              <th scope="col">Thao tác</th>
+              <th scope="col" ng-if="detailHoaDon.trangThai==0">Thao tác</th>
+
             </tr>
           </thead>
           <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
@@ -151,19 +151,24 @@
                 {{hoaDonChiTiet.tenMauSac}} -
                 {{hoaDonChiTiet.tenKichThuoc}} ]</th>
               <th scope="row">
-                <input type="number" ng-model="hoaDonChiTiet.soLuong" id="liveToastBtn"
-                  ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)" class="form-control form-control-sm"
-                  style="width: 100px; height: 30px;" />
+                <input ng-if="detailHoaDon.trangThai==0" type="number" ng-model="hoaDonChiTiet.soLuong"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                  class="form-control form-control-sm" style="width: 100px; height: 30px;" />
+                <input ng-if="detailHoaDon.trangThai!=0" disabled type="number" ng-model="hoaDonChiTiet.soLuong"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                  class="form-control form-control-sm" style="width: 100px; height: 30px;" />
               </th>
               <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
               <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
 
-              <th data-toggle="tooltip" data-placement="top" title="Xóa">
+              <th ng-if="detailHoaDon.trangThai==0" data-toggle="tooltip" data-placement="top" title="Xóa">
                 <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
                   <i class="fa-solid fa-trash"></i>
                 </a>
 
+
               </th>
+
             </tr>
           </tbody>
         </table>

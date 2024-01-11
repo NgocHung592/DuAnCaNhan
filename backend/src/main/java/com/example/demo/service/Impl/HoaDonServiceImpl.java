@@ -97,7 +97,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
-
+                hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 return hoaDonReponsitory.save(hoaDon);
             }).orElse(null);
@@ -109,6 +109,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+                hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
                 return hoaDonReponsitory.save(hoaDon);
             }).orElse(null);

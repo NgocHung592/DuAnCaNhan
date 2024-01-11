@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface HoaDonChiTietService {
 
-    List<HoaDonChiTiet> getByMa( String ma);
+    List<HoaDonChiTiet> getByMa( UUID hoaDonId);
 
     Page<HoaDonChiTietReponse> getGioHang(Integer pageNo, String ma);
 

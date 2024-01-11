@@ -1,14 +1,14 @@
 window.hienThiHoaDonChiTiet = function ($http, $scope, $routeParams) {
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
-  $scope.formHoaDon = {
-    id: "",
-    ma: "",
-    tenKhachHang: "",
-    ngayDatHang: "",
-    loaiHoaDon: "",
-    trangThai: Number,
-  };
+  // $scope.formHoaDon = {
+  //   id: "",
+  //   ma: "",
+  //   tenKhachHang: "",
+  //   ngayDatHang: "",
+  //   loaiHoaDon: "",
+  //   trangThai: Number,
+  // };
   $scope.getData = function () {
     $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
       $scope.listHoaDon = response.data;

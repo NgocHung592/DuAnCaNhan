@@ -31,7 +31,7 @@ public class HoaDonChiTietController {
 
     @GetMapping("tinh-tong/{id}")
     public ResponseEntity hienThi(@PathVariable("id") String ma) {
-        return new ResponseEntity(hoaDonChiTietService.getByMa(ma),HttpStatus.OK);
+        return new ResponseEntity(hoaDonChiTietService.getByMa(UUID.fromString(ma)),HttpStatus.OK);
     }
 
     @PostMapping("add")

@@ -115,6 +115,7 @@ window.DonHangController = function ($http, $scope, $routeParams) {
   $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
       $scope.detailHoaDon = response.data;
+      console.log($scope.detailHoaDon);
     }
   });
   $scope.getHoaDonChiTiet = function () {

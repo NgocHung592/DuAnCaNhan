@@ -423,7 +423,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="dropdown-container col-md-11 mb-4">
-                                            <input type="text" ng-model="searchKeyword"
+                                            <input type="text" ng-model="searchVoucher"
                                                 placeholder="Tìm kiếm theo mã, tên" ng-click="toggleVoucher($event)"
                                                 class="form-control" />
                                             <ul ng-show="showDropDownVoucher" id="dropDownVoucher">
@@ -530,6 +530,26 @@
         overflow-y: auto;
         cursor: pointer;
         /* padding: 0px 0px; */
+    }
+
+    #dropDown {
+        position: absolute;
+        background-color: #f0f0f0;
+        z-index: 1000;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        cursor: pointer;
+        padding: 10px 5px;
+    }
+
+    #dropDown li {
+        /* margin: 10px; */
+        list-style: none;
+    }
+
+    #dropDown li:hover {
+        background-color: #fff;
     }
 
     #dropDownVoucher li {

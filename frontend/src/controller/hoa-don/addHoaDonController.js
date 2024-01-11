@@ -83,6 +83,7 @@ window.addHoaDonController = function (
     quanHuyen: "",
     phuongXa: "",
     tongTien: "",
+    phiVanChuyen: 0,
     ngayThanhToan: new Date(),
     trangThai: 1,
   };
@@ -260,8 +261,7 @@ window.addHoaDonController = function (
 
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
         $scope.visiblePages = getVisiblePages();
-        $scope.tienHang = $scope.calculateTotal();
-        $scope.tongTien = $scope.calculateTotal();
+        $scope.calculateTotal();
       });
   };
   function detailChiTietSanPham(idSanPhamChiTiet) {
@@ -305,7 +305,7 @@ window.addHoaDonController = function (
             .then(function () {
               $scope.getHoaDonChiTiet();
               $scope.tienHang = $scope.calculateTotal();
-              $scope.tongTien = $scope.calculateTotal();
+              // $scope.tongTien = $scope.calculateTotal();
               showSuccess("Cập nhật thành công");
             });
         } else {
@@ -329,9 +329,17 @@ window.addHoaDonController = function (
   };
 
   $scope.calculateTotal = function () {
-    return $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.maHoaDon)
-      .reduce((total, item) => total + item.thanhTien, 0);
+    $http
+      .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
+      .then(function (response) {
+        $scope.listHoaDonChiTietTinhTong = response.data;
+        $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+          (total, item) => total + item.thanhTien,
+          0
+        );
+        $scope.tongTien =
+          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+      });
   };
 
   $scope.changeSoLuong = function (idSanPhamChiTiet) {
@@ -356,8 +364,7 @@ window.addHoaDonController = function (
           )
           .then(function () {
             $scope.getHoaDonChiTiet();
-            $scope.tienHang = $scope.calculateTotal();
-            $scope.tongTien = $scope.calculateTotal();
+            $scope.calculateTotal();
             showSuccess("Cập nhật thành công");
           });
       } else {
@@ -489,6 +496,7 @@ window.addHoaDonController = function (
                   .then(function (response) {
                     console.log(response.data);
                     $scope.phiVanChuyen = response.data.data.total;
+                    $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
                     $scope.tongTien =
                       $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
                   });
@@ -513,6 +521,7 @@ window.addHoaDonController = function (
     } else if ($scope.tienHang < option.giaTriDonToiThieu) {
       showError("Chưa đủ giá trị đơn tối thiểu");
     } else {
+      $scope.searchVoucher = option.ma;
       if (option.hinhThucGiam === 1) {
         $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
         $scope.tongTien =
@@ -552,6 +561,8 @@ window.addHoaDonController = function (
       $scope.hoaDonThanhToan.tinhThanhPho;
     if ($scope.formHoaDonChiTiet.idHoaDon === "") {
       showError("Chọn 1 hóa đơn để thanh toán");
+    } else if ($scope.listHoaDonChiTiet.length === 0) {
+      showError("Hóa đơn có ít nhất 1 sản phẩm để thanh toán");
     } else {
       if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
         $scope.hoaDonThanhToan.trangThai = 3;
@@ -620,6 +631,23 @@ window.addHoaDonController = function (
               sanPhamChiTietAPI + "/update-so-luong",
               $scope.listHoaDonChiTiet
             );
+          })
+          //add ma giam gia
+          .then(function () {
+            if ($scope.maGiamGiaId === undefined) {
+              return;
+            } else {
+              $scope.addMaGiamGia = {
+                tongTien: $scope.tienHang,
+                tongTienSauKhiGiam: $scope.tongTien,
+                hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+                maGiamGiaId: $scope.maGiamGiaId,
+              };
+              return $http.post(
+                maGiamGiaChiTietAPI + "/add",
+                $scope.addMaGiamGia
+              );
+            }
           });
         $location.path("/hoa-don/hien-thi");
         $timeout(function () {
@@ -639,6 +667,23 @@ window.addHoaDonController = function (
               sanPhamChiTietAPI + "/update-so-luong",
               $scope.listHoaDonChiTiet
             );
+          })
+          //add ma giam gia
+          .then(function () {
+            if ($scope.maGiamGiaId === undefined) {
+              return;
+            } else {
+              $scope.addMaGiamGia = {
+                tongTien: $scope.tienHang,
+                tongTienSauKhiGiam: $scope.tongTien,
+                hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+                maGiamGiaId: $scope.maGiamGiaId,
+              };
+              return $http.post(
+                maGiamGiaChiTietAPI + "/add",
+                $scope.addMaGiamGia
+              );
+            }
           });
         $location.path("/hoa-don/hien-thi");
         $timeout(function () {
@@ -697,6 +742,63 @@ window.addHoaDonController = function (
         ", " +
         $scope.hoaDonThanhToan.tinhThanhPho;
     });
+    var headers = {
+      "Content-Type": "application/json",
+      token: "6b9dba70-8881-11ee-af43-6ead57e9219a",
+      shop_id: "4714252",
+    };
+
+    var config = {
+      headers: headers,
+    };
+    $http
+      .get(APIDistrict, config)
+      .then(function (response) {
+        $scope.districts = response.data.data;
+        var foundDistrict = $scope.districts.find(function (district) {
+          return district.DistrictName === $scope.hoaDonThanhToan.quanHuyen;
+        });
+
+        if (foundDistrict) {
+          var district_id = foundDistrict.DistrictID;
+
+          $http
+            .get(APIWard + "?district_id=" + district_id, config)
+            .then(function (response) {
+              $scope.wards = response.data.data;
+
+              var foundWard = $scope.wards.find(function (ward) {
+                return ward.WardName === $scope.hoaDonThanhToan.phuongXa;
+              });
+
+              if (foundWard) {
+                var wardCode = foundWard.WardCode;
+
+                var requestData = {
+                  service_type_id: 2,
+                  to_district_id: district_id,
+                  to_ward_code: wardCode,
+                  height: 20,
+                  length: 30,
+                  weight: 3000,
+                  width: 40,
+                };
+
+                $http
+                  .post(APIPhiVanChuyen, requestData, config)
+                  .then(function (response) {
+                    $scope.phiVanChuyen = response.data.data.total;
+                    $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
+                    $scope.tongTien =
+                      $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+                  });
+              }
+            });
+        }
+      })
+      .catch(function (error) {
+        console.error("An error occurred:", error);
+      });
   };
   $scope.hinhThucThanhToan = function (hinhThuc) {
     $scope.searchHinhThucThanhToan = hinhThuc;

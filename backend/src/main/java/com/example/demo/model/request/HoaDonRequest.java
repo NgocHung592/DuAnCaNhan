@@ -18,6 +18,8 @@ public class HoaDonRequest {
 
     private String soDienThoaiKhachHang;
 
+    private Double phiVanChuyen;
+
     private UUID idKhachHang;
 
     private Timestamp ngayThanhToan;

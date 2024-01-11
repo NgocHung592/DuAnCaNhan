@@ -49,5 +49,5 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query(value = """
             select * from hoa_don_chi_tiet where hoa_don_id=?1
             """, nativeQuery = true)
-    List<HoaDonChiTiet> getByMa(String ma);
+    List<HoaDonChiTiet> getByMa(UUID hoaDonId);
 }

@@ -30,8 +30,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
 
     @Override
-    public List<HoaDonChiTiet> getByMa(String ma) {
-        return hoaDonChiTietRepository.getByMa(ma);
+    public List<HoaDonChiTiet> getByMa(UUID hoaDonId) {
+        return hoaDonChiTietRepository.getByMa(hoaDonId);
     }
 
     @Override
