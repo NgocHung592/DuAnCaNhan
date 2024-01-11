@@ -4,9 +4,10 @@ import com.example.demo.model.response.ThongKeReponse;
 
 import java.util.List;
 
+
 public interface ThongKeService {
-    List<ThongKeReponse> getTongDoanhThu();
-    List<ThongKeReponse> getTongDonHang();
-    List<ThongKeReponse> getTongSanPham();
-    List<ThongKeReponse> getTongKhachHang();
+    List<ThongKeReponse> getThongKeTongHop();
+//    List<ThongKeReponse> getTongDonHang();
+//    List<ThongKeReponse> getTongSanPham();
+//    List<ThongKeReponse> getTongKhachHang();
 }

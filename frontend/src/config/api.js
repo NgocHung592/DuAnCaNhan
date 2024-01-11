@@ -2,6 +2,8 @@ let url = "http://localhost:8080";
 
 window.sanPhamAPI = url + "/san-pham";
 
+window.thongKeAPI = url + "/thong-ke";
+
 window.chatLieuAPI = url + "/api/v1/chat-lieu";
 
 window.mauSacAPI = url + "/mau-sac";
@@ -13,6 +15,7 @@ window.phongCachAPI = url + "/phong-cach";
 window.hoaTietAPI = url + "/hoa-tiet";
 
 window.coAoAPI = url + "/co-ao";
+
 window.taiKhoanAPI = url + "/accout";
 
 window.tayAoAPI = url + "/tay-ao";
