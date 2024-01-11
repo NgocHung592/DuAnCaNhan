@@ -6,6 +6,7 @@ import com.example.demo.service.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,18 +20,9 @@ public class ThongKeServiceImpl implements ThongKeService {
         return thongKeRepository.getThongKeTongHop();
     }
 
-//    @Override
-//    public List<ThongKeReponse> getTongDonHang() {
-//        return thongKeRepository.getTongDonHang();
-//    }
-//
-//    @Override
-//    public List<ThongKeReponse> getTongSanPham() {
-//        return thongKeRepository.getTongSanPham();
-//    }
-//
-//    @Override
-//    public List<ThongKeReponse> getTongKhachHang() {
-//        return thongKeRepository.getTongKhachHang();
-//    }
+    @Override
+    public List<ThongKeReponse> getThongKeTongHopByDateRange(Date startDate, Date endDate) {
+        return thongKeRepository.getThongKeTongHopByDateRange();
+    }
+
 }

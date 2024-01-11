@@ -14,13 +14,20 @@ public interface ThongKeRepository extends JpaRepository<HoaDon, UUID> {
     SELECT
         MONTH(hd.ngay_thanh_toan) AS thang,
         YEAR(hd.ngay_thanh_toan) AS nam,
-        COUNT(hdct.id) AS tong_san_pham,
-        SUM(hd.tong_tien) AS tong_doanh_thu,
-        COUNT(*) AS tong_don_hang
+        COUNT(DISTINCT hd.id) AS tong_don_hang,
+        SUM(hdct.tong_so_luong) AS tong_san_pham,
+        SUM(hd.tong_tien) AS tong_doanh_thu
     FROM
         hoa_don hd
-    JOIN
-        hoa_don_chi_tiet hdct ON hd.id = hdct.hoa_don_id
+    JOIN (
+        SELECT
+            hoa_don_id,
+            SUM(so_luong) AS tong_so_luong
+        FROM
+            hoa_don_chi_tiet
+        GROUP BY
+            hoa_don_id
+    ) hdct ON hd.id = hdct.hoa_don_id
     
     WHERE
         hd.trang_thai = 3
@@ -29,4 +36,22 @@ public interface ThongKeRepository extends JpaRepository<HoaDon, UUID> {
 """, nativeQuery = true)
     List<ThongKeReponse> getThongKeTongHop();
 
+    @Query(value = """
+        SELECT
+            MONTH(hd.ngay_thanh_toan) AS thang,
+            YEAR(hd.ngay_thanh_toan) AS nam,
+            COUNT(hdct.id) AS tong_san_pham,
+            SUM(hd.tong_tien) AS tong_doanh_thu,
+            COUNT(*) AS tong_don_hang
+        FROM
+            HoaDon hd
+        JOIN
+            HoaDonChiTiet hdct ON hd.id = hdct.hoaDon.id
+        WHERE
+            hd.trangThai = 3
+            AND hd.ngayThanhToan BETWEEN :startDate AND :endDate
+        GROUP BY
+            YEAR(hd.ngay_thanh_toan), MONTH(hd.ngay_thanh_toan)
+    """, nativeQuery = true)
+    List<ThongKeReponse> getThongKeTongHopByDateRange();
 }

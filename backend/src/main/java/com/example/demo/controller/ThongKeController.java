@@ -5,11 +5,11 @@ import com.example.demo.service.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @RestController
@@ -26,19 +26,24 @@ public class ThongKeController {
     public ResponseEntity getTongDoanhThu() {
         return new ResponseEntity(thongKeService.getThongKeTongHop(), HttpStatus.OK);
     }
+    @GetMapping("/hien-thi1")
+    public ResponseEntity getTongDoanhThu2(
+            @RequestParam(name = "startDate") String startDateString,
+            @RequestParam(name = "endDate") String endDateString
+    ) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
 
-//    @GetMapping("/hien-thi2")
-//    public ResponseEntity getTongDonHang() {
-//        return new ResponseEntity(thongKeService.getTongDonHang(), HttpStatus.OK);
-//    }
-//    @GetMapping("/hien-thi3")
-//    public ResponseEntity getTongSanPham() {
-//        return new ResponseEntity(thongKeService.getTongSanPham(), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/hien-thi4")
-//    public ResponseEntity getTongKhachHang() {
-//        return new ResponseEntity(thongKeService.getTongKhachHang(), HttpStatus.OK);
-//    }
+            List<ThongKeReponse> thongKeData = thongKeService.getThongKeTongHopByDateRange(startDate, endDate);
+            return new ResponseEntity(thongKeData, HttpStatus.OK);
+        } catch (ParseException e) {
+            // Xử lý lỗi chuyển đổi ngày tháng
+            e.printStackTrace();
+            return new ResponseEntity("Invalid date format", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+
 
