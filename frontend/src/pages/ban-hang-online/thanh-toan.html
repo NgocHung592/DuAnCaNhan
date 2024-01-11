@@ -132,7 +132,6 @@
 
                           <div class="col-md-1 text-center">
                             <input
-                              
                               class="input-radio"
                               name="payment_method_id"
                               type="radio"
@@ -141,11 +140,9 @@
                             />
                           </div>
                           <div class="col-md-6">
-                            
-
                             <span class="radio-label-primary"
-                              >Ship tận nơi 30,000 VNĐ </span
-                            >
+                              >Ship tận nơi 30,000 VNĐ
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -160,7 +157,6 @@
 
                             <div class="col-md-1 text-center">
                               <input
-                               
                                 class="input-radio"
                                 name="payment_method"
                                 type="radio"
@@ -286,14 +282,18 @@
                             ng-click="selectedVoucher($index,maGiamGia)"
                           >
                             <span> {{maGiamGia.ma}} </span>
-                            <span class="text-end"> {{maGiamGia.tenKM}} </span>
+                            <span style="float: right">
+                              {{maGiamGia.tenKM}}
+                            </span>
                             <br />
                             <span
                               >Giảm: {{ maGiamGia.hinhThucGiam === 0 ?
                               (maGiamGia.giaTriGiam | number) + ' VND' :
                               maGiamGia.giaTriGiam + ' %' }}
                             </span>
-                            <span>Số lượng: {{maGiamGia.soLuong}}</span>
+                            <span style="float: right"
+                              >Số lượng: {{maGiamGia.soLuong}}</span
+                            >
                           </li>
                         </ul>
                       </div>
