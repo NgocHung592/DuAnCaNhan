@@ -268,19 +268,20 @@ window.thanhToanController = function (
   };
 
   $scope.getListHoaDon = function () {
-    $http.get(hoaDonAPI + "/get-list").then(function (response) {
-      $scope.listHoaDon = response.data;
+    $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
+      $scope.listHoaDon = response.data.content;
       var giohang = $scope.gioHangList;
       console.log(giohang);
       for (var i = 0; i < giohang.length; i++) {
         console.log(giohang[i]);
-        var formHoaDonChiTiet = {
+        formHoaDonChiTiet = {
           idHoaDon: $scope.listHoaDon[0].id,
           idSanPhamChiTiet: $scope.gioHangList[i].idSanPhamChiTiet,
           donGia: parseInt($scope.gioHangList[i].donGiaSp),
           thanhTien: parseInt($scope.gioHangList[i].donGia.replace(",", "")),
           soLuong: $scope.gioHangList[i].soLuong,
         };
+        console.log(formHoaDonChiTiet);
         // $http
         //   .put(
         //     sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,

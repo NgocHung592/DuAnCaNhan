@@ -36,6 +36,7 @@ public class HoaDonChiTietController {
 
     @PostMapping("add")
     public HoaDonChiTiet add(@RequestBody HoaDonChiTietRequest hoaDonChiTietRequest) {
+        System.out.println(hoaDonChiTietRequest);
         return hoaDonChiTietService.add(hoaDonChiTietRequest);
     }
 

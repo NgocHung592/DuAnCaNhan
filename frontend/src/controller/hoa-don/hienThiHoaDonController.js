@@ -265,8 +265,8 @@ window.hienThiHoaDonController = function (
       1: "Đơn hàng đã xác nhận thành công",
       2: "Đơn hàng đang giao hàng",
       3: "Đơn hàng đã giao thành công",
-      4: "Đơn hàng giao không thành công",
-      5: "đã hủy",
+      5: "Đơn hàng giao không thành công",
+      4: "đã hủy",
       // Thêm các ánh xạ khác nếu cần
     };
 
@@ -279,9 +279,9 @@ window.hienThiHoaDonController = function (
         return "color-dang-giao-hang";
       } else if (trangThai == 3) {
         return "color-da-giao-thanh-cong";
-      } else if (trangThai == 4) {
-        return "color-giao-khong-thanh-cong";
       } else if (trangThai == 5) {
+        return "color-giao-khong-thanh-cong";
+      } else if (trangThai == 4) {
         return "color-da-huy";
       } else {
         return ""; // Nếu không phù hợp với bất kỳ trạng thái nào khác
@@ -363,5 +363,41 @@ window.hienThiHoaDonController = function (
         }, 1000);
         // Xử lý lỗi nếu có
       });
+  };
+  $scope.daNhanHang = function (hang) {
+    if (!$scope.idKhachHang) {
+      console.error("Giá trị idKhachHang không hợp lệ");
+      return;
+    }
+
+    var idDonHang = hang.hoaDonId;
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.idKhachHang,
+      idDonHang: idDonHang,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-nhan-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+        // Xử lý lỗi nếu có
+      });
+  };
+
+  $scope.hienThiHoaDonTimeLine = function (hang) {
+    $rootScope.hangg = hang.hoaDonId;
+    console.log("sao day", $rootScope.hangg);
   };
 };
