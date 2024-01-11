@@ -26,6 +26,8 @@ public interface HoaDonResponse {
 
     @Value("#{target.ngay_tao}")
     Date getNgayTao();
+//    @Value("#{target.phi_ship}")
+//    String getPhiShip();
 
     @Value("#{target.trang_thai}")
     Integer getTrangThai();

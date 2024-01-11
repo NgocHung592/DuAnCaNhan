@@ -78,6 +78,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Online")
                 .nguoiTao("P")
+//                .phiShip(BigDecimal.valueOf(hoaDon.getPhiShip()))
                 .trangThai(hoaDon.getTrangThai())
                 .build();
         return hoaDonReponsitory.save(hoaDonSave);
@@ -93,6 +94,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
+
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 return hoaDonReponsitory.save(hoaDon);
             }).orElse(null);
