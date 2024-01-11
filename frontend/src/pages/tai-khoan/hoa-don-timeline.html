@@ -246,6 +246,13 @@
                                   >
                                     Hủy đơn hàng
                                   </button>
+
+                                  <button
+                                    ng-click="daNhanHang(hang)"
+                                    ng-if="hang.trangThai == 2"
+                                  >
+                                    Đã nhận được hàng
+                                  </button>
                                 </div>
                               </div>
                             </form>

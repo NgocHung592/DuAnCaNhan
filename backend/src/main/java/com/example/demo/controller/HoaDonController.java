@@ -99,7 +99,35 @@ public class HoaDonController {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 5); // 5 là trạng thái mặc định mới
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 4); // 5 là trạng thái mặc định mới
+
+            return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
+        }
+    }
+    @PostMapping("da-xac-nhan")
+    public ResponseEntity<String> updateTrangThaiDaXacNhan(@RequestParam(name = "idKhachHang") String idKhachHang,
+                                                         @RequestParam(name = "idDonHang") String idDonHang) {
+        try {
+            UUID khachHangId = UUID.fromString(idKhachHang);
+            UUID donHangId = UUID.fromString(idDonHang);
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 2); // 5 là trạng thái mặc định mới
+
+            return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
+        }
+    }
+    @PostMapping("da-nhan-hang")
+    public ResponseEntity<String> updateDonHangThanhCong(@RequestParam(name = "idKhachHang") String idKhachHang,
+                                                         @RequestParam(name = "idDonHang") String idDonHang) {
+        try {
+            UUID khachHangId = UUID.fromString(idKhachHang);
+            UUID donHangId = UUID.fromString(idDonHang);
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 3); // 5 là trạng thái mặc định mới
 
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {

@@ -361,6 +361,37 @@ window.hienThiHoaDonController = function (
         // Xử lý lỗi nếu có
       });
   };
+  $scope.daNhanHang = function (hang) {
+    if (!$scope.idKhachHang) {
+      console.error("Giá trị idKhachHang không hợp lệ");
+      return;
+    }
+
+    var idDonHang = hang.hoaDonId;
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.idKhachHang,
+      idDonHang: idDonHang,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-nhan-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+        // Xử lý lỗi nếu có
+      });
+  };
 
   $scope.hienThiHoaDonTimeLine = function (hang) {
     $rootScope.hangg = hang.hoaDonId;
