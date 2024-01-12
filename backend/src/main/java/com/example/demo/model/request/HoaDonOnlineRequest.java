@@ -26,7 +26,7 @@ public class HoaDonOnlineRequest {
 
     private Timestamp ngayThanhToan;
 
-//    private int phiShip;
+    private int phiShip;
 
     private long tongTien;
 

@@ -15,6 +15,7 @@ window.thanhToanController = function (
   $scope.totalPagesHDCT = [];
   $scope.listMaGiamGia = [];
   $scope.listSanPhamChiTiet = [];
+  $scope.listMaGiamGiaChiTiet = [];
   $scope.listHoaDonChiTiet = [];
   $scope.listKhachHang = [];
   $scope.cityOptions = [];
@@ -235,7 +236,6 @@ window.thanhToanController = function (
 
   //thanh toan
   $scope.addHoaDon = function (event) {
-    $scope.tongTienThanhToan -= $scope.giamGia;
     $scope.randomHoaDon = "HD" + Math.floor(Math.random() * 10000) + 1;
 
     $scope.formHoaDon = {
@@ -256,7 +256,7 @@ window.thanhToanController = function (
       ngayThanhToan: new Date(),
 
       tongTien: $scope.tongTienThanhToan,
-      // phiShip: "30000",
+      phiShip: 30000,
     };
     console.log($scope.formHoaDon);
     $http.post(hoaDonAPI + "/addonline", $scope.formHoaDon).then(function () {
@@ -268,7 +268,19 @@ window.thanhToanController = function (
     $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
       $scope.listHoaDon = response.data.content;
       var giohang = $scope.gioHangList;
-      console.log(giohang);
+      console.log("list hoa don", $scope.listHoaDon);
+      if ($scope.maGiamGiaId === undefined) {
+        return;
+      } else {
+        $scope.addMaGiamGia = {
+          tongTien: $scope.tongGiaTri,
+          tongTienSauKhiGiam: $scope.tongTienThanhToan,
+          hoaDonId: $scope.listHoaDon[0].id,
+          maGiamGiaId: $scope.maGiamGiaId,
+        };
+        console.log("mã giảm giá", $scope.addMaGiamGia);
+        $http.post(maGiamGiaChiTietAPI + "/add", $scope.addMaGiamGia);
+      }
       for (var i = 0; i < giohang.length; i++) {
         console.log(giohang[i]);
         formHoaDonChiTiet = {
@@ -279,27 +291,6 @@ window.thanhToanController = function (
           soLuong: $scope.gioHangList[i].soLuong,
         };
         console.log(formHoaDonChiTiet);
-        // $http
-        //   .put(
-        //     sanPhamChiTietAPI + "/updatesl/" + giohang[i].idSanPhamChiTiet,
-        //     giohang[i].soLuong
-        //   )
-        //   .then(function () {
-        //     console.log("Xóa so luong thanh cong");
-        //   });
-        //console.log($scope.formHoaDonChiTiet);
-
-        // if ($scope.maGiamGiaId === undefined) {
-        //   return;
-        // } else {
-        //   $scope.addMaGiamGia = {
-        //     tongTien: $scope.tienHang,
-        //     tongTienSauKhiGiam: $scope.tongTien,
-        //     hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-        //     maGiamGiaId: $scope.maGiamGiaId,
-        //   };
-        //   return $http.post(maGiamGiaChiTietAPI + "/add", $scope.addMaGiamGia);
-        // }
 
         $http
           .post(hoaDonChiTietAPI + "/add", formHoaDonChiTiet)
@@ -352,7 +343,7 @@ window.thanhToanController = function (
     tenQuanHuyen: "",
     tenPhuongXa: "",
   };
-
+  $scope.addMaGiamGia = {};
   $scope.getCity = function () {
     const api = api_giaoHang + "?depth=1";
     axios.get(api).then((response) => {
@@ -448,108 +439,6 @@ window.thanhToanController = function (
     }
   });
   $scope.getCity();
-
-  // $scope.thanhToan = function () {
-  //   $scope.hoaDonThanhToan.tongTien = $scope.tongTien;
-  //   let diaChiKhachHang =
-  //     $scope.hoaDonThanhToan.diaChiCuThe +
-  //     ", " +
-  //     $scope.hoaDonThanhToan.phuongXa +
-  //     ", " +
-  //     $scope.hoaDonThanhToan.quanHuyen +
-  //     ", " +
-  //     $scope.hoaDonThanhToan.tinhThanhPho;
-  //   if ($scope.formHoaDonChiTiet.idHoaDon === "") {
-  //     showError("Chọn 1 hóa đơn để thanh toán");
-  //   } else {
-  //     if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
-  //       $scope.hoaDonThanhToan.trangThai = 3;
-  //       //update hoa don
-  //       $http
-  //         .put(
-  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-  //           $scope.hoaDonThanhToan
-  //         )
-  //         .then(function () {
-  //           $scope.getListHoaDon();
-  //         })
-  //         //update so luong san pham
-  //         .then(function () {
-  //           return $http.put(
-  //             sanPhamChiTietAPI + "/update-so-luong",
-  //             $scope.listHoaDonChiTiet
-  //           );
-  //         })
-  //         //add ma giam gia
-  //         .then(function () {
-  //           if ($scope.maGiamGiaId === undefined) {
-  //             return;
-  //           } else {
-  //             $scope.addMaGiamGia = {
-  //               tongTien: $scope.tienHang,
-  //               tongTienSauKhiGiam: $scope.tongTien,
-  //               hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-  //               maGiamGiaId: $scope.maGiamGiaId,
-  //             };
-  //             return $http.post(
-  //               maGiamGiaChiTietAPI + "/add",
-  //               $scope.addMaGiamGia
-  //             );
-  //           }
-  //         })
-
-  //         //add hinh thuc thanh toan
-  //         .then(function () {
-  //           $scope.addHinhThucThanhToan = {
-  //             tenHinhThuc: $scope.searchHinhThucThanhToan,
-  //             hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-  //           };
-  //           return $http.post(
-  //             hinhThucThanhToanAPI + "/add",
-  //             $scope.addHinhThucThanhToan
-  //           );
-  //         });
-  //       $location.path("/hoa-don/hien-thi");
-  //     } else if (
-  //       $scope.hoaDonThanhToan.idKhachHang === "" &&
-  //       $scope.show == true
-  //     ) {
-  //       $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-  //       $http
-  //         .put(
-  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-  //           $scope.hoaDonThanhToan
-  //         )
-  //         .then(function () {
-  //           $scope.getListHoaDon();
-  //         })
-  //         .then(function () {
-  //           return $http.put(
-  //             sanPhamChiTietAPI + "/update-so-luong",
-  //             $scope.listHoaDonChiTiet
-  //           );
-  //         });
-  //       $location.path("/hoa-don/hien-thi");
-  //     } else {
-  //       $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-  //       $http
-  //         .put(
-  //           hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
-  //           $scope.hoaDonThanhToan
-  //         )
-  //         .then(function () {
-  //           $scope.getListHoaDon();
-  //         })
-  //         .then(function () {
-  //           return $http.put(
-  //             sanPhamChiTietAPI + "/update-so-luong",
-  //             $scope.listHoaDonChiTiet
-  //           );
-  //         });
-  //       $location.path("/hoa-don/hien-thi");
-  //     }
-  //   }
-  // };
 
   function detailKhachHang(idKhachHang) {
     return $http
