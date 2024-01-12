@@ -54,8 +54,7 @@
                                                     {{hoaDonChiTiet.tenKichThuoc}} ]</th>
                                                 <th scope="row">
                                                     <input type="number" ng-model="hoaDonChiTiet.soLuong"
-                                                        id="liveToastBtn"
-                                                        ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                                                        ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
                                                         class="form-control form-control-sm"
                                                         style="width: 100px; height: 30px;" />
                                                 </th>

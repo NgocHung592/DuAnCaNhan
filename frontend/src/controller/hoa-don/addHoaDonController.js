@@ -275,6 +275,17 @@ window.addHoaDonController = function (
         throw error; // Chuyển tiếp lỗi để xử lý ở nơi gọi
       });
   }
+  function detailChiTietSanPham(idSanPhamChiTiet) {
+    return $http
+      .get(sanPhamChiTietAPI + "/detail/" + idSanPhamChiTiet)
+      .then(function (response) {
+        return response?.data;
+      })
+      .catch(function (error) {
+        console.error("Error fetching product details:", error);
+        throw error; // Chuyển tiếp lỗi để xử lý ở nơi gọi
+      });
+  }
   $scope.addSanPhamChiTiet = function (idSanPhamChiTiet, index) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
       (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
@@ -286,7 +297,6 @@ window.addHoaDonController = function (
       thanhTien: $scope.listSanPhamChiTiet[index].donGia,
       soLuong: 1,
     };
-    console.log($scope.formHoaDonChiTiet);
     detailChiTietSanPham(idSanPhamChiTiet).then(function (
       detailSanPhamChiTiet
     ) {
@@ -304,8 +314,7 @@ window.addHoaDonController = function (
             )
             .then(function () {
               $scope.getHoaDonChiTiet();
-              $scope.tienHang = $scope.calculateTotal();
-              // $scope.tongTien = $scope.calculateTotal();
+              $scope.calculateTotal();
               showSuccess("Cập nhật thành công");
             });
         } else {
@@ -314,14 +323,14 @@ window.addHoaDonController = function (
               detailSanPhamChiTiet.soLuong +
               " sản phẩm trong cửa hàng"
           );
+          matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
         }
       } else {
         $http
           .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
           .then(function () {
             $scope.getHoaDonChiTiet();
-            $scope.tienHang = $scope.calculateTotal();
-            $scope.tongTien = $scope.calculateTotal();
+            $scope.calculateTotal();
             showSuccess("Thêm sản phẩm mới thành công");
           });
       }
@@ -342,15 +351,31 @@ window.addHoaDonController = function (
       });
   };
 
-  $scope.changeSoLuong = function (idSanPhamChiTiet) {
+  $scope.changeSoLuong = function (idSanPhamChiTiet, index) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
       (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
     );
     detailChiTietSanPham(idSanPhamChiTiet).then(function (
       detailSanPhamChiTiet
     ) {
-      if (matchingItem.soLuong === null || matchingItem.soLuong === undefined) {
-        showError("Số lượng không được nhỏ hơn 0");
+      if (matchingItem.soLuong <= 0) {
+        console.log(matchingItem);
+        var xacNhan = confirm(
+          "Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?"
+        );
+        if (xacNhan) {
+          $http
+            .delete(
+              hoaDonChiTietAPI + "/delete/" + matchingItem.idHoaDonChiTiet
+            )
+            .then(function () {
+              $scope.getHoaDonChiTiet();
+            });
+          return;
+        } else {
+          $scope.listHoaDonChiTiet[index].soLuong = 1;
+          // showError("Số lượng không được nhỏ hơn 0");
+        }
       } else if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
         $scope.hoaDonUpdate = {
           soLuong: matchingItem.soLuong,
@@ -368,6 +393,8 @@ window.addHoaDonController = function (
             showSuccess("Cập nhật thành công");
           });
       } else {
+        $scope.listHoaDonChiTiet[index].soLuong = detailSanPhamChiTiet.soLuong;
+
         showError(
           "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"
         );
@@ -375,6 +402,7 @@ window.addHoaDonController = function (
     });
   };
   $scope.xoaSanPhamGioHang = function (id) {
+    $scope.idHoaDonChiTiet;
     $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
       $scope.getHoaDonChiTiet();
     });
