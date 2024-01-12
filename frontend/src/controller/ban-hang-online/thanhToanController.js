@@ -137,12 +137,7 @@ window.thanhToanController = function (
     // toastBootstrap.show();
     $scope.showError = true;
   }
-  function showSuccess(message) {
-    $scope.successProgress();
-    $scope.message = message;
-    // toastBootstrap.show();
-    $scope.showError = false;
-  }
+
   $scope.selectTab = function (tab, id, ma) {
     $scope.formHoaDonChiTiet.idHoaDon = id;
     $scope.maHoaDon = ma;
@@ -182,22 +177,24 @@ window.thanhToanController = function (
   //Su kien click chon ma giam gia
   $scope.selectedVoucher = function (index, option) {
     $scope.maGiamGiaId = option.id;
-    console.log(option);
-    // if ($scope.formHoaDonChiTiet.idHoaDon === "") {
-    //   showError("Hãy chọn 1 hóa đơn để áp dụng mã giảm giá");
-    // } else if ($scope.tongGiaTri < option.giaTriDonToiThieu) {
-    //   showError("Chưa đủ giá trị đơn tối thiểu");
-    // } else {
-    if (option.hinhThucGiam === 1) {
-      $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
+    if ($scope.tongGiaTri < option.giaTriDonToiThieu) {
+      alert("Chưa đủ giá trị đơn tối thiểu");
     } else {
-      $scope.giamGia = option.giaTriGiam;
+      if (option.hinhThucGiam === 1) {
+        $scope.giamGia = $scope.tongGiaTri * (option.giaTriGiam / 100);
+        $scope.tongTienThanhToan = $scope.tongGiaTri + 30000 - $scope.giamGia;
+      } else {
+        $scope.giamGia = option.giaTriGiam;
+        $scope.tongTienThanhToan =
+          $scope.tongGiaTri + 30000 - option.giaTriGiam;
+      }
     }
-    // }
-    console.log("giam gia:" + $scope.giamGia);
-    $scope.tongTienThanhToan -= $scope.giamGia;
+
     $scope.showDropDownVoucher = false;
   };
+
+  // }
+  // };
   $http
     .get(gioHangAPI + "/hien-thi/" + $rootScope.idKhachHang)
     .then(function (response) {
