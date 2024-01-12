@@ -208,6 +208,39 @@ window.detailSanPhamController = function (
         }
       });
   };
+  $scope.muaNgay = function () {
+    if (!$scope.searchMauSac || !$scope.searchKichThuoc) {
+      // Hiển thị thông báo yêu cầu chọn màu sắc và kích thước
+      alert("Vui lòng chọn màu sắc và kích thước trước khi thêm vào giỏ hàng.");
+      return;
+    }
+
+    $http
+      .post(gioHangAPI + "/them", $scope.goiHang)
+      .then(function (response) {
+        if (response.data && typeof response.data === "object") {
+          if (response.data.status === "success") {
+            $location.path("/thanh-toan-onl");
+            $timeout(function () {
+              $window.location.reload();
+            }, 0);
+            // Hiển thị thông báo thành công
+          } else {
+          }
+        } else {
+          // Hiển thị thông báo lỗi nếu phản hồi không hợp lệ
+          alert("Có lỗi xảy ra khi thêm vào giỏ hàng: Phản hồi không hợp lệ.");
+        }
+      })
+      .catch(function (error) {
+        // Bắt lỗi từ phản hồi HTTP
+        if (error && error.data && error.data.message) {
+          // Hiển thị thông báo lỗi cụ thể từ phản hồi
+          alert("Lỗi từ server: " + error.data.message);
+        } else {
+        }
+      });
+  };
 
   $scope.search = function () {
     $http

@@ -16,12 +16,25 @@
                               <div class="ms-4 mb-5">
                                 <div class="uploadfile">
                                   <label for="product-image">
-                                    <i ng-if="!list.anhDaiDien" style="font-size: 70px" class="fas fa-user-circle"
-                                      aria-hidden="true"></i>
-                                    <img ng-if="list.anhDaiDien"
-                                      src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}" class="table_img" />
-                                    <input type="file" multiple class="file-upload-input" id="product-image"
-                                      data-mdb-file-upload="file-upload" style="display: none" />
+                                    <i
+                                      ng-if="!list.anhDaiDien"
+                                      style="font-size: 70px"
+                                      class="fas fa-user-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                    <img
+                                      ng-if="list.anhDaiDien"
+                                      src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
+                                      class="table_img"
+                                    />
+                                    <input
+                                      type="file"
+                                      multiple
+                                      class="file-upload-input"
+                                      id="product-image"
+                                      data-mdb-file-upload="file-upload"
+                                      style="display: none"
+                                    />
                                   </label>
                                 </div>
                               </div>
@@ -50,7 +63,8 @@
                         <li class="item-wrap">
                           <span><i class="fas fa-user"></i> </span>
                           <a class="text" href="#thong-tin">
-                            Thông tin cá nhân</a>
+                            Thông tin cá nhân</a
+                          >
                         </li>
                       </ul>
                     </div>
@@ -79,12 +93,17 @@
                           <div class="list-pageform-cart">
                             <form id="cartformpage">
                               <div class="cart-row">
-                                <div class="table-cart" ng-repeat="hang in donHangListMerged">
+                                <div
+                                  class="table-cart"
+                                  ng-repeat="hang in donHangListMerged"
+                                >
                                   <div class="order-details">
                                     <div class="order-id">
                                       MÃ ĐƠN HÀNG: {{ hang.hoaDonId }}
                                     </div>
-                                    <span ng-class="getStatusColor(hang.trangThai)">
+                                    <span
+                                      ng-class="getStatusColor(hang.trangThai)"
+                                    >
                                       {{ statusMapping[hang.trangThai] || 'Không
                                       xác định' }}
                                     </span>
@@ -92,11 +111,16 @@
 
                                   <hr />
 
-                                  <div class="timeline-container" ng-if="hang.trangThai != 4">
+                                  <div
+                                    class="timeline-container"
+                                    ng-if="hang.trangThai != 4"
+                                  >
                                     <ul class="timeline">
                                       <li class="timeline-item">
                                         <div class="timeline-content">
-                                          <span class="order-label">Đơn hàng đã đặt</span><br />
+                                          <span class="order-label"
+                                            >Đơn hàng đã đặt</span
+                                          ><br />
                                           <p>
                                             {{ beautifyDate(hang.ngayThanhToan)
                                             }}
@@ -105,7 +129,9 @@
                                       </li>
                                       <li class="timeline-item">
                                         <div class="timeline-content">
-                                          <span class="order-label">Đã xác nhận</span><br />
+                                          <span class="order-label"
+                                            >Đã xác nhận</span
+                                          ><br />
                                           <p>
                                             {{ beautifyDate(hang.ngayThanhToan)
                                             }}
@@ -114,7 +140,9 @@
                                       </li>
                                       <li class="timeline-item">
                                         <div class="timeline-content">
-                                          <span class="order-label">Đang giao hàng</span><br />
+                                          <span class="order-label"
+                                            >Đang giao hàng</span
+                                          ><br />
                                           <p>
                                             {{ beautifyDate(hang.ngayThanhToan)
                                             }}
@@ -123,7 +151,9 @@
                                       </li>
                                       <li class="timeline-item">
                                         <div class="timeline-content">
-                                          <span class="order-label">Đã nhận hàng</span><br />
+                                          <span class="order-label"
+                                            >Đã nhận hàng</span
+                                          ><br />
                                           <p>
                                             {{ beautifyDate(hang.ngayThanhToan)
                                             }}
@@ -143,36 +173,48 @@
                                   <hr />
                                   <br />
                                   <div ng-repeat="item in hang.products">
-                                    <div class="media-line-item line-item" data-variant-id="1116772352"
-                                      data-product-id="1051838542">
+                                    <div
+                                      class="media-line-item line-item"
+                                      data-variant-id="1116772352"
+                                      data-product-id="1051838542"
+                                    >
                                       <div class="media-left">
                                         <div class="item-img">
-                                          <img src="../../../assets/anh-san-pham/{{item.duongDan}}"
-                                            alt="8YO MÃ ĐÁO THÀNH CÔNG ART TEE" />
+                                          <img
+                                            src="../../../assets/anh-san-pham/{{item.duongDan}}"
+                                            alt="8YO MÃ ĐÁO THÀNH CÔNG ART TEE"
+                                          />
                                         </div>
                                       </div>
 
                                       <div class="media-right">
                                         <div class="item-info">
                                           <h3 class="item--title">
-                                            <a href="#hoa-don-timeline" ng-click="hienThiHoaDonTimeLine(hang)">
+                                            <a
+                                              href="#hoa-don-timeline"
+                                              ng-click="hienThiHoaDonTimeLine(hang)"
+                                            >
                                               {{item.tenSanPham}}
                                               {{item.tenChatLieu}}
                                               {{item.tenPhongCach}}
                                               {{item.tenTayAo}} {{item.tenCoAo}}
-                                              {{item.tenHoaTiet}}</a>
+                                              {{item.tenHoaTiet}}</a
+                                            >
                                           </h3>
 
                                           <div class="item--variant">
-                                            <span>Phân loại hàng:
+                                            <span
+                                              >Phân loại hàng:
                                               {{item.tenMauSac}} /
-                                              {{item.tenKichThuoc}}</span>
+                                              {{item.tenKichThuoc}}</span
+                                            >
                                           </div>
                                         </div>
                                         <div class="item-price">
                                           <p>
                                             <span>
-                                              x{{item.slsanPhamHoaDon}}</span>
+                                              x{{item.slsanPhamHoaDon}}</span
+                                            >
 
                                             <!-- <del>350,000₫</del> -->
                                           </p>
@@ -181,26 +223,43 @@
 
                                       <div class="media-total">
                                         <div class="item-total-price">
-                                          <span class="line-item-total">{{item.donGiaSanPham |
-                                            number:0}}₫</span>
+                                          <span class="line-item-total"
+                                            >{{item.donGiaSanPham |
+                                            number:0}}₫</span
+                                          >
                                         </div>
                                       </div>
                                     </div>
                                   </div>
 
                                   <hr />
-                                  <span class="line-item-label">Thành tiền:
+                                  <span class="line-item-label"
+                                    >Thành tiền:
                                   </span>
-                                  <span class="line-item-total" style="color: red; font-size: 20px">
+                                  <span
+                                    class="line-item-total"
+                                    style="color: red; font-size: 20px"
+                                  >
                                     {{hang.tongTien | number:0}}₫
                                   </span>
 
-                                  <button ng-click="huyDonHang(hang)" ng-if="hang.trangThai == 0">
+                                  <button
+                                    ng-click="huyDonHang(hang)"
+                                    ng-if="hang.trangThai == 0"
+                                  >
                                     Hủy đơn hàng
                                   </button>
 
-                                  <button ng-click="daNhanHang(hang)" ng-if="hang.trangThai == 2">
+                                  <button
+                                    ng-click="daNhanHang(hang)"
+                                    ng-if="hang.trangThai == 2"
+                                  >
                                     Đã nhận được hàng
+                                  </button>
+                                  <button
+                                    ng-if="hang.trangThai === 3 && hang.trangThai === 4"
+                                  >
+                                    Mua lại
                                   </button>
                                 </div>
                               </div>

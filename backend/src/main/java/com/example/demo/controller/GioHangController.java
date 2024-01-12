@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.request.GioHangNoLoginRequset;
+import com.example.demo.model.request.GioHangThemNhieuRequset;
 import com.example.demo.model.request.GioHangRequset;
 import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.GioHangReponse;
@@ -32,15 +32,24 @@ public class GioHangController {
 
         return ResponseEntity.ok(response);
     }
-    @PostMapping("themsanpham")
-    public ResponseEntity<Map<String, Object>> themSanPhamVaoGioHangChiTiet(@RequestBody GioHangNoLoginRequset gioHangNoLoginRequset) {
-        gioHangService.GioHangK(gioHangNoLoginRequset.getSanPhamChiTietId(),gioHangNoLoginRequset.getSoLuong());
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "Sản phẩm đã được thêm vào giỏ hàng ");
-
-        return ResponseEntity.ok(response);
+    @PostMapping("/them-nhieu")
+    public ResponseEntity<String> themSanPhamNhieu(@RequestBody GioHangThemNhieuRequset gioHangRequest) {
+        try {
+            gioHangService.GioHangThemNhieu(gioHangRequest.getSanPhamChiTietIds(),gioHangRequest.getKhachHangId(),gioHangRequest.getSoLuong());
+            return new ResponseEntity<>("Thêm sản phẩm vào giỏ hàng thành công", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+//    @PostMapping("themsanpham")
+//    public ResponseEntity<Map<String, Object>> themSanPhamVaoGioHangChiTiet(@RequestBody GioHangThemNhieuRequset gioHangThemNhieuRequset) {
+//        gioHangService.GioHangK(gioHangThemNhieuRequset.getSanPhamChiTietId(), gioHangThemNhieuRequset.getSoLuong());
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("status", "success");
+//        response.put("message", "Sản phẩm đã được thêm vào giỏ hàng ");
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @DeleteMapping("xoa")
     public ResponseEntity<?> xoaGioHang(@RequestParam UUID gioHangId) {
@@ -94,13 +103,13 @@ public class GioHangController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
         }
     }
-    @PutMapping("/updateNoLogin")
-    public ResponseEntity<?> updateCartItemN(@RequestBody GioHangNoLoginRequset gioHangChiTietRequest) {
-        try {
-            gioHangService.updateNoLogin(gioHangChiTietRequest);
-            return ResponseEntity.ok("Cập nhật giỏ hàng thành công");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
-        }
-    }
+//    @PutMapping("/updateNoLogin")
+//    public ResponseEntity<?> updateCartItemN(@RequestBody GioHangThemNhieuRequset gioHangChiTietRequest) {
+//        try {
+//            gioHangService.updateNoLogin(gioHangChiTietRequest);
+//            return ResponseEntity.ok("Cập nhật giỏ hàng thành công");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi cập nhật giỏ hàng");
+//        }
+//    }
 }
