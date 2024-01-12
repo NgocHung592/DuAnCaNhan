@@ -81,8 +81,8 @@ public class SanPhamChiTietController {
     }
 
     @PutMapping("update-so-luong")
-    public ResponseEntity update(@RequestBody List<UpdateSanPham> updateSanPhams) {
-        return new ResponseEntity(sanPhamChiTietService.updateSoLuong(updateSanPhams), HttpStatus.OK);
+    public ResponseEntity update(@RequestBody UpdateSanPham updateSanPham) {
+        return new ResponseEntity(sanPhamChiTietService.updateSoLuong(updateSanPham), HttpStatus.OK);
     }
 
 }

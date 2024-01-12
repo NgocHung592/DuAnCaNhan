@@ -183,11 +183,10 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public SanPhamChiTiet updateSoLuong(List<UpdateSanPham> updateSanPhams) {
-        updateSanPhams.forEach(sanPham -> {
-            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(sanPham.getIdSanPhamChiTiet());
+    public SanPhamChiTiet updateSoLuong(UpdateSanPham updateSanPham) {
+            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(updateSanPham.getIdSanPhamChiTiet());
             if (optional.isPresent()) {
-                Integer soLuongNew = optional.get().getSoLuong() - sanPham.getSoLuong();
+                Integer soLuongNew = optional.get().getSoLuong() - updateSanPham.getSoLuong();
                 optional.map(sanPhamChiTiet -> {
                     sanPhamChiTiet.setSoLuong(soLuongNew);
                     if (soLuongNew == 0) {
@@ -196,7 +195,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                     return sanPhamChiTietRepository.save(sanPhamChiTiet);
                 }).orElse(null);
             }
-        });
 
         return null;
     }

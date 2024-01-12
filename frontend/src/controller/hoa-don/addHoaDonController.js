@@ -410,6 +410,11 @@ window.addHoaDonController = function (
 
   $scope.giaoHang = function () {
     $scope.show = !$scope.show;
+    if ($scope.show === true) {
+      $scope.tongTien = $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+    } else {
+      $scope.tongTien = $scope.tienHang;
+    }
   };
   $scope.getCity = function () {
     const api = api_giaoHang + "?depth=1";
@@ -600,15 +605,18 @@ window.addHoaDonController = function (
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-          .then(function () {
-            $scope.getListHoaDon();
-          })
           //update so luong san pham
           .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
+            $scope.listHoaDonChiTiet.forEach((hoaDonChiTiet) => {
+              $scope.updateSoLuong = {
+                soLuong: hoaDonChiTiet.soLuong,
+                idSanPhamChiTiet: hoaDonChiTiet.idSanPhamChiTiet,
+              };
+              return $http.put(
+                sanPhamChiTietAPI + "/update-so-luong",
+                $scope.updateSoLuong
+              );
+            });
           })
           //add ma giam gia
           .then(function () {
@@ -640,25 +648,29 @@ window.addHoaDonController = function (
         //   );
         // });
         $location.path("/hoa-don/hien-thi");
-        $timeout(function () {
-          $window.location.reload();
-        }, 0);
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
         $scope.show == true
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-
+          //update so luong san pham
           .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
+            $scope.listHoaDonChiTiet.forEach((hoaDonChiTiet) => {
+              $scope.updateSoLuong = {
+                soLuong: hoaDonChiTiet.soLuong,
+                idSanPhamChiTiet: hoaDonChiTiet.idSanPhamChiTiet,
+              };
+              return $http.put(
+                sanPhamChiTietAPI + "/update-so-luong",
+                $scope.updateSoLuong
+              );
+            });
           })
           //add ma giam gia
           .then(function () {
@@ -678,23 +690,68 @@ window.addHoaDonController = function (
             }
           });
         $location.path("/hoa-don/hien-thi");
-        $timeout(function () {
-          $window.location.reload();
-        }, 0);
+      } else if (
+        $scope.hoaDonThanhToan.idKhachHang !== "" &&
+        $scope.show == true
+      ) {
+        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $scope.hoaDonThanhToan.trangThai = 3;
+
+        $http
+          .put(
+            hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
+            $scope.hoaDonThanhToan
+          )
+          //update so luong san pham
+          .then(function () {
+            $scope.listHoaDonChiTiet.forEach((hoaDonChiTiet) => {
+              $scope.updateSoLuong = {
+                soLuong: hoaDonChiTiet.soLuong,
+                idSanPhamChiTiet: hoaDonChiTiet.idSanPhamChiTiet,
+              };
+              return $http.put(
+                sanPhamChiTietAPI + "/update-so-luong",
+                $scope.updateSoLuong
+              );
+            });
+          })
+          //add ma giam gia
+          .then(function () {
+            if ($scope.maGiamGiaId === undefined) {
+              return;
+            } else {
+              $scope.addMaGiamGia = {
+                tongTien: $scope.tienHang,
+                tongTienSauKhiGiam: $scope.tongTien,
+                hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
+                maGiamGiaId: $scope.maGiamGiaId,
+              };
+              return $http.post(
+                maGiamGiaChiTietAPI + "/add",
+                $scope.addMaGiamGia
+              );
+            }
+          });
+        $location.path("/hoa-don/hien-thi");
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-        //update hoa don
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
             $scope.hoaDonThanhToan
           )
-          //update so luong
+          //update so luong san pham
           .then(function () {
-            return $http.put(
-              sanPhamChiTietAPI + "/update-so-luong",
-              $scope.listHoaDonChiTiet
-            );
+            $scope.listHoaDonChiTiet.forEach((hoaDonChiTiet) => {
+              $scope.updateSoLuong = {
+                soLuong: hoaDonChiTiet.soLuong,
+                idSanPhamChiTiet: hoaDonChiTiet.idSanPhamChiTiet,
+              };
+              return $http.put(
+                sanPhamChiTietAPI + "/update-so-luong",
+                $scope.updateSoLuong
+              );
+            });
           })
           //add ma giam gia
           .then(function () {
@@ -714,9 +771,6 @@ window.addHoaDonController = function (
             }
           });
         $location.path("/hoa-don/hien-thi");
-        $timeout(function () {
-          $window.location.reload();
-        }, 0);
       }
     }
   };
@@ -817,8 +871,6 @@ window.addHoaDonController = function (
                   .then(function (response) {
                     $scope.phiVanChuyen = response.data.data.total;
                     $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
-                    $scope.tongTien =
-                      $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
                   });
               }
             });
