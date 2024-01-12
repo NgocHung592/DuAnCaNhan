@@ -18,7 +18,7 @@ public interface HoaDonService {
 
     Page<HoaDonResponse> getPage(Integer pageNo);
 
-    List<HoaDon> getHoaDonCho();
+    HoaDon getHoaDonLast();
 
     List<DonHangKhachHangReponse> getAll(UUID id);
 

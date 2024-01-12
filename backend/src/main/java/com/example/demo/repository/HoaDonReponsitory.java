@@ -19,8 +19,7 @@ import java.util.UUID;
 @Repository
 public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 
-    @Query("select hd from HoaDon hd where hd.trangThai=5 order by hd.ngayTao desc ")
-    List<HoaDon> getHoaDonCho();
+	HoaDon getTopByOrderByIdDesc();
 
     @Query(value = """
             select hd.id,

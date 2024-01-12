@@ -34,8 +34,8 @@ public class HoaDonServiceImpl implements HoaDonService {
     private KhachHangRepository khachHangRepository;
 
     @Override
-    public List<HoaDon> getHoaDonCho() {
-        return hoaDonReponsitory.getHoaDonCho();
+    public HoaDon getHoaDonLast() {
+        return hoaDonReponsitory.getTopByOrderByIdDesc();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Online")
                 .nguoiTao("P")
-//                .phiShip(BigDecimal.valueOf(hoaDon.getPhiShip()))
+                .phiShip(BigDecimal.valueOf(hoaDon.getPhiShip()))
                 .trangThai(hoaDon.getTrangThai())
                 .build();
 
