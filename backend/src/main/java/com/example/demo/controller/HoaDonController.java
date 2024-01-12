@@ -31,9 +31,9 @@ public class HoaDonController {
         return hoaDonService.getPage(pageNo);
     }
 
-    @GetMapping("get-last")
-    public HoaDon getList() {
-        return hoaDonService.getHoaDonLast();
+    @GetMapping("get-list")
+    public ResponseEntity getList() {
+        return new ResponseEntity(hoaDonService.getHoaDonCho(), HttpStatus.OK);
     }
 
     @GetMapping("detail/{id}")

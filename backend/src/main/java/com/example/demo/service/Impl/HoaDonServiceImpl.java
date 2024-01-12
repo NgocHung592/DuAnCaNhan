@@ -34,8 +34,8 @@ public class HoaDonServiceImpl implements HoaDonService {
     private KhachHangRepository khachHangRepository;
 
     @Override
-    public HoaDon getHoaDonLast() {
-        return hoaDonReponsitory.getTopByOrderByIdDesc();
+    public List<HoaDon> getHoaDonCho() {
+        return hoaDonReponsitory.getHoaDonCho();
     }
 
     @Override

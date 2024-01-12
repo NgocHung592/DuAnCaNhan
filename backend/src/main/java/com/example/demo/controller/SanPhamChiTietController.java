@@ -75,10 +75,10 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.update(sanPhamChiTietRequest, UUID.fromString(id)), HttpStatus.OK);
     }
 
-//    @PutMapping("updatesl/{id}")
-//    public ResponseEntity updateSL(@RequestBody int soLuong, @PathVariable("id") String id) {
-//        return new ResponseEntity(sanPhamChiTietService.updateSL(soLuong, UUID.fromString(id)), HttpStatus.OK);
-//    }
+    @PutMapping("updatesl/{id}")
+    public ResponseEntity updateSL(@RequestBody int soLuong, @PathVariable("id") String id) {
+        return new ResponseEntity(sanPhamChiTietService.updateSL(soLuong, UUID.fromString(id)), HttpStatus.OK);
+    }
 
     @PutMapping("update-so-luong")
     public ResponseEntity update(@RequestBody List<UpdateSanPham> updateSanPhams) {
