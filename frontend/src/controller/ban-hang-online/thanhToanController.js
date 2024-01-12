@@ -270,7 +270,7 @@ window.thanhToanController = function (
       var giohang = $scope.gioHangList;
       console.log("list hoa don", $scope.listHoaDon);
       if ($scope.maGiamGiaId === undefined) {
-        return;
+        // return;
       } else {
         $scope.addMaGiamGia = {
           tongTien: $scope.tongGiaTri,
