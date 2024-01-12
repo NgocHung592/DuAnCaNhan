@@ -12,6 +12,8 @@ window.hienThiHoaDonController = function (
   $scope.totalPages = [];
   $scope.visiblePages = [];
   $scope.maxVisiblePages = 3;
+  $scope.phiVanChuyen = 0;
+  $scope.giamGia = 0;
 
   $scope.getData = function () {
     $http
@@ -232,7 +234,10 @@ window.hienThiHoaDonController = function (
     $scope.mergeDuplicateOr = function (dh) {
       var mergedOrders = {}; // Đối tượng để gộp các đơn hàng
       var allOrders = []; // Mảng để hiển thị tất cả các đơn hàng
-
+      // dh.filter(hoaDon=>{
+      //   hoaDon.hoaDonId
+      //   $scope.listHoaDonChiTietTinhTong
+      // })
       for (var i = 0; i < dh.length; i++) {
         var donHang = dh[i];
 
@@ -292,6 +297,22 @@ window.hienThiHoaDonController = function (
         .get(hoaDonAPI + "/hien-thiKh/" + $scope.idKhachHang)
         .then(function (response) {
           $scope.dh = response.data;
+          console.log($scope.dh);
+          // $scope.dh.forEach((hoaDon) => {
+          //   $http
+          //     .get(hoaDonChiTietAPI + "/tinh-tong/" + hoaDon.hoaDonId)
+          //     .then(function (response) {
+          //       $scope.listHoaDonChiTietTinhTong = response.data;
+          //       $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+          //         (total, item) => total + item.thanhTien,
+          //         0
+          //       );
+          //       $scope.tongTien =
+          //         $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+          //       console.log("tong tien: " + $scope.tongTien);
+          //     });
+          // });
+
           $scope.mergeDuplicateOr(response.data);
         })
         .catch(function (error) {});

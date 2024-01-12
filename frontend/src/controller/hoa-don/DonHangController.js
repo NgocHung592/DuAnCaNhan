@@ -1,4 +1,11 @@
-window.DonHangController = function ($http, $scope, $routeParams) {
+window.DonHangController = function (
+  $http,
+  $scope,
+  $routeParams,
+  $httpParamSerializerJQLike,
+  $timeout,
+  $window
+) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listHoaDon = [];
@@ -115,7 +122,8 @@ window.DonHangController = function ($http, $scope, $routeParams) {
   $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
       $scope.detailHoaDon = response.data;
-      console.log($scope.detailHoaDon);
+      $scope.vai = $scope.detailHoaDon.khachHang.id;
+      console.log($scope.vai);
     }
   });
   $scope.getHoaDonChiTiet = function () {
@@ -138,7 +146,7 @@ window.DonHangController = function ($http, $scope, $routeParams) {
       });
   };
   $scope.getHoaDonChiTiet();
-  //update hoa don
+
   $scope.changePage = function (index) {
     if (index >= 0 && index < $scope.totalPages.length) {
       $scope.currentPage = index;
@@ -228,8 +236,7 @@ window.DonHangController = function ($http, $scope, $routeParams) {
             )
             .then(function () {
               $scope.getHoaDonChiTiet();
-              $scope.tienHang = $scope.calculateTotal();
-              $scope.tongTien = $scope.calculateTotal();
+              $scope.calculateTotal();
               showSuccess("Cập nhật thành công");
             });
         } else {
@@ -244,17 +251,24 @@ window.DonHangController = function ($http, $scope, $routeParams) {
           .post(hoaDonChiTietAPI + "/add", $scope.formHoaDonChiTiet)
           .then(function () {
             $scope.getHoaDonChiTiet();
-            $scope.tienHang = $scope.calculateTotal();
-            $scope.tongTien = $scope.calculateTotal();
+            $scope.calculateTotal();
             showSuccess("Thêm sản phẩm mới thành công");
           });
       }
     });
   };
   $scope.calculateTotal = function () {
-    return $scope.listHoaDonChiTiet
-      .filter((item) => item.maHoaDon === $scope.detailHoaDon.ma)
-      .reduce((total, item) => total + item.thanhTien, 0);
+    $http
+      .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
+      .then(function (response) {
+        $scope.listHoaDonChiTietTinhTong = response.data;
+        $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+          (total, item) => total + item.thanhTien,
+          0
+        );
+        $scope.tongTien =
+          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+      });
   };
   $scope.changeSoLuong = function (idSanPhamChiTiet) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
@@ -278,8 +292,6 @@ window.DonHangController = function ($http, $scope, $routeParams) {
           )
           .then(function () {
             $scope.getHoaDonChiTiet();
-            $scope.tienHang = $scope.calculateTotal();
-            $scope.tongTien = $scope.calculateTotal();
             showSuccess("Cập nhật thành công");
           });
       } else {
@@ -386,8 +398,65 @@ window.DonHangController = function ($http, $scope, $routeParams) {
       .then(function (response) {
         $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
           $scope.listHoaDon = response.data;
+
           alert(response.data);
         });
+      });
+  };
+  $scope.daXacNhan = function (detailHoaDon) {
+    $scope.hoaDonId = $routeParams.id;
+
+    console.log("Id hoadon", $scope.hoaDonId);
+    console.log("Id hoadon", $scope.vai);
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-xac-nhan", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+      });
+  };
+  $scope.xacNhanDonHang = function (detailHoaDon) {
+    $scope.hoaDonId = $routeParams.id;
+
+    console.log("Id hoadon", $scope.hoaDonId);
+    console.log("Id hoadon", $scope.vai);
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/xac-nhan-don-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
       });
   };
 };

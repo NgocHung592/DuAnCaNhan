@@ -5,14 +5,18 @@
         <div class="card-body d-flex">
           <div class="timeline-container">
             <ul class="timeline">
-              <li class="timeline-item">
-                <div class=" timeline-content">
+              <li class="timeline-item"
+                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
+                <div class="timeline-content">
                   <h3>Tạo đơn hàng</h3>
-                  <p style="align-items: center;">{{detailHoaDon.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}</p>
+                  <p style="align-items: center">
+                    {{detailHoaDon.ngayTao | date: 'dd/MM/yyyy hh:mm a'}}
+                  </p>
                 </div>
               </li>
-              <li class="timeline-item">
-                <div class=" timeline-content">
+              <li class="timeline-item"
+                ng-if="detailHoaDon.trangThai===0 || detailHoaDon.trangThai===1 || detailHoaDon.trangThai===2 || detailHoaDon.trangThai===3 ">
+                <div class="timeline-content">
                   <h3>Chờ xác nhận</h3>
                 </div>
               </li>
@@ -31,10 +35,16 @@
                   <h3>Hoàn thành</h3>
                 </div>
               </li>
-
             </ul>
           </div>
-
+        </div>
+        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
+          <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="daXacNhan(detailHoaDon)">Xác nhận đơn
+            hàng</a>
+        </div>
+        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==1 ">
+          <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="xacNhanDonHang(detailHoaDon)">Xác nhận
+            giao hàng</a>
         </div>
         <div class="text-end m-3">
           <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="add($event)">Chi tiết</a>
@@ -54,32 +64,31 @@
                 <div class="col-md-3 mb-4">Loại</div>
                 <div class="col-md-9">
                   <p>{{detailHoaDon.loaiHoaDon}}</p>
-
                 </div>
                 <div class="col-md-3 mb-4">Trạng thái</div>
                 <div class="col-md-9">
                   <p>
-                    {{detailHoaDon.trangThai==0?"Chờ xác nhận":detailHoaDon.trangThai==1?"Chờ giao
-                    hàng":detailHoaDon.trangThai==2?"Đang giao hàng":"Đã hoàn thành"}}
+                    {{detailHoaDon.trangThai==0?"Chờ xác
+                    nhận":detailHoaDon.trangThai==1?"Chờ giao
+                    hàng":detailHoaDon.trangThai==2?"Đang giao hàng":"Đã hoàn
+                    thành"}}
                   </p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="row">
-                <div class="col-md-3  mb-4">Tên khách hàng</div>
+                <div class="col-md-3 mb-4">Tên khách hàng</div>
                 <div class="col-md-9">
                   <p>{{detailHoaDon.tenKhachHang}}</p>
                 </div>
-                <div class="col-md-3  mb-4">Số điện thoại</div>
+                <div class="col-md-3 mb-4">Số điện thoại</div>
                 <div class="col-md-9">
                   <p>{{detailHoaDon.soDienThoaiKhachHang}}</p>
                 </div>
-                <div class="col-md-3  mb-4">Địa chỉ</div>
+                <div class="col-md-3 mb-4">Địa chỉ</div>
                 <div class="col-md-9">
-                  <p>
-                    {{detailHoaDon.diaChiKhachHang}}
-                  </p>
+                  <p>{{detailHoaDon.diaChiKhachHang}}</p>
                 </div>
               </div>
             </div>
@@ -89,7 +98,7 @@
 
       <div class="card flex-fill">
         <h4 class="mt-4">THÔNG TIN THANH TOÁN</h4>
-        <hr>
+        <hr />
         <table class="table align-self-center">
           <thead>
             <tr>
@@ -103,22 +112,19 @@
           <tbody>
             <tr>
               <th>{{ tienHang ? (tienHang | number) + ' VNĐ' : '0 VNĐ' }}</th>
-              <th> {{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}</th>
-              <th>{{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' : '0 VNĐ'
-                }}</th>
+              <th>{{ giamGia ? (giamGia | number) + ' VNĐ' : '0 VNĐ' }}</th>
               <th>
-                {{ detailHoaDon.tongTien ? (detailHoaDon.tongTien | number) + ' VNĐ' : '0 VNĐ' }}
+                {{ phiVanChuyen ? (phiVanChuyen | number) + ' VNĐ' : '0 VNĐ' }}
               </th>
-
+              <th>{{ tongTien ? (tongTien | number) + ' VNĐ' : '0 VNĐ' }}</th>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="card flex-fill">
         <h4 class="mt-4">DANH SÁCH SẢN PHẨM</h4>
-        <hr>
-        <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-
+        <hr />
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <!-- 
           <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#quetQR">
               Quét Qr Code
@@ -144,12 +150,12 @@
           <tbody ng-repeat="hoaDonChiTiet in listHoaDonChiTiet">
             <tr>
               <th scope="row">{{customIndexHDCT+$index+1}}</th>
-              <th scope="row"><img class="table_img" ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
-                  alt="Không có ảnh">
+              <th> <img class="table_img" ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
+                  alt="Không có ảnh" /></th>
+              <th scope="row">
+                {{hoaDonChiTiet.tenSanPham}} [ {{hoaDonChiTiet.tenMauSac}} -
+                {{hoaDonChiTiet.tenKichThuoc}} ]
               </th>
-              <th scope="row">{{hoaDonChiTiet.tenSanPham}} [
-                {{hoaDonChiTiet.tenMauSac}} -
-                {{hoaDonChiTiet.tenKichThuoc}} ]</th>
               <th scope="row">
                 <input ng-if="detailHoaDon.trangThai==0" type="number" ng-model="hoaDonChiTiet.soLuong"
                   id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
@@ -157,6 +163,7 @@
                 <input ng-if="detailHoaDon.trangThai!=0" disabled type="number" ng-model="hoaDonChiTiet.soLuong"
                   id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
                   class="form-control form-control-sm" style="width: 100px; height: 30px;" />
+
               </th>
               <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
               <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
@@ -165,8 +172,6 @@
                 <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
                   <i class="fa-solid fa-trash"></i>
                 </a>
-
-
               </th>
 
             </tr>
@@ -174,12 +179,10 @@
         </table>
         <div ng-if="listHoaDonChiTiet.length===0">
           <p class="dataTables_empty_icon">
-            <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+            <img src="../../../assets/anh-san-pham/empty-product.png" alt="" />
           </p>
 
-          <p class="dataTables_empty_lable">
-            Không có sản phẩm nào
-          </p>
+          <p class="dataTables_empty_lable">Không có sản phẩm nào</p>
         </div>
         <nav aria-label="Page navigation example mt-3" ng-if="listHoaDonChiTiet.length>0">
           <ul class="pagination justify-content-center">
@@ -198,31 +201,30 @@
             </li>
           </ul>
           <p>Tổng số trang: {{ totalPagesHDCT.length }}</p>
-
         </nav>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <div class="modal fade" id="addSanPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl">
               <div class="modal-content">
-                <h4 class="p-3">DANH SÁCH SẢN PHẨM </h4>
+                <h4 class="p-3">DANH SÁCH SẢN PHẨM</h4>
                 <div class="wrapper_layered_filter ms-3">
-                  <div class="layered_filter_parent ">
+                  <div class="layered_filter_parent">
                     <div class="layered_filter_container">
                       <div class="layered_filter_group">
-                        <div class="row ">
+                        <div class="row">
                           <div class="search-container col-md-5 ms-3">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm sản phẩm theo tên"
                               ng-change="search()" class="search-input" />
                           </div>
-                          <div class="filter_group col-md-3 col-sm-12  col-xs-12" aria-expanded="false">
+                          <div class="filter_group col-md-3 col-sm-12 col-xs-12" aria-expanded="false">
                             <div class="filter_group_block">
-                              <div class="filter_group-subtitle"><span>Màu
-                                  sắc</span>
+                              <div class="filter_group-subtitle">
+                                <span>Màu sắc</span>
                                 <span class="icon-control"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                               </div>
                               <div class="filter_group-content filter-color">
-                                <ul class="checkbox-list ">
+                                <ul class="checkbox-list">
                                   <li ng-repeat="mauSac in listMauSac">
                                     <input type="checkbox" id="{{mauSac.ma}}" ng-click="locSanPhamTheoMau($index)" />
                                     <label for="{{mauSac.ma}}" ng-value="mauSac.ten"
@@ -232,11 +234,10 @@
                               </div>
                             </div>
                           </div>
-                          <div class="filter_group col-md-3 col-sm-12  col-xs-12" aria-expanded="false">
+                          <div class="filter_group col-md-3 col-sm-12 col-xs-12" aria-expanded="false">
                             <div class="filter_group_block">
                               <div class="filter_group-subtitle">
-                                <span>Kích
-                                  thước</span>
+                                <span>Kích thước</span>
                                 <span class="icon-control"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                               </div>
                               <div class="filter_group-content filter-size">
@@ -266,36 +267,37 @@
                         <th scope="col">Số Lượng</th>
                         <th scope="col">Đơn Giá</th>
                         <th scope="col">Thao Tác</th>
-
                       </tr>
                     </thead>
                     <tbody ng-repeat="sanPhamChiTiet in listSanPhamChiTiet ">
                       <tr>
                         <th scope="row">{{ customIndex+$index+1}}</th>
-                        <th scope="row"><img class="table_img"
-                            ng-src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}" alt="Không có ảnh"></th>
-                        <th scope="row">{{sanPhamChiTiet.tenSanPham}}
-                          [{{sanPhamChiTiet.tenMauSac}}
-                          - {{sanPhamChiTiet.tenKichThuoc}}]</th>
+                        <th scope="row">
+                          <img class="table_img" ng-src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
+                            alt="Không có ảnh" />
+                        </th>
+                        <th scope="row">
+                          {{sanPhamChiTiet.tenSanPham}}
+                          [{{sanPhamChiTiet.tenMauSac}} -
+                          {{sanPhamChiTiet.tenKichThuoc}}]
+                        </th>
                         <th scope="row">{{sanPhamChiTiet.soLuong}}</th>
-                        <th scope="row">{{sanPhamChiTiet.donGia | number}} VND</th>
+                        <th scope="row">
+                          {{sanPhamChiTiet.donGia | number}} VND
+                        </th>
 
                         <th>
-
-                          <a type="button" class="btn btn-warning " data-bs-dismiss="modal"
+                          <a type="button" class="btn btn-warning" data-bs-dismiss="modal"
                             ng-click="addSanPhamChiTiet(sanPhamChiTiet.idSanPhamChiTiet,$index)">Chọn</a>
-
                         </th>
                       </tr>
                     </tbody>
                   </table>
                   <div ng-if="listSanPhamChiTiet.length===0">
                     <p class="dataTables_empty_icon">
-                      <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                      <img src="../../../assets/anh-san-pham/empty-product.png" alt="" />
                     </p>
-                    <p class="dataTables_empty_lable">
-                      Không có sản phẩm nào
-                    </p>
+                    <p class="dataTables_empty_lable">Không có sản phẩm nào</p>
                   </div>
                   <nav aria-label="Page navigation example " ng-if="listSanPhamChiTiet.length!==0">
                     <ul class="pagination justify-content-center">
@@ -316,7 +318,6 @@
                   </nav>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -332,9 +333,7 @@
         <span class="icon_error" ng-show="showError">
           <i class="fa-solid fa-xmark fa-xl"></i>
         </span>
-        <span class="message_error">
-          {{message}}
-        </span>
+        <span class="message_error"> {{message}} </span>
         <div id="myProgress">
           <div id="success" ng-show="showError==false"></div>
           <div id="error" ng-show="showError"></div>
@@ -356,11 +355,10 @@
     padding: 20px;
     position: relative;
     overflow-x: auto;
-
   }
 
   .timeline::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;
@@ -375,7 +373,6 @@
   .timeline::before {
     display: none;
   }
-
 
   .timeline-item {
     position: relative;

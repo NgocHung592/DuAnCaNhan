@@ -188,6 +188,7 @@ Create table [dia_chi](
 	so_dien_thoai_khach_hang varchar(15),
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     )
+	drop table dia_chi
 
 
 	Create table [chuc_vu](
