@@ -12,9 +12,11 @@ public interface HienThiHoaDonReponse {
     @Value("#{target.id_khach_hang}")
     String getIdKhachHang();
 
-
     @Value("#{target.id_hoa_don}")
     String getHoaDonId();
+
+    @Value("#{target.ma_don_hang}")
+    String getMaHoaDon();
 
     @Value("#{target.trang_thai}")
     String getTrangThai();

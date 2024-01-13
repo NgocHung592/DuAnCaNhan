@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.LichSuHoaDon;
 import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
@@ -8,6 +9,7 @@ import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.service.HoaDonService;
+import com.example.demo.service.LichSuHoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,9 +25,18 @@ import java.util.UUID;
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class HoaDonController {
     @Autowired
+    private LichSuHoaDonService lichSuHoaDonService;
+    @Autowired
     private HoaDonService hoaDonService;
 
 
+
+
+    @GetMapping("lich-su/{hoaDonId}")
+    public ResponseEntity<List<LichSuHoaDon>> getListLichSuHoaDon(@PathVariable UUID hoaDonId) {
+        List<LichSuHoaDon> lichSuList = lichSuHoaDonService.getAllid(hoaDonId);
+        return new ResponseEntity<>(lichSuList, HttpStatus.OK);
+    }
     @GetMapping("hien-thi")
     public Page<HoaDonResponse> getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return hoaDonService.getPage(pageNo);
@@ -94,12 +105,13 @@ public class HoaDonController {
     }
     @PostMapping("huy-don-hang")
     public ResponseEntity<String> updateTrangThaiDonHang(@RequestParam(name = "idKhachHang") String idKhachHang,
-                                                         @RequestParam(name = "idDonHang") String idDonHang) {
+                                                         @RequestParam(name = "idDonHang") String idDonHang,
+                                                         @RequestParam(name = "noiDung") String noiDung) {
         try {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 4); // 5 là trạng thái mặc định mới
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 4, noiDung); // 5 là trạng thái mặc định mới
 
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {
@@ -107,19 +119,26 @@ public class HoaDonController {
         }
     }
     @PostMapping("da-xac-nhan")
-    public ResponseEntity<String> updateTrangThaiDaXacNhan(@RequestParam(name = "idKhachHang") String idKhachHang,
-                                                         @RequestParam(name = "idDonHang") String idDonHang) {
+    public ResponseEntity<String> updateTrangThaiDaXacNhan(
+            @RequestParam(name = "idKhachHang") String idKhachHang,
+            @RequestParam(name = "idDonHang") String idDonHang
+    ) {
         try {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 1); // 5 là trạng thái mặc định mới
+            // Assuming "Đã xác nhận" is represented by the status code 1
+            String noiDung = "Đơn hàng đã được xác nhận";
+
+            // Call the updated method from the service
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 1, noiDung);
 
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
         }
     }
+
     @PostMapping("xac-nhan-don-hang")
     public ResponseEntity<String> updateTrangThaiXacNhan(@RequestParam(name = "idKhachHang") String idKhachHang,
                                                            @RequestParam(name = "idDonHang") String idDonHang) {
@@ -127,7 +146,10 @@ public class HoaDonController {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 2); // 5 là trạng thái mặc định mới
+            String noiDung = "Đơn hàng đã được xác nhận";
+
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 2,noiDung); // 5 là trạng thái mặc định mới
 
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {
@@ -141,7 +163,10 @@ public class HoaDonController {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 3); // 5 là trạng thái mặc định mới
+            String noiDung = "Đơn hàng đã được xác nhận";
+
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 3,noiDung); // 5 là trạng thái mặc định mới
 
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {

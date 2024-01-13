@@ -21,6 +21,11 @@ public class LichSuHoaDonServiceImpl implements LichSuHoaDonService {
     }
 
     @Override
+    public List<LichSuHoaDon> getAllid(UUID id) {
+        return lichSuHoaDonRepository.getListLichSuHoaDon(id);
+    }
+
+    @Override
     public LichSuHoaDon add(LichSuHoaDon lichSuHoaDon) {
         return lichSuHoaDonRepository.save(lichSuHoaDon);
     }

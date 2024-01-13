@@ -99,7 +99,7 @@
                                 >
                                   <div class="order-details">
                                     <div class="order-id">
-                                      ID ĐƠN HÀNG: {{ hang.hoaDonId }}
+                                      MÃ ĐƠN HÀNG: {{ hang.maHoaDon }}
                                     </div>
                                     <span
                                       ng-class="getStatusColor(hang.trangThai)"
@@ -115,36 +115,60 @@
                                     class="timeline-container"
                                     ng-if="hang.trangThai != 4"
                                   >
-                                    <ul class="timeline">
-                                      <li class="timeline-item">
-                                        <div class="timeline-content">
-                                          <span class="order-label"
-                                            >Đơn hàng đã đặt</span
-                                          ><br />
-                                        </div>
-                                      </li>
-                                      <li class="timeline-item">
-                                        <div class="timeline-content">
-                                          <span class="order-label"
-                                            >Đã xác nhận</span
-                                          ><br />
-                                        </div>
-                                      </li>
-                                      <li class="timeline-item">
-                                        <div class="timeline-content">
-                                          <span class="order-label"
-                                            >Đang giao hàng</span
-                                          ><br />
-                                        </div>
-                                      </li>
-                                      <li class="timeline-item">
-                                        <div class="timeline-content">
-                                          <span class="order-label"
-                                            >Đã nhận hàng</span
-                                          ><br />
-                                        </div>
-                                      </li>
-                                    </ul>
+                                    <div>
+                                      <ul class="timeline">
+                                        <li
+                                          class="timeline-item"
+                                          ng-repeat="lichsua in listlichsu"
+                                        >
+                                          <div
+                                            ng-if="lichsua.trangThai == 0"
+                                            class="timeline-content"
+                                          >
+                                            <span class="order-label"
+                                              >Đơn hàng đã đặt</span
+                                            >
+                                            <span
+                                              >{{ beautifyDate(lichsua.ngayTao)
+                                              }}</span
+                                            ><br />
+                                          </div>
+                                          <div
+                                            ng-if="lichsua.trangThai == 1"
+                                            class="timeline-content"
+                                          >
+                                            <span class="order-label"
+                                              >Đã xác nhận</span
+                                            ><span
+                                              >{{ beautifyDate(lichsua.ngayTao)
+                                              }}</span
+                                            ><br />
+                                          </div>
+                                          <div
+                                            ng-if="lichsua.trangThai == 2"
+                                            class="timeline-content"
+                                          >
+                                            <span class="order-label"
+                                              >Đang giao hàng</span
+                                            ><span
+                                              >{{ beautifyDate(lichsua.ngayTao)
+                                              }}</span
+                                            ><br />
+                                          </div>
+                                          <div
+                                            ng-if="lichsua.trangThai == 3"
+                                            class="timeline-content"
+                                          >
+                                            <span class="order-label"
+                                              >Đã nhận hàng</span
+                                            ><span
+                                              >{{ beautifyDate(lichsua.ngayTao)
+                                              }}</span
+                                            ><br />
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </div>
                                   <hr />
                                   <br />
@@ -367,18 +391,6 @@
     z-index: 3;
     font-size: 14px;
     color: #333333;
-  }
-
-  .timeline-item::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -10px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent #ffe600;
   }
 
   .timeline-item::after {

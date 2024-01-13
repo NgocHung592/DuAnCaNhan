@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface LichSuHoaDonService {
     List<LichSuHoaDon> getAll();
 
+    List<LichSuHoaDon> getAllid(UUID id);
+
     LichSuHoaDon add(LichSuHoaDon lichSuHoaDon);
 
     LichSuHoaDon update(LichSuHoaDon lichSuHoaDon, UUID id);

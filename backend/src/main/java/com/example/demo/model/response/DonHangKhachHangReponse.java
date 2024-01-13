@@ -12,6 +12,9 @@ public  interface DonHangKhachHangReponse {
     @Value("#{target.id_khach_hang}")
     String getIdKhachHang();
 
+    @Value("#{target.ma_don_hang}")
+    String getMaHoaDon();
+
 
     @Value("#{target.id_hoa_don}")
     String getHoaDonId();

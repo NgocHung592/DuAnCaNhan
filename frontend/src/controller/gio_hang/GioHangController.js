@@ -55,15 +55,10 @@ window.GioHangController = function (
 
   $scope.xoaGioHang = function (goiHangId) {
     // Hộp thoại xác nhận trước khi xóa
-    var xacNhan = confirm("Bạn có chắc chắn muốn xóa giỏ hàng này không?");
-    if (!xacNhan) {
-      return; // Người dùng đã hủy xác nhận
-    }
 
     $http
       .delete(gioHangAPI + "/delete/" + goiHangId)
       .then(function (response) {
-        console.log("Xóa gio hang thành công:", response.data);
         $route.reload();
       })
       .catch(function (error) {
