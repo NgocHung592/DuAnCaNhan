@@ -22,18 +22,16 @@ angular.module("loginApp", []).controller("nhanVienController", [
           if (response.status === 200) {
             $scope.nhanVienLogin = response?.data;
 
-            localStorage.setItem(
-              "loggedInUser",
-              JSON.stringify($scope.nhanVienLogin)
-            );
-            $window.location.href = "/src/pages/admin.html#/admin";
-          } else {
-            alert("Invalid credentials");
+            if ($scope.nhanVienLogin) {
+              $window.location.href = "/src/pages/admin.html#/admin";
+              localStorage.setItem(
+                "loggedInUser",
+                JSON.stringify($scope.nhanVienLogin)
+              );
+            } else {
+              alert("Email, số điện thoại hoặc mật khẩu không đúng");
+            }
           }
-        })
-        .catch(function (error) {
-          console.error(error);
-          alert("Email, số điện thoại hoặc mật khẩu không đúng");
         });
     };
   },
