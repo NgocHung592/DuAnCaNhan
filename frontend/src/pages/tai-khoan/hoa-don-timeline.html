@@ -24,7 +24,7 @@
                                     ></i>
                                     <img
                                       ng-if="list.anhDaiDien"
-                                      src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
+                                      ng-src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
                                       class="table_img"
                                     />
                                     <input
@@ -99,7 +99,7 @@
                                 >
                                   <div class="order-details">
                                     <div class="order-id">
-                                      MÃ ĐƠN HÀNG: {{ hang.hoaDonId }}
+                                      ID ĐƠN HÀNG: {{ hang.hoaDonId }}
                                     </div>
                                     <span
                                       ng-class="getStatusColor(hang.trangThai)"
@@ -121,10 +121,6 @@
                                           <span class="order-label"
                                             >Đơn hàng đã đặt</span
                                           ><br />
-                                          <p>
-                                            {{ beautifyDate(hang.ngayThanhToan)
-                                            }}
-                                          </p>
                                         </div>
                                       </li>
                                       <li class="timeline-item">
@@ -132,10 +128,6 @@
                                           <span class="order-label"
                                             >Đã xác nhận</span
                                           ><br />
-                                          <p>
-                                            {{ beautifyDate(hang.ngayThanhToan)
-                                            }}
-                                          </p>
                                         </div>
                                       </li>
                                       <li class="timeline-item">
@@ -143,10 +135,6 @@
                                           <span class="order-label"
                                             >Đang giao hàng</span
                                           ><br />
-                                          <p>
-                                            {{ beautifyDate(hang.ngayThanhToan)
-                                            }}
-                                          </p>
                                         </div>
                                       </li>
                                       <li class="timeline-item">
@@ -154,10 +142,6 @@
                                           <span class="order-label"
                                             >Đã nhận hàng</span
                                           ><br />
-                                          <p>
-                                            {{ beautifyDate(hang.ngayThanhToan)
-                                            }}
-                                          </p>
                                         </div>
                                       </li>
                                     </ul>
@@ -257,9 +241,15 @@
                                     Đã nhận được hàng
                                   </button>
                                   <button
-                                    ng-if="hang.trangThai === 3 && hang.trangThai === 4"
+                                    ng-click="muaLai(hang.products)"
+                                    ng-if="hang.trangThai == 3 || hang.trangThai == 4"
                                   >
                                     Mua lại
+                                  </button>
+
+                                  <span></span
+                                  ><button class="sao" ng-click="lienHe()">
+                                    Liên hệ người bán
                                   </button>
                                 </div>
                               </div>
@@ -279,6 +269,26 @@
   </div>
 </main>
 <style>
+  .sao {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000; /* Black border with 2px width */
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .sao:hover {
+    background-color: #ffffff;
+    /* Màu đỏ đậm khi rê chuột vào */
+  }
+
+  /* Kiểu khi nhấn giữ nút */
+  .sao:active {
+    background-color: #f7f1f1;
+    /* Màu đỏ sáng khi nhấn giữ */
+  }
+
   .timeline-content {
     text-align: center;
   }

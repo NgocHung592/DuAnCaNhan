@@ -24,7 +24,7 @@
                                     ></i>
                                     <img
                                       ng-if="list.anhDaiDien"
-                                      src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
+                                      ng-src="../../../assets/anh-nguoi-dung/{{list.anhDaiDien}}"
                                       class="table_img"
                                     />
                                     <input
@@ -181,6 +181,17 @@
                             ng-class="{ 'active': isSelectedTabb(null) || isSelectedTabb(0) || isSelectedTabb(2) || isSelectedTabb(3) || isSelectedTabb(1) || isSelectedTabb(4) }"
                           >
                             <form id="cartformpage">
+                              <div ng-if="donHangListMerged.length==0">
+                                <p class="dataTables_empty_icon">
+                                  <img
+                                    ng-src="../../../assets/anh-san-pham/empty-product.png"
+                                    alt=""
+                                  />
+                                </p>
+                                <p class="dataTables_empty_lable">
+                                  Không có sản phẩm nào
+                                </p>
+                              </div>
                               <div class="cart-row">
                                 <div
                                   class="table-cart"
@@ -202,7 +213,7 @@
                                       <div class="media-left">
                                         <div class="item-img">
                                           <img
-                                            src="../../../assets/anh-san-pham/{{item.duongDan}}"
+                                            ng-src="../../../assets/anh-san-pham/{{item.duongDan}}"
                                             alt="8YO MÃ ĐÁO THÀNH CÔNG ART TEE"
                                           />
                                         </div>

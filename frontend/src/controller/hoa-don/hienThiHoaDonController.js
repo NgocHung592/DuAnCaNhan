@@ -2,7 +2,8 @@ window.hienThiHoaDonController = function (
   $http,
   $scope,
   $location,
-  $q,
+  $timeout,
+  $window,
   $rootScope,
 
   $httpParamSerializerJQLike
@@ -359,6 +360,7 @@ window.hienThiHoaDonController = function (
 
     console.log("idKhachHang", $scope.idKhachHang);
     console.log("idDonHang", hang.hoaDonId);
+    $rootScope.hangg = hang.hoaDonId;
 
     if (!$scope.idKhachHang) {
       console.error("Giá trị idKhachHang không hợp lệ");
@@ -392,6 +394,7 @@ window.hienThiHoaDonController = function (
         // Xử lý lỗi nếu có
       });
   };
+
   $scope.daNhanHang = function (hang) {
     if (!$scope.idKhachHang) {
       console.error("Giá trị idKhachHang không hợp lệ");
@@ -423,7 +426,10 @@ window.hienThiHoaDonController = function (
         // Xử lý lỗi nếu có
       });
   };
-
+  $scope.hienThiHoaDonTimeLine = function (hang) {
+    $rootScope.hangg = hang.hoaDonId;
+    console.log("sao day", $rootScope.hangg);
+  };
   $scope.muaLai = function (products) {
     // Lấy danh sách idSanPhamChiTiet từ mảng sản phẩm
     var sanPhamChiTietIds = products.map(function (item) {

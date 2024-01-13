@@ -3,6 +3,8 @@ window.hienThiHoaDonTimeLineController = function (
   $scope,
   $location,
   $rootScope,
+  $timeout,
+  $window,
   $httpParamSerializerJQLike
 ) {
   $scope.listHoaDon = [];
@@ -194,5 +196,52 @@ window.hienThiHoaDonTimeLineController = function (
           $window.location.reload();
         }, 0);
       });
+  };
+  $scope.muaLai = function (products) {
+    // Lấy danh sách idSanPhamChiTiet từ mảng sản phẩm
+    var sanPhamChiTietIds = products.map(function (item) {
+      return item.idSanPhamChiTiet;
+    });
+
+    // Dữ liệu gửi đi
+    var goiHangData = {
+      khachHangId: $scope.idKhachHang,
+      soLuong: 1,
+      sanPhamChiTietIds: sanPhamChiTietIds,
+    };
+
+    // Gọi API để thêm nhiều sản phẩm vào giỏ hàng
+    $http
+      .post(gioHangAPI + "/them-nhieu", goiHangData)
+      .then(function (response) {
+        if (response.data && typeof response.data === "object") {
+          if (response.data.status === "success") {
+            $location.path("/gio-hang");
+            $timeout(function () {
+              $window.location.reload();
+            }, 0);
+          } else {
+            $location.path("/gio-hang");
+            $timeout(function () {
+              $window.location.reload();
+            }, 0);
+            // Hiển thị thông báo lỗi nếu có
+            console.error("Lỗi từ server: " + response.data.message);
+          }
+        } else {
+          // Xử lý trường hợp khác nếu cần
+        }
+      })
+      .catch(function (error) {
+        $location.path("/gio-hang");
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+      });
+  };
+  $scope.lienHe = function () {
+    var contactInfo =
+      "Địa chỉ: Số nhà 56 Ngõ 2 Nguyên Xá Bắc Từ Liêm Hà Nội\nSố điện thoại: 0363446243";
+    alert(contactInfo);
   };
 };
