@@ -209,9 +209,11 @@ window.thanhToanController = function (
   };
 
   // hien thi ma giam gia
-  $scope.getMaGiamGia = function () {
+
+  $scope.getMaGiamGia = function (option) {
     $http.get(magiamgiaAPI + "/trang-thai").then(function (response) {
       $scope.listMaGiamGia = response?.data.content;
+
       $scope.listMaGiamGia.forEach((maGiamGia) => {
         $http
           .get(
@@ -231,6 +233,7 @@ window.thanhToanController = function (
       });
     });
   };
+
   $scope.getMaGiamGia();
   //Su kien click chon ma giam gia
   $scope.selectedVoucher = function (index, option) {
@@ -238,6 +241,7 @@ window.thanhToanController = function (
     if ($scope.tongGiaTri < option.giaTriDonToiThieu) {
       alert("Chưa đủ giá trị đơn tối thiểu");
     } else {
+      $scope.searchKeyword = option.ma;
       if (option.hinhThucGiam === 1) {
         $scope.giamGia = $scope.tongGiaTri * (option.giaTriGiam / 100);
         $scope.tongTienThanhToan = $scope.tongGiaTri + 30000 - $scope.giamGia;
