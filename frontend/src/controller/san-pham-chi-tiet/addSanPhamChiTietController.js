@@ -9,12 +9,13 @@ window.addSanPhamChiTietController = function (
   $scope.productDetails = [];
   $scope.sizeAndQuantitys = [];
   $scope.colors = [];
+  $scope.sizes = [];
   $scope.sizeAndColors = [];
   $scope.newSizeAndColors = [];
   $scope.selectedFiles = [];
   $scope.selectedMauSac = [];
   $scope.selectedKichThuoc = [];
-
+  $scope.groupedProducts = {};
   $scope.currentPage = 0;
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
   const toastLiveExample = document.getElementById("liveToast");
@@ -51,10 +52,7 @@ window.addSanPhamChiTietController = function (
     $scope.product.idTayAo = tayAo.id;
     $scope.selectedTayAo = tayAo.ten;
   };
-  $scope.getMauSac = function (tayAo) {
-    $scope.product.idTayAo = tayAo.id;
-    $scope.selectedTayAo = tayAo.ten;
-  };
+
   $scope.displaySelectedMauSac = function (selectedMauSac) {
     if (selectedMauSac && selectedMauSac.length > 0) {
       return selectedMauSac.join(", ");
@@ -140,10 +138,10 @@ window.addSanPhamChiTietController = function (
       const indexOfItemToRemove = $scope.sizeAndQuantitys.findIndex(
         (item) => item.tenKichThuoc === size
       );
+
       if (indexOfItemToRemove !== -1) {
         $scope.sizeAndQuantitys.splice(indexOfItemToRemove, 1);
         $scope.selectedKichThuoc.splice(indexOfItemToRemove, 1);
-
         $scope.sizeAndColors = $scope.sizeAndColors.filter(
           (item) => item.tenKichThuoc !== size
         );
@@ -175,7 +173,6 @@ window.addSanPhamChiTietController = function (
       acc[product.tenMauSac].push(product);
       return acc;
     }, {});
-    console.log($scope.groupedProducts);
   };
   $scope.addMauSac = function (index) {
     $scope.listMauSacTrangThai[index].checked =
@@ -191,20 +188,18 @@ window.addSanPhamChiTietController = function (
       $scope.colors.push(angular.copy(colorObject));
       $scope.selectedMauSac.push(color.ten);
     } else {
-      // Xóa màu khỏi $scope.colors
       const indexOfItemToRemove = $scope.colors.findIndex(
         (item) => item.tenMauSac === color
       );
-      if (indexOfItemToRemove !== -1) {
+      console.log(indexOfItemToRemove);
+      if (indexOfItemToRemove === -1) {
         $scope.colors.splice(indexOfItemToRemove, 1);
         $scope.selectedMauSac.splice(indexOfItemToRemove, 1);
 
-        // Xóa sản phẩm liên quan từ $scope.sizeAndColors
         $scope.sizeAndColors = $scope.sizeAndColors.filter(
           (item) => item.tenMauSac !== color
         );
 
-        // Xóa sản phẩm liên quan từ $scope.groupedProducts
         Object.keys($scope.groupedProducts).forEach((key) => {
           $scope.groupedProducts[key] = $scope.groupedProducts[key].filter(
             (item) => item.tenMauSac !== color
@@ -385,6 +380,18 @@ window.addSanPhamChiTietController = function (
       }
     }
   };
+  function showError(message) {
+    $scope.errorProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = false;
+  }
+  function showSuccess(message) {
+    $scope.successProgress();
+    $scope.message = message;
+    toastBootstrap.show();
+    $scope.showError = true;
+  }
   //load thuoc tinh theo trang thai kich hoat
   $scope.getChatLieuTrangThai = function () {
     $http.get(chatLieuAPI + "/trang-thai").then(function (response) {
@@ -442,11 +449,12 @@ window.addSanPhamChiTietController = function (
   };
   $scope.getTayAoTrangThai();
 
-  //add nhanh thuoc tinh
+  //add chất liệu
   $scope.formChatLieu = {
     ten: "",
   };
   $scope.addChatLieu = function () {
+    let isDuplicate = false;
     $scope.randoomCL = "CL" + Math.floor(Math.random() * 10000) + 1;
     $scope.chatLieuSave = {
       ma: $scope.randoomCL,
@@ -455,22 +463,35 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formChatLieu.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên chất liệu không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên chất liệu không được trống");
     } else {
-      $http.post(chatLieuAPI + "/add", $scope.chatLieuSave).then(function () {
-        $scope.formChatLieu = null;
-        $scope.getChatLieuTrangThai();
+      $http.get(chatLieuAPI + "/get-all").then(function (response) {
+        $scope.listChatLieu = response?.data;
+        $scope.listChatLieu.forEach((chatLieu) => {
+          if (chatLieu.ten === $scope.formChatLieu.ten) {
+            isDuplicate = true;
+            showError("Tên chất liệu không được trùng");
+          }
+        });
+        if (!isDuplicate) {
+          $http
+            .post(chatLieuAPI + "/add", $scope.chatLieuSave)
+            .then(function () {
+              $scope.formChatLieu = null;
+              showSuccess("Thêm chất liệu mới thành công");
+              $scope.getChatLieuTrangThai();
+            });
+        }
       });
     }
   };
 
+  // add phong cách
   $scope.formPhongCach = {
     ten: "",
   };
   $scope.addPhongCach = function () {
+    let isDuplicate = false;
     $scope.randoomPC = "PC" + Math.floor(Math.random() * 10000) + 1;
     $scope.phongCachSave = {
       ma: $scope.randoomPC,
@@ -479,22 +500,34 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formPhongCach.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên phong cách không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên phong cách không được trống");
     } else {
-      $http.post(phongCachAPI + "/add", $scope.phongCachSave).then(function () {
-        $scope.getPhongCachTrangThai();
-        $scope.formPhongCach = null;
+      $http.get(phongCachAPI + "/get-all").then(function (response) {
+        $scope.listPhongCach = response?.data;
+        $scope.listPhongCach.forEach((phongCach) => {
+          if (phongCach.ten === $scope.formPhongCach.ten) {
+            isDuplicate = true;
+            showError("Tên phong cách không được trùng");
+          }
+        });
+        if (!isDuplicate) {
+          $http
+            .post(phongCachAPI + "/add", $scope.phongCachSave)
+            .then(function () {
+              $scope.getPhongCachTrangThai();
+              $scope.formPhongCach = null;
+              showSuccess("Thêm phong cách mới thành công");
+            });
+        }
       });
     }
   };
-
+  // add họa tiết
   $scope.formHoaTiet = {
     ten: "",
   };
   $scope.addHoaTiet = function () {
+    let isDuplicate = false;
     $scope.randoomHT = "HT" + Math.floor(Math.random() * 10000) + 1;
     $scope.hoaTietSave = {
       ma: $scope.randoomHT,
@@ -503,14 +536,23 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formHoaTiet.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên họa tiết không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên họa tiết không được trống");
     } else {
-      $http.post(hoaTietAPI + "/add", $scope.hoaTietSave).then(function () {
-        $scope.getHoaTietTrangThai();
-        $scope.formHoaTiet = null;
+      $http.get(hoaTietAPI + "/get-all").then(function (response) {
+        $scope.listHoaTiet = response?.data;
+        $scope.listHoaTiet.forEach((hoaTiet) => {
+          if (hoaTiet.ten === $scope.formHoaTiet.ten) {
+            isDuplicate = true;
+            showError("Tên họa tiết không được trùng");
+          }
+        });
+        if (!isDuplicate) {
+          $http.post(hoaTietAPI + "/add", $scope.hoaTietSave).then(function () {
+            $scope.getHoaTietTrangThai();
+            $scope.formHoaTiet = null;
+            showSuccess("Thêm họa tiết mới thành công");
+          });
+        }
       });
     }
   };
@@ -519,6 +561,7 @@ window.addSanPhamChiTietController = function (
     ten: "",
   };
   $scope.addCoAo = function () {
+    let isDuplicate = false;
     $scope.random = "CA" + Math.floor(Math.random() * 10000) + 1;
     $scope.coAoSave = {
       ma: $scope.random,
@@ -527,14 +570,25 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formCoAo.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên cổ áo không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên cổ áo không được trống");
     } else {
-      $http.post(coAoAPI + "/add", $scope.coAoSave).then(function () {
-        $scope.getCoAoTrangThai();
-        $scope.formCoAo = null;
+      $http.get(coAoAPI + "/get-all").then(function (response) {
+        $scope.listCoAo = response?.data;
+        $scope.listCoAo.forEach((coAo) => {
+          if (coAo.ten === $scope.formCoAo.ten) {
+            isDuplicate = true;
+            showError("Tên cổ áo không được trùng");
+          }
+        });
+        if (!isDuplicate) {
+          $http.post(coAoAPI + "/add", $scope.formCoAo).then(function () {
+            $http.post(coAoAPI + "/add", $scope.coAoSave).then(function () {
+              $scope.getCoAoTrangThai();
+              $scope.formCoAo = null;
+              showSuccess("Thêm cổ áo mới thành công");
+            });
+          });
+        }
       });
     }
   };
@@ -543,6 +597,7 @@ window.addSanPhamChiTietController = function (
     ten: "",
   };
   $scope.addTayAo = function () {
+    let isDuplicate = false;
     $scope.randoomTA = "TA" + Math.floor(Math.random() * 10000) + 1;
 
     $scope.tayAoSave = {
@@ -552,14 +607,23 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formTayAo.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên tay áo không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên tay áo không được trống");
     } else {
-      $http.post(tayAoAPI + "/add", $scope.tayAoSave).then(function () {
-        $scope.getTayAoTrangThai();
-        $scope.formTayAo = null;
+      $http.get(tayAoAPI + "/get-all").then(function (response) {
+        $scope.listTayAo = response?.data;
+        $scope.listTayAo.forEach((tayAo) => {
+          if (tayAo.ten === $scope.formTayAo.ten) {
+            showError("Tên tay áo không được trùng");
+            isDuplicate = true;
+          }
+        });
+        if (!isDuplicate) {
+          $http.post(tayAoAPI + "/add", $scope.tayAoSave).then(function () {
+            $scope.getTayAoTrangThai();
+            $scope.formTayAo = null;
+            showSuccess("Thêm tay áo mới thành công");
+          });
+        }
       });
     }
   };
@@ -573,7 +637,7 @@ window.addSanPhamChiTietController = function (
   };
   $scope.addNewKichThuoc = function () {
     $scope.randoomKT = "KT" + Math.floor(Math.random() * 10000) + 1;
-
+    let isDuplicate = false;
     $scope.kichThuocSave = {
       ma: $scope.randoomKT,
       ten: $scope.formKichThuoc.ten,
@@ -581,14 +645,27 @@ window.addSanPhamChiTietController = function (
       daXoa: false,
     };
     if ($scope.formKichThuoc.ten === "") {
-      toastBootstrap.show();
-      $scope.message = "Tên kích thước không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
+      showError("Tên kích thước không được trống");
     } else {
-      $http.post(kichThuocAPI + "/add", $scope.kichThuocSave).then(function () {
-        $scope.getKichThuocTrangThai();
-        $scope.formKichThuoc = null;
+      $http.get(kichThuocAPI + "/get-all").then(function (reponse) {
+        $scope.listKichThuoc = reponse?.data;
+        $scope.listKichThuoc.forEach((kichThuoc) => {
+          if (kichThuoc.ten === $scope.formKichThuoc.ten) {
+            isDuplicate = true;
+            showError("Tên kích thước không được trùng");
+          }
+        });
+        if (!isDuplicate) {
+          $http
+            .post(kichThuocAPI + "/add", $scope.kichThuocSave)
+            .then(function () {
+              $scope.selectedKichThuoc = null;
+              $scope.getKichThuocTrangThai();
+              $scope.formKichThuoc = null;
+              $scope.groupedProducts = null;
+              showSuccess("Thêm kích thước mới thành công");
+            });
+        }
       });
     }
   };
@@ -598,22 +675,36 @@ window.addSanPhamChiTietController = function (
     ngayTao: new Date(),
     daXoa: false,
   };
+  function callColorApi(color) {
+    return $http.get(api_url + "/id?hex=" + color).then(function (response) {
+      return response.data.name.value;
+    });
+  }
   $scope.addNewMauSac = function () {
     let colorStr = document.getElementById("color").value;
     let color = colorStr.slice(1, 7);
     if ($scope.formMauSac.ma === "") {
-      toastBootstrap.show();
-      $scope.message = "Mã màu không được trống";
-      $scope.errorProgress();
-      $scope.showError = false;
-    } else {
-      $http.get(api_url + "/id?hex=" + color).then(function (response) {
-        $scope.formMauSac.ten = response.data.name.value;
-        $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
-          $scope.getMauSacTrangThai();
-          $scope.formMauSac = null;
-        });
-      });
+      showError("Mã màu sắc không được trống");
     }
+    callColorApi(color).then(function (tenMauSac) {
+      $scope.formMauSac.ten = tenMauSac;
+      $http.get(mauSacAPI + "/get-all").then(function (response) {
+        $scope.listMauSac = response?.data;
+        let isDuplicate = $scope.listMauSac.some(
+          (mauSac) => mauSac.ten === tenMauSac
+        );
+        if (isDuplicate) {
+          showError("Mã màu không được trùng");
+        } else {
+          $http.post(mauSacAPI + "/add", $scope.formMauSac).then(function () {
+            $scope.selectedMauSac = null;
+            $scope.getMauSacTrangThai();
+            $scope.formMauSac = null;
+            $scope.groupedProducts = null;
+            showSuccess("Thêm màu sắc mới thành công");
+          });
+        }
+      });
+    });
   };
 };

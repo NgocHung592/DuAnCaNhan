@@ -350,7 +350,7 @@
                                     <th> <input type="text" ng-model="product.gia" class="form-control form-control-sm"
                                             style="width: 100px; height: 30px;" />
                                     </th>
-                                    <th>
+                                    <th ng-if="listProduct[0]">
                                         <input type="file" class="file-upload-input" id="product-image"
                                             style="display: none;">
                                         <i ng-click="selectFile(product.tenMauSac,$index)"
@@ -366,6 +366,14 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div ng-if="colors.length === 0 && sizes.length === 0">
+                        <p class="dataTables_empty_icon">
+                            <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                        </p>
+                        <p class="dataTables_empty_lable">
+                            Không có dữ liệu
+                        </p>
                     </div>
                 </div>
             </div>
