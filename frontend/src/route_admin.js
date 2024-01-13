@@ -1,5 +1,17 @@
 var myApp = angular.module("myApp", ["ngRoute"]);
+function checkAndRedirect($window) {
+  let storedUserData = localStorage.getItem("loggedInUser");
+  let storedUser = JSON.parse(storedUserData);
 
+  if (storedUser === null) {
+    $window.location.href = "/src/pages/login/dang-nhap.html";
+  } else {
+    // var check = storedUser.chucVu.ten;
+    // if (check === null) {
+    //   $window.location.href = "/src/pages/login/dang-nhap.html";
+    // }
+  }
+}
 myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
   $httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
@@ -10,13 +22,8 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "san-pham/hien-thi-san-pham.html",
       controller: hienThiSanPhamController,
       resolve: {
-        // Điều kiện để chặn đường dẫn '/restricted'
-        checkAccess: function ($location) {
-          // Kiểm tra điều kiện truy cập, ví dụ: nếu không đủ quyền
-          var hasAccess = true; // Điều kiện kiểm tra, bạn cần cung cấp điều kiện thực tế của mình
-          if (!hasAccess) {
-            $location.path("/admin"); // Chuyển hướng đến đường dẫn khác nếu điều kiện không đáp ứng
-          }
+        redirect: function ($window) {
+          checkAndRedirect($window);
         },
       },
     })
@@ -39,6 +46,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/mau-sac/hien-thi", {
       templateUrl: "mau-sac/hien-thi-mau-sac.html",
       controller: hienThiMauSacController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/mau-sac/add", {
       templateUrl: "mau-sac/add-mau-sac.html",
@@ -51,6 +63,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/kich-thuoc/hien-thi", {
       templateUrl: "kich-thuoc/hien-thi-kich-thuoc.html",
       controller: hienThiKichThuocController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
 
     .when("/kich-thuoc/add", {
@@ -64,6 +81,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/chat-lieu/hien-thi", {
       templateUrl: "chat-lieu/hien-thi-chat-lieu.html",
       controller: hienThiChatLieuController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/chat-lieu/add", {
       templateUrl: "chat-lieu/add-chat-lieu.html",
@@ -76,6 +98,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/hoa-tiet/hien-thi", {
       templateUrl: "hoa-tiet/hien-thi-hoa-tiet.html",
       controller: hienThiHoaTietController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/hoa-tiet/add", {
       templateUrl: "hoa-tiet/add-hoa-tiet.html",
@@ -88,10 +115,20 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/nhan-vien/hien-thi", {
       templateUrl: "nhan-vien/hien-thi-nhan-vien.html",
       controller: hienThiNhanVienController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/phong-cach/hien-thi", {
       templateUrl: "phong-cach/hien-thi-phong-cach.html",
       controller: hienThiPhongCachController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/phong-cach/add", {
       templateUrl: "phong-cach/add-phong-cach.html",
@@ -104,6 +141,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/co-ao/hien-thi", {
       templateUrl: "co-ao/hien-thi-co-ao.html",
       controller: hienThiCoAoController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/co-ao/add", {
       templateUrl: "co-ao/add-co-ao.html",
@@ -116,6 +158,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/tay-ao/hien-thi", {
       templateUrl: "tay-ao/hien-thi-tay-ao.html",
       controller: hienThiTayAoController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/tay-ao/add", {
       templateUrl: "tay-ao/add-tay-ao.html",
@@ -136,6 +183,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/khach-hang/hien-thi", {
       templateUrl: "khach-hang/hien-thi-khach-hang.html",
       controller: hienThiKhachHangController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/khach-hang/add", {
       templateUrl: "khach-hang/add-khach-hang.html",
@@ -151,14 +203,14 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "hoa-don/hien-thi-don-hang.html",
       controller: DonHangController,
     })
-    // .when("/thu-chi/hien-thi", {
-    //   templateUrl: "quan-ly-thu-chi.html",
-    //   controller: ThuChiController,
-    // })
-
     .when("/ma-giam-gia/hien-thi", {
       templateUrl: "ma-giam-gia/hien-thi-ma-giam-gia.html",
       controller: hienThiMaGiamGiaController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
 
     .when("/ma-giam-gia/add", {
@@ -179,6 +231,11 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/ban-hang/tai-quay", {
       templateUrl: "ban-hang-tai-quay/hien-thi.html",
       controller: addHoaDonController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
     .when("/khach-hang/update/:id", {
       templateUrl: "khach-hang/update-khach-hang.html",
@@ -187,9 +244,14 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/thong-ke/hien-thi", {
       templateUrl: "thong-ke/hien-thi-thong-ke.html",
       controller: hienThiThongKeController,
+      resolve: {
+        redirect: function ($window) {
+          checkAndRedirect($window);
+        },
+      },
     })
 
     .otherwise({
-      redirectTo: "/thong-ke/hien-thi",
+      redirectTo: "/trang-chu",
     });
 });

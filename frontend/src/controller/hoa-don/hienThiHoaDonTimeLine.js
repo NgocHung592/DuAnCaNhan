@@ -32,6 +32,7 @@ window.hienThiHoaDonTimeLineController = function (
           // Nếu đơn hàng đã tồn tại, cập nhật trạng thái và tổng tiền
           mergedOrders[donHang.hoaDonId].trangThai = donHang.trangThai; // Gộp trangThai
           mergedOrders[donHang.hoaDonId].tongTien = donHang.tongTien;
+          mergedOrders[donHang.hoaDonId].maHoaDon = donHang.maHoaDon;
           mergedOrders[donHang.hoaDonId].diaChi = donHang.diaChi;
           mergedOrders[donHang.hoaDonId].tenKhachHang = donHang.tenKhachHang;
           mergedOrders[donHang.hoaDonId].soDienThoai = donHang.soDienThoai;
@@ -45,6 +46,7 @@ window.hienThiHoaDonTimeLineController = function (
             hoaDonId: donHang.hoaDonId,
             trangThai: donHang.trangThai,
             diaChi: donHang.diaChi,
+            maHoaDon: donHang.maHoaDon,
             tenKhachHang: donHang.tenKhachHang,
             soDienThoai: donHang.soDienThoai,
             tongTien: donHang.tongTien,
@@ -116,6 +118,12 @@ window.hienThiHoaDonTimeLineController = function (
         $scope.mergeDuplicateOr(response.data);
       })
       .catch(function (error) {});
+    $http
+      .get(hoaDonAPI + "/lich-su/" + $rootScope.hangg)
+      .then(function (response) {
+        $scope.listlichsu = response.data;
+        console.log("idhd", $scope.listlichsu);
+      });
   };
   $scope.getLocHoaDon();
   $scope.huyDonHang = function (hang) {

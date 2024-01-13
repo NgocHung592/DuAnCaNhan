@@ -43,6 +43,11 @@ public class NhanVienServiceImpl implements NhanVienService {
         return nhanVienRepository.getALl(pageable);
     }
 
+    @Override
+    public NhanVien login(String email, String matKhau) {
+        return nhanVienRepository.login(email,matKhau);
+    }
+
 
     @Override
     public NhanVien add(NhanVienRequest nhanVienRequest) {

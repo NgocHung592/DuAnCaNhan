@@ -10,6 +10,7 @@ import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.KhachHangRepository;
+import com.example.demo.repository.LichSuHoaDonRepository;
 import com.example.demo.service.HoaDonService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -32,6 +34,9 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private KhachHangRepository khachHangRepository;
+
+    @Autowired
+    private LichSuHoaDonRepository lichSuHoaDonRepository;
 
     @Override
     public List<HoaDon> getHoaDonCho() {
@@ -82,9 +87,17 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .phiShip(BigDecimal.valueOf(hoaDon.getPhiShip()))
                 .trangThai(hoaDon.getTrangThai())
                 .build();
+        hoaDonReponsitory.save(hoaDonSave);
+        LichSuHoaDon lichSuHoaDon = new LichSuHoaDon();
+        lichSuHoaDon.setNgayTao(new Timestamp(System.currentTimeMillis()));
+        lichSuHoaDon.setNguoiTao("System"); // You may set the actual user or system information
+        lichSuHoaDon.setNoiDung("Chờ xác nhận");
+        lichSuHoaDon.setTrangThai(hoaDonSave.getTrangThai());
+        lichSuHoaDon.setHoaDon(hoaDonSave);
+        lichSuHoaDonRepository.save(lichSuHoaDon);
 
 
-        return hoaDonReponsitory.save(hoaDonSave);
+        return hoaDonSave;
     }
 
     @Override
@@ -123,16 +136,30 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonReponsitory.findById(id).orElse(null);
     }
 
+
     @Override
-    public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai) {
+    @Transactional
+    public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai, String noiDung) {
         Optional<HoaDon> optionalHoaDon = hoaDonReponsitory.findByKhachHangIdAndId(khachHangId,donHangId);
 
         if (optionalHoaDon.isPresent()) {
             HoaDon hoaDon = optionalHoaDon.get();
+
+            // Save payment history and update order status
+            LichSuHoaDon lichSuHoaDon = new LichSuHoaDon();
+            lichSuHoaDon.setNgayTao(new Timestamp(System.currentTimeMillis()));
+            // Set the person who made the change (you might want to retrieve this information from the current user or a system user)
+            lichSuHoaDon.setNguoiTao("System");
+            lichSuHoaDon.setNoiDung(noiDung);
+            lichSuHoaDon.setTrangThai(newTrangThai);
+            lichSuHoaDon.setHoaDon(hoaDon);
+
+            // Save the payment history and update the order status
+            lichSuHoaDonRepository.save(lichSuHoaDon);
             hoaDon.setTrangThai(newTrangThai);
             hoaDonReponsitory.save(hoaDon);
         } else {
-            // Xử lý trường hợp không tìm thấy đơn hàng
+            // Handle the case when the order is not found
             throw new EntityNotFoundException("Không tìm thấy đơn hàng");
         }
     }

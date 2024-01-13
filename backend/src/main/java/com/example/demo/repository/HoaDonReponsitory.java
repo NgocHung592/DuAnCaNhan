@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.LichSuHoaDon;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.DonHangRepone;
 import com.example.demo.model.response.HienThiHoaDonReponse;
@@ -21,6 +22,7 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 
     @Query("select hd from HoaDon hd where hd.trangThai=5 order by hd.ngayTao desc ")
     List<HoaDon> getHoaDonCho();
+
 
     @Query(value = """
             select hd.id,
@@ -53,6 +55,7 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 	     hoa_don.id as 'id_hoa_don',
 		 hoa_don_chi_tiet.thanh_tien as'thanh_tien',
 		 hoa_don_chi_tiet.so_luong as 'so_luongsp_hd',
+		 hoa_don.ma as 'ma_don_hang',
 	     san_pham_chi_tiet.don_gia as'don_gia_sp',
 		 san_pham_chi_tiet.id as 'id_san_pham_chi_tiet',
 		 san_pham.ten as 'ten_san_pham',
@@ -81,6 +84,7 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 	     SELECT san_pham_chi_tiet.hinh_anh,san_pham_chi_tiet.so_luong as'so_luong_sp',
 	     hoa_don.id as 'id_hoa_don',
 		 hoa_don_chi_tiet.thanh_tien as'thanh_tien',
+		 hoa_don.ma as 'ma_don_hang',
 		 hoa_don_chi_tiet.so_luong as 'so_luongsp_hd',
 	     san_pham_chi_tiet.don_gia as'don_gia_sp',
 		 san_pham_chi_tiet.id as 'id_san_pham_chi_tiet',
@@ -108,10 +112,11 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
 	List<DonHangKhachHangReponse> getSearchDonHangKhachHang(String id,String trangThai);
 	@Query(value = """
 
- 	     SELECT san_pham_chi_tiet.hinh_anh,san_pham_chi_tiet.so_luong as'so_luong_sp',
+	     SELECT san_pham_chi_tiet.hinh_anh,san_pham_chi_tiet.so_luong as'so_luong_sp',
  	        hoa_don.id as 'id_hoa_don',
-			hoa_don_chi_tiet.thanh_tien as'thanh_tien',
+ 	        hoa_don_chi_tiet.thanh_tien as'thanh_tien',
 			hoa_don_chi_tiet.so_luong as 'so_luongsp_hd',
+ 	        hoa_don.ma as 'ma_don_hang',
  	        san_pham_chi_tiet.don_gia as'don_gia_sp',
 			san_pham_chi_tiet.id as 'id_san_pham_chi_tiet',
 			hoa_don.phi_ship as 'phi_ship',
@@ -140,7 +145,7 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
           INNER JOIN chat_lieu ON san_pham_chi_tiet.chat_lieu_id = chat_lieu.id
           INNER JOIN phong_cach ON san_pham_chi_tiet.phong_cach_id = phong_cach.id
           INNER JOIN hoa_tiet ON san_pham_chi_tiet.hoa_tiet_id = hoa_tiet.id
-          INNER JOIN san_pham ON san_pham_chi_tiet.san_pham_id = san_pham.id where khach_hang.id =?1  and hoa_don.id=?2  ORDER BY hoa_don.ngay_tao DESC """, nativeQuery = true)
+          INNER JOIN san_pham ON san_pham_chi_tiet.san_pham_id = san_pham.id where khach_hang.id =?1  and hoa_don.id=?2   ORDER BY hoa_don.ngay_tao DESC""", nativeQuery = true)
 	List<HienThiHoaDonReponse> getDetailDonHangKhachHang(UUID idKhachHang, UUID idHoaDon );
 
 	Optional<HoaDon> findByKhachHangIdAndId(UUID idKhachHang, UUID idDonHang);

@@ -427,6 +427,7 @@
                                                 class="form-control" />
                                             <ul ng-show="showDropDownVoucher" id="dropDownVoucher">
                                                 <li ng-repeat="maGiamGia in listMaGiamGia"
+                                                ng-if="maGiamGia.giaTriDonToiThieu <= tienHang && maGiamGia.soLuong>0"
                                                     ng-click="selectedVoucher($index,maGiamGia)">
                                                     <span>
                                                         {{maGiamGia.ma}}

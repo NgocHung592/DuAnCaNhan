@@ -29,6 +29,11 @@ public class NhanVienController {
     public ResponseEntity getPage(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
         return new ResponseEntity(nhanVienService.getPage(pageNo), HttpStatus.OK);
     }
+    @GetMapping("login")
+    public ResponseEntity login(@RequestParam(name = "email") String  email,
+                                @RequestParam(name = "matKhau") String  matKhau) {
+        return new ResponseEntity(nhanVienService.login(email,matKhau), HttpStatus.OK);
+    }
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody NhanVienRequest nhanVienRequest) throws Exception {

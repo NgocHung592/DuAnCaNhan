@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.LichSuHoaDon;
 import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
@@ -34,7 +35,8 @@ public interface HoaDonService {
 
     HoaDon detail(UUID id);
 
-    void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai);
+
+    void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai,String noiDung);
 
     Page<HoaDonResponse> search(Integer pageNo, String search);
 

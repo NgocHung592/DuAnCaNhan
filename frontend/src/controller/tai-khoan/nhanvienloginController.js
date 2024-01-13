@@ -2,47 +2,37 @@
 angular.module("loginApp", []).controller("nhanVienController", [
   "$scope",
   "$http",
-  function ($scope, $http) {
-    $scope.user = {
-      email: "",
-      matkhau: "",
-    };
-    $scope.list = {};
-    $scope.isLoggedInAdmin = false;
+  "$window",
+  function ($scope, $http, $window) {
+    $scope.email = null;
+    $scope.matKhau = null;
 
-    var storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      $scope.list = JSON.parse(storedUser);
-      $scope.isLoggedInAdmin = true;
-    } else {
-      $scope.isLoggedInAdmin = false;
-    }
+    $scope.nhanVienLogin = {};
+
     $scope.login = function () {
       $http
-        .post(nhanVienAPI + "/login", $scope.user)
+        .get(
+          nhanVienAPI +
+            "/login?email=" +
+            $scope.email +
+            "&matKhau=" +
+            $scope.matKhau
+        )
         .then(function (response) {
           if (response.status === 200) {
-            alert("Đăng nhập thành công");
+            $scope.nhanVienLogin = response?.data;
 
-            $scope.list = response.data;
-            console.log($scope.list);
-            $scope.isLoggedInAdmin = true;
-
-            localStorage.setItem("loggedInUser", JSON.stringify($scope.list));
-          } else {
-            alert("Invalid credentials");
+            if ($scope.nhanVienLogin) {
+              $window.location.href = "/src/pages/admin.html#/admin";
+              localStorage.setItem(
+                "loggedInAdmin",
+                JSON.stringify($scope.nhanVienLogin)
+              );
+            } else {
+              alert("Email, số điện thoại hoặc mật khẩu không đúng");
+            }
           }
-        })
-        .catch(function (error) {
-          // Xử lý lỗi
-          console.error(error);
-          alert("Email, số điện thoại hoặc mật khẩu không đúng");
         });
-    };
-    $scope.logout = function () {
-      localStorage.removeItem("loggedInUser");
-      $scope.isLoggedInAdmin = false;
-      $window.location.reload();
     };
   },
 ]);

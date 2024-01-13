@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KhachHang;
 import com.example.demo.entity.NhanVien;
-import com.example.demo.model.request.KhachHangRequest;
-import com.example.demo.model.response.NhanVienReponse;
 import com.example.demo.model.request.NhanVienRequest;
 import org.springframework.data.domain.Page;
 
@@ -15,6 +12,8 @@ public interface NhanVienService {
     List<NhanVien> getAll();
 
     Page<NhanVien> getPage(Integer pageNo);
+
+    NhanVien login (String email,String matKhau);
 
     NhanVien add(NhanVienRequest nhanVienRequest);
 
