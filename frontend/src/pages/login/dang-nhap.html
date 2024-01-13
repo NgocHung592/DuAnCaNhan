@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link class="js-stylesheet" href="../../../css/custom/css.css" rel="stylesheet" />
+
+</head>
+
+<body ng-app="loginApp" ng-controller="nhanVienController">
+    <div ng-if="isLoggedInAdmin==false">
+        <main class="wrapperMain_content">
+            <div id="login">
+                <div class="accounttype">
+                    <h2 class="text-center">Đăng Nhập</h2>
+                </div>
+                <form>
+                    <div class="clearfix large_form">
+                        <input type="email" value="" name="customer[email]" id="customer_email" placeholder="Email"
+                            class="text" ng-model="user.email" fdprocessedid="3l1joc" />
+                    </div>
+
+                    <div class="clearfix large_form large_form-mrb">
+                        <input type="password" value="" name="customer[password]" id="customer_password"
+                            ng-model="user.matkhau" placeholder="Mật khẩu" class="text" size="16"
+                            fdprocessedid="vqke7p" />
+                    </div>
+
+                    <div class="clearfix large_form sitebox-recaptcha">
+                        This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy
+                            Policy</a>
+                        and
+                        <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of
+                            Service</a>
+                        apply.
+                    </div>
+                    <div class="clearfix custommer_account_action">
+                        <div class="action_bottom">
+                            <button class="btn btn-signin button dark" type="submit" fdprocessedid="2wf5kf"
+                                ng-click="login()">
+                                Đăng nhập
+                            </button>
+                        </div>
+                        <div class="req_pass">
+                            <a href="#quen-mat-khau">Quên mật khẩu?</a><br />
+                            hoặc <a href="/account/register" title="Đăng ký">Đăng ký</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.min.js"></script>
+
+    <script src="../../config/api.js"></script>
+
+    <script src="../../controller/tai-khoan/nhanvienloginController.js"></script>
+</body>
+
+
+
+
+</html>

@@ -1,6 +1,8 @@
-angular
-  .module("myApp")
-  .controller("nhanVienController", function ($http, $scope, $window) {
+// nhanvienloginController.js
+angular.module("loginApp", []).controller("nhanVienController", [
+  "$scope",
+  "$http",
+  function ($scope, $http) {
     $scope.user = {
       email: "",
       matkhau: "",
@@ -15,7 +17,6 @@ angular
     } else {
       $scope.isLoggedInAdmin = false;
     }
-
     $scope.login = function () {
       $http
         .post(nhanVienAPI + "/login", $scope.user)
@@ -43,4 +44,5 @@ angular
       $scope.isLoggedInAdmin = false;
       $window.location.reload();
     };
-  });
+  },
+]);

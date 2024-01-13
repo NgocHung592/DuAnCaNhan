@@ -692,7 +692,7 @@ window.addHoaDonController = function (
         $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang !== "" &&
-        $scope.show == true
+        $scope.show == false
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $scope.hoaDonThanhToan.trangThai = 3;

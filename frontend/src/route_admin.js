@@ -9,6 +9,16 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .when("/san-pham/hien-thi", {
       templateUrl: "san-pham/hien-thi-san-pham.html",
       controller: hienThiSanPhamController,
+      resolve: {
+        // Điều kiện để chặn đường dẫn '/restricted'
+        checkAccess: function ($location) {
+          // Kiểm tra điều kiện truy cập, ví dụ: nếu không đủ quyền
+          var hasAccess = true; // Điều kiện kiểm tra, bạn cần cung cấp điều kiện thực tế của mình
+          if (!hasAccess) {
+            $location.path("/admin"); // Chuyển hướng đến đường dẫn khác nếu điều kiện không đáp ứng
+          }
+        },
+      },
     })
     .when("/san-pham/add", {
       templateUrl: "san-pham/add-san-pham.html",
