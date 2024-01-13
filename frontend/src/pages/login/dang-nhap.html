@@ -6,53 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link class="js-stylesheet" href="../../../css/custom/css.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css" rel="stylesheet" />
 
 </head>
 
 <body ng-app="loginApp" ng-controller="nhanVienController">
-    <div ng-if="isLoggedInAdmin==false">
-        <main class="wrapperMain_content">
-            <div id="login">
-                <div class="accounttype">
-                    <h2 class="text-center">Đăng Nhập</h2>
+    <section class="vh-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 text-black">
+
+                    <div class="px-5 ms-xl-4">
+
+                        <img style=" width: 200px;" src="../../..//assets/logo/Simple.jpg" alt="Simple"
+                            class="img-responsive logoimg" />
+                    </div>
+
+                    <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 ">
+
+                        <form style="width: 23rem;">
+                            <div class=" mb-4">
+                                <label class="form-label">Email</label>
+
+                                <input type="email" ng-model="email" class="form-control form-control-lg" />
+                            </div>
+
+                            <div class=" mb-4">
+                                <label class="form-label">Mật khẩu</label>
+
+                                <input type="password" ng-model="matKhau" class="form-control form-control-lg" />
+                            </div>
+
+                            <div class="pt-1 mb-4">
+                                <button class="btn btn-info btn-lg btn-block" type="button" ng-click="login()">Đăng
+                                    nhập</button>
+                            </div>
+
+                            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Quên mật khẩu ?</a></p>
+                            <!-- <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p> -->
+
+                        </form>
+
+                    </div>
+
                 </div>
-                <form>
-                    <div class="clearfix large_form">
-                        <input type="email" value="" name="customer[email]" id="customer_email" placeholder="Email"
-                            class="text" ng-model="user.email" fdprocessedid="3l1joc" />
-                    </div>
-
-                    <div class="clearfix large_form large_form-mrb">
-                        <input type="password" value="" name="customer[password]" id="customer_password"
-                            ng-model="user.matkhau" placeholder="Mật khẩu" class="text" size="16"
-                            fdprocessedid="vqke7p" />
-                    </div>
-
-                    <div class="clearfix large_form sitebox-recaptcha">
-                        This site is protected by reCAPTCHA and the Google
-                        <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy
-                            Policy</a>
-                        and
-                        <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of
-                            Service</a>
-                        apply.
-                    </div>
-                    <div class="clearfix custommer_account_action">
-                        <div class="action_bottom">
-                            <button class="btn btn-signin button dark" type="submit" fdprocessedid="2wf5kf"
-                                ng-click="login()">
-                                Đăng nhập
-                            </button>
-                        </div>
-                        <div class="req_pass">
-                            <a href="#quen-mat-khau">Quên mật khẩu?</a><br />
-                            hoặc <a href="/account/register" title="Đăng ký">Đăng ký</a>
-                        </div>
-                    </div>
-                </form>
+                <div class="col-sm-6 px-0 d-none d-sm-block">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                        class="img-fluid" alt="Phone image">
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </section>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.min.js"></script>
 
@@ -63,5 +67,8 @@
 
 
 
+<style>
+
+</style>
 
 </html>

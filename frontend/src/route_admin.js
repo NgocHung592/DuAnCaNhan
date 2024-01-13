@@ -1,5 +1,15 @@
 var myApp = angular.module("myApp", ["ngRoute"]);
+function checkAndRedirect($window) {
+  let storedUserData = localStorage.getItem("loggedInUser");
+  let storedUser = JSON.parse(storedUserData);
 
+  if (storedUser === null) {
+    $window.location.href = "/src/pages/login/dang-nhap.html";
+  } else {
+    var check = storedUser.chucVu.ten;
+    console.log(check);
+  }
+}
 myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
   $httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
@@ -10,13 +20,8 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: "san-pham/hien-thi-san-pham.html",
       controller: hienThiSanPhamController,
       resolve: {
-        // Điều kiện để chặn đường dẫn '/restricted'
-        checkAccess: function ($location) {
-          // Kiểm tra điều kiện truy cập, ví dụ: nếu không đủ quyền
-          var hasAccess = true; // Điều kiện kiểm tra, bạn cần cung cấp điều kiện thực tế của mình
-          if (!hasAccess) {
-            $location.path("/admin"); // Chuyển hướng đến đường dẫn khác nếu điều kiện không đáp ứng
-          }
+        redirect: function ($window) {
+          checkAndRedirect($window);
         },
       },
     })
@@ -190,6 +195,6 @@ myApp.config(function ($routeProvider, $locationProvider, $httpProvider) {
     })
 
     .otherwise({
-      redirectTo: "/thong-ke/hien-thi",
+      redirectTo: "/trang-chu",
     });
 });

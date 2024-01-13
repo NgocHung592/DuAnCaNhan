@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myApp" ng-controller="admin">
 
 <head>
   <meta charset="utf-8" />
@@ -32,7 +32,7 @@
             <span class="sidebar-brand-text align-middle"> SIMPLE </span>
           </a>
           <ul class="sidebar-nav">
-            <li class="sidebar-item">
+            <li class="sidebar-item" ng-if="role==='Admin'">
               <a class="sidebar-link" href="#thong-ke/hien-thi">
                 <i class="align-middle me-2 fas fa-fw fa-chart-pie"></i>
                 <span class="align-middle">Thống Kê</span>
@@ -50,7 +50,7 @@
                 <span class="align-middle">Bán Hàng Tại Quầy</span>
               </a>
             </li>
-            <li class="sidebar-item">
+            <li class="sidebar-item" ng-if="role==='Admin'">
               <a data-bs-target="#taiKhoan" href="" data-bs-toggle="collapse" class="sidebar-link collapsed">
                 <i class="fa-regular fa-user"></i>
                 <span class="align-middle">Quản Lý Tài Khoản</span>
@@ -101,7 +101,7 @@
                 </li>
               </ul>
             </li>
-            <li class="sidebar-item">
+            <li class="sidebar-item" ng-if="role==='Admin'">
               <a href="#khuyenMai" data-bs-toggle="collapse" class="sidebar-link collapsed">
                 <i class="align-middle me-2 fas fa-fw fa-gift"></i>
                 <span class="align-middle">Quản Lý Mã Giảm Giá</span>
@@ -195,24 +195,27 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  <img src="../../assets/anh-nguoi-dung/z4304786145300_de67b043fe1a0739521309be17b0426c.jpg"
-                    class="avatar img-fluid rounded" />
-                  <!-- {{list.hoten}} -->
+
+                  <i ng-if="!storedUser.anhDaiDien" style="font-size: 40px" class="fas fa-user-circle"
+                    aria-hidden="true"></i>
+                  <img ng-if="storedUser.anhDaiDien" src="../../../assets/anh-nguoi-dung/{{storedUser.anhDaiDien}}"
+                    alt="Employee Image" class="table_img" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
+                    {{storedUser.hoTen}}</a>
                   <a class="dropdown-item" href="../pages/login/dang-nhap.html"><i class="align-middle me-1"
                       data-feather="user"></i>
-                    Profile</a>
-                  <!-- <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
-                    Analytics</a>
+                    Thông tin cá nhân</a>
+
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
+                  <!-- <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
                       data-feather="settings"></i>
                     Settings & Privacy</a>
                   <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i>
-                    Help Center</a>
-                  <div class="dropdown-divider"></div> -->
-                  <a class="dropdown-item" ng-click="logout()">Log out</a>
+                    Help Center</a> -->
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <a class="dropdown-item" ng-click="logOut()">Đăng xuất</a>
                 </div>
               </li>
             </ul>
@@ -246,6 +249,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+  <script src="../controller/tai-khoan/adminController.js"></script>
 
   <script src="../controller/san-pham/addSanPhamController.js"></script>
   <script src="../controller/san-pham/updateSanPhamController.js"></script>
