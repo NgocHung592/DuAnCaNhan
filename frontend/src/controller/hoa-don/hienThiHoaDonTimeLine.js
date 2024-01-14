@@ -32,6 +32,8 @@ window.hienThiHoaDonTimeLineController = function (
           // Nếu đơn hàng đã tồn tại, cập nhật trạng thái và tổng tiền
           mergedOrders[donHang.hoaDonId].trangThai = donHang.trangThai; // Gộp trangThai
           mergedOrders[donHang.hoaDonId].tongTien = donHang.tongTien;
+          mergedOrders[donHang.hoaDonId].phiShip = donHang.phiShip;
+          mergedOrders[donHang.hoaDonId].loaiHoaDon = donHang.loaiHoaDon;
           mergedOrders[donHang.hoaDonId].maHoaDon = donHang.maHoaDon;
           mergedOrders[donHang.hoaDonId].diaChi = donHang.diaChi;
           mergedOrders[donHang.hoaDonId].tenKhachHang = donHang.tenKhachHang;
@@ -45,6 +47,8 @@ window.hienThiHoaDonTimeLineController = function (
           mergedOrders[donHang.hoaDonId] = {
             hoaDonId: donHang.hoaDonId,
             trangThai: donHang.trangThai,
+            loaiHoaDon: donHang.loaiHoaDon,
+            phiShip: donHang.phiShip,
             diaChi: donHang.diaChi,
             maHoaDon: donHang.maHoaDon,
             tenKhachHang: donHang.tenKhachHang,

@@ -511,7 +511,116 @@ window.DonHangController = function (
     // Sử dụng Moment.js để định dạng ngày tháng
     return moment(date).format("hh:mm A, DD/MM/YYYY");
   };
+  $scope.khongNhanHang = function () {
+    $scope.hoaDonId = $routeParams.id;
 
+    // Hiển thị hộp thoại xác nhận với thông báo và nút xác nhận/hủy
+    var xacNhanHuy = confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
+
+    if (!xacNhanHuy) {
+      // Nếu người dùng chọn "Hủy", không thực hiện bước tiếp theo
+      return;
+    }
+
+    // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
+
+    var danhSachLyDo = ["Khách không nhận"];
+
+    // Hiển thị danh sách lựa chọn cho người dùng
+    var noiDung = prompt(
+      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
+    );
+
+    // Kiểm tra nếu người dùng đã chọn một lựa chọn
+    if (noiDung !== null && noiDung !== "") {
+      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
+      console.log("Lý do khách hàng không nhận:", noiDung);
+      // Thêm mã logic xử lý hủy đơn hàng tại đây
+    } else {
+      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
+      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
+    }
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+      noiDung: noiDung,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/khong-nhan-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        alert(" Thành công!");
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+        // Xử lý lỗi nếu có
+      });
+  };
+  $scope.huyDonHang = function () {
+    $scope.hoaDonId = $routeParams.id;
+
+    // Hiển thị hộp thoại xác nhận với thông báo và nút xác nhận/hủy
+    var xacNhanHuy = confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
+
+    if (!xacNhanHuy) {
+      // Nếu người dùng chọn "Hủy", không thực hiện bước tiếp theo
+      return;
+    }
+
+    // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
+
+    var danhSachLyDo = ["Sai thông tin"];
+
+    // Hiển thị danh sách lựa chọn cho người dùng
+    var noiDung = prompt(
+      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
+    );
+
+    // Kiểm tra nếu người dùng đã chọn một lựa chọn
+    if (noiDung !== null && noiDung !== "") {
+      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
+      console.log("Lý do hủy đơn hàng:", noiDung);
+      // Thêm mã logic xử lý hủy đơn hàng tại đây
+    } else {
+      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
+      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
+    }
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+      noiDung: noiDung,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/huy-don-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        alert("Hủy đơn hàng thành công!");
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+        // Xử lý lỗi nếu có
+      });
+  };
   $scope.daXacNhan = function (detailHoaDon) {
     $scope.hoaDonId = $routeParams.id;
 
