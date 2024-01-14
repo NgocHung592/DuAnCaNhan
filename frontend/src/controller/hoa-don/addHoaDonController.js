@@ -8,7 +8,8 @@ window.addHoaDonController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.listHoaDon = [];
   $scope.sizeAndQuantitys = [];
   $scope.listKichThuoc = [];
@@ -178,12 +179,18 @@ window.addHoaDonController = function (
     $scope.formHoaDon = {
       ma: $scope.randomHoaDon,
       ngayTao: new Date(),
+      nguoiTao: $scope.storedUser.hoTen,
       trangThai: 5,
     };
     if ($scope.listHoaDon.length < 5) {
-      $http.post(hoaDonAPI + "/add", $scope.formHoaDon).then(function () {
-        $scope.getListHoaDon();
-      });
+      $http
+        .post(hoaDonAPI + "/add", $scope.formHoaDon)
+        .then(function () {
+          $scope.getListHoaDon();
+        })
+        .then(function () {
+          return;
+        });
       showSuccess("Tạo hóa đơn thành công");
     } else {
       showError("Chỉ tạo tối đa 5 hóa đơn");
