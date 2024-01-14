@@ -351,11 +351,27 @@ window.hienThiHoaDonController = function (
     }
 
     // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
-    var noiDung = prompt("Nhập lý do hủy đơn hàng:", "");
 
-    if (noiDung === null || noiDung === "") {
-      // Nếu người dùng chọn "Hủy" hoặc không nhập lý do, không thực hiện bước tiếp theo
-      return;
+    var danhSachLyDo = [
+      "Không muốn mua nữa",
+      "Sai thông tin",
+      "Đơn hàng được tạo do sự nhầm lẫn",
+      "Sai địa chỉ",
+    ];
+
+    // Hiển thị danh sách lựa chọn cho người dùng
+    var noiDung = prompt(
+      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
+    );
+
+    // Kiểm tra nếu người dùng đã chọn một lựa chọn
+    if (noiDung !== null && noiDung !== "") {
+      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
+      console.log("Lý do hủy đơn hàng:", noiDung);
+      // Thêm mã logic xử lý hủy đơn hàng tại đây
+    } else {
+      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
+      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
     }
 
     console.log("idKhachHang", $scope.idKhachHang);
