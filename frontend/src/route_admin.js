@@ -1,8 +1,8 @@
 var myApp = angular.module("myApp", ["ngRoute"]);
 function checkAndRedirect($window) {
-  let storedUserData = localStorage.getItem("loggedInUser");
+  let storedUserData = localStorage.getItem("loggedInAdmin");
   let storedUser = JSON.parse(storedUserData);
-
+  console.log(storedUser);
   if (storedUser === null) {
     $window.location.href = "/src/pages/login/dang-nhap.html";
   } else {

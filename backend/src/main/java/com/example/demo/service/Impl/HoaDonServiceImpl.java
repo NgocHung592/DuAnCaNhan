@@ -74,7 +74,15 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .nguoiTao("Hưng")
                 .trangThai(hoaDon.getTrangThai())
                 .build();
-        return hoaDonReponsitory.save(hoaDonSave);
+        HoaDon hoaDonNew=hoaDonReponsitory.save(hoaDonSave);
+        LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+                .ngayTao(hoaDon.getNgayTao())
+                .nguoiTao(hoaDon.getNguoiTao())
+                .trangThai(hoaDon.getTrangThai())
+                .hoaDon(hoaDonNew)
+                .build();
+        lichSuHoaDonRepository.save(lichSuHoaDon);
+        return null;
     }
 
 
@@ -119,7 +127,15 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
-                return hoaDonReponsitory.save(hoaDon);
+                HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
+                LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+                        .ngayTao(hoaDon.getNgayTao())
+                        .nguoiTao(hoaDon.getNguoiTao())
+                        .trangThai(hoaDon.getTrangThai())
+                        .hoaDon(hoaDonNew)
+                        .build();
+                lichSuHoaDonRepository.save(lichSuHoaDon);
+                return null;
             }).orElse(null);
         } else {
             optional.map(hoaDon -> {
@@ -131,7 +147,16 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
-                return hoaDonReponsitory.save(hoaDon);
+                HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
+
+                LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+                        .ngayTao(hoaDon.getNgayTao())
+                        .nguoiTao(hoaDon.getNguoiTao())
+                        .trangThai(hoaDon.getTrangThai())
+                        .hoaDon(hoaDonNew)
+                        .build();
+                lichSuHoaDonRepository.save(lichSuHoaDon);
+                return null;
             }).orElse(null);
         }
         return null;
