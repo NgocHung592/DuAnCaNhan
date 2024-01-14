@@ -328,12 +328,15 @@ window.addHoaDonController = function (
               showSuccess("Cập nhật thành công");
             });
         } else {
+          $scope.listHoaDonChiTiet[index].soLuong =
+            detailSanPhamChiTiet.soLuong;
+
           showError(
             "Chỉ còn " +
               detailSanPhamChiTiet.soLuong +
               " sản phẩm trong cửa hàng"
           );
-          matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
+          // matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
         }
       } else {
         $http

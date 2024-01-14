@@ -152,17 +152,20 @@ window.DonHangController = function (
   };
   $scope.detailHoaDon();
 
-  $http
-    .get(maGiamGiaChiTietAPI + "/detail/" + $routeParams.id)
-    .then(function (response) {
-      if (response.status == 200) {
-        $scope.detailMaGiamGiaChiTet = response?.data;
-        console.log($scope.detailMaGiamGiaChiTet);
-        $scope.giamGia =
-          $scope.detailMaGiamGiaChiTet.donGia -
-          $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
-      }
-    });
+  $scope.detailMaGiamGia = function () {
+    $http
+      .get(maGiamGiaChiTietAPI + "/detail/" + $routeParams.id)
+      .then(function (response) {
+        if (response.status == 200) {
+          $scope.detailMaGiamGiaChiTet = response?.data;
+          console.log($scope.detailMaGiamGiaChiTet);
+          $scope.giamGia =
+            $scope.detailMaGiamGiaChiTet.donGia -
+            $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
+        }
+      });
+  };
+  $scope.detailMaGiamGia();
   $scope.getHoaDonChiTiet = function () {
     $http
       .get(
@@ -254,7 +257,6 @@ window.DonHangController = function (
       thanhTien: $scope.listSanPhamChiTiet[index].donGia,
       soLuong: 1,
     };
-    console.log($scope.formHoaDonChiTiet);
     detailChiTietSanPham(idSanPhamChiTiet).then(function (
       detailSanPhamChiTiet
     ) {
@@ -274,8 +276,36 @@ window.DonHangController = function (
               $scope.getHoaDonChiTiet();
               $scope.calculateTotal();
               showSuccess("Cập nhật thành công");
+            })
+            .then(function () {
+              $http
+                .get(hoaDonChiTietAPI + "/tinh-tong/" + $routeParams.id)
+                .then(function (response) {
+                  $scope.listHoaDonChiTietTinhTong = response.data;
+
+                  $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+                    (total, item) => total + item.thanhTien,
+                    0
+                  );
+                  $http
+                    .get(hoaDonAPI + "/detail/" + $routeParams.id)
+                    .then(function (response) {
+                      $scope.detailHoaDon = response.data;
+                      $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
+                    });
+
+                  $scope.updateTongTien =
+                    $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+                  return $http.put(
+                    hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                    $scope.updateTongTien
+                  );
+                });
             });
         } else {
+          $scope.listHoaDonChiTiet[index].soLuong = matchingItem.soLuong;
+          console.log((matchingItem.soLuong = detailSanPhamChiTiet.soLuong));
+
           showError(
             "Chỉ còn " +
               detailSanPhamChiTiet.soLuong +
@@ -294,21 +324,35 @@ window.DonHangController = function (
     });
   };
 
-  $scope.changeSoLuong = function (idSanPhamChiTiet) {
+  $scope.changeSoLuong = function (idSanPhamChiTiet, index) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
       (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
     );
     detailChiTietSanPham(idSanPhamChiTiet).then(function (
       detailSanPhamChiTiet
     ) {
-      if (matchingItem.soLuong === null || matchingItem.soLuong === undefined) {
-        showError("Số lượng không được nhỏ hơn 0");
+      if (matchingItem.soLuong <= 0) {
+        console.log(matchingItem);
+        var xacNhan = confirm(
+          "Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?"
+        );
+        if (xacNhan) {
+          $http
+            .delete(
+              hoaDonChiTietAPI + "/delete/" + matchingItem.idHoaDonChiTiet
+            )
+            .then(function () {
+              $scope.getHoaDonChiTiet();
+            });
+          return;
+        } else {
+          $scope.listHoaDonChiTiet[index].soLuong = 1;
+        }
       } else if (matchingItem.soLuong <= detailSanPhamChiTiet.soLuong) {
         $scope.hoaDonUpdate = {
           soLuong: matchingItem.soLuong,
           thanhTien: matchingItem.soLuong * matchingItem.donGia,
         };
-        console.log($scope.hoaDonUpdate);
         $http
           .put(
             hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
@@ -343,8 +387,9 @@ window.DonHangController = function (
                 );
               });
           });
-        $scope.detailHoaDon();
       } else {
+        matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
+
         showError(
           "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"
         );
@@ -465,130 +510,6 @@ window.DonHangController = function (
   $scope.beautifyDate = function (date) {
     // Sử dụng Moment.js để định dạng ngày tháng
     return moment(date).format("hh:mm A, DD/MM/YYYY");
-  };
-  $scope.huyDonHang = function (hang) {
-    $scope.hoaDonId = $routeParams.id;
-    // Hiển thị hộp thoại xác nhận với thông báo và nút xác nhận/hủy
-    var xacNhanHuy = confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
-
-    if (!xacNhanHuy) {
-      // Nếu người dùng chọn "Hủy", không thực hiện bước tiếp theo
-      return;
-    }
-
-    // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
-
-    var danhSachLyDo = [
-      "Không muốn mua nữa",
-      "Sai thông tin",
-      "Đơn hàng được tạo do sự nhầm lẫn",
-      "Sai địa chỉ",
-    ];
-
-    // Hiển thị danh sách lựa chọn cho người dùng
-    var noiDung = prompt(
-      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
-    );
-
-    // Kiểm tra nếu người dùng đã chọn một lựa chọn
-    if (noiDung !== null && noiDung !== "") {
-      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
-      console.log("Lý do hủy đơn hàng:", noiDung);
-      // Thêm mã logic xử lý hủy đơn hàng tại đây
-    } else {
-      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
-      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
-    }
-
-    console.log("idKhachHang", $scope.idKhachHang);
-    console.log("idDonHang", $scope.hoaDonId);
-
-    var data = $httpParamSerializerJQLike({
-      idKhachHang: $scope.vai,
-      idDonHang: $scope.hoaDonId,
-      noiDung: noiDung,
-    });
-
-    var config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-      },
-    };
-
-    $http
-      .post(hoaDonAPI + "/huy-don-hang", data, config)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function () {
-        alert("Hủy đơn hàng thành công!");
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000);
-        // Xử lý lỗi nếu có
-      });
-  };
-  $scope.khongNhanHang = function (hang) {
-    $scope.hoaDonId = $routeParams.id;
-    // Hiển thị hộp thoại xác nhận với thông báo và nút xác nhận/hủy
-    var xacNhanHuy = confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
-
-    if (!xacNhanHuy) {
-      // Nếu người dùng chọn "Hủy", không thực hiện bước tiếp theo
-      return;
-    }
-
-    // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
-
-    var danhSachLyDo = [
-      "Không muốn mua nữa",
-      "Sai thông tin",
-      "Đơn hàng được tạo do sự nhầm lẫn",
-      "Sai địa chỉ",
-    ];
-
-    // Hiển thị danh sách lựa chọn cho người dùng
-    var noiDung = prompt(
-      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
-    );
-
-    // Kiểm tra nếu người dùng đã chọn một lựa chọn
-    if (noiDung !== null && noiDung !== "") {
-      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
-      console.log("Lý do hủy đơn hàng:", noiDung);
-      // Thêm mã logic xử lý hủy đơn hàng tại đây
-    } else {
-      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
-      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
-    }
-
-    console.log("idKhachHang", $scope.idKhachHang);
-    console.log("idDonHang", $scope.hoaDonId);
-
-    var data = $httpParamSerializerJQLike({
-      idKhachHang: $scope.vai,
-      idDonHang: $scope.hoaDonId,
-      noiDung: noiDung,
-    });
-
-    var config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-      },
-    };
-
-    $http
-      .post(hoaDonAPI + "/khong-nhan-hang", data, config)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function () {
-        alert("Hủy đơn hàng thành công!");
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000);
-        // Xử lý lỗi nếu có
-      });
   };
 
   $scope.daXacNhan = function (detailHoaDon) {

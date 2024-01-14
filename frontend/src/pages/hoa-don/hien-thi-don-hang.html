@@ -40,22 +40,11 @@
         </div>
 
         <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==2 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-primary"
-            ng-click="khongNhanHang(detailHoaDon)"
-            >Hủy đơn hàng</a
-          >
+          <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="khongNhanHang(detailHoaDon)">Hủy đơn
+            hàng</a>
         </div>
         <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-danger"
-            ng-click="huyDonHang(detailHoaDon)"
-            >Hủy Đơn hàng</a
-          >
+          <a type="button" id="liveToastBtn" class="btn btn-danger" ng-click="huyDonHang(detailHoaDon)">Hủy Đơn hàng</a>
         </div>
 
         <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==1 ">
@@ -177,10 +166,10 @@
               </th>
               <th scope="row">
                 <input ng-if="detailHoaDon.trangThai==0" type="number" ng-model="hoaDonChiTiet.soLuong"
-                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
                   class="form-control form-control-sm" style="width: 100px; height: 30px" />
                 <input ng-if="detailHoaDon.trangThai!=0" disabled type="number" ng-model="hoaDonChiTiet.soLuong"
-                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet)"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
                   class="form-control form-control-sm" style="width: 100px; height: 30px" />
               </th>
               <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
