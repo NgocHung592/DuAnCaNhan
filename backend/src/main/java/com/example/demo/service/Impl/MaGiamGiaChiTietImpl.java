@@ -53,5 +53,11 @@ public class MaGiamGiaChiTietImpl implements MaGiamGiaChiTietService {
         return null;
     }
 
+    @Override
+    public MaGiamGiaChiTiet detail(UUID hoaDonId) {
+
+        return maGiamGiaChiTietRepositioy.detail(hoaDonId);
+    }
+
 
 }

@@ -14,4 +14,6 @@ public interface MaGiamGiaChiTietService {
 
     MaGiamGiaChiTiet update(MaGiamGiaChiTiet maGiamGiaChiTiet, UUID id);
 
+    MaGiamGiaChiTiet detail(UUID hoaDonId);
+
 }

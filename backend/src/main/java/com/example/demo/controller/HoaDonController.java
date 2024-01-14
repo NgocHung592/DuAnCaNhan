@@ -66,6 +66,10 @@ public class HoaDonController {
     public HoaDon updateKhachCoSan(@RequestBody HoaDonRequest hoaDonRequest, @PathVariable("id") String id) {
         return hoaDonService.update(hoaDonRequest, UUID.fromString(id));
     }
+    @PutMapping("update-tong-tien/{id}")
+    public HoaDon updateKhachCoSan(@RequestBody Double tongTien, @PathVariable("id") String id) {
+        return hoaDonService.updateTongTien(tongTien, UUID.fromString(id));
+    }
 
     @GetMapping("/search")
     public Page<HoaDonResponse> search(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "search") String search) {

@@ -22,7 +22,16 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
       });
   }
   $scope.intervalId = setInterval(scheduledTask, 1000);
-
+  $scope.getMa = function () {
+    $http
+      .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
+      .then(function (response) {
+        $scope.listMaGiamGia = response?.data.content;
+        $scope.customIndex = $scope.currentPage * response.data.size;
+        $scope.totalPages = new Array(response.data.totalPages);
+        $scope.visiblePages = $scope.getVisiblePages();
+      });
+  };
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;
 
@@ -174,6 +183,7 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
       .then(function (response) {
         $scope.listMaGiamGia = response.data.content;
         $scope.totalPages = new Array(response.data.totalPages);
+        $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };

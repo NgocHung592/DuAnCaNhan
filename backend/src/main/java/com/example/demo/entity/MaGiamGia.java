@@ -54,10 +54,10 @@ public class MaGiamGia {
     private Timestamp ngayKetThuc;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao = new java.util.Date().toInstant();
+    private Instant ngayTao;
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua = new java.util.Date().toInstant();
+    private Instant ngaySua;
 
     @Column(name = "nguoi_tao")
     private String nguoiTao;

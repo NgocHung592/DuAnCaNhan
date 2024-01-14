@@ -19,7 +19,7 @@ public interface LichSuHoaDonRepository extends JpaRepository<LichSuHoaDon, UUID
             lich_su_hoa_don.trang_thai_hoa_don,
             lich_su_hoa_don.hoa_don_id FROM lich_su_hoa_don
             WHERE hoa_don_id = :hoaDonId
-            ORDER BY ngay_tao ASC;
+            ORDER BY lich_su_hoa_don.ngay_tao ASC;
             """, nativeQuery = true)
     List<LichSuHoaDon> getListLichSuHoaDon(@Param("hoaDonId") UUID hoaDonId);
 }

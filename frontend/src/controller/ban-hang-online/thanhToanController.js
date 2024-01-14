@@ -298,7 +298,7 @@ window.thanhToanController = function (
       } else {
         $scope.addMaGiamGia = {
           tongTien: $scope.tongGiaTri,
-          tongTienSauKhiGiam: $scope.tongTienThanhToan,
+          tongTienSauKhiGiam: $scope.tongTienThanhToan - 30000,
           hoaDonId: $scope.listHoaDon[0].id,
           maGiamGiaId: $scope.maGiamGiaId,
         };

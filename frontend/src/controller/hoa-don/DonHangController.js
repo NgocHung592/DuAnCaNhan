@@ -25,6 +25,10 @@ window.DonHangController = function (
   $scope.customIndexHDCT = 0;
   $scope.customIndex = 0;
   $scope.tienHang = 0;
+  $scope.giamGia = 0;
+  $scope.phiVanChuyen = 0;
+  $scope.listHoaDonChiTietTinhTong = [];
+
   $scope.detailHoaDon = {
     id: "",
     ma: "",
@@ -40,6 +44,19 @@ window.DonHangController = function (
     donGia: "",
     thanhTien: "",
   };
+  $scope.calculateTotal = function () {
+    $http
+      .get(hoaDonChiTietAPI + "/tinh-tong/" + $routeParams.id)
+      .then(function (response) {
+        $scope.listHoaDonChiTietTinhTong = response.data;
+
+        $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+          (total, item) => total + item.thanhTien,
+          0
+        );
+      });
+  };
+  $scope.calculateTotal();
   $scope.successProgress = function () {
     let elem = document.getElementById("success");
     let width = 100;
@@ -120,13 +137,32 @@ window.DonHangController = function (
   };
   //detai hoa don
   $scope.getData();
-  $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
-    if (response.status == 200) {
-      $scope.detailHoaDon = response.data;
-      $scope.vai = $scope.detailHoaDon.khachHang.id;
-      console.log($scope.vai);
-    }
-  });
+  $scope.detailHoaDon = function () {
+    $http
+      .get(hoaDonAPI + "/detail/" + $routeParams.id)
+      .then(function (response) {
+        if (response.status == 200) {
+          $scope.detailHoaDon = response.data;
+          if ($scope.detailHoaDon.khachHang !== null) {
+            $scope.vai = $scope.detailHoaDon.khachHang.id;
+          }
+        }
+        $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
+      });
+  };
+  $scope.detailHoaDon();
+
+  $http
+    .get(maGiamGiaChiTietAPI + "/detail/" + $routeParams.id)
+    .then(function (response) {
+      if (response.status == 200) {
+        $scope.detailMaGiamGiaChiTet = response?.data;
+        console.log($scope.detailMaGiamGiaChiTet);
+        $scope.giamGia =
+          $scope.detailMaGiamGiaChiTet.donGia -
+          $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
+      }
+    });
   $scope.getHoaDonChiTiet = function () {
     $http
       .get(
@@ -142,8 +178,7 @@ window.DonHangController = function (
         $scope.customIndexHDCT = $scope.currentPageHDCT * response.data.size;
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
         $scope.visiblePages = $scope.getVisiblePages();
-        $scope.tienHang = $scope.calculateTotal();
-        $scope.tongTien = $scope.calculateTotal();
+        $scope.calculateTotal();
       });
   };
   $scope.getHoaDonChiTiet();
@@ -258,19 +293,7 @@ window.DonHangController = function (
       }
     });
   };
-  // $scope.calculateTotal = function () {
-  //   $http
-  //     .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
-  //     .then(function (response) {
-  //       $scope.listHoaDonChiTietTinhTong = response.data;
-  //       $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
-  //         (total, item) => total + item.thanhTien,
-  //         0
-  //       );
-  //       $scope.tongTien =
-  //         $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-  //     });
-  // };
+
   $scope.changeSoLuong = function (idSanPhamChiTiet) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
       (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
@@ -285,7 +308,7 @@ window.DonHangController = function (
           soLuong: matchingItem.soLuong,
           thanhTien: matchingItem.soLuong * matchingItem.donGia,
         };
-
+        console.log($scope.hoaDonUpdate);
         $http
           .put(
             hoaDonChiTietAPI + "/update/" + matchingItem.idHoaDonChiTiet,
@@ -294,7 +317,33 @@ window.DonHangController = function (
           .then(function () {
             $scope.getHoaDonChiTiet();
             showSuccess("Cập nhật thành công");
+          })
+          .then(function () {
+            $http
+              .get(hoaDonChiTietAPI + "/tinh-tong/" + $routeParams.id)
+              .then(function (response) {
+                $scope.listHoaDonChiTietTinhTong = response.data;
+
+                $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+                  (total, item) => total + item.thanhTien,
+                  0
+                );
+                $http
+                  .get(hoaDonAPI + "/detail/" + $routeParams.id)
+                  .then(function (response) {
+                    $scope.detailHoaDon = response.data;
+                    $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
+                  });
+
+                $scope.updateTongTien =
+                  $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+                return $http.put(
+                  hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                  $scope.updateTongTien
+                );
+              });
           });
+        $scope.detailHoaDon();
       } else {
         showError(
           "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"

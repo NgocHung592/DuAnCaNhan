@@ -24,6 +24,10 @@ public class MaGiamGiaChiTietController {
     public ResponseEntity hienThi(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @PathVariable("id") String id) {
         return new ResponseEntity(maGiamGiaChiTietService.getPage(pageNo, UUID.fromString(id)), HttpStatus.OK);
     }
+    @GetMapping("detail/{id}")
+    public ResponseEntity detail( @PathVariable("id") String id) {
+        return new ResponseEntity(maGiamGiaChiTietService.detail(UUID.fromString(id)), HttpStatus.OK);
+    }
 
     @PostMapping("add")
     public ResponseEntity post(@RequestBody MaGiamGiaChiTietRequest maGiamGiaChiTietRequest) {

@@ -21,4 +21,9 @@ public interface MaGiamGiaChiTietRepositioy extends JpaRepository<MaGiamGiaChiTi
             """, nativeQuery = true)
     Page<MaGiamGiaChiTiet> getPage(Pageable pageable, UUID id);
 
+     @Query(value = """
+            select * from ma_giam_gia_chi_tiet where hoa_don_id=?1
+            """, nativeQuery = true)
+    MaGiamGiaChiTiet detail(UUID id);
+
 }

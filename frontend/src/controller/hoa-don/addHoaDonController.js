@@ -635,7 +635,8 @@ window.addHoaDonController = function (
             } else {
               $scope.addMaGiamGia = {
                 tongTien: $scope.tienHang,
-                tongTienSauKhiGiam: $scope.tongTien,
+                tongTienSauKhiGiam: $scope.tienHang - $scope.giamGia,
+
                 hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
                 maGiamGiaId: $scope.maGiamGiaId,
               };
@@ -691,7 +692,7 @@ window.addHoaDonController = function (
             } else {
               $scope.addMaGiamGia = {
                 tongTien: $scope.tienHang,
-                tongTienSauKhiGiam: $scope.tongTien,
+                tongTienSauKhiGiam: $scope.tienHang - $scope.giamGia,
                 hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
                 maGiamGiaId: $scope.maGiamGiaId,
               };
@@ -734,7 +735,8 @@ window.addHoaDonController = function (
             } else {
               $scope.addMaGiamGia = {
                 tongTien: $scope.tienHang,
-                tongTienSauKhiGiam: $scope.tongTien,
+                tongTienSauKhiGiam: $scope.tienHang - $scope.giamGia,
+
                 hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
                 maGiamGiaId: $scope.maGiamGiaId,
               };
@@ -773,7 +775,7 @@ window.addHoaDonController = function (
             } else {
               $scope.addMaGiamGia = {
                 tongTien: $scope.tienHang,
-                tongTienSauKhiGiam: $scope.tongTien,
+                tongTienSauKhiGiam: $scope.tienHang - $scope.giamGia,
                 hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
                 maGiamGiaId: $scope.maGiamGiaId,
               };

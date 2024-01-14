@@ -163,6 +163,13 @@ public class HoaDonServiceImpl implements HoaDonService {
         return null;
     }
 
+    @Override
+    public HoaDon updateTongTien(Double tongTien, UUID id) {
+        HoaDon hoaDon=hoaDonReponsitory.findById(id).get();
+        hoaDon.setTongTien(BigDecimal.valueOf(tongTien));
+        return hoaDonReponsitory.save(hoaDon);
+    }
+
 
     @Override
     public HoaDon detail(UUID id) {

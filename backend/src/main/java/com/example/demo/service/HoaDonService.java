@@ -33,8 +33,9 @@ public interface HoaDonService {
 
     HoaDon update(HoaDonRequest hoaDonRequest, UUID id);
 
-    HoaDon detail(UUID id);
+    HoaDon updateTongTien(Double tongTien, UUID id);
 
+    HoaDon detail(UUID id);
 
     void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai,String noiDung);
 
