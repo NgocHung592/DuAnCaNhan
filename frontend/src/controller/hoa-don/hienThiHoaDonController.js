@@ -5,7 +5,6 @@ window.hienThiHoaDonController = function (
   $timeout,
   $window,
   $rootScope,
-
   $httpParamSerializerJQLike
 ) {
   $scope.listHoaDon = [];
@@ -17,7 +16,7 @@ window.hienThiHoaDonController = function (
   $scope.maxVisiblePages = 3;
   $scope.phiVanChuyen = 0;
   $scope.giamGia = 0;
-
+  $scope.selectedTab = null;
   $scope.getData = function () {
     $http
       .get(hoaDonAPI + "/hien-thi?pageNo=" + $scope.currentPage)
@@ -25,14 +24,11 @@ window.hienThiHoaDonController = function (
         $scope.listHoaDon = response?.data.content;
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
-        $scope.currentPage = Math.min(
-          $scope.currentPage,
-          response.data.totalPages
-        );
-
         $scope.visiblePages = $scope.getVisiblePages();
+      })
+      .catch(function (error) {
+        console.error("Error fetching data:", error);
       });
-    $;
   };
   $scope.getData();
   $scope.selectTab = function (tab) {
@@ -42,14 +38,7 @@ window.hienThiHoaDonController = function (
 
   $scope.filterDataByTab = function (tab) {
     if (tab === null) {
-      $http
-        .get(hoaDonAPI + "/hien-thi?pageNo=" + $scope.currentPage)
-        .then(function (response) {
-          $scope.listHoaDon = response?.data.content;
-          $scope.customIndex = $scope.currentPage * response.data.size;
-          $scope.totalPages = new Array(response.data.totalPages);
-          $scope.visiblePages = $scope.getVisiblePages();
-        });
+      $scope.getData();
     } else {
       $http
         .get(
@@ -60,20 +49,29 @@ window.hienThiHoaDonController = function (
           $scope.customIndex = $scope.currentPage * response.data.size;
           $scope.totalPages = new Array(response.data.totalPages);
           $scope.visiblePages = $scope.getVisiblePages();
+        })
+        .catch(function (error) {
+          console.error("Error fetching data:", error);
         });
     }
   };
+  $scope.selectTab(null);
+  // $scope.filterDataByTab(null);
   $scope.isSelectedTab = function (tab) {
     return tab === $scope.selectedTab;
   };
-  $scope.selectTab(null);
 
   $scope.detail = function (id) {
-    $http.get(hoaDonAPI + "/detail/" + id).then(function (response) {
-      if (response.status == 200) {
-        $scope.formHoaDon = response.data;
-      }
-    });
+    $http
+      .get(hoaDonAPI + "/detail/" + id)
+      .then(function (response) {
+        if (response.status == 200) {
+          $scope.formHoaDon = response.data;
+        }
+      })
+      .catch(function (error) {
+        console.error("Error fetching data:", error);
+      });
   };
   $scope.changePage = function (index) {
     if (index >= 0) {
@@ -96,14 +94,6 @@ window.hienThiHoaDonController = function (
       $scope.getData();
     }
   };
-
-  // $scope.add = function () {
-  //   $http.post(hoaDonAPI + "/add", $scope.formHoaDon).then(function (response) {
-  //     $http.get(hoaDonAPI + "/hien-thi").then(function (response) {
-  //       $scope.listHoaDon = response.data;
-  //     });
-  //   });
-  // };
 
   $scope.update = function (id) {
     $http
@@ -351,11 +341,27 @@ window.hienThiHoaDonController = function (
     }
 
     // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
-    var noiDung = prompt("Nhập lý do hủy đơn hàng:", "");
 
-    if (noiDung === null || noiDung === "") {
-      // Nếu người dùng chọn "Hủy" hoặc không nhập lý do, không thực hiện bước tiếp theo
-      return;
+    var danhSachLyDo = [
+      "Không muốn mua nữa",
+      "Sai thông tin",
+      "Đơn hàng được tạo do sự nhầm lẫn",
+      "Sai địa chỉ",
+    ];
+
+    // Hiển thị danh sách lựa chọn cho người dùng
+    var noiDung = prompt(
+      "Chọn lý do hủy đơn hàng:\n" + danhSachLyDo.join("\n")
+    );
+
+    // Kiểm tra nếu người dùng đã chọn một lựa chọn
+    if (noiDung !== null && noiDung !== "") {
+      // Người dùng đã chọn một lựa chọn, sử dụng lựa chọn đó
+      console.log("Lý do hủy đơn hàng:", noiDung);
+      // Thêm mã logic xử lý hủy đơn hàng tại đây
+    } else {
+      // Người dùng đã chọn 'Hủy' hoặc đóng prompt, không thực hiện bước tiếp theo
+      console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
     }
 
     console.log("idKhachHang", $scope.idKhachHang);

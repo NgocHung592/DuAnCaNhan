@@ -4,6 +4,7 @@ window.DonHangController = function (
   $routeParams,
   $httpParamSerializerJQLike,
   $timeout,
+  $rootScope,
   $window
 ) {
   const toastLiveExample = document.getElementById("liveToast");
@@ -257,19 +258,19 @@ window.DonHangController = function (
       }
     });
   };
-  $scope.calculateTotal = function () {
-    $http
-      .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
-      .then(function (response) {
-        $scope.listHoaDonChiTietTinhTong = response.data;
-        $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
-          (total, item) => total + item.thanhTien,
-          0
-        );
-        $scope.tongTien =
-          $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-      });
-  };
+  // $scope.calculateTotal = function () {
+  //   $http
+  //     .get(hoaDonChiTietAPI + "/tinh-tong/" + $scope.formHoaDonChiTiet.idHoaDon)
+  //     .then(function (response) {
+  //       $scope.listHoaDonChiTietTinhTong = response.data;
+  //       $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+  //         (total, item) => total + item.thanhTien,
+  //         0
+  //       );
+  //       $scope.tongTien =
+  //         $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+  //     });
+  // };
   $scope.changeSoLuong = function (idSanPhamChiTiet) {
     var matchingItem = $scope.listHoaDonChiTiet.find(
       (item) => item.idSanPhamChiTiet === idSanPhamChiTiet
@@ -403,6 +404,20 @@ window.DonHangController = function (
         });
       });
   };
+  $scope.getListSuHoaDon = function () {
+    $http
+      .get(hoaDonAPI + "/lich-su/" + $routeParams.id)
+      .then(function (response) {
+        $scope.listlichsu = response.data;
+        console.log("idhd", $scope.listlichsu);
+      });
+  };
+  $scope.getListSuHoaDon();
+  $scope.beautifyDate = function (date) {
+    // Sử dụng Moment.js để định dạng ngày tháng
+    return moment(date).format("hh:mm A, DD/MM/YYYY");
+  };
+
   $scope.daXacNhan = function (detailHoaDon) {
     $scope.hoaDonId = $routeParams.id;
 
