@@ -70,30 +70,29 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div ng-if="listHoaDonChiTiet.length===0">
+                                    <div ng-if="listHoaDonChiTiet.length === 0">
                                         <p class="dataTables_empty_icon">
                                             <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
                                         </p>
-
                                         <p class="dataTables_empty_lable">
-                                            Không có sản phẩm nào
+                                            Không có dữ liệu
                                         </p>
                                     </div>
-                                    <nav aria-label="Page navigation example " ng-if="listHoaDonChiTiet.length!==0">
+                                    <nav aria-label="Page navigation example" ng-if="listHoaDonChiTiet.length > 0">
                                         <ul class="pagination justify-content-center">
                                             <li class="page-item">
-                                                <a class="page-link" ng-click="previousPageHDCT()">
+                                                <a class="page-link" ng-click="previousPage()" aria-label="Previous">
                                                     <span aria-hidden="true">
                                                         << </span>
                                                 </a>
                                             </li>
-                                            <li class="page-item" ng-repeat="page in totalPagesHDCT track by $index"
-                                                ng-class="{'active': $index === currentPageHDCT} "
-                                                ng-click="changePageHDCT($index);">
-                                                <a class="page-link">{{$index+1}}</a>
+                                            <li class="page-item" ng-repeat="page in visiblePages"
+                                                ng-class="{ 'active': page.active === 'active' }">
+                                                <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                                                    }}</a>
                                             </li>
                                             <li class="page-item">
-                                                <a class="page-link" ng-click="nextPageHDCT()">>></a>
+                                                <a class="page-link" ng-click="nextPage()"> >> </a>
                                             </li>
                                         </ul>
                                     </nav>

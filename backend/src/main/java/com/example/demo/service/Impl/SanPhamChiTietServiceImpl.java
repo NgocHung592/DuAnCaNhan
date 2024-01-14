@@ -91,7 +91,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .ngayTao(sanPhamChiTietRequest.getNgayTao())
-                        .nguoiTao("Hưng")
+                        .nguoiTao(sanPhamChiTietRequest.getNguoiTao())
                         .urlImage(sanPhamChiTietRequest.getUrlImage())
                         .sanPham(sanPhamRepository.findById(getIdSanPham(sanPhamChiTietRequest.getTenSanPham())).get())
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())
@@ -110,7 +110,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .ten(sanPhamChiTietRequest.getTenSanPham())
                         .moTa(sanPhamChiTietRequest.getMoTa())
                         .ngayTao(sanPhamChiTietRequest.getNgayTao())
-                        .nguoiTao("Hưng")
+                        .nguoiTao(sanPhamChiTietRequest.getNguoiTao())
                         .daXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()))
                         .build();
                 SanPham sanPham = sanPhamRepository.save(sanPhamSave);
@@ -120,7 +120,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                         .soLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()))
                         .donGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()))
                         .ngayTao(sanPhamChiTietRequest.getNgayTao())
-                        .nguoiTao("Hưng")
+                        .nguoiTao(sanPhamChiTietRequest.getNguoiTao())
                         .urlImage(sanPhamChiTietRequest.getUrlImage())
                         .sanPham(sanPham)
                         .kichThuoc(kichThuocRepository.findById(getIdKichThuoc(sanPhamChiTietRequest.getTenKichThuoc())).get())

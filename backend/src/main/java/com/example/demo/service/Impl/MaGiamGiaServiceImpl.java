@@ -45,7 +45,7 @@ public class MaGiamGiaServiceImpl implements MaGiamGiaService {
         optional.map(maGiamGiaUpdate -> {
             maGiamGiaUpdate.setTenKM(maGiamGia.getTenKM());
             maGiamGiaUpdate.setHinhThucGiam(maGiamGia.getHinhThucGiam());
-            maGiamGiaUpdate.setSoLuong(maGiamGiaUpdate.getSoLuong());
+            maGiamGiaUpdate.setSoLuong(maGiamGia.getSoLuong());
             maGiamGiaUpdate.setGiaTriDonToiThieu(maGiamGia.getGiaTriDonToiThieu());
             maGiamGiaUpdate.setGiaTriGiam(maGiamGia.getGiaTriGiam());
             maGiamGiaUpdate.setNgayBatDau(maGiamGia.getNgayBatDau());
