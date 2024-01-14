@@ -33,10 +33,31 @@
             </div>
           </div>
         </div>
+
         <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
           <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="daXacNhan(detailHoaDon)">Xác nhận đơn
             hàng</a>
         </div>
+
+        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==2 ">
+          <a
+            type="button"
+            id="liveToastBtn"
+            class="btn btn-primary"
+            ng-click="khongNhanHang(detailHoaDon)"
+            >Hủy đơn hàng</a
+          >
+        </div>
+        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
+          <a
+            type="button"
+            id="liveToastBtn"
+            class="btn btn-danger"
+            ng-click="huyDonHang(detailHoaDon)"
+            >Hủy Đơn hàng</a
+          >
+        </div>
+
         <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==1 ">
           <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="xacNhanDonHang(detailHoaDon)">Xác nhận
             giao hàng</a>

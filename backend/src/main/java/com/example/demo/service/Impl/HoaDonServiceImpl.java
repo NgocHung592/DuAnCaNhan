@@ -10,6 +10,7 @@ import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
 import com.example.demo.repository.*;
 import com.example.demo.service.HoaDonService;
+import com.example.demo.service.LichSuHoaDonService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -180,7 +181,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     @Transactional
     public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai, String noiDung) {
-        Optional<HoaDon> optionalHoaDon = hoaDonReponsitory.findByKhachHangIdAndId(khachHangId,donHangId);
+        Optional<HoaDon> optionalHoaDon = hoaDonReponsitory.findByKhachHangIdAndId(khachHangId, donHangId);
 
         if (optionalHoaDon.isPresent()) {
             HoaDon hoaDon = optionalHoaDon.get();
@@ -205,11 +206,14 @@ public class HoaDonServiceImpl implements HoaDonService {
                     sanPhamChiTietRepository.giamSoLuongSanPham(hoaDonChiTiet.getSanPhamChiTiet().getId(), hoaDonChiTiet.getSoLuong());
                 }
             }
-        } else {
-            // Handle the case when the order is not found
-            throw new EntityNotFoundException("Không tìm thấy đơn hàng");
+            } else {
+                // Handle the case when the order is not found
+                throw new EntityNotFoundException("Không tìm thấy đơn hàng");
+            }
+
         }
-    }
+
+
 
     @Override
     public Page<HoaDonResponse> getPage(Integer pageNo) {
@@ -228,4 +232,14 @@ public class HoaDonServiceImpl implements HoaDonService {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return hoaDonReponsitory.loc(pageable, trangThai);
     }
+    @Override
+    @Transactional
+    public void khongNhanHang(UUID id) {
+        List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietRepository.findByHoaDonId(id);
+        for (HoaDonChiTiet hoaDonChiTiet : hoaDonChiTietList) {
+            sanPhamChiTietRepository.tangSoLuongSanPham(hoaDonChiTiet.getSanPhamChiTiet().getId(), hoaDonChiTiet.getSoLuong());
+        }
+    }
+
+
 }

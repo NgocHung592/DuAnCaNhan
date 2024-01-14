@@ -53,4 +53,19 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, 
     void deleteByGioHang(GioHang gioHang);
 
 
+    @Query(value = """
+  SELECT * from gio_hang_chi_tiet where san_pham_chi_tiet_id =?1
+  
+  """, nativeQuery = true)
+    Optional<GioHangChiTiet> getAlll(UUID id);
+
+
+
+
+
+
+
+
+
+
 }
