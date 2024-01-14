@@ -67,19 +67,36 @@
             </div>
             <div class="row">
               <div class="col-md-3">
-                <label for="startDate">Từ ngày:</label>
-                <input type="date" id="startDate" ng-model="startDate" />
+                <div class="form-group">
+                  <label for="startDate">Từ ngày:</label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    ng-model="startDate"
+                    class="form-control"
+                  />
+                </div>
               </div>
               <div class="col-md-3">
-                <label for="endDate">Đến ngày:</label>
-                <input type="date" id="endDate" ng-model="endDate" />
+                <div class="form-group">
+                  <label for="endDate">Đến ngày:</label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    ng-model="endDate"
+                    class="form-control"
+                  />
+                </div>
               </div>
               <div class="col-md-3 mt-4">
-                <button class="btn btn-primary" ng-click="getData()">
-                  Xem thống kê
-                </button>
+                <div class="form-group">
+                  <button class="btn btn-primary" ng-click="getData()">
+                    Xem thống kê
+                  </button>
+                </div>
               </div>
             </div>
+
             <canvas id="myChart" width="300"></canvas>
           </div>
         </div>
