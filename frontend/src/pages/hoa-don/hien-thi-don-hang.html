@@ -7,12 +7,16 @@
             <div>
               <ul class="timeline">
                 <li class="timeline-item" ng-repeat="lichsua in listlichsu">
+                  <div ng-if="lichsua.trangThai == 5" class="timeline-content">
+                    <span class="order-label">Tạo hóa đơn</span>
+                    <span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                  </div>
                   <div ng-if="lichsua.trangThai == 0" class="timeline-content">
-                    <span class="order-label">Đơn hàng đã đặt</span>
+                    <span class="order-label">Chờ xác nhận</span>
                     <span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 1" class="timeline-content">
-                    <span class="order-label">Đã xác nhận</span
+                    <span class="order-label">Chờ giao hàng</span
                     ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 2" class="timeline-content">
@@ -21,6 +25,10 @@
                   </div>
                   <div ng-if="lichsua.trangThai == 3" class="timeline-content">
                     <span class="order-label">Đã nhận hàng</span
+                    ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                  </div>
+                  <div ng-if="lichsua.trangThai == 4" class="timeline-content">
+                    <span class="order-label">Đã hủy</span
                     ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                 </li>
