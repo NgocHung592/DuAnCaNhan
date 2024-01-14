@@ -37,7 +37,7 @@ window.GioHangController = function (
           item.donGia = $filter("number")(donGia, 0);
           // Tính toán tổng giá trị từ đơn giá
           $scope.tongGiaTri += donGia;
-
+          // $route.reload();
           // In ra console log để kiểm tra từng bước tính toán
           console.log("donGia:", donGia);
           console.log("Partial tongGiaTri:", $scope.tongGiaTri);

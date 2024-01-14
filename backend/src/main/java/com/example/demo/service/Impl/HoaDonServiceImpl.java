@@ -8,9 +8,7 @@ import com.example.demo.model.request.HoaDonRequest;
 import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
-import com.example.demo.repository.HoaDonReponsitory;
-import com.example.demo.repository.KhachHangRepository;
-import com.example.demo.repository.LichSuHoaDonRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.HoaDonService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,15 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private KhachHangRepository khachHangRepository;
+
+    @Autowired
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+
+    @Autowired
+    private SanPhamChiTietRepository sanPhamChiTietRepository;
+
+
 
     @Autowired
     private LichSuHoaDonRepository lichSuHoaDonRepository;
@@ -158,6 +165,13 @@ public class HoaDonServiceImpl implements HoaDonService {
             lichSuHoaDonRepository.save(lichSuHoaDon);
             hoaDon.setTrangThai(newTrangThai);
             hoaDonReponsitory.save(hoaDon);
+            if (newTrangThai == 1) {
+                List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietRepository.findByHoaDonId(donHangId);
+                for (HoaDonChiTiet hoaDonChiTiet : hoaDonChiTietList) {
+                    // Gọi phương thức từ repository để giảm số lượng sản phẩm
+                    sanPhamChiTietRepository.giamSoLuongSanPham(hoaDonChiTiet.getSanPhamChiTiet().getId(), hoaDonChiTiet.getSoLuong());
+                }
+            }
         } else {
             // Handle the case when the order is not found
             throw new EntityNotFoundException("Không tìm thấy đơn hàng");

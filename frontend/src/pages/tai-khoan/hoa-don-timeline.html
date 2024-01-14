@@ -241,6 +241,7 @@
                                   </div>
 
                                   <hr />
+
                                   <span class="line-item-label"
                                     >Thành tiền:
                                   </span>
@@ -250,6 +251,17 @@
                                   >
                                     {{hang.tongTien | number:0}}₫
                                   </span>
+                                  <hr />
+                                  <div ng-repeat="lichsua in listlichsu">
+                                    <div
+                                      ng-if="lichsua.trangThai == 4"
+                                      class="timeline-content"
+                                    >
+                                      <span
+                                        >Lý đo hủy : {{lichsua.noiDung}}</span
+                                      >
+                                    </div>
+                                  </div>
 
                                   <button
                                     ng-click="huyDonHang(hang)"

@@ -1,4 +1,9 @@
-window.hienThiHoaDonChiTiet = function ($http, $scope, $routeParams) {
+window.hienThiHoaDonChiTiet = function (
+  $http,
+  $scope,
+  $routeParams,
+  $rootScope
+) {
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
   // $scope.formHoaDon = {
@@ -19,7 +24,8 @@ window.hienThiHoaDonChiTiet = function ($http, $scope, $routeParams) {
   $http.get(hoaDonAPI + "/detail/" + $routeParams.id).then(function (response) {
     if (response.status == 200) {
       $scope.formHoaDon = response.data;
-      console.log("response.data", response.data);
+      $rootScope.idhoaD = $routeParams.id;
+      console.log("response.data", $rootScope.idhoaD);
     }
   });
   // $scope.getLichSuDonHang = function (id) {

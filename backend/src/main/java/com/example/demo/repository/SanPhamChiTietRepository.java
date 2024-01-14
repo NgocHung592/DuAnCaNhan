@@ -5,6 +5,7 @@ import com.example.demo.model.response.SanPhamChiTietResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -107,6 +108,10 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
     List<SanPhamChiTietResponse> detailSanPham(UUID id);
 
     Optional<SanPhamChiTiet> findById(UUID sanPhamChiTietId);
+    @Modifying
+    @Query("UPDATE SanPhamChiTiet s SET s.soLuong = s.soLuong - :soLuong WHERE s.id = :sanPhamChiTietId")
+    void giamSoLuongSanPham(@Param("sanPhamChiTietId") UUID sanPhamChiTietId, @Param("soLuong") int soLuong);
+
 
 
 }

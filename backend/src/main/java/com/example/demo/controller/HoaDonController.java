@@ -133,6 +133,7 @@ public class HoaDonController {
             // Call the updated method from the service
             hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 1, noiDung);
 
+
             return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
@@ -146,7 +147,7 @@ public class HoaDonController {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            String noiDung = "Đơn hàng đã được xác nhận";
+            String noiDung = "Đơn hàng đã đang giao hang";
 
 
             hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 2,noiDung); // 5 là trạng thái mặc định mới
@@ -163,7 +164,7 @@ public class HoaDonController {
             UUID khachHangId = UUID.fromString(idKhachHang);
             UUID donHangId = UUID.fromString(idDonHang);
 
-            String noiDung = "Đơn hàng đã được xác nhận";
+            String noiDung = "Đơn hàng đã giao thành cong";
 
 
             hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 3,noiDung); // 5 là trạng thái mặc định mới
