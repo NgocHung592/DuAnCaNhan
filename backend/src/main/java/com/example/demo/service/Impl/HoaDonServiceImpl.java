@@ -71,7 +71,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .ma(hoaDon.getMa())
                 .ngayTao(hoaDon.getNgayTao())
                 .loaiHoaDon("Tại quầy")
-                .nguoiTao("Hưng")
+                .nguoiTao(hoaDon.getNguoiTao())
                 .trangThai(hoaDon.getTrangThai())
                 .build();
         HoaDon hoaDonNew=hoaDonReponsitory.save(hoaDonSave);
@@ -127,9 +127,10 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
+                hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
                 LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
-                        .ngayTao(hoaDon.getNgayTao())
+                        .ngayTao(hoaDonRequest.getNgayThanhToan())
                         .nguoiTao(hoaDon.getNguoiTao())
                         .trangThai(hoaDon.getTrangThai())
                         .hoaDon(hoaDonNew)
@@ -147,10 +148,10 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
+                hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
-
                 LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
-                        .ngayTao(hoaDon.getNgayTao())
+                        .ngayTao(hoaDon.getNgayThanhToan())
                         .nguoiTao(hoaDon.getNguoiTao())
                         .trangThai(hoaDon.getTrangThai())
                         .hoaDon(hoaDonNew)

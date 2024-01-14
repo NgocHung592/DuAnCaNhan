@@ -663,7 +663,9 @@ window.addHoaDonController = function (
         $scope.show == true
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
         //update hóa đơn
+        console.log($scope.hoaDonThanhToan);
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -699,7 +701,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $location.path("/hoa-don/hien-thi");
+        // $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang !== "" &&
         $scope.show == false
@@ -745,6 +747,7 @@ window.addHoaDonController = function (
         $location.path("/hoa-don/hien-thi");
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
