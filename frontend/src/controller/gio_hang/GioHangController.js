@@ -83,8 +83,12 @@ window.GioHangController = function (
       $scope.capNhatGioHangChiTiet(item); // Cập nhật giỏ hàng
       $route.reload();
     } else {
-      // Nếu số lượng là 1, gọi hàm xóa sản phẩm
-      $scope.xoaGioHang(item.idGioHang);
+      var xacNhan = confirm("Bạn có chắc chắn muốn xóa không?");
+      if (xacNhan) {
+        $scope.xoaGioHang(item.idGioHang);
+      } else {
+        // Người dùng đã hủy xác nhận, không thực hiện hành động
+      }
     }
   };
 

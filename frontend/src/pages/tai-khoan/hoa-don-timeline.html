@@ -113,7 +113,7 @@
 
                                   <div
                                     class="timeline-container"
-                                    ng-if="hang.trangThai != 4"
+                                    ng-if="hang.trangThai != 4 "
                                   >
                                     <div>
                                       <ul class="timeline">
@@ -127,6 +127,18 @@
                                           >
                                             <span class="order-label"
                                               >Đơn hàng đã đặt</span
+                                            >
+                                            <span
+                                              >{{ beautifyDate(lichsua.ngayTao)
+                                              }}</span
+                                            ><br />
+                                          </div>
+                                          <div
+                                            ng-if="lichsua.trangThai == 5"
+                                            class="timeline-content"
+                                          >
+                                            <span class="order-label"
+                                              >Tạo đơn hàng</span
                                             >
                                             <span
                                               >{{ beautifyDate(lichsua.ngayTao)

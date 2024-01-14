@@ -1,21 +1,10 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.entity.KichThuoc;
-import com.example.demo.entity.MauSac;
-import com.example.demo.entity.SanPham;
-import com.example.demo.entity.SanPhamChiTiet;
+import com.example.demo.entity.*;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
-import com.example.demo.repository.ChatLieuRepository;
-import com.example.demo.repository.CoAoRepository;
-import com.example.demo.repository.HoaTietRepository;
-import com.example.demo.repository.KichThuocRepository;
-import com.example.demo.repository.MauSacRepository;
-import com.example.demo.repository.PhongCachRepository;
-import com.example.demo.repository.SanPhamChiTietRepository;
-import com.example.demo.repository.SanPhamRepository;
-import com.example.demo.repository.TayAoRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.SanPhamChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +33,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Autowired
     private MauSacRepository mauSacRepository;
     @Autowired
+    private GioHangChiTietRepository gioHangChiTietRepository;
+    @Autowired
     private PhongCachRepository phongCachRepository;
     @Autowired
     private TayAoRepository tayAoRepository;
@@ -64,7 +55,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, List<UUID> mauSacIds, List<UUID>  kichThuocIds) {
+    public Page<SanPhamChiTietResponse> search(Integer pageNo, String key, List<UUID> mauSacIds, List<UUID> kichThuocIds) {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return sanPhamChiTietRepository.search(pageable, key, mauSacIds, kichThuocIds);
     }
@@ -178,23 +169,29 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             sanPhamChiTietUpdate.setCoAo(coAoRepository.findById(sanPhamChiTietRequest.getIdCoAo()).get());
             return sanPhamChiTietRepository.save(sanPhamChiTietUpdate);
         }).orElse(null);
+        Optional<GioHangChiTiet> gioHangChiTiet = gioHangChiTietRepository.getAlll(id);
+        gioHangChiTiet.map(gioHangChiTiet1 -> {
+            gioHangChiTiet1.setDonGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()).multiply(BigDecimal.valueOf(gioHangChiTiet.get().getSoLuong())));
+            return gioHangChiTietRepository.save(gioHangChiTiet1);
+        }).orElse(null);
+
 
         return null;
     }
 
     @Override
     public SanPhamChiTiet updateSoLuong(UpdateSanPham updateSanPham) {
-            Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(updateSanPham.getIdSanPhamChiTiet());
-            if (optional.isPresent()) {
-                Integer soLuongNew = optional.get().getSoLuong() - updateSanPham.getSoLuong();
-                optional.map(sanPhamChiTiet -> {
-                    sanPhamChiTiet.setSoLuong(soLuongNew);
-                    if (soLuongNew == 0) {
-                        sanPhamChiTiet.setDaXoa(true);
-                    }
-                    return sanPhamChiTietRepository.save(sanPhamChiTiet);
-                }).orElse(null);
-            }
+        Optional<SanPhamChiTiet> optional = sanPhamChiTietRepository.findById(updateSanPham.getIdSanPhamChiTiet());
+        if (optional.isPresent()) {
+            Integer soLuongNew = optional.get().getSoLuong() - updateSanPham.getSoLuong();
+            optional.map(sanPhamChiTiet -> {
+                sanPhamChiTiet.setSoLuong(soLuongNew);
+                if (soLuongNew == 0) {
+                    sanPhamChiTiet.setDaXoa(true);
+                }
+                return sanPhamChiTietRepository.save(sanPhamChiTiet);
+            }).orElse(null);
+        }
 
         return null;
     }
