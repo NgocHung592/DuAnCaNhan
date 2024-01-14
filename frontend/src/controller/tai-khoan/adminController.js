@@ -5,7 +5,6 @@ angular.module("myApp").controller("admin", [
     let storedUserData = localStorage.getItem("loggedInAdmin");
     $scope.storedUser = JSON.parse(storedUserData);
 
-    console.log($scope.storedUser);
     if ($scope.storedUser === null) {
       $window.location.href = "/src/pages/login/dang-nhap.html";
     } else {

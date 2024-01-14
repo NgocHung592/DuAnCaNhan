@@ -8,6 +8,7 @@ window.addHoaDonController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
   $scope.listHoaDon = [];
   $scope.sizeAndQuantitys = [];
   $scope.listKichThuoc = [];
@@ -34,6 +35,8 @@ window.addHoaDonController = function (
   $scope.showDropDownThanhPho = false;
   $scope.showDropDownPhuongXa = false;
   $scope.showDropDownQuanHuyen = false;
+  $scope.isSelected = false;
+
   $scope.tongTien = 0;
   $scope.giamGia = 0;
   $scope.tienHang = 0;
@@ -647,13 +650,13 @@ window.addHoaDonController = function (
         //     $scope.addHinhThucThanhToan
         //   );
         // });
-        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
+        $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
         $scope.show == true
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
-
+        //update hóa đơn
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -689,12 +692,12 @@ window.addHoaDonController = function (
               );
             }
           });
-        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
+        $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang !== "" &&
         $scope.show == false
       ) {
-        $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
+        $scope.hoaDonThanhToan.diaChiKhachHang = null;
         $scope.hoaDonThanhToan.trangThai = 3;
 
         $http
@@ -732,7 +735,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
+        $location.path("/hoa-don/hien-thi");
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $http
@@ -770,7 +773,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
+        $location.path("/hoa-don/hien-thi");
       }
     }
   };
@@ -796,20 +799,24 @@ window.addHoaDonController = function (
         return response?.data;
       });
   }
+
   $scope.addKhachHang = function (e, idKhachHang) {
     e.preventDefault();
+    $scope.isSelected = !$scope.isSelected;
+
     $scope.chonKhachHang = true;
     let diaChiMacDinh = "";
     detailKhachHang(idKhachHang).then(function (detailKhachHang) {
       $scope.hoaDonThanhToan.idKhachHang = detailKhachHang.id;
-      $scope.hoaDonThanhToan.tenKhachHang = detailKhachHang.hoTen;
-      $scope.hoaDonThanhToan.soDienThoaiKhachHang = detailKhachHang.soDienThoai;
     });
     detailDiaChi(idKhachHang).then(function (detailDiaChi) {
       if (detailDiaChi) {
         diaChiMacDinh = detailDiaChi.find((diaChi) => {
           return diaChi.diaChiMacDinh === true;
         });
+        $scope.hoaDonThanhToan.tenKhachHang = diaChiMacDinh.tenKhachHang;
+        $scope.hoaDonThanhToan.soDienThoaiKhachHang = diaChiMacDinh.soDienThoai;
+        $scope.listDiaChi = detailDiaChi;
       }
       $scope.hoaDonThanhToan.diaChiCuThe = diaChiMacDinh.diaChiCuThe;
       $scope.hoaDonThanhToan.tinhThanhPho = diaChiMacDinh.tinhThanhPho;
@@ -988,6 +995,7 @@ window.addHoaDonController = function (
     }
     return visiblePages;
   }
+
   // const video = document.getElementById("scanner");
 
   // // Khởi tạo Instascan

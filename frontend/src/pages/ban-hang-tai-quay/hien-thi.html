@@ -291,7 +291,7 @@
                                     <div class="search-container col-md-5">
                                         <i class="fas fa-search search-icon"></i>
                                         <input type="text" ng-model="searchKeyword"
-                                            placeholder="Tìm kiếm sản phẩm theo mã, tên" ng-change="search()"
+                                            placeholder="Tìm kiếm khách hàng theo mã, tên" ng-change="searchKhachHang()"
                                             class="search-input" />
                                     </div>
                                 </div>
@@ -323,6 +323,62 @@
                                             <th scope="row">{{khachHang.email}}</th>
                                             <th scope="row">{{khachHang.gioiTinh ?'Nam':'Nữ'}} </th>
 
+                                            <th>
+                                                <button type="button" ng-click="addKhachHang($event, khachHang.id)"
+                                                    data-bs-dismiss="modal"
+                                                    ng-class="{ 'btn btn-danger': isSelected, 'btn btn-primary': !isSelected }">
+                                                    {{isSelected ? 'Bỏ chọn' : 'Chọn' }}
+                                                </button>
+
+                                                <!-- <button ng-click="toggleSelection()">Chọn/Bỏ chọn</button> -->
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="modal fade" id="danhSachDiaChi" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h4>Danh sách địa chỉ</h4>
+                                <div class="row p-3">
+                                    <div class="search-container col-md-5">
+                                        <i class="fas fa-search search-icon"></i>
+                                        <input type="text" ng-model="searchKeyword"
+                                            placeholder="Tìm kiếm sản phẩm theo mã, tên" ng-change="search()"
+                                            class="search-input" />
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên Khách Hàng</th>
+                                            <th scope="col">Số Điện Thoại</th>
+                                            <th scope="col">Số nhà, ngõ</th>
+                                            <th scope="col">Tỉnh, thành phố</th>
+                                            <th scope="col">Quận, huyện</th>
+                                            <th scope="col">Phường, xã</th>
+                                            <th scope="col">Thao Tác</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="diaChi in listDiaChi">
+                                        <tr>
+                                            <th scope="row">{{$index+1}}</th>
+
+                                            <th scope="row">{{diaChi.tenKhachHang}}</th>
+                                            <th scope="row">{{diaChi.soDienThoai}}</th>
+                                            <th scope="row">{{diaChi.diaChiCuThe}}</th>
+                                            <th scope="row">{{diaChi.tinhThanhPho}}</th>
+                                            <th scope="row">{{diaChi.quanHuyen}}</th>
+                                            <th scope="row">{{diaChi.phuongXa}}</th>
                                             <th>
                                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                                                     ng-click="addKhachHang($event,khachHang.id)">Chọn</button>
@@ -406,7 +462,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button ng-if="chonKhachHang" class="btn btn-primary">Địa chỉ
+                                            <button ng-if="chonKhachHang" data-bs-toggle="modal"
+                                                ng-click="getDiaChiByKhachHang($event)" data-bs-target="#danhSachDiaChi"
+                                                class="btn btn-primary">Địa chỉ
                                                 khác</button>
                                         </div>
                                     </form>
@@ -427,7 +485,7 @@
                                                 class="form-control" />
                                             <ul ng-show="showDropDownVoucher" id="dropDownVoucher">
                                                 <li ng-repeat="maGiamGia in listMaGiamGia"
-                                                ng-if="maGiamGia.giaTriDonToiThieu <= tienHang && maGiamGia.soLuong>0"
+                                                    ng-if="maGiamGia.giaTriDonToiThieu <= tienHang && maGiamGia.soLuong>0"
                                                     ng-click="selectedVoucher($index,maGiamGia)">
                                                     <span>
                                                         {{maGiamGia.ma}}
