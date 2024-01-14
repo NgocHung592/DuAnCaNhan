@@ -25,7 +25,7 @@ angular.module("loginApp", []).controller("nhanVienController", [
             if ($scope.nhanVienLogin) {
               $window.location.href = "/src/pages/admin.html#/admin";
               localStorage.setItem(
-                "loggedInUser",
+                "loggedInAdmin",
                 JSON.stringify($scope.nhanVienLogin)
               );
             } else {

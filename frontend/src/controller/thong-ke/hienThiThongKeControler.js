@@ -30,12 +30,75 @@ window.hienThiThongKeController = function ($http, $scope, $routeParams) {
   console.log($scope.listThongKe);
 
   // Chuyển đổi định dạng tháng thành label mong muốn (tháng/năm)
+  var data = [5, 35, 20, 10, 0];
 
+  // Tạo mảng màu sắc tương ứng
+  var colors = ["red", "blue", "green", "orange", "purple"];
+
+  // Lấy thẻ canvas và context
+  var ctx = document.getElementById("myPieChart").getContext("2d");
+
+  // Tạo biểu đồ tròn
+  var myPieChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"],
+      datasets: [
+        {
+          data: data,
+          backgroundColor: colors,
+        },
+      ],
+    },
+    options: {
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            var dataset = data.datasets[tooltipItem.datasetIndex];
+            var total = dataset.data.reduce(function (
+              previousValue,
+              currentValue,
+              currentIndex,
+              array
+            ) {
+              return previousValue + currentValue;
+            });
+            var currentValue = dataset.data[tooltipItem.index];
+            var percentage = Math.floor((currentValue / total) * 100 + 0.5);
+            return percentage + "%";
+          },
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+
+  // Tạo chú thích
+  var legend = document.getElementById("chartLegend");
+  var legendHTML = "";
+
+  for (var i = 0; i < myPieChart.data.labels.length; i++) {
+    legendHTML +=
+      '<div class="list-group-item" style="background-color:' +
+      colors[i] +
+      ';">';
+    legendHTML +=
+      "<strong>" +
+      myPieChart.data.labels[i] +
+      "</strong>: " +
+      data[i] +
+      "%</div>";
+  }
+
+  legend.innerHTML = legendHTML;
   $scope.getData = function () {
     $http
       .get(thongKeAPI + "/hien-thi")
       .then(function (response) {
         $scope.listThongKe = response.data;
+        console.log($scope.listThongKe);
         $scope.chartLabels = $scope.listThongKe.map(function (item) {
           return moment()
             .month(item.thang - 1)
@@ -72,5 +135,6 @@ window.hienThiThongKeController = function ($http, $scope, $routeParams) {
         console.error("Error fetching data:", error);
       });
   };
+
   $scope.getData();
 };

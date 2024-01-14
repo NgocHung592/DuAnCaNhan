@@ -27,7 +27,7 @@ public class ThongKeController {
         return new ResponseEntity(thongKeService.getThongKeTongHop(), HttpStatus.OK);
     }
     @GetMapping("/hien-thi1")
-    public ResponseEntity getTongDoanhThu2(
+    public ResponseEntity<List<ThongKeReponse>> getTongDoanhThu2(
             @RequestParam(name = "startDate") String startDateString,
             @RequestParam(name = "endDate") String endDateString
     ) {
@@ -37,7 +37,7 @@ public class ThongKeController {
             Date endDate = sdf.parse(endDateString);
 
             List<ThongKeReponse> thongKeData = thongKeService.getThongKeTongHopByDateRange(startDate, endDate);
-            return new ResponseEntity(thongKeData, HttpStatus.OK);
+            return new ResponseEntity<>(thongKeData, HttpStatus.OK);
         } catch (ParseException e) {
             // Xử lý lỗi chuyển đổi ngày tháng
             e.printStackTrace();

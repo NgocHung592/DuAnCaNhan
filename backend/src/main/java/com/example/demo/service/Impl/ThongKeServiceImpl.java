@@ -22,7 +22,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     public List<ThongKeReponse> getThongKeTongHopByDateRange(Date startDate, Date endDate) {
-        return thongKeRepository.getThongKeTongHopByDateRange();
+        return thongKeRepository.getThongKeTongHopByDateRange(startDate,endDate);
     }
 
 }

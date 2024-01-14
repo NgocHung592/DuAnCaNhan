@@ -647,7 +647,7 @@ window.addHoaDonController = function (
         //     $scope.addHinhThucThanhToan
         //   );
         // });
-        $location.path("/hoa-don/hien-thi");
+        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
         $scope.show == true
@@ -689,7 +689,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $location.path("/hoa-don/hien-thi");
+        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
       } else if (
         $scope.hoaDonThanhToan.idKhachHang !== "" &&
         $scope.show == false
@@ -732,7 +732,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $location.path("/hoa-don/hien-thi");
+        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $http
@@ -770,7 +770,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $location.path("/hoa-don/hien-thi");
+        $window.location.href = "/src/pages/admin.html#/hoa-don/hien-thi";
       }
     }
   };
