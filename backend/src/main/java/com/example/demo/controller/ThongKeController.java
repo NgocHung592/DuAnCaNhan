@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.response.BieuDoThongKeReponse;
 import com.example.demo.model.response.ThongKeReponse;
 import com.example.demo.service.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,16 @@ public class ThongKeController {
     public ResponseEntity getTongDoanhThu() {
         return new ResponseEntity(thongKeService.getThongKeTongHop(), HttpStatus.OK);
     }
-    @GetMapping("/hien-thi1")
-    public ResponseEntity<List<ThongKeReponse>> getTongDoanhThu2(
+    @GetMapping("/hien-thi-2")
+    public ResponseEntity getThongKeTrangThai() {
+        return new ResponseEntity(thongKeService.getThongKeTrangThai(), HttpStatus.OK);
+    }
+    @GetMapping("/hien-thi-3")
+    public ResponseEntity getThongKe() {
+        return new ResponseEntity(thongKeService.getThongKe(), HttpStatus.OK);
+    }
+    @GetMapping("/hien-thi-1")
+    public ResponseEntity<List<BieuDoThongKeReponse>> getTongDoanhThu2(
             @RequestParam(name = "startDate") String startDateString,
             @RequestParam(name = "endDate") String endDateString
     ) {
@@ -36,7 +45,7 @@ public class ThongKeController {
             Date startDate = sdf.parse(startDateString);
             Date endDate = sdf.parse(endDateString);
 
-            List<ThongKeReponse> thongKeData = thongKeService.getThongKeTongHopByDateRange(startDate, endDate);
+            List<BieuDoThongKeReponse> thongKeData = thongKeService.getThongKeTongHopByDateRange(startDate, endDate);
             return new ResponseEntity<>(thongKeData, HttpStatus.OK);
         } catch (ParseException e) {
             // Xử lý lỗi chuyển đổi ngày tháng

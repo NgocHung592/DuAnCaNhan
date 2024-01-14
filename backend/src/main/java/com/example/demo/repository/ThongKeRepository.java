@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.model.response.BieuDoThongKeReponse;
+import com.example.demo.model.response.BieuDoTrangThaiReponse;
 import com.example.demo.model.response.ThongKeReponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -57,24 +59,54 @@ public interface ThongKeRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = """
         SELECT
-            DAY(hd.ngay_thanh_toan) AS ngay,
-            MONTH(hd.ngay_thanh_toan) AS thang,
-            YEAR(hd.ngay_thanh_toan) AS nam,
-            COUNT(hdct.id) AS tong_san_pham,
-            SUM(hd.tong_tien) AS tong_doanh_thu,
-            COUNT(*) AS tong_don_hang
+            CONVERT(DATE, hd.ngay_thanh_toan) AS ngay,
+            SUM(hd.tong_tien) AS tong_doanh_thu
         FROM
             hoa_don hd
-        JOIN
-            hoa_don_chi_tiet hdct ON hd.id = hdct.hoa_don_id
         WHERE
             hd.trang_thai = 3
-            AND hd.ngay_thanh_toan BETWEEN :startDate AND :endDate
+            AND CONVERT(DATE, hd.ngay_thanh_toan) BETWEEN :startDate AND :endDate
         GROUP BY
-            YEAR(hd.ngay_thanh_toan), MONTH(hd.ngay_thanh_toan), DAY(hd.ngay_thanh_toan)
+            CONVERT(DATE, hd.ngay_thanh_toan)
+        ORDER BY
+            ngay;
+        
     """, nativeQuery = true)
-    List<ThongKeReponse> getThongKeTongHopByDateRange(
+    List<BieuDoThongKeReponse> getThongKeTongHopByDateRange(
              Date startDate,
              Date endDate
     );
+    @Query(value = """
+        SELECT
+            CONVERT(DATE, hd.ngay_thanh_toan) AS ngay,
+            SUM(hd.tong_tien) AS tong_doanh_thu
+        FROM
+            hoa_don hd
+        WHERE
+            hd.trang_thai = 3
+            AND (
+                (CONVERT(DATE, hd.ngay_thanh_toan) BETWEEN DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1) AND GETDATE())
+                OR
+                (MONTH(hd.ngay_thanh_toan) = MONTH(GETDATE()) AND YEAR(hd.ngay_thanh_toan) = YEAR(GETDATE()))
+            )
+        GROUP BY
+            CONVERT(DATE, hd.ngay_thanh_toan)
+        ORDER BY
+            ngay;
+        
+    """, nativeQuery = true)
+    List<BieuDoThongKeReponse> getThongKe();
+
+    @Query(value = """
+        SELECT
+            trang_thai,
+            COUNT(*) AS tong_so_hoa_don
+        FROM
+            hoa_don
+        WHERE
+            trang_thai BETWEEN 0 AND 4
+        GROUP BY
+            trang_thai;
+    """, nativeQuery = true)
+    List<BieuDoTrangThaiReponse> getThongKeTrangThai();
 }
