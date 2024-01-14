@@ -42,4 +42,6 @@ public interface HoaDonService {
 
     Page<HoaDonResponse> loc(Integer pageNo, String trangThai);
 
+    void khongNhanHang(UUID id);
+
 }

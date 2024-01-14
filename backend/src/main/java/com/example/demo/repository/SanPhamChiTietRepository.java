@@ -111,6 +111,9 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
     @Modifying
     @Query("UPDATE SanPhamChiTiet s SET s.soLuong = s.soLuong - :soLuong WHERE s.id = :sanPhamChiTietId")
     void giamSoLuongSanPham(@Param("sanPhamChiTietId") UUID sanPhamChiTietId, @Param("soLuong") int soLuong);
+    @Modifying
+    @Query("UPDATE SanPhamChiTiet s SET s.soLuong = s.soLuong + :soLuong WHERE s.id = :sanPhamChiTietId")
+    void tangSoLuongSanPham(@Param("sanPhamChiTietId") UUID sanPhamChiTietId, @Param("soLuong") int soLuong);
 
 
 

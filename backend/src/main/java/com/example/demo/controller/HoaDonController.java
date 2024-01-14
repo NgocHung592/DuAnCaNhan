@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.HoaDonChiTiet;
 import com.example.demo.entity.LichSuHoaDon;
 import com.example.demo.model.request.HoaDonOnlineRequest;
 import com.example.demo.model.request.HoaDonRequest;
@@ -8,6 +9,8 @@ import com.example.demo.model.response.DonHangKhachHangReponse;
 import com.example.demo.model.response.GioHangChiTietReponse;
 import com.example.demo.model.response.HienThiHoaDonReponse;
 import com.example.demo.model.response.HoaDonResponse;
+import com.example.demo.repository.HoaDonChiTietRepository;
+import com.example.demo.repository.SanPhamChiTietRepository;
 import com.example.demo.service.HoaDonService;
 import com.example.demo.service.LichSuHoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ public class HoaDonController {
     private LichSuHoaDonService lichSuHoaDonService;
     @Autowired
     private HoaDonService hoaDonService;
+
+
 
 
 
@@ -118,6 +123,24 @@ public class HoaDonController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
         }
     }
+    @PostMapping("khong-nhan-hang")
+    public ResponseEntity<String> updateTrangThaiBoom(@RequestParam(name = "idKhachHang") String idKhachHang,
+                                                         @RequestParam(name = "idDonHang") String idDonHang,
+                                                         @RequestParam(name = "noiDung") String noiDung) {
+        try {
+            UUID khachHangId = UUID.fromString(idKhachHang);
+            UUID donHangId = UUID.fromString(idDonHang);
+
+
+
+            hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 4, noiDung);
+            hoaDonService.khongNhanHang(donHangId);// 5 là trạng thái mặc định mới
+
+            return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật trạng thái đơn hàng");
+        }
+    }
     @PostMapping("da-xac-nhan")
     public ResponseEntity<String> updateTrangThaiDaXacNhan(
             @RequestParam(name = "idKhachHang") String idKhachHang,
@@ -148,6 +171,7 @@ public class HoaDonController {
             UUID donHangId = UUID.fromString(idDonHang);
 
             String noiDung = "Đơn hàng đã đang giao hang";
+
 
 
             hoaDonService.updateTrangThaiDonHang(khachHangId, donHangId, 2,noiDung); // 5 là trạng thái mặc định mới
