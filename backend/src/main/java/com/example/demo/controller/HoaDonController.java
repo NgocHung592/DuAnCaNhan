@@ -85,6 +85,10 @@ public class HoaDonController {
     public Page<HoaDonResponse> loc(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(name = "trangThai") String trangThai) {
         return hoaDonService.loc(pageNo, trangThai);
     }
+    @GetMapping("thong-bao")
+    public List<HoaDon> thongBao() {
+        return hoaDonService.getThongBao();
+    }
 
 
     @GetMapping("hien-thiKh/{id}")

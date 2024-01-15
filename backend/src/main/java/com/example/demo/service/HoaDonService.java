@@ -45,4 +45,6 @@ public interface HoaDonService {
 
     void khongNhanHang(UUID id);
 
+    List<HoaDon> getThongBao();
+
 }
