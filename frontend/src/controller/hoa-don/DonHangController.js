@@ -29,6 +29,7 @@ window.DonHangController = function (
   $scope.giamGia = 0;
   $scope.phiVanChuyen = 0;
   $scope.listHoaDonChiTietTinhTong = [];
+  $scope.updateTongTien = 0;
 
   $scope.detailHoaDon = {
     id: "",
@@ -308,6 +309,9 @@ window.DonHangController = function (
                       $scope.detailHD();
                     });
                 });
+            })
+            .then(function () {
+              $window.location.reload();
             });
         } else {
           $scope.listHoaDonChiTiet[index].soLuong = matchingItem.soLuong;
@@ -413,7 +417,13 @@ window.DonHangController = function (
                     $scope.detailHoaDon = response.data;
                     $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
                   });
-
+                console.log(
+                  $scope.tienHang +
+                    " " +
+                    $scope.phiVanChuyen +
+                    " " +
+                    $scope.giamGia
+                );
                 $scope.updateTongTien =
                   $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
                 return $http
@@ -426,7 +436,6 @@ window.DonHangController = function (
                   });
               });
           });
-        $location.path("/hoa-don/update/" + $routeParams.id);
       } else {
         matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
         showError(

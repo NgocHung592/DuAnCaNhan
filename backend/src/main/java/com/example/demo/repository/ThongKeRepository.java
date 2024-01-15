@@ -59,17 +59,18 @@ public interface ThongKeRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = """
         SELECT
-            CONVERT(DATE, hd.ngay_thanh_toan) AS ngay,
-            SUM(hd.tong_tien) AS tong_doanh_thu
-        FROM
-            hoa_don hd
-        WHERE
-            hd.trang_thai = 3
-            AND CONVERT(DATE, hd.ngay_thanh_toan) BETWEEN :startDate AND :endDate
-        GROUP BY
-            CONVERT(DATE, hd.ngay_thanh_toan)
-        ORDER BY
-            ngay;
+                     CONVERT(DATE, hd.ngay_thanh_toan) AS ngay,
+                     SUM(hd.tong_tien) AS tong_doanh_thu
+                 FROM
+                     hoa_don hd
+                 WHERE
+                     hd.trang_thai = 3
+                     AND CONVERT(DATE, hd.ngay_thanh_toan) BETWEEN :startDate AND DATEADD(DAY, 1, :endDate)
+                 GROUP BY
+                     CONVERT(DATE, hd.ngay_thanh_toan)
+                 ORDER BY
+                     ngay;
+                 
         
     """, nativeQuery = true)
     List<BieuDoThongKeReponse> getThongKeTongHopByDateRange(
