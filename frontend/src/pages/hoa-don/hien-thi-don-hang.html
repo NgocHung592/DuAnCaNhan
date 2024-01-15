@@ -194,7 +194,8 @@
 
           <p class="dataTables_empty_lable">Không có sản phẩm nào</p>
         </div>
-        <nav aria-label="Page navigation example mt-3" ng-if="listHoaDonChiTiet.length>0">
+        <nav ng-if="detailHoaDon.trangThai==0" aria-label="Page navigation example mt-3"
+          ng-if="listHoaDonChiTiet.length>0">
           <ul class="pagination justify-content-center">
             <li class="page-item">
               <a class="page-link" ng-click="previousPageHDCT()">

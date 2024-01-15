@@ -70,19 +70,15 @@ window.addSanPhamChiTietController = function (
     }
   };
 
-  $scope.selectFile = function (index) {
-    $scope.listPr;
+  $scope.selectFile = function (tenMauSac, index) {
     var productImageInput = document.getElementById("product-image");
 
-    // Tạo một hàm để giữ tham chiếu đến handleImageChange
     var handleImageChangeCallback = function (event) {
       $scope.handleImageChange(event, tenMauSac, index);
     };
 
-    // Thêm người nghe sự kiện
     productImageInput.addEventListener("change", handleImageChangeCallback);
 
-    // Gỡ bỏ người nghe sự kiện sau khi sự kiện đã xảy ra
     productImageInput.addEventListener(
       "change",
       function removeEventListenerCallback() {
@@ -97,7 +93,6 @@ window.addSanPhamChiTietController = function (
       }
     );
 
-    // Kích hoạt sự kiện click
     productImageInput.click();
   };
 
@@ -110,14 +105,18 @@ window.addSanPhamChiTietController = function (
         $scope.groupedProducts[tenMauSac].length > index
       ) {
         var products = $scope.groupedProducts[tenMauSac];
-        console.log(products);
         products.forEach((product) => {
           var newProduct = angular.copy(product);
           newProduct.urlImage = file.name;
+          if (newProduct) {
+            newProduct.urlImage = file.name;
+          }
+
           $scope.newSizeAndColors.push(newProduct);
         });
       }
     }
+    console.log($scope.newSizeAndColors);
   };
 
   $scope.addKichThuoc = function (index) {
@@ -293,6 +292,7 @@ window.addSanPhamChiTietController = function (
   };
   $scope.addSanPhamChiTiet = function (event) {
     event.preventDefault();
+    console.log($scope.newSizeAndColors);
     $scope.newSizeAndColors.forEach((sizeAndColor) => {
       const newProductDetail = {
         maSanPham: $scope.product.maSanPham,
@@ -314,7 +314,7 @@ window.addSanPhamChiTietController = function (
       };
       $scope.productDetails.push(newProductDetail);
     });
-    console.log($scope.productDetails);
+    console.log($scope.newSizeAndColors);
     if ($scope.product.tenSanPham == "") {
       toastBootstrap.show();
       $scope.message = "Tên sản phẩm không được trống";

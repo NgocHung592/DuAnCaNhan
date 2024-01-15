@@ -138,7 +138,7 @@ window.DonHangController = function (
   };
   //detai hoa don
   $scope.getData();
-  $scope.detailHoaDon = function () {
+  $scope.detailHD = function () {
     $http
       .get(hoaDonAPI + "/detail/" + $routeParams.id)
       .then(function (response) {
@@ -151,7 +151,7 @@ window.DonHangController = function (
         $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
       });
   };
-  $scope.detailHoaDon();
+  $scope.detailHD();
 
   $scope.detailMaGiamGia = function () {
     $http
@@ -159,10 +159,12 @@ window.DonHangController = function (
       .then(function (response) {
         if (response.status == 200) {
           $scope.detailMaGiamGiaChiTet = response?.data;
-          console.log($scope.detailMaGiamGiaChiTet);
-          $scope.giamGia =
-            $scope.detailMaGiamGiaChiTet.donGia -
-            $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
+          if ($scope.detailMaGiamGiaChiTet) {
+            $scope.giamGia =
+              $scope.detailMaGiamGiaChiTet.donGia -
+              $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
+          }
+          $scope.giamGia = 0;
         }
       });
   };
@@ -297,15 +299,18 @@ window.DonHangController = function (
 
                   $scope.updateTongTien =
                     $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-                  return $http.put(
-                    hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
-                    $scope.updateTongTien
-                  );
+                  return $http
+                    .put(
+                      hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                      $scope.updateTongTien
+                    )
+                    .then(function () {
+                      $scope.detailHD();
+                    });
                 });
             });
         } else {
           $scope.listHoaDonChiTiet[index].soLuong = matchingItem.soLuong;
-          console.log((matchingItem.soLuong = detailSanPhamChiTiet.soLuong));
 
           showError(
             "Chỉ còn " +
@@ -340,10 +345,14 @@ window.DonHangController = function (
 
                 $scope.updateTongTien =
                   $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-                return $http.put(
-                  hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
-                  $scope.updateTongTien
-                );
+                return $http
+                  .put(
+                    hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                    $scope.updateTongTien
+                  )
+                  .then(function () {
+                    $scope.detailHD();
+                  });
               });
           });
       }
@@ -407,16 +416,19 @@ window.DonHangController = function (
 
                 $scope.updateTongTien =
                   $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-                return $http.put(
-                  hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
-                  $scope.updateTongTien
-                );
+                return $http
+                  .put(
+                    hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                    $scope.updateTongTien
+                  )
+                  .then(function () {
+                    $scope.detailHD();
+                  });
               });
           });
         $location.path("/hoa-don/update/" + $routeParams.id);
       } else {
         matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
-
         showError(
           "Chỉ còn " + detailSanPhamChiTiet.soLuong + " sản phẩm trong cửa hàng"
         );
