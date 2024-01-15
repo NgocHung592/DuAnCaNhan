@@ -1,4 +1,9 @@
-window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
+window.hienThiMaGiamGiaController = function (
+  $http,
+  $scope,
+  $rootScope,
+  $timeout
+) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.listMaGiamGia = [];
@@ -23,6 +28,10 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
   }
   $scope.intervalId = setInterval(scheduledTask, 1000);
   $scope.getMa = function () {
+    if ($scope.message !== undefined) {
+      $scope.successProgress();
+      toastBootstrap.show();
+    }
     $http
       .get(magiamgiaAPI + "/hien-thi?pageNo=" + $scope.currentPage)
       .then(function (response) {
@@ -77,9 +86,12 @@ window.hienThiMaGiamGiaController = function ($http, $scope, $rootScope) {
     }
   };
   if ($scope.message !== undefined) {
-    $scope.successProgress();
-    toastBootstrap.show();
+    $timeout(function () {
+      $scope.message = undefined;
+      $rootScope.message = undefined;
+    }, 1000);
   }
+
   $scope.getMaTrangThai = function () {
     setTimeout(() => {
       clearInterval($scope.intervalId);

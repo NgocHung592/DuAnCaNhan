@@ -8,14 +8,17 @@ window.hienThiHoaDonController = function (
   $httpParamSerializerJQLike
 ) {
   $scope.listHoaDon = [];
+  $scope.visiblePages = [];
   $scope.listLichSuHoaDon = [];
   $scope.filteredHoaDonList = [];
   $scope.currentPage = 0;
   $scope.totalPages = [];
-  $scope.currentPage = 0;
+  $scope.totalPagesFilter = [];
+  $scope.currentPageFilter = 0;
   $scope.maxVisiblePages = 3;
   $scope.phiVanChuyen = 0;
   $scope.giamGia = 0;
+  $scope.total = 0;
   $scope.selectedTab = null;
   $scope.getData = function () {
     $http
@@ -24,11 +27,13 @@ window.hienThiHoaDonController = function (
         $scope.listHoaDon = response?.data.content;
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = $scope.getVisiblePages();
-      })
-      .catch(function (error) {
-        console.error("Error fetching data:", error);
+        $scope.total = $scope.totalPages.length;
+        $scope.visiblePages = $scope.getVisiblePages(
+          $scope.totalPages.length,
+          $scope.currentPage
+        );
       });
+    console.log($scope.visiblePages);
   };
   $scope.getData();
   $scope.selectTab = function (tab) {
@@ -42,21 +47,26 @@ window.hienThiHoaDonController = function (
     } else {
       $http
         .get(
-          hoaDonAPI + "/loc?pageNo=" + $scope.currentPage + "&trangThai=" + tab
+          hoaDonAPI +
+            "/loc?pageNo=" +
+            $scope.currentPageFilter +
+            "&trangThai=" +
+            tab
         )
         .then(function (response) {
           $scope.listHoaDon = response?.data.content;
-          $scope.customIndex = $scope.currentPage * response.data.size;
-          $scope.totalPages = new Array(response.data.totalPages);
-          $scope.visiblePages = $scope.getVisiblePages();
-        })
-        .catch(function (error) {
-          console.error("Error fetching data:", error);
+          $scope.customIndex = $scope.currentPageFilter * response.data.size;
+          $scope.totalPagesFilter = new Array(response.data.totalPages);
+          $scope.total = $scope.totalPagesFilter.length;
+
+          $scope.visiblePages = $scope.getVisiblePages(
+            $scope.totalPagesFilter.length,
+            $scope.currentPageFilter
+          );
         });
     }
   };
   $scope.selectTab(null);
-  // $scope.filterDataByTab(null);
   $scope.isSelectedTab = function (tab) {
     return tab === $scope.selectedTab;
   };
@@ -75,23 +85,47 @@ window.hienThiHoaDonController = function (
   };
   $scope.changePage = function (index) {
     if (index >= 0) {
-      $scope.currentPage = index;
-      $scope.getData();
+      if ($scope.selectedTab === null) {
+        $scope.currentPage = index;
+        $scope.filterDataByTab($scope.selectedTab);
+      } else {
+        $scope.currentPageFilter = index;
+        $scope.filterDataByTab($scope.selectedTab);
+      }
     }
   };
 
   $scope.nextPage = function () {
-    let length = $scope.totalPages.length;
-    if ($scope.currentPage < length - 1) {
-      $scope.currentPage++;
-      $scope.getData();
+    if ($scope.selectedTab === null) {
+      console.log("a");
+      let length = $scope.totalPages.length;
+      if ($scope.currentPage < length - 1) {
+        $scope.currentPage++;
+        $scope.filterDataByTab($scope.selectedTab);
+      }
+    } else {
+      console.log("b");
+      let length = $scope.totalPagesFilter.length;
+      if ($scope.currentPageFilter < length - 1) {
+        $scope.currentPageFilter++;
+        $scope.filterDataByTab($scope.selectedTab);
+      }
     }
   };
 
   $scope.previousPage = function () {
-    if ($scope.currentPage > 0) {
-      $scope.currentPage--;
-      $scope.getData();
+    if ($scope.selectedTab === null) {
+      console.log("s");
+      if ($scope.currentPage > 0) {
+        $scope.currentPageFilter--;
+        $scope.filterDataByTab($scope.selectedTab);
+      }
+    } else {
+      console.log("b");
+      if ($scope.currentPage > 0) {
+        $scope.currentPageFilter--;
+        $scope.filterDataByTab($scope.selectedTab);
+      }
     }
   };
 
@@ -109,19 +143,16 @@ window.hienThiHoaDonController = function (
       "Địa chỉ: Số nhà 56 Ngõ 2 Nguyên Xá Bắc Từ Liêm Hà Nội\nSố điện thoại: 0363446243";
     alert(contactInfo);
   };
-  $scope.getVisiblePages = function () {
-    var totalPages = $scope.totalPages.length;
-
+  $scope.getVisiblePages = function (totalPages, currentPage) {
     var range = $scope.maxVisiblePages;
-    var curPage = $scope.currentPage;
 
-    var numberTruncateLeft = curPage - Math.floor(range / 2);
-    var numberTruncateRight = curPage + Math.floor(range / 2);
+    var numberTruncateLeft = currentPage - Math.floor(range / 2);
+    var numberTruncateRight = currentPage + Math.floor(range / 2);
 
     var visiblePages = [];
 
     for (var pos = 1; pos <= totalPages; pos++) {
-      var active = pos - 1 === curPage ? "active" : "";
+      var active = pos - 1 === currentPage ? "active" : "";
 
       if (totalPages >= 2 * range - 1) {
         if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {

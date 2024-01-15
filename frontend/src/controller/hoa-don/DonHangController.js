@@ -166,8 +166,9 @@ window.DonHangController = function (
             $scope.giamGia =
               $scope.detailMaGiamGiaChiTet.donGia -
               $scope.detailMaGiamGiaChiTet.donGiaSauKhiGiam;
+          } else {
+            $scope.giamGia = 0;
           }
-          $scope.giamGia = 0;
         }
       });
   };
