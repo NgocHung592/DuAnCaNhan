@@ -123,7 +123,7 @@ window.hienThiSanPhamChiTietController = function (
         soLuong: $scope.detailSanPhamChiTiet.soLuong,
         donGia: $scope.detailSanPhamChiTiet.donGia,
         daXoa: $scope.detailSanPhamChiTiet.daXoa,
-        urlImage: $scope.detailSanPhamChiTiet.urlImage,
+        urlImage: $scope.urlImage,
         nguoiSua: $scope.storedUser.hoTen,
         ngaySua: new Date(),
       };
@@ -147,7 +147,6 @@ window.hienThiSanPhamChiTietController = function (
         urlImage: $scope.urlImage,
         ngaySua: new Date(),
       };
-      console.log($scope.updateSanPhamChiTiet);
       $http
         .put(sanPhamChiTietAPI + "/update/" + id, $scope.updateSanPhamChiTiet)
         .then(function () {

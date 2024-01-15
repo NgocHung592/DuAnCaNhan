@@ -681,16 +681,17 @@ window.addSanPhamChiTietController = function (
         $http
           .post(kichThuocAPI + "/add", $scope.kichThuocSave)
           .then(function () {
-            $scope.selectedKichThuoc = [];
-            $scope.sizeAndQuantitys = [];
-            $scope.formKichThuoc = null;
-            $scope.selectedMauSac = [];
-            $scope.colors = [];
-            $scope.sizeAndColors = [];
-            $scope.formMauSac = null;
-            $scope.groupedProducts = null;
-            $scope.getKichThuocTrangThai();
-            $scope.getMauSacTrangThai();
+            // $scope.selectedKichThuoc = [];
+            // $scope.sizeAndQuantitys = [];
+            // $scope.formKichThuoc = null;
+            // $scope.selectedMauSac = [];
+            // $scope.colors = [];
+            // $scope.sizeAndColors = [];
+            // $scope.formMauSac = null;
+            // $scope.groupedProducts = null;
+            // $scope.getKichThuocTrangThai();
+            // $scope.getMauSacTrangThai();
+            console.log($scope.selectedKichThuoc);
             showSuccess("Thêm kích thước mới thành công");
           });
       }

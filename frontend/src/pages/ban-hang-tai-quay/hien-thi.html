@@ -81,18 +81,20 @@
                                     <nav aria-label="Page navigation example" ng-if="listHoaDonChiTiet.length > 0">
                                         <ul class="pagination justify-content-center">
                                             <li class="page-item">
-                                                <a class="page-link" ng-click="previousPage()" aria-label="Previous">
+                                                <a class="page-link" ng-click="previousPageHDCT()"
+                                                    aria-label="Previous">
                                                     <span aria-hidden="true">
                                                         << </span>
                                                 </a>
                                             </li>
                                             <li class="page-item" ng-repeat="page in visiblePages"
                                                 ng-class="{ 'active': page.active === 'active' }">
-                                                <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                                                <a class="page-link" ng-click="changePageHDCT(page.page - 1)">{{
+                                                    page.page
                                                     }}</a>
                                             </li>
                                             <li class="page-item">
-                                                <a class="page-link" ng-click="nextPage()"> >> </a>
+                                                <a class="page-link" ng-click="nextPageHDCT()"> >> </a>
                                             </li>
                                         </ul>
                                     </nav>
