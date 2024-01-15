@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.MaGiamGiaChiTiet;
 import com.example.demo.model.request.MaGiamGiaChiTietRequest;
+import com.example.demo.model.response.MaGiamGiaReponse;
 import com.example.demo.service.MaGiamGiaChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +30,13 @@ public class MaGiamGiaChiTietController {
     public ResponseEntity detail( @PathVariable("id") String id) {
         return new ResponseEntity(maGiamGiaChiTietService.detail(UUID.fromString(id)), HttpStatus.OK);
     }
+    @GetMapping("hoa-donid")
+    public ResponseEntity<List<MaGiamGiaReponse>> getMaGiamGiaChiTietByIdHd(@RequestParam UUID id) {
+        List<MaGiamGiaReponse> result = maGiamGiaChiTietService.getidHd(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 
     @PostMapping("add")
     public ResponseEntity post(@RequestBody MaGiamGiaChiTietRequest maGiamGiaChiTietRequest) {

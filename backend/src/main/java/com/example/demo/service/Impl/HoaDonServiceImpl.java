@@ -241,5 +241,10 @@ public class HoaDonServiceImpl implements HoaDonService {
         }
     }
 
+    @Override
+    public List<HoaDon> getThongBao() {
+        return hoaDonReponsitory.listthongbao();
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.demo.service.Impl;
 
 import com.example.demo.entity.MaGiamGiaChiTiet;
 import com.example.demo.model.request.MaGiamGiaChiTietRequest;
+import com.example.demo.model.response.MaGiamGiaReponse;
 import com.example.demo.repository.HoaDonReponsitory;
 import com.example.demo.repository.MaGiamGiaChiTietRepositioy;
 import com.example.demo.repository.MaGiamGiaRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -57,6 +59,11 @@ public class MaGiamGiaChiTietImpl implements MaGiamGiaChiTietService {
     public MaGiamGiaChiTiet detail(UUID hoaDonId) {
 
         return maGiamGiaChiTietRepositioy.detail(hoaDonId);
+    }
+
+    @Override
+    public List<MaGiamGiaReponse> getidHd(UUID id) {
+        return maGiamGiaChiTietRepositioy.getIdHd(id);
     }
 
 

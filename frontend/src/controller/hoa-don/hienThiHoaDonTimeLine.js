@@ -128,6 +128,12 @@ window.hienThiHoaDonTimeLineController = function (
         $scope.listlichsu = response.data;
         console.log("idhd", $scope.listlichsu);
       });
+    $http
+      .get(maGiamGiaChiTietAPI + "/hoa-donid?id=" + $rootScope.hangg)
+      .then(function (response) {
+        $scope.listgiamgia = response.data;
+        console.log("giamgia", $scope.listgiamgia);
+      });
   };
   $scope.getLocHoaDon();
   $scope.huyDonHang = function (hang) {
@@ -140,9 +146,9 @@ window.hienThiHoaDonTimeLineController = function (
     }
 
     // Nếu người dùng chọn "OK", tiếp tục với lựa chọn hủy đơn hàng
-    var lyDoHuy = prompt("Nhập lý do hủy đơn hàng:", "");
+    var noiDung = prompt("Nhập lý do hủy đơn hàng:", "");
 
-    if (lyDoHuy === null || lyDoHuy === "") {
+    if (noiDung === null || noiDung === "") {
       // Nếu người dùng chọn "Hủy" hoặc không nhập lý do, không thực hiện bước tiếp theo
       return;
     }
@@ -156,7 +162,7 @@ window.hienThiHoaDonTimeLineController = function (
     var data = $httpParamSerializerJQLike({
       idKhachHang: $scope.idKhachHang,
       idDonHang: idDonHang,
-      lyDoHuy: lyDoHuy,
+      noiDung: noiDung,
     });
 
     var config = {

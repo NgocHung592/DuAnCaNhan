@@ -260,6 +260,16 @@
                                   </div>
                                   <hr />
                                   <span class="line-item-label"
+                                    >Loại hóa đơn:
+                                  </span>
+                                  <span
+                                    class="line-item-total"
+                                    style="font-size: 15px"
+                                  >
+                                    {{hang.loaiHoaDon}}
+                                  </span>
+                                  <hr />
+                                  <span class="line-item-label"
                                     >Phí vận chuyển :
                                   </span>
                                   <span
@@ -269,14 +279,23 @@
                                     {{hang.phiShip | number:0}}₫
                                   </span>
                                   <hr />
-                                  <span class="line-item-label"
-                                    >Loại hóa đơn:
-                                  </span>
                                   <span
+                                    ng-if="!listgiamgia || listgiamgia.length === 0"
+                                    >Không có giảm giá</span
+                                  >
+
+                                  <span
+                                    ng-repeat="giamgia in listgiamgia"
                                     class="line-item-total"
                                     style="font-size: 15px"
                                   >
-                                    {{hang.loaiHoaDon}}
+                                    <span ng-if="giamgia.hinhThuc==1">
+                                      Giảm giá: {{giamgia.giaTri}} %
+                                    </span>
+                                    <span ng-if="giamgia.hinhThuc==0">
+                                      Giảm giá: {{giamgia.giaTri | number:0}}
+                                      VND
+                                    </span>
                                   </span>
 
                                   <hr />
