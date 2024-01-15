@@ -97,6 +97,13 @@
                                   class="table-cart"
                                   ng-repeat="hang in donHangListMerged"
                                 >
+                                  <a
+                                    href=""
+                                    ng-click="quayLai()"
+                                    class="back-link"
+                                    >Quay lại</a
+                                  >
+                                  <hr />
                                   <div class="order-details">
                                     <div class="order-id">
                                       MÃ ĐƠN HÀNG: {{ hang.maHoaDon }}
@@ -359,6 +366,15 @@
 
   .timeline-content {
     text-align: center;
+  }
+  a.back-link {
+    text-decoration: none;
+    color: #ee4d2d;
+    transition: color 0.3s ease;
+  }
+
+  a.back-link:hover {
+    color: #bf3d29;
   }
 
   .timeline-content .order-label {

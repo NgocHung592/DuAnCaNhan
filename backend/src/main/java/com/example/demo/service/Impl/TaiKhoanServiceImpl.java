@@ -63,6 +63,26 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return khachHang1;
     }
 
+    @Override
+    public boolean checkPassword(String email, String currentPassword) {
+        KhachHang taiKhoan = taiKhoanRepository.findByEmail(email);
+        if (taiKhoan != null) {
+            // Ở đây, bạn cần thực hiện so sánh mật khẩu đã lưu và mật khẩu hiện tại
+            return currentPassword.equals(taiKhoan.getMatKhau());
+        }
+        return false; // Hoặc có thể xử lý theo cách khác tùy vào yêu cầu của bạn
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword) {
+        KhachHang taiKhoan = taiKhoanRepository.findByEmail(email);
+        if (taiKhoan != null) {
+            // Ở đây, bạn cần thực hiện cập nhật mật khẩu mới
+            taiKhoan.setMatKhau(newPassword);
+            taiKhoanRepository.save(taiKhoan);
+        }
+    }
+
     private void sendEmail(KhachHang khachHang) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();

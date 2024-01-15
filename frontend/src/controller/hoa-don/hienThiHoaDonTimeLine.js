@@ -209,6 +209,9 @@ window.hienThiHoaDonTimeLineController = function (
         }, 0);
       });
   };
+  $scope.quayLai = function () {
+    $location.path("/don-hang");
+  };
   $scope.muaLai = function (products) {
     // Lấy danh sách idSanPhamChiTiet từ mảng sản phẩm
     var sanPhamChiTietIds = products.map(function (item) {

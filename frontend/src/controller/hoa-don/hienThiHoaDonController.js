@@ -434,7 +434,6 @@ window.hienThiHoaDonController = function (
   };
   $scope.hienThiHoaDonTimeLine = function (hang) {
     $rootScope.hangg = hang.hoaDonId;
-    console.log("sao day", $rootScope.hangg);
   };
   $scope.muaLai = function (products) {
     // Lấy danh sách idSanPhamChiTiet từ mảng sản phẩm
