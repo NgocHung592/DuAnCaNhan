@@ -10,40 +10,54 @@
     /* Đảm bảo nội dung không bị tràn ra ngoài */
   }
 
-  .input-container {
-    position: relative;
-  }
-
-  .form-control {
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #ccc;
-    /* Màu và độ dày của gạch chân mặc định */
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-bottom 0.3s;
-    /* Hiệu ứng chuyển động khi thay đổi border-bottom */
-  }
-
-  .form-control:focus {
-    border-bottom: none;
-    /* Loại bỏ gạch chân khi ô input được focus */
-  }
 
   .file-upload {
     width: 100%;
-    /* Đảm bảo nút bên trong kích thước đúng */
     height: 100%;
-    border-radius: 100%;
+    border-radius: 50%;
   }
 
   .table_img {
-    border-radius: 100%;
-    /* Đặt bán kính là 50% để biến ảnh thành hình tròn */
+    border-radius: 50%;
     width: 260px;
-    /* Điều chỉnh kích thước theo nhu cầu của bạn */
     height: 297px;
-    /* Điều chỉnh kích thước theo nhu cầu của bạn */
+    margin-left: 60px;
+  }
+
+  .dropdown-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #dropDownVoucher {
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 410px;
+    max-height: 200px;
+    overflow-y: auto;
+    cursor: pointer;
+    /* padding: 0px 0px; */
+  }
+
+  #dropDown {
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 1000;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    cursor: pointer;
+    padding: 10px 5px;
+  }
+
+  #dropDown li {
+    /* margin: 10px; */
+    list-style: none;
+  }
+
+  #dropDown li:hover {
+    background-color: #fff;
   }
 </style>
 <main class="content">
@@ -182,7 +196,7 @@
                   <span class="align-middle">Địa chỉ {{indexDiaChi+1}}</span>
                 </a>
                 <ul ng-show="diaChi.isDropdownOpen" class="sidebar-dropdown list-unstyled">
-                  <form>
+                  <form class="row">
                     <div class="mb-3">
                       <label class="form-label">Họ tên <span style="color: red">*</span></label>
                       <input type="text" class="form-control" ng-model="diaChi.tenKhachHang" />
@@ -223,7 +237,7 @@
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label">Phường / Xã </label>
+                        <label class="form-label">Phường / Xã </label><br>
                         <div class="dropdown-container">
                           <input type="text" ng-model="diaChi.phuongXa" ng-click="toggleAPI($event,'PhuongXa')"
                             class="form-control" />
