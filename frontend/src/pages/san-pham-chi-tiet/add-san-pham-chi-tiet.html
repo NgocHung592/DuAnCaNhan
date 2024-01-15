@@ -334,7 +334,6 @@
                                     <th>Màu Sắc</th>
                                     <th>Số Lượng</th>
                                     <th>Đơn Giá</th>
-                                    <th>Ảnh</th>
                                     <th>Thao Tác</th>
                                 </tr>
                             </thead>
@@ -347,24 +346,26 @@
                                         <input type="text" ng-model="product.soLuong"
                                             class="form-control form-control-sm" style="width: 70px; height: 30px;" />
                                     </th>
-                                    <th> <input type="text" ng-model="product.gia" class="form-control form-control-sm"
-                                            style="width: 100px; height: 30px;" />
+                                    <th style=" justify-content: center;"> <input type="text" ng-model="product.gia"
+                                            class="form-control form-control-sm" style="width: 100px; height: 30px;" />
                                     </th>
-                                    <th ng-if="listProduct[0]">
-                                        <input type="file" class="file-upload-input" id="product-image"
-                                            style="display: none;">
-                                        <i ng-click="selectFile(product.tenMauSac,$index)"
-                                            class="fa-solid fa-image fa-2xl"></i>
-                                        <!-- <img class="table_img" ng-if="product.urlImage"
-                                            ng-src="../../../assets/anh-san-pham/{{product.urlImage}}" alt="a"> -->
-                                    </th>
+
                                     <th>
-                                        <a ng-click="removeSize(product.tenMauSac,$index)">
+                                        <a ng-click="removeSize(product.tenMauSac,$parent.$index,$index)">
                                             <i class="fa-solid fa-trash"></i>
                                         </a>
                                     </th>
+
                                 </tr>
                             </tbody>
+                            <tfoot class="mt-3" ng-repeat="product in listProduct track by $index">
+                                <td ng-if="$index===0" colspan="6" style="text-align: center; padding-top: 30px;">
+                                    <input type="file" class="file-upload-input" id="product-image"
+                                        style="display: none;">
+                                    <i ng-click="selectFile(product.tenMauSac,$index)" style="font-size: 3em;"
+                                        class="fa-solid fa-image fa-xl"></i>
+                                </td>
+                            </tfoot>
                         </table>
                     </div>
                     <div ng-if="colors.length === 0 && sizes.length === 0">
@@ -400,6 +401,13 @@
     </div>
 </main>
 <style>
+    .san-pham-cung-mau {
+        text-align: center;
+        padding: 10px 0;
+        background-color: teal;
+        color: white;
+    }
+
     .wrapper_layered_filter {
         margin-bottom: 0;
     }

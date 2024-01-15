@@ -42,9 +42,12 @@ window.hienThiSanPhamController = function (
       });
   };
   $scope.getSanPham();
-  $timeout(function () {
-    $scope.message = undefined;
-  }, 1000);
+  if ($scope.message !== undefined) {
+    $timeout(function () {
+      $scope.message = undefined;
+      $rootScope.message = undefined;
+    }, 1000);
+  }
 
   $scope.getVisiblePages = function () {
     var totalPages = $scope.totalPages.length;

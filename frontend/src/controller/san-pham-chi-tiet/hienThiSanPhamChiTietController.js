@@ -6,7 +6,8 @@ window.hienThiSanPhamChiTietController = function (
   $scope.currentPage = 0;
   $scope.totalPages = [];
   $scope.listSanPhamChiTiet = [];
-  $scope.urlImage = "";
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.detailSanPham = {
     id: "",
     ten: "",
@@ -89,6 +90,7 @@ window.hienThiSanPhamChiTietController = function (
     $scope.sanPhamUpdate = {
       ten: $scope.detailSanPham.ten,
       moTa: $scope.detailSanPham.moTa,
+      nguoiSua: $scope.storedUser.hoTen,
       ngaySua: new Date(),
       daXoa: $scope.detailSanPham.daXoa,
     };
@@ -101,21 +103,18 @@ window.hienThiSanPhamChiTietController = function (
   };
   $scope.detailSanPhamChiTietF = function (e, id) {
     e.preventDefault();
-
     $http.get(sanPhamChiTietAPI + "/detail/" + id).then(function (response) {
       $scope.detailSanPhamChiTiet = response.data;
       console.log($scope.detailSanPhamChiTiet);
     });
   };
   $scope.updateSanPhamChiTietF = function (e, id) {
-    let productImages = document.getElementById("urlImage");
+    let productImages = document.getElementById("product-image");
     for (const file of productImages.files) {
       $scope.urlImage = file.name;
     }
     if ($scope.urlImage == "") {
       $scope.updateSanPhamChiTiet = {
-        idMauSac: $scope.detailSanPhamChiTiet.mauSac.id,
-        idKichThuoc: $scope.detailSanPhamChiTiet.kichThuoc.id,
         idHoaTiet: $scope.detailSanPhamChiTiet.hoaTiet.id,
         idPhongCach: $scope.detailSanPhamChiTiet.phongCach.id,
         idChatLieu: $scope.detailSanPhamChiTiet.chatLieu.id,
@@ -125,6 +124,7 @@ window.hienThiSanPhamChiTietController = function (
         donGia: $scope.detailSanPhamChiTiet.donGia,
         daXoa: $scope.detailSanPhamChiTiet.daXoa,
         urlImage: $scope.detailSanPhamChiTiet.urlImage,
+        nguoiSua: $scope.storedUser.hoTen,
         ngaySua: new Date(),
       };
       $http
