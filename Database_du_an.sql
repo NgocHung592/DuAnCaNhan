@@ -269,20 +269,13 @@ Create table [lich_su_hoa_don](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
     noi_dung nvarchar(50),
-<<<<<<< HEAD
     ngay_sua datetime,
-=======
->>>>>>> 9fc3390800bd48f4df8d4c9469822f9a06bd7a53
 	ngay_tao datetime,
     nguoi_tao nvarchar(50),
     trang_thai_hoa_don int,
     hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
   )
-  drop table lich_su_hoa_don
-<<<<<<< HEAD
 
-=======
->>>>>>> 9fc3390800bd48f4df8d4c9469822f9a06bd7a53
 Create table [hinh_thuc_thanh_toan](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
