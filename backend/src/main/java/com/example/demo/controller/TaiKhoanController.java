@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,6 +54,24 @@ public class TaiKhoanController {
             return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
         }
     }
+    @PostMapping("/change-password")
+    public ResponseEntity<Map<String, String>> changePassword(
+            @RequestParam String email,
+            @RequestParam String currentPassword,
+            @RequestParam String newPassword) {
+        Map<String, String> response = new HashMap<>();
+
+        if (taiKhoanService.checkPassword(email, currentPassword)) {
+            taiKhoanService.updatePassword(email, newPassword);
+            response.put("message", "Password has been changed");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", "Incorrect password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    }
+
+
 
     @PostMapping("forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) throws MessagingException {

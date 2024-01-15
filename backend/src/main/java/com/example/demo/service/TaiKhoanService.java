@@ -15,5 +15,8 @@ public interface TaiKhoanService {
     Optional<KhachHang> findByResetToken(String resetToken);
     KhachHang singup(KhachHang khachHang) throws Exception ;
 
+    boolean checkPassword(String username, String currentPassword);
+    void updatePassword(String username, String newPassword);
+
 
 }
