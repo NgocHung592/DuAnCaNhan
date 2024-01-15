@@ -21,9 +21,11 @@ public class SanPhamChiTietRequest {
 
     private Double donGia;
 
+    private String nguoiTao;
+
     private Timestamp ngayTao;
 
-    private String nguoiTao;
+    private String nguoiSua;
 
     private Timestamp ngaySua;
 

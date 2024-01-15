@@ -39,13 +39,6 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
   };
   $scope.getChatLieuTrangThai();
 
-  $scope.getDanhMucTrangThai = function () {
-    $http.get(danhMucAPI + "/trang-thai").then(function (response) {
-      $scope.listDanhMucTrangThai = response.data;
-    });
-  };
-  $scope.getDanhMucTrangThai();
-
   $scope.getSanPhamTrangThai = function (response) {
     $http.get(sanPhamAPI + "/trang-thai").then(function (response) {
       $scope.listSanPhamTrangThai = response.data;
@@ -56,6 +49,7 @@ window.updateSanPhamController = function ($http, $scope, $routeParams) {
   $scope.getHoaTietTrangThai = function () {
     $http.get(hoaTietAPI + "/trang-thai").then(function (response) {
       $scope.listHoaTietTrangThai = response.data;
+      console.log($scope.listHoaTietTrangThai);
     });
   };
   $scope.getHoaTietTrangThai();
