@@ -112,9 +112,22 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public NhanVien update(NhanVien nhanVien, UUID id) {
-        Optional<NhanVien> optional=nhanVienRepository.findById(id);
-        if (optional.isPresent()){
-            return nhanVienRepository.save(nhanVien);
+        Optional<NhanVien> optional = nhanVienRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.map(khachHangUpdate -> {
+                khachHangUpdate.setHoTen(nhanVien.getHoTen());
+                khachHangUpdate.setNgaySinh(nhanVien.getNgaySinh());
+                khachHangUpdate.setGioiTinh(nhanVien.getGioiTinh());
+                khachHangUpdate.setEmail(nhanVien.getEmail());
+                khachHangUpdate.setSoDienThoai(nhanVien.getSoDienThoai());
+                khachHangUpdate.setAnhDaiDien(nhanVien.getAnhDaiDien());
+                khachHangUpdate.setDaXoa(nhanVien.getDaXoa());
+                khachHangUpdate.setDiaChiCuThe(nhanVien.getDiaChiCuThe());
+                khachHangUpdate.setTinhThanhPho(nhanVien.getTinhThanhPho());
+                khachHangUpdate.setQuanHuyen(nhanVien.getQuanHuyen());
+                khachHangUpdate.setPhuongXa(nhanVien.getPhuongXa());
+                return nhanVienRepository.save(khachHangUpdate);
+            }).orElse(null);
         }
         return null;
     }

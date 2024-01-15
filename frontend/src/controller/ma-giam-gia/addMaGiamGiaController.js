@@ -101,10 +101,10 @@ window.addMaGiamGiaController = function (
       } else if (parseInt(gtg) < 0) {
         showError("Giá trị giảm không được nhỏ hơn 0");
       } else if (
-        parseInt(gtg) >= parseInt(tt) ||
+        parseInt(gtg) > parseInt(tt) ||
         parseInt(gtg) != parseFloat(gtg)
       ) {
-        showError("Giá trị giảm phải lớn hơn hoặc bằng giá trị giảm tối thiểu");
+        showError("Giá trị giảm phải nhỏ hơn hoặc bằng giá trị giảm tối thiểu");
       }
     } else if (parseInt(ht) != 0) {
       if (tt.length == 0) {
