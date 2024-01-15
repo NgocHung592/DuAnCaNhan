@@ -106,7 +106,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDonReponsitory.save(hoaDonSave);
         LichSuHoaDon lichSuHoaDon = new LichSuHoaDon();
         lichSuHoaDon.setNgayTao(new Timestamp(System.currentTimeMillis()));
-        lichSuHoaDon.setNguoiTao("System"); // You may set the actual user or system information
+        lichSuHoaDon.setNguoiTao(hoaDon.getTenKhachHang()); // You may set the actual user or system information
         lichSuHoaDon.setNoiDung("Chờ xác nhận");
         lichSuHoaDon.setTrangThai(hoaDonSave.getTrangThai());
         lichSuHoaDon.setHoaDon(hoaDonSave);
@@ -180,7 +180,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     @Transactional
-    public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai, String noiDung) {
+    public void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai, String noiDung, String nguoiTao) {
         Optional<HoaDon> optionalHoaDon = hoaDonReponsitory.findByKhachHangIdAndId(khachHangId, donHangId);
 
         if (optionalHoaDon.isPresent()) {
@@ -190,7 +190,7 @@ public class HoaDonServiceImpl implements HoaDonService {
             LichSuHoaDon lichSuHoaDon = new LichSuHoaDon();
             lichSuHoaDon.setNgayTao(new Timestamp(System.currentTimeMillis()));
             // Set the person who made the change (you might want to retrieve this information from the current user or a system user)
-            lichSuHoaDon.setNguoiTao("System");
+            lichSuHoaDon.setNguoiTao(nguoiTao);
             lichSuHoaDon.setNoiDung(noiDung);
             lichSuHoaDon.setTrangThai(newTrangThai);
             lichSuHoaDon.setHoaDon(hoaDon);

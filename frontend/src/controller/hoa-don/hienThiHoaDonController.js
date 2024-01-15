@@ -364,7 +364,7 @@ window.hienThiHoaDonController = function (
       console.log("Người dùng đã chọn Hủy hoặc đóng prompt.");
     }
 
-    console.log("idKhachHang", $scope.idKhachHang);
+    console.log("idKhachHang", $scope.hoTen);
     console.log("idDonHang", hang.hoaDonId);
     $rootScope.hangg = hang.hoaDonId;
 
@@ -379,6 +379,7 @@ window.hienThiHoaDonController = function (
       idKhachHang: $scope.idKhachHang,
       idDonHang: idDonHang,
       noiDung: noiDung,
+      nguoiTao: $scope.ten,
     });
 
     var config = {
@@ -412,6 +413,7 @@ window.hienThiHoaDonController = function (
     var data = $httpParamSerializerJQLike({
       idKhachHang: $scope.idKhachHang,
       idDonHang: idDonHang,
+      nguoiTao: $scope.ten,
     });
 
     var config = {

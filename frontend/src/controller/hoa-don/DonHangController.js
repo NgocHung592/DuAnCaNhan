@@ -10,6 +10,8 @@ window.DonHangController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.listHoaDon = [];
   $scope.listLichSuHoaDon = [];
   $scope.sizes = [];
@@ -620,6 +622,7 @@ window.DonHangController = function (
       idKhachHang: $scope.vai,
       idDonHang: $scope.hoaDonId,
       noiDung: noiDung,
+      nguoiTao: $scope.storedUser.hoTen,
     });
 
     var config = {
@@ -675,6 +678,7 @@ window.DonHangController = function (
       idKhachHang: $scope.vai,
       idDonHang: $scope.hoaDonId,
       noiDung: noiDung,
+      nguoiTao: $scope.storedUser.hoTen,
     });
 
     var config = {
@@ -696,6 +700,35 @@ window.DonHangController = function (
         // Xử lý lỗi nếu có
       });
   };
+  $scope.daNhanHang = function (hang) {
+    $scope.hoaDonId = $routeParams.id;
+
+    console.log("Id hoadon", $scope.hoaDonId);
+    console.log("Id hoadon", $scope.vai);
+
+    var data = $httpParamSerializerJQLike({
+      idKhachHang: $scope.vai,
+      idDonHang: $scope.hoaDonId,
+      nguoiTao: $scope.storedUser.hoTen,
+    });
+
+    var config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    };
+
+    $http
+      .post(hoaDonAPI + "/da-nhan-hang", data, config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $window.location.reload();
+        }, 0);
+      });
+  };
   $scope.daXacNhan = function (detailHoaDon) {
     $scope.hoaDonId = $routeParams.id;
 
@@ -705,6 +738,7 @@ window.DonHangController = function (
     var data = $httpParamSerializerJQLike({
       idKhachHang: $scope.vai,
       idDonHang: $scope.hoaDonId,
+      nguoiTao: $scope.storedUser.hoTen,
     });
 
     var config = {
@@ -733,6 +767,7 @@ window.DonHangController = function (
     var data = $httpParamSerializerJQLike({
       idKhachHang: $scope.vai,
       idDonHang: $scope.hoaDonId,
+      nguoiTao: $scope.storedUser.hoTen,
     });
 
     var config = {

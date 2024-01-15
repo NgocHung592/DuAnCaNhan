@@ -37,7 +37,7 @@ public interface HoaDonService {
 
     HoaDon detail(UUID id);
 
-    void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai,String noiDung);
+    void updateTrangThaiDonHang(UUID khachHangId, UUID donHangId, Integer newTrangThai,String noiDung,String nguoiTao);
 
     Page<HoaDonResponse> search(Integer pageNo, String search);
 

@@ -163,6 +163,7 @@ window.hienThiHoaDonTimeLineController = function (
       idKhachHang: $scope.idKhachHang,
       idDonHang: idDonHang,
       noiDung: noiDung,
+      nguoiTao: $scope.ten,
     });
 
     var config = {
@@ -195,6 +196,7 @@ window.hienThiHoaDonTimeLineController = function (
     var data = $httpParamSerializerJQLike({
       idKhachHang: $scope.idKhachHang,
       idDonHang: idDonHang,
+      nguoiTao: $scope.ten,
     });
 
     var config = {
