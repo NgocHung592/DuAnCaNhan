@@ -275,16 +275,7 @@ Create table [lich_su_hoa_don](
     hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
   )
   drop table lich_su_hoa_don
-Create table [hinh_thuc_thanh_toan](
-    id UNIQUEIDENTIFIER
-    DEFAULT NEWID() PRIMARY KEY,
-    ten nvarchar(50),
-    ngay_tao datetime,
-    mo_ta nvarchar(50),
-    trang_thai int,
-    ghi_chu nvarchar(50),
-    hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
-    )
+  drop table hinh_thuc_thanh_toan
 
 Create table  ma_giam_gia(
         id UNIQUEIDENTIFIER
