@@ -129,7 +129,33 @@ window.addHoaDonController = function (
     toastBootstrap.show();
     $scope.showError = false;
   }
+  $scope.getVisiblePages = function (totalPages, currentPage) {
+    var range = $scope.maxVisiblePages;
 
+    var numberTruncateLeft = currentPage - Math.floor(range / 2);
+    var numberTruncateRight = currentPage + Math.floor(range / 2);
+
+    var visiblePages = [];
+
+    for (var pos = 1; pos <= totalPages; pos++) {
+      var active = pos - 1 === currentPage ? "active" : "";
+
+      if (totalPages >= 2 * range - 1) {
+        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
+          visiblePages.push({
+            page: pos,
+            active: active,
+          });
+        }
+      } else {
+        visiblePages.push({
+          page: pos,
+          active: active,
+        });
+      }
+    }
+    return visiblePages;
+  };
   $scope.selectTab = function (tab, id, ma) {
     $scope.formHoaDonChiTiet.idHoaDon = id;
     $scope.maHoaDon = ma;
@@ -201,11 +227,11 @@ window.addHoaDonController = function (
         $scope.listSanPhamChiTiet = response?.data.content;
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = getVisiblePages(
-          $scope.totalPages,
-          3,
-          $scope.changePage
-        );
+        // $scope.visiblePages = getVisiblePages(
+        //   $scope.totalPages,
+        //   3,
+        //   $scope.changePage
+        // );
       });
   };
   $scope.getSanPhamChiTiet();
@@ -224,7 +250,7 @@ window.addHoaDonController = function (
     }
   };
   $scope.changePageHDCT = function (index) {
-    if ($scope.currentPage < $scope.totalPages.length - 1) {
+    if ($scope.currentPage < $scope.totalPagesHDCT.length - 1) {
       $scope.currentPageHDCT = index;
       $scope.getHoaDonChiTiet();
     }
@@ -238,7 +264,7 @@ window.addHoaDonController = function (
     }
   };
   $scope.nextPageHDCT = function () {
-    let length = $scope.totalPages.length;
+    let length = $scope.totalPagesHDCT.length;
     if ($scope.currentPageHDCT < length - 1) {
       $scope.currentPageHDCT++;
       $scope.getHoaDonChiTiet();
@@ -270,10 +296,13 @@ window.addHoaDonController = function (
       .then(function (response) {
         $scope.listHoaDonChiTiet = response?.data.content;
         $scope.customIndex = $scope.currentPageHDCT * response.data.size;
-
         $scope.totalPagesHDCT = new Array(response.data.totalPages);
-        $scope.visiblePages = getVisiblePages();
+        $scope.visiblePages = $scope.getVisiblePages(
+          $scope.totalPagesHDCT.length,
+          $scope.currentPageHDCT
+        );
         $scope.calculateTotal();
+        console.log($scope.visiblePages);
       });
   };
   function detailChiTietSanPham(idSanPhamChiTiet) {
@@ -981,22 +1010,12 @@ window.addHoaDonController = function (
     }
     callSearchAPI();
   };
-  function getVisiblePages(totalPages, maxVisiblePages, currentPage) {
-    const range = Math.floor(maxVisiblePages / 2);
-    const startPage = Math.max(1, currentPage - range);
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, index) => {
-      const pageNumber = startPage + index;
-      const isActive = pageNumber === currentPage;
-      return { page: pageNumber, active: isActive ? "active" : "" };
-    });
-  }
-  function paginateList(list, maxItemsPerPage, currentPage) {
-    const startIdx = (currentPage - 1) * maxItemsPerPage;
-    const endIdx = startIdx + maxItemsPerPage;
-    return list.slice(startIdx, endIdx);
-  }
+  // function paginateList(list, maxItemsPerPage, currentPage) {
+  //   const startIdx = (currentPage - 1) * maxItemsPerPage;
+  //   const endIdx = startIdx + maxItemsPerPage;
+  //   return list.slice(startIdx, endIdx);
+  // }
 
   // const video = document.getElementById("scanner");
 

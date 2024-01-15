@@ -7,6 +7,8 @@
   text-align: center;
 }
 
+
+
 .header-page {
   text-align: center;
   margin-bottom: 20px;
@@ -469,10 +471,7 @@ img.employee-image {
   padding: 5px;
 }
 
-.san-pham-cung-mau {
-  text-align: center;
-  padding: 10px 0;
-}
+
 
 .anh_san_pham {
   height: 100px;

@@ -7,27 +7,18 @@
             <h4 class="mb-4">CẬP NHẬT NHÂN VIÊN</h4>
             <form>
               <div class="row">
-                <div class="col-md-4 mb-3">
-                  <div class="uploadfile">
-                    <section class="p-4 d-flex justify-content-center h-200 w-100">
-                      <div class="file-upload-wrapper">
-                        <div class="file-upload">
-                          <div class="file-upload-message">
-                            <i class="fas fa-cloud-upload-alt file-upload-cloud-icon"></i>
-                            <p class="file-upload-default-message">
-                              Tải hình ảnh
-                            </p>
-                          </div>
-                          <div class="file-upload-mask"></div>
-                          <ul class="file-upload-errors"></ul>
-                          <input type="file" class="file-upload-input" id="product-image"
-                            data-mdb-file-upload="file-upload" />
-                          <div class="file-upload-previews"></div>
-                        </div>
-                      </div>
-                    </section>
+                  <div class="ms-4 mb-5">
+                    <div class="uploadfile">
+                      <label for="product-image">
+                        <i ng-if="!detailKhachHang.anhDaiDien" style="font-size: 250px" class="fas fa-user-circle"
+                          aria-hidden="true"></i>
+                        <img ng-if="detailKhachHang.anhDaiDien"
+                          src="../../../assets/anh-nguoi-dung/{{detailNhanVien.anhDaiDien}}" class="table_img" />
+                        <input type="file" multiple class="file-upload-input" id="product-image"
+                          data-mdb-file-upload="file-upload" style="display: none" />
+                      </label>
+                    </div>
                   </div>
-                </div>
                 <div class="col-md-8">
                   <div class="row">
                     <div class="col-md-6 mb-6">
@@ -76,10 +67,10 @@
                     <div class="col-md-4">
                       <label class="form-label">Tỉnh / Thành Phố</label>
                       <div class="dropdown-container">
-                        <input type="text" ng-model="diaChi.tinhThanhPho" ng-click="toggleAPI($event,'ThanhPho')"
+                        <input type="text" ng-model="detailNhanVien.tinhThanhPho" ng-click="toggleAPI($event,'ThanhPho')"
                           class="form-control">
                         <ul ng-show="showDropDownThanhPho" id="dropDown">
-                          <li ng-repeat="city in cityOptions" ng-model="diaChi.tinhThanhPho"
+                          <li ng-repeat="city in cityOptions" ng-model="detailNhanVien.tinhThanhPho"
                             ng-click="selectOptionThanhPho(indexDiaChi, city.name)">
                             {{city.name}}</li>
                         </ul>
@@ -88,10 +79,10 @@
                     <div class="col-md-4">
                       <label class="form-label">Quận / Huyện</label>
                       <div class="dropdown-container">
-                        <input type="text" ng-model="diaChi.quanHuyen" ng-click="toggleAPI($event,'QuanHuyen')"
+                        <input type="text" ng-model="detailNhanVien.quanHuyen" ng-click="toggleAPI($event,'QuanHuyen')"
                           class="form-control">
                         <ul ng-show="showDropDownQuanHuyen" id="dropDown">
-                          <li ng-repeat="district in districtOptions" ng-model="diaChi.quanHuyen"
+                          <li ng-repeat="district in districtOptions" ng-model="detailNhanVien.quanHuyen"
                             ng-click="selectOptionQuanHuyen(indexDiaChi, district.name)">
                             {{district.name}}</li>
                         </ul>
@@ -100,10 +91,10 @@
                     <div class="col-md-4">
                       <label class="form-label">Phường / Xã </label>
                       <div class="dropdown-container">
-                        <input type="text" ng-model="diaChi.phuongXa" ng-click="toggleAPI($event,'PhuongXa')"
+                        <input type="text" ng-model="detailNhanVien.phuongXa" ng-click="toggleAPI($event,'PhuongXa')"
                           class="form-control">
                         <ul ng-show="showDropDownPhuongXa" id="dropDown">
-                          <li ng-repeat="ward in wardOptions" ng-model="diaChi.phuongXa"
+                          <li ng-repeat="ward in wardOptions" ng-model="detailNhanVien.phuongXa"
                             ng-click="selectOptionPhuongXa(indexDiaChi, ward.name)">
                             {{ward.name}}</li>
                         </ul>
@@ -113,7 +104,7 @@
                 </div>
               </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a type="button" class="btn btn-primary" ng-click="addNhanVien($event)">Thêm nhân viên</a>
+                <a type="button" class="btn btn-primary" ng-click="update($event)">Thêm nhân viên</a>
               </div>
           </div>
         </div>

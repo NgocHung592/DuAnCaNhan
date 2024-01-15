@@ -87,8 +87,9 @@
                                     <th><img class="table_img"
                                             ng-src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
                                             alt="Không có ảnh"></th>
-                                    <th>{{sanPhamChiTiet.tenSanPham}} [{{sanPhamChiTiet.tenKichThuoc}} -
-                                        {{sanPhamChiTiet.tenMauSac}}]</th>
+                                    <th>{{sanPhamChiTiet.tenSanPham}} [
+                                        {{sanPhamChiTiet.tenMauSac}} - {{sanPhamChiTiet.tenKichThuoc}}
+                                        ]</th>
                                     <th>{{sanPhamChiTiet.soLuong}}</th>
                                     <th>{{sanPhamChiTiet.donGia | number}} VND</th>
 
@@ -106,7 +107,15 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example">
+                        <div ng-if="listSanPhamChiTiet.length === 0">
+                            <p class="dataTables_empty_icon">
+                                <img src="../../../assets/anh-san-pham/empty-product.png" alt="">
+                            </p>
+                            <p class="dataTables_empty_lable">
+                                Không có dữ liệu
+                            </p>
+                        </div>
+                        <nav aria-label="Page navigation example" ng-if="listSanPhamChiTiet.length > 0">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
                                     <a class="page-link" ng-click="previousPage()" aria-label="Previous">
@@ -123,8 +132,8 @@
                                     <a class="page-link" ng-click="nextPage()"> >> </a>
                                 </li>
                             </ul>
+                            <p>Tổng số trang: {{ totalPages.length }}</p>
                         </nav>
-                        <p>Tổng số trang: {{ totalPages.length }}</p>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <div class="modal fade" id="updateSanPhamChiTiet" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,98 +143,82 @@
                                             <div class="container-fluid">
                                                 <form class="row">
                                                     <div class="col-md-4 mb-3">
-                                                        <label class="form-label">Kích Thước</label>
-                                                        <select class="form-control"
-                                                            ng-model="detailSanPhamChiTiet.kichThuoc.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.kichThuoc.ten"
-                                                                value="{{kichThuoc.id}}"
-                                                                ng-repeat="kichThuoc in listKichThuocTrangThai">
-                                                                {{kichThuoc.ten}}</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label">Màu Sắc</label>
-                                                        <select class="form-control"
-                                                            ng-model="detailSanPhamChiTiet.mauSac.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.mauSac.ten"
-                                                                value="{{mauSac.id}}"
-                                                                ng-repeat="mauSac in listMauSacTrangThai">
-                                                                {{mauSac.ten}}</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label">Chất Liệu</label>
+                                                        <label class="form-label">Chất liệu</label>
                                                         <select class="form-control"
                                                             ng-model="detailSanPhamChiTiet.chatLieu.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.chatLieu.ten"
-                                                                value="{{chatLieu.id}}"
+                                                            <option value="{{chatLieu.id}}"
                                                                 ng-repeat="chatLieu in listChatLieuTrangThai">
                                                                 {{chatLieu.ten}}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Phong Cách</label>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Phong cách</label>
                                                         <select class="form-control"
                                                             ng-model="detailSanPhamChiTiet.phongCach.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.phongCach.ten"
-                                                                value="{{phongCach.id}}"
+                                                            <option value="{{phongCach.id}}"
                                                                 ng-repeat="phongCach in listPhongCachTrangThai">
                                                                 {{phongCach.ten}}</option>
                                                         </select>
-
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Họa Tiết</label>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Họa tiết</label>
                                                         <select class="form-control mb-3"
                                                             ng-model="detailSanPhamChiTiet.hoaTiet.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.hoaTiet.ten"
-                                                                value="{{hoaTiet.id}}"
+                                                            <option value="{{hoaTiet.id}}"
                                                                 ng-repeat="hoaTiet in listHoaTietTrangThai">
                                                                 {{hoaTiet.ten}}
                                                             </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Tay Áo</label>
+                                                    <div class="col-md-6">
+
+                                                        <label class="form-label">Tay áo</label>
                                                         <select class=" form-control"
                                                             ng-model="detailSanPhamChiTiet.tayAo.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.tayAo.ten"
-                                                                value="{{tayAo.id}}"
+                                                            <option value="{{tayAo.id}}"
                                                                 ng-repeat="tayAo in listTayAoTrangThai">
                                                                 {{tayAo.ten}}
                                                             </option>
                                                         </select>
-
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label">Cổ Áo</label>
+                                                        <label class="form-label">Cổ áo</label>
                                                         <select class="form-control"
                                                             ng-model="detailSanPhamChiTiet.coAo.id">
-                                                            <option ng-selected="detailSanPhamChiTiet.coAo.ten"
-                                                                class="form-control" value="{{coAo.id}}"
+                                                            <option class="form-control" value="{{coAo.id}}"
                                                                 ng-repeat="coAo in listCoAoTrangThai">
                                                                 {{coAo.ten}}
                                                             </option>
                                                         </select>
-
                                                     </div>
+
                                                     <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Số Lượng</label>
+                                                        <label class="form-label">Số lượng</label>
                                                         <input type="number" class="form-control"
                                                             ng-model="detailSanPhamChiTiet.soLuong">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label">Đơn Giá</label>
+                                                        <label class="form-label">Đơn giá</label>
                                                         <input type="number" class="form-control"
                                                             ng-model="detailSanPhamChiTiet.donGia">
                                                     </div>
                                                     <div class="col-md-12 mb-3">
-                                                        <label class="form-label">Hình Ảnh</label>
-                                                        <input type="file" class="form-control"
-                                                            ng-model="detailSanPhamChiTiet.urlImage" id="urlImage">
+                                                        <label class="form-label">Hình ảnh</label>
+                                                        <div class="uploadfile">
+                                                            <label for="product-image">
+                                                                <img class="table_img"
+                                                                    ng-src="../../../assets/anh-san-pham/{{detailSanPhamChiTiet.urlImage}}">
+                                                                <input type="file" class="file-upload-input"
+                                                                    ng-model="detailSanPhamChiTiet.urlImage"
+                                                                    id="product-image"
+                                                                    data-mdb-file-upload="file-upload"
+                                                                    style="display: none" />
+                                                            </label>
+                                                        </div>
+
                                                     </div>
                                                     <div class="mb-3" class="form-check">
-                                                        <label class="form-label">Trạng Thái</label><br>
+                                                        <label class="form-label">Trạng thái</label><br>
                                                         <input type="radio" value="false"
                                                             ng-model="detailSanPhamChiTiet.daXoa"
                                                             ng-checked="detailSanPhamChiTiet.daXoa==false"
@@ -236,7 +229,7 @@
                                                         <input type="radio" value="true"
                                                             ng-model="detailSanPhamChiTiet.daXoa"
                                                             ng-checked="detailSanPhamChiTiet.daXoa==true"
-                                                            class="form-check-input">
+                                                            class="form-check-input ms-3">
                                                         <label class="form-check-label">
                                                             Ngừng Kinh Doanh
                                                         </label>

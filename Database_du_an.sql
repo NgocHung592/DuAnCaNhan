@@ -188,7 +188,6 @@ Create table [dia_chi](
 	so_dien_thoai_khach_hang varchar(15),
     khach_hang_id UNIQUEIDENTIFIER REFERENCES khach_hang(id),
     )
-	drop table dia_chi
 
 
 	Create table [chuc_vu](
@@ -269,13 +268,31 @@ Create table [lich_su_hoa_don](
     id UNIQUEIDENTIFIER
     DEFAULT NEWID() PRIMARY KEY,
     noi_dung nvarchar(50),
+<<<<<<< HEAD
+    ngay_sua datetime,
+=======
+>>>>>>> 2b39d6cd302a36d96e3b5d5a4a941efc468ef8b8
 	ngay_tao datetime,
     nguoi_tao nvarchar(50),
     trang_thai_hoa_don int,
     hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
   )
+<<<<<<< HEAD
+
+Create table [hinh_thuc_thanh_toan](
+    id UNIQUEIDENTIFIER
+    DEFAULT NEWID() PRIMARY KEY,
+    ten nvarchar(50),
+    ngay_tao datetime,
+    mo_ta nvarchar(50),
+    trang_thai int,
+    ghi_chu nvarchar(50),
+    hoa_don_id UNIQUEIDENTIFIER REFERENCES hoa_don(id),
+    )
+=======
   drop table lich_su_hoa_don
   drop table hinh_thuc_thanh_toan
+>>>>>>> 2b39d6cd302a36d96e3b5d5a4a941efc468ef8b8
 
 Create table  ma_giam_gia(
         id UNIQUEIDENTIFIER

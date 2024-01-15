@@ -157,7 +157,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
             sanPhamChiTietUpdate.setSoLuong(Integer.valueOf(sanPhamChiTietRequest.getSoLuong()));
             sanPhamChiTietUpdate.setDonGia(BigDecimal.valueOf(sanPhamChiTietRequest.getDonGia()));
             sanPhamChiTietUpdate.setNgaySua(sanPhamChiTietRequest.getNgaySua());
-            sanPhamChiTietUpdate.setNguoiSua("Nguyễn Ngọc Hưng");
+            sanPhamChiTietUpdate.setNguoiSua(sanPhamChiTietRequest.getNguoiSua());
             sanPhamChiTietUpdate.setUrlImage(sanPhamChiTietRequest.getUrlImage());
             sanPhamChiTietUpdate.setDaXoa(Boolean.valueOf(sanPhamChiTietRequest.getDaXoa()));
             sanPhamChiTietUpdate.setMauSac(mauSacRepository.findById(sanPhamChiTietRequest.getIdMauSac()).get());
