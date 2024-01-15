@@ -82,24 +82,24 @@
                       Không có đơn hàng nào
                     </p>
                   </div>
-                  <nav aria-label="Page navigation example " ng-if="listHoaDon.length>0">
+                  <nav aria-label="Page navigation example" ng-if="listHoaDon.length > 0">
                     <ul class="pagination justify-content-center">
                       <li class="page-item">
-                        <a class="page-link" ng-click="previousPage()">
+                        <a class="page-link" ng-click="previousPage()" aria-label="Previous">
                           <span aria-hidden="true">
                             << </span>
                         </a>
                       </li>
-                      <li class="page-item" ng-repeat="page in totalPages track by $index"
-                        ng-class="{'active': $index === currentPage} " ng-click="changePage($index);">
-                        <a class="page-link">{{$index+1}}</a>
+                      <li class="page-item" ng-repeat="page in visiblePages"
+                        ng-class="{ 'active': page.active === 'active' }">
+                        <a class="page-link" ng-click="changePage(page.page - 1)">{{ page.page
+                          }}</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" ng-click="nextPage()">>></a>
+                        <a class="page-link" ng-click="nextPage()"> >> </a>
                       </li>
                     </ul>
                     <p>Tổng số trang: {{ totalPages.length }}</p>
-
                   </nav>
                 </div>
               </div>

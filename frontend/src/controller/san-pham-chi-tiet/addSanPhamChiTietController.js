@@ -20,6 +20,8 @@ window.addSanPhamChiTietController = function (
   $scope.randoomSanPham = "SP" + Math.floor(Math.random() * 10000) + 1;
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.product = {
     maSanPham: $scope.randoomSanPham,
     tenSanPham: "",
@@ -283,6 +285,7 @@ window.addSanPhamChiTietController = function (
         donGia: sizeAndColor.gia,
         urlImage: sizeAndColor.urlImage,
         ngayTao: new Date(),
+        nguoiTao: $scope.storedUser.hoTen,
         daXoa: $scope.product.daXoa,
       };
       $scope.productDetails.push(newProductDetail);

@@ -2,8 +2,11 @@ window.updateMaGiamGiaController = function (
   $http,
   $scope,
   $routeParams,
-  $location
+  $location,
+  $rootScope
 ) {
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.detailMaGiamGia = {
     id: "",
     ma: "",
@@ -15,7 +18,7 @@ window.updateMaGiamGiaController = function (
     ngayBatDau: "",
     ngayKetThuc: "",
     ngaySua: new Date(),
-    nguoiSua: "Hưng",
+    nguoiSua: $scope.storedUser.hoTen,
   };
 
   $http
@@ -171,6 +174,7 @@ window.updateMaGiamGiaController = function (
           $scope.detailMaGiamGia
         )
         .then(function () {
+          $rootScope.message("Cập nhật thành công");
           $location.path("/ma-giam-gia/hien-thi");
         });
     } else {

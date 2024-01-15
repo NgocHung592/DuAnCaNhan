@@ -4,6 +4,7 @@ window.DonHangController = function (
   $routeParams,
   $httpParamSerializerJQLike,
   $timeout,
+  $location,
   $rootScope,
   $window
 ) {
@@ -319,6 +320,31 @@ window.DonHangController = function (
             $scope.getHoaDonChiTiet();
             $scope.calculateTotal();
             showSuccess("Thêm sản phẩm mới thành công");
+          })
+          .then(function () {
+            $http
+              .get(hoaDonChiTietAPI + "/tinh-tong/" + $routeParams.id)
+              .then(function (response) {
+                $scope.listHoaDonChiTietTinhTong = response.data;
+
+                $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+                  (total, item) => total + item.thanhTien,
+                  0
+                );
+                $http
+                  .get(hoaDonAPI + "/detail/" + $routeParams.id)
+                  .then(function (response) {
+                    $scope.detailHoaDon = response.data;
+                    $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
+                  });
+
+                $scope.updateTongTien =
+                  $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+                return $http.put(
+                  hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                  $scope.updateTongTien
+                );
+              });
           });
       }
     });
@@ -387,6 +413,7 @@ window.DonHangController = function (
                 );
               });
           });
+        $location.path("/hoa-don/update/" + $routeParams.id);
       } else {
         matchingItem.soLuong = detailSanPhamChiTiet.soLuong;
 
@@ -397,10 +424,37 @@ window.DonHangController = function (
     });
   };
   $scope.xoaSanPhamGioHang = function (id) {
-    $http.delete(hoaDonChiTietAPI + "/delete/" + id).then(function () {
-      showError("Xóa thành công ");
-      $scope.getHoaDonChiTiet();
-    });
+    $http
+      .delete(hoaDonChiTietAPI + "/delete/" + id)
+      .then(function () {
+        showError("Xóa thành công ");
+        $scope.getHoaDonChiTiet();
+      })
+      .then(function () {
+        $http
+          .get(hoaDonChiTietAPI + "/tinh-tong/" + $routeParams.id)
+          .then(function (response) {
+            $scope.listHoaDonChiTietTinhTong = response.data;
+
+            $scope.tienHang = $scope.listHoaDonChiTietTinhTong.reduce(
+              (total, item) => total + item.thanhTien,
+              0
+            );
+            $http
+              .get(hoaDonAPI + "/detail/" + $routeParams.id)
+              .then(function (response) {
+                $scope.detailHoaDon = response.data;
+                $scope.phiVanChuyen = $scope.detailHoaDon.phiShip;
+              });
+
+            $scope.updateTongTien =
+              $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
+            $http.put(
+              hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+              $scope.updateTongTien
+            );
+          });
+      });
   };
   function detailChiTietSanPham(idSanPhamChiTiet) {
     return $http

@@ -23,6 +23,8 @@ public class SanPhamChiTietRequest {
 
     private Timestamp ngayTao;
 
+    private String nguoiTao;
+
     private Timestamp ngaySua;
 
     private String soLuong;

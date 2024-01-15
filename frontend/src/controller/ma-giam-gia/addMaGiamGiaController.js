@@ -6,7 +6,8 @@ window.addMaGiamGiaController = function (
 ) {
   const toastLiveExample = document.getElementById("liveToast");
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-
+  let storedUserData = localStorage.getItem("loggedInAdmin");
+  $scope.storedUser = JSON.parse(storedUserData);
   $scope.randoom = "MG" + Math.floor(Math.random() * 10000) + 1;
 
   $scope.maGiamGiaSave = {
@@ -20,6 +21,7 @@ window.addMaGiamGiaController = function (
     giaTriGiam: "",
     ngayBatDau: "",
     ngayKetThuc: "",
+    nguoiTao: $scope.storedUser.hoTen,
     ngayTao: new Date(),
   };
   $scope.errorProgress = function () {

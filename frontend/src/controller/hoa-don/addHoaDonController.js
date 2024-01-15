@@ -37,7 +37,6 @@ window.addHoaDonController = function (
   $scope.showDropDownPhuongXa = false;
   $scope.showDropDownQuanHuyen = false;
   $scope.isSelected = false;
-
   $scope.tongTien = 0;
   $scope.giamGia = 0;
   $scope.tienHang = 0;
@@ -49,7 +48,6 @@ window.addHoaDonController = function (
   $scope.searchKeyword = null;
   $scope.searchMauSac = null;
   $scope.searchKichThuoc = null;
-
   $scope.customIndex = 0;
   $scope.detailKhachHang = {
     id: "",
@@ -203,7 +201,11 @@ window.addHoaDonController = function (
         $scope.listSanPhamChiTiet = response?.data.content;
         $scope.customIndex = $scope.currentPage * response.data.size;
         $scope.totalPages = new Array(response.data.totalPages);
-        $scope.visiblePages = getVisiblePages();
+        $scope.visiblePages = getVisiblePages(
+          $scope.totalPages,
+          3,
+          $scope.changePage
+        );
       });
   };
   $scope.getSanPhamChiTiet();
@@ -979,36 +981,21 @@ window.addHoaDonController = function (
     }
     callSearchAPI();
   };
-  function getVisiblePages() {
-    var totalPages = $scope.totalPages.length;
+  function getVisiblePages(totalPages, maxVisiblePages, currentPage) {
+    const range = Math.floor(maxVisiblePages / 2);
+    const startPage = Math.max(1, currentPage - range);
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    var range = $scope.maxVisiblePages; // Số trang tối đa để hiển thị
-    var curPage = $scope.currentPage;
-
-    var numberTruncateLeft = curPage - Math.floor(range / 2);
-    var numberTruncateRight = curPage + Math.floor(range / 2);
-
-    // Tạo danh sách trang hiển thị
-    var visiblePages = [];
-
-    for (var pos = 1; pos <= totalPages; pos++) {
-      var active = pos - 1 === curPage ? "active" : "";
-
-      if (totalPages >= 2 * range - 1) {
-        if (pos >= numberTruncateLeft && pos <= numberTruncateRight) {
-          visiblePages.push({
-            page: pos,
-            active: active,
-          });
-        }
-      } else {
-        visiblePages.push({
-          page: pos,
-          active: active,
-        });
-      }
-    }
-    return visiblePages;
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => {
+      const pageNumber = startPage + index;
+      const isActive = pageNumber === currentPage;
+      return { page: pageNumber, active: isActive ? "active" : "" };
+    });
+  }
+  function paginateList(list, maxItemsPerPage, currentPage) {
+    const startIdx = (currentPage - 1) * maxItemsPerPage;
+    const endIdx = startIdx + maxItemsPerPage;
+    return list.slice(startIdx, endIdx);
   }
 
   // const video = document.getElementById("scanner");
