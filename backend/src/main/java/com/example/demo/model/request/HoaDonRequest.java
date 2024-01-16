@@ -22,6 +22,8 @@ public class HoaDonRequest {
 
     private UUID idKhachHang;
 
+    private UUID idNhanVien;
+
     private Timestamp ngayThanhToan;
 
     private Double tongTien;

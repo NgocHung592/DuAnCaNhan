@@ -108,12 +108,47 @@ window.hienThiSanPhamChiTietController = function (
       console.log($scope.detailSanPhamChiTiet);
     });
   };
-  $scope.updateSanPhamChiTietF = function (e, id) {
-    let productImages = document.getElementById("product-image");
-    for (const file of productImages.files) {
-      $scope.urlImage = file.name;
+  $scope.selectFile = function (index) {
+    var productImageInput = document.getElementById("product-image");
+
+    var handleImageChangeCallback = function (event) {
+      $scope.$apply(function () {
+        $scope.handleImageChange(event, index);
+      });
+    };
+
+    productImageInput.addEventListener("change", handleImageChangeCallback);
+
+    productImageInput.addEventListener(
+      "change",
+      function removeEventListenerCallback() {
+        productImageInput.removeEventListener(
+          "change",
+          handleImageChangeCallback
+        );
+        productImageInput.removeEventListener(
+          "change",
+          removeEventListenerCallback
+        );
+      }
+    );
+
+    productImageInput.click();
+  };
+
+  $scope.handleImageChange = function (event, tenMauSac, index) {
+    console.log("handleImageChange called");
+    var file = event.target.files[0];
+
+    if (file) {
+      $scope.detailSanPhamChiTiet.urlImage = file.name;
     }
-    if ($scope.urlImage == "") {
+    console.log($scope.detailSanPhamChiTiet);
+  };
+  $scope.updateSanPhamChiTietF = function (e, id) {
+    e.preventDefault();
+
+    if ($scope.detailSanPhamChiTiet.urlImage == null) {
       $scope.updateSanPhamChiTiet = {
         idHoaTiet: $scope.detailSanPhamChiTiet.hoaTiet.id,
         idPhongCach: $scope.detailSanPhamChiTiet.phongCach.id,
@@ -144,7 +179,7 @@ window.hienThiSanPhamChiTietController = function (
         soLuong: $scope.detailSanPhamChiTiet.soLuong,
         donGia: $scope.detailSanPhamChiTiet.donGia,
         daXoa: $scope.detailSanPhamChiTiet.daXoa,
-        urlImage: $scope.urlImage,
+        urlImage: $scope.detailSanPhamChiTiet.urlImage,
         ngaySua: new Date(),
       };
       $http

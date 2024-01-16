@@ -35,12 +35,14 @@ public class HoaDonServiceImpl implements HoaDonService {
     private KhachHangRepository khachHangRepository;
 
     @Autowired
+    private NhanVienRepository nhanVienRepository;
+
+    @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
 
 
     @Autowired
     private SanPhamChiTietRepository sanPhamChiTietRepository;
-
 
 
     @Autowired
@@ -58,12 +60,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public List<HienThiHoaDonReponse> getHienThi(UUID idKhachHang, UUID idHoaDon) {
-        return hoaDonReponsitory.getDetailDonHangKhachHang(idKhachHang,idHoaDon);
+        return hoaDonReponsitory.getDetailDonHangKhachHang(idKhachHang, idHoaDon);
     }
 
     @Override
     public List<DonHangKhachHangReponse> getSearch(String id, String trangThai) {
-        return hoaDonReponsitory.getSearchDonHangKhachHang(id,trangThai);
+        return hoaDonReponsitory.getSearchDonHangKhachHang(id, trangThai);
     }
 
     @Override
@@ -75,11 +77,12 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .nguoiTao(hoaDon.getNguoiTao())
                 .trangThai(hoaDon.getTrangThai())
                 .build();
-        HoaDon hoaDonNew=hoaDonReponsitory.save(hoaDonSave);
-        LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+        HoaDon hoaDonNew = hoaDonReponsitory.save(hoaDonSave);
+        LichSuHoaDon lichSuHoaDon = LichSuHoaDon.builder()
                 .ngayTao(hoaDon.getNgayTao())
                 .nguoiTao(hoaDon.getNguoiTao())
                 .trangThai(hoaDon.getTrangThai())
+                .noiDung("Tạo đơn hàng")
                 .hoaDon(hoaDonNew)
                 .build();
         lichSuHoaDonRepository.save(lichSuHoaDon);
@@ -123,14 +126,15 @@ public class HoaDonServiceImpl implements HoaDonService {
             optional.map(hoaDon -> {
                 hoaDon.setTrangThai(Integer.valueOf(hoaDonRequest.getTrangThai()));
                 hoaDon.setTenKhachHang(hoaDonRequest.getTenKhachHang());
+                hoaDon.setNhanVien(nhanVienRepository.findById(hoaDonRequest.getIdNhanVien()).get());
                 hoaDon.setSoDienThoaiKhachHang(hoaDonRequest.getSoDienThoaiKhachHang());
                 hoaDon.setDiaChiKhachHang(hoaDonRequest.getDiaChiKhachHang());
                 hoaDon.setNgayThanhToan(hoaDonRequest.getNgayThanhToan());
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
-                HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
-                LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+                HoaDon hoaDonNew = hoaDonReponsitory.save(hoaDon);
+                LichSuHoaDon lichSuHoaDon = LichSuHoaDon.builder()
                         .ngayTao(hoaDonNew.getNgayThanhToan())
                         .nguoiTao(hoaDonNew.getNguoiTao())
                         .trangThai(hoaDonNew.getTrangThai())
@@ -149,9 +153,10 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setTongTien(BigDecimal.valueOf(hoaDonRequest.getTongTien()));
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 hoaDon.setKhachHang(khachHangRepository.findById(hoaDonRequest.getIdKhachHang()).orElse(null));
+                hoaDon.setNhanVien(nhanVienRepository.findById(hoaDonRequest.getIdNhanVien()).get());
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
-                HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
-                LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
+                HoaDon hoaDonNew = hoaDonReponsitory.save(hoaDon);
+                LichSuHoaDon lichSuHoaDon = LichSuHoaDon.builder()
                         .ngayTao(hoaDon.getNgayThanhToan())
                         .nguoiTao(hoaDon.getNguoiTao())
                         .trangThai(hoaDon.getTrangThai())
@@ -166,7 +171,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public HoaDon updateTongTien(Double tongTien, UUID id) {
-        HoaDon hoaDon=hoaDonReponsitory.findById(id).get();
+        HoaDon hoaDon = hoaDonReponsitory.findById(id).get();
         hoaDon.setTongTien(BigDecimal.valueOf(tongTien));
         return hoaDonReponsitory.save(hoaDon);
     }
@@ -206,13 +211,12 @@ public class HoaDonServiceImpl implements HoaDonService {
                     sanPhamChiTietRepository.giamSoLuongSanPham(hoaDonChiTiet.getSanPhamChiTiet().getId(), hoaDonChiTiet.getSoLuong());
                 }
             }
-            } else {
-                // Handle the case when the order is not found
-                throw new EntityNotFoundException("Không tìm thấy đơn hàng");
-            }
-
+        } else {
+            // Handle the case when the order is not found
+            throw new EntityNotFoundException("Không tìm thấy đơn hàng");
         }
 
+    }
 
 
     @Override
@@ -232,6 +236,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         Pageable pageable = PageRequest.of(pageNo, 10);
         return hoaDonReponsitory.loc(pageable, trangThai);
     }
+
     @Override
     @Transactional
     public void khongNhanHang(UUID id) {

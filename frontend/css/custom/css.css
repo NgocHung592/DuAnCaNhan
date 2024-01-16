@@ -3,6 +3,12 @@
   width: 90px;
 }
 
+.user_img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
 .table thead tr th {
   text-align: center;
 }

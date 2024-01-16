@@ -147,6 +147,7 @@ window.DonHangController = function (
       .then(function (response) {
         if (response.status == 200) {
           $scope.detailHoaDon = response.data;
+          console.log($scope.detailHoaDon);
           if ($scope.detailHoaDon.khachHang !== null) {
             $scope.vai = $scope.detailHoaDon.khachHang.id;
           }

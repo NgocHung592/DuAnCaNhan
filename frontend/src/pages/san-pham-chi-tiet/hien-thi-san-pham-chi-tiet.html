@@ -203,18 +203,19 @@
                                                             ng-model="detailSanPhamChiTiet.donGia">
                                                     </div>
                                                     <div class="col-md-12 mb-3">
-                                                        <label class="form-label">Hình ảnh</label>
-                                                        <div class="uploadfile">
-                                                            <label for="product-image">
-                                                                <img class="table_img"
-                                                                    ng-src="../../../assets/anh-san-pham/{{detailSanPhamChiTiet.urlImage}}">
-                                                                <input type="file" class="file-upload-input"
-                                                                    ng-model="detailSanPhamChiTiet.urlImage"
-                                                                    id="product-image"
-                                                                    data-mdb-file-upload="file-upload"
-                                                                    style="display: none" />
-                                                            </label>
-                                                        </div>
+                                                        <label class="form-label">Hình ảnh</label><br>
+                                                        <input type="file" class="file-upload-input" id="product-image"
+                                                            style="display: none;">
+                                                        <i ng-if="detailSanPhamChiTiet.urlImage===null"
+                                                            style="font-size: 200px" class="fas fa-user-circle"
+                                                            ng-click="selectFile($index);$event.stopPropagation()"
+                                                            aria-hidden="true"></i>
+                                                        <!-- <i ng-click="selectFile(product.tenMauSac,$index);$event.stopPropagation()"
+                                                            style="font-size: 3em;" class="fa-solid fa-image fa-xl"></i> -->
+                                                        <img ng-if="detailSanPhamChiTiet.urlImage!==null"
+                                                            style="height: 200px;width: 200px;"
+                                                            ng-click="selectFile($index);$event.stopPropagation()"
+                                                            ng-src="../../../assets/anh-san-pham/{{detailSanPhamChiTiet.urlImage}}">
 
                                                     </div>
                                                     <div class="mb-3" class="form-check">
