@@ -320,31 +320,45 @@
                                       >
                                     </div>
                                   </div>
-
-                                  <button
-                                    ng-click="huyDonHang(hang)"
-                                    ng-if="hang.trangThai == 0"
+                                  <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-end"
                                   >
-                                    Hủy đơn hàng
-                                  </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-danger"
+                                      ng-click="huyDonHang(hang)"
+                                      ng-if="hang.trangThai == 0"
+                                    >
+                                      Hủy đơn hàng
+                                    </button>
 
-                                  <button
-                                    ng-click="daNhanHang(hang)"
-                                    ng-if="hang.trangThai == 2"
-                                  >
-                                    Đã nhận được hàng
-                                  </button>
-                                  <button
-                                    ng-click="muaLai(hang.products)"
-                                    ng-if="hang.trangThai == 3 || hang.trangThai == 4"
-                                  >
-                                    Mua lại
-                                  </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-primary"
+                                      ng-click="daNhanHang(hang)"
+                                      ng-if="hang.trangThai == 2"
+                                    >
+                                      Đã nhận được hàng
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-danger"
+                                      ng-click="muaLai(hang.products)"
+                                      ng-if="hang.trangThai == 3 || hang.trangThai == 4"
+                                    >
+                                      Mua lại
+                                    </button>
 
-                                  <span></span
-                                  ><button class="sao" ng-click="lienHe()">
-                                    Liên hệ người bán
-                                  </button>
+                                    <span></span>
+
+                                    <button
+                                      type="button"
+                                      class="sao"
+                                      ng-click="lienHe()"
+                                    >
+                                      Liên hệ người bán
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </form>

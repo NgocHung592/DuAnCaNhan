@@ -759,7 +759,6 @@ window.DonHangController = function (
         console.log(response.data);
       })
       .catch(function () {
-        $scope.exportToPDF();
         $timeout(function () {
           $window.location.reload();
         }, 0);
@@ -793,21 +792,21 @@ window.DonHangController = function (
       });
   };
 
-  $scope.invoice = {
-    customer: "Tên khách hàng",
-    items: [
-      { description: "Sản phẩm 1", quantity: 2, price: 10 },
-      { description: "Sản phẩm 2", quantity: 1, price: 20 },
-      // Thêm các mục khác nếu cần
-    ],
-  };
+  // $scope.invoice = {
+  //   customer: "Tên khách hàng",
+  //   items: [
+  //     { description: "Sản phẩm 1", quantity: 2, price: 10 },
+  //     { description: "Sản phẩm 2", quantity: 1, price: 20 },
+  //     // Thêm các mục khác nếu cần
+  //   ],
+  // };
 
-  var jsPDF = window.jsPDF || window.jspdf;
-  $scope.exportToPDF = function () {
-    // Tạo đối tượng jsPDF
-    var doc = new jsPDF.default();
+  // var jsPDF = window.jsPDF || window.jspdf;
+  // $scope.exportToPDF = function () {
+  //   // Tạo đối tượng jsPDF
+  //   var doc = new jsPDF.default();
 
-    // Xuất file PDF
-    doc.save("hoa-don.pdf");
-  };
+  //   // Xuất file PDF
+  //   doc.save("hoa-don.pdf");
+  // };
 };
