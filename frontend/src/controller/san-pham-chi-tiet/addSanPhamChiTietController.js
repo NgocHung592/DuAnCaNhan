@@ -278,7 +278,6 @@ window.addSanPhamChiTietController = function (
       $scope.product.moTa = null;
     }
   };
-  $scope.addSizeAndColor = function () {};
   $scope.removeSize = function (tenMauSac, indexcha, indexcon) {
     console.log(indexcha);
     console.log(indexcon);
@@ -314,27 +313,54 @@ window.addSanPhamChiTietController = function (
   $scope.addSanPhamChiTiet = function (event) {
     event.preventDefault();
     $scope.sizeAndColors.forEach((sizeAndColor) => {
-      const newProductDetail = {
-        maSanPham: $scope.product.maSanPham,
-        tenSanPham: $scope.product.tenSanPham,
-        moTa: $scope.product.moTa,
-        idPhongCach: $scope.product.idPhongCach,
-        idChatLieu: $scope.product.idChatLieu,
-        idHoaTiet: $scope.product.idHoaTiet,
-        idCoAo: $scope.product.idCoAo,
-        idTayAo: $scope.product.idTayAo,
-        tenKichThuoc: sizeAndColor.tenKichThuoc,
-        tenMauSac: sizeAndColor.tenMauSac,
-        soLuong: sizeAndColor.soLuong,
-        donGia: sizeAndColor.gia,
-        urlImage: sizeAndColor.urlImage,
-        ngayTao: new Date(),
-        nguoiTao: $scope.storedUser.hoTen,
-        daXoa: $scope.product.daXoa,
-      };
-      $scope.productDetails.push(newProductDetail);
-    });
+      const existingProductDetail = $scope.productDetails.find(
+        (detail) =>
+          detail.tenKichThuoc === sizeAndColor.tenKichThuoc &&
+          detail.tenMauSac === sizeAndColor.tenMauSac
+      );
 
+      if (existingProductDetail) {
+        existingProductDetail.maSanPham = $scope.product.maSanPham;
+        existingProductDetail.tenSanPham = $scope.product.tenSanPham;
+        existingProductDetail.moTa = $scope.product.moTa;
+        existingProductDetail.idPhongCach = $scope.product.idPhongCach;
+        existingProductDetail.idChatLieu = $scope.product.idChatLieu;
+        existingProductDetail.idHoaTiet = $scope.product.idHoaTiet;
+        existingProductDetail.idCoAo = $scope.product.idCoAo;
+        existingProductDetail.idTayAo = $scope.product.idTayAo;
+        existingProductDetail.tenKichThuoc = sizeAndColor.tenKichThuoc;
+        existingProductDetail.tenMauSac = sizeAndColor.tenMauSac;
+        existingProductDetail.ngayTao = new Date();
+        existingProductDetail.nguoiTao = $scope.storedUser.hoTen;
+        existingProductDetail.daXoa = $scope.product.daXoa;
+        existingProductDetail.soLuong = sizeAndColor.soLuong;
+        existingProductDetail.donGia = sizeAndColor.gia;
+        existingProductDetail.urlImage = sizeAndColor.urlImage;
+      } else {
+        // Nếu chưa tồn tại, tạo mới và thêm vào mảng
+        const productDetail = {
+          maSanPham: $scope.product.maSanPham,
+          tenSanPham: $scope.product.tenSanPham,
+          moTa: $scope.product.moTa,
+          idPhongCach: $scope.product.idPhongCach,
+          idChatLieu: $scope.product.idChatLieu,
+          idHoaTiet: $scope.product.idHoaTiet,
+          idCoAo: $scope.product.idCoAo,
+          idTayAo: $scope.product.idTayAo,
+          tenKichThuoc: sizeAndColor.tenKichThuoc,
+          tenMauSac: sizeAndColor.tenMauSac,
+          soLuong: sizeAndColor.soLuong,
+          donGia: sizeAndColor.gia,
+          urlImage: sizeAndColor.urlImage,
+          ngayTao: new Date(),
+          nguoiTao: $scope.storedUser.hoTen,
+          daXoa: $scope.product.daXoa,
+        };
+        $scope.productDetails.push(productDetail);
+      }
+    });
+    console.log($scope.productDetails);
+    console.log($scope.productDetails);
     if ($scope.product.tenSanPham == "") {
       showError("Tên sản phẩm không được trống");
     } else if ($scope.product.moTa == "") {
