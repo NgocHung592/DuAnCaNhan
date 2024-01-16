@@ -1,512 +1,745 @@
-<main class="wrapperMain_content ">
-    <div class="layout-collections 0">
-
-        <div class="wrapper-mainCollection">
-            <div class="collection-heading">
-                <div class="container">
-                    <div class="bgwhite-heading border ">
-                        <div class="flexbox-heading">
-                            <div class=" col-md-9  col-sm-12 col-xs-12">
-                                <h1 class="title">Tất cả sản phẩm</h1>
-                            </div>
-                            <div class="col-md-3 col-sm-12 col-xs-12">
-                                <div class="collection-filter-boxmb">
-                                    <p class="title-count"><b>99</b> sản phẩm</p>
-                                    <p class="title-filter">
-
-                                        <span>Bộ lọc </span>
-                                        <svg viewBox="0 0 20 20">
-                                            <path fill="none" stroke-width="2" stroke-linejoin="round"
-                                                stroke-miterlimit="10" d="M12 9v8l-4-4V9L2 3h16z"></path>
-                                        </svg>
-                                    </p>
-                                </div>
-                                <div class="collection-sortby">
-                                    <div class="collection-sortby--title">
-                                        <span class="icon-filter"><i class="fa fa-sort-alpha-asc"
-                                                aria-hidden="true"></i></span>
-                                        Sắp xếp
-                                    </div>
-                                    <div class="collection-sortby--option">
-                                        <ul class="sort-by sort-by-content">
-
-                                            <li><span data-value="price-ascending"
-                                                    data-filter="(price:product=asc)">Giá: Tăng dần</span></li>
-                                            <li><span data-value="price-descending"
-                                                    data-filter="(price:product=desc)">Giá: Giảm dần</span></li>
-                                            <li><span data-value="title-ascending"
-                                                    data-filter="(title:product=asc)">Tên: A-Z</span></li>
-                                            <li><span data-value="title-descending"
-                                                    data-filter="(title:product=desc)">Tên: Z-A</span></li>
-                                            <li><span data-value="created-ascending"
-                                                    data-filter="(updated_at:product=asc)">Cũ nhất</span></li>
-                                            <li><span data-value="created-descending"
-                                                    data-filter="(updated_at:product=desc)">Mới nhất</span></li>
-                                            <li><span data-value="best-selling"
-                                                    data-filter="(sold_quantity:product=desc)">Bán chạy nhất</span></li>
-                                            <li><span data-value="quantity-descending"
-                                                    data-filter="(quantity:product=desc)">Tồn kho giảm dần</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<main class="wrapperMain_content">
+  <div class="layout-collections 0">
+    <div class="wrapper-mainCollection">
+      <div class="collection-heading">
+        <div class="container">
+          <div class="bgwhite-heading border">
+            <div class="flexbox-heading">
+              <div class="col-md-9 col-sm-12 col-xs-12">
+                <h1 class="title">Tất cả sản phẩm</h1>
+                <hr />
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                  <div class="collection-sortby">
+                    <input type="hidden" name="type" value="product" />
+                    <input
+                      ng-model="searchKeyword"
+                      ng-change="searchTen()"
+                      required
+                      id="inputSearchAuto-3"
+                      class="input-search"
+                      name="q"
+                      maxlength="40"
+                      autocomplete="off"
+                      type="text"
+                      size="20"
+                      placeholder="Tìm kiếm sản phẩm..."
+                    />
+                  </div>
                 </div>
-            </div>
-            <div class="collection-filter">
-                <div class="container">
-                    <div class="wrapper_layered_filter">
-                        <div class="layered_filter_parent ">
-                            <div class="layered_filter_container">
-                                <div class="layered_filter_title">
-                                    <p class="title_filter">
-                                        <span class="icon-filter"><svg viewBox="0 0 20 20">
-                                                <path fill="none" stroke-width="2" stroke-linejoin="round"
-                                                    stroke-miterlimit="10" d="M12 9v8l-4-4V9L2 3h16z"></path>
-                                            </svg></span>
-
-                                        Bộ lọc
-                                    </p>
-                                    <button class="close_filter">
-                                        <svg viewBox="0 0 19 19" role="presentation">
-                                            <path
-                                                d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
-                                                fill-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="layered_filter_group">
-                                    <div class="row ">
-                                        <!-- ./filter sortby -->
-                                        <div class="filter_group filter_sortby col-md-3 col-sm-12  col-xs-12"
-                                            aria-expanded="false">
-                                            <div class="filter_group_block">
-                                                <div class="filter_group-subtitle">
-                                                    <span>Sắp xếp</span>
-                                                    <span class="icon-control"><i class="fa fa-chevron-down"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                                <div class="filter_group-content">
-                                                    <ul class="checkbox-sortby sort-by-content">
-
-                                                        <li><span data-value="price-ascending"
-                                                                data-filter="(price:product=asc)">Giá: Tăng dần</span>
-                                                        </li>
-                                                        <li><span data-value="price-descending"
-                                                                data-filter="(price:product=desc)">Giá: Giảm dần</span>
-                                                        </li>
-                                                        <li><span data-value="title-ascending"
-                                                                data-filter="(title:product=asc)">Tên: A-Z</span></li>
-                                                        <li><span data-value="title-descending"
-                                                                data-filter="(title:product=desc)">Tên: Z-A</span></li>
-                                                        <li><span data-value="created-ascending"
-                                                                data-filter="(updated_at:product=asc)">Cũ nhất</span>
-                                                        </li>
-                                                        <li><span data-value="created-descending"
-                                                                data-filter="(updated_at:product=desc)">Mới nhất</span>
-                                                        </li>
-                                                        <li><span data-value="best-selling"
-                                                                data-filter="(sold_quantity:product=desc)">Bán chạy
-                                                                nhất</span></li>
-                                                        <li><span data-value="quantity-descending"
-                                                                data-filter="(quantity:product=desc)">Tồn kho giảm
-                                                                dần</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- ./filter brand -->
-                                        <!-- ./filter price -->
-
-                                        <!-- ./filter color -->
-                                        <div class="filter_group col-md-3 col-sm-12  col-xs-12" aria-expanded="false">
-                                            <div class="filter_group_block">
-                                                <div class="filter_group-subtitle"><span>Màu sắc</span>
-                                                    <span class="icon-control"><i class="fa fa-chevron-down"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                                <div class="filter_group-content filter-color">
-                                                    <ul class="checkbox-list clearfix">
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p1" value="Tím"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Tím)" />
-                                                            <label for="data-color-p1"
-                                                                style="background-color: #eb11eb">Tím</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p2" value="Vàng"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Vàng)" />
-                                                            <label for="data-color-p2"
-                                                                style="background-color: #ffff05">Vàng</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p3" value="Cam"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Cam)" />
-                                                            <label for="data-color-p3"
-                                                                style="background-color: #f54105">Cam</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p4" value="Hồng"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Hồng)" />
-                                                            <label for="data-color-p4"
-                                                                style="background-color: #f23895">Hồng</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p5" value="BLACK"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains BLACK)" />
-                                                            <label for="data-color-p5"
-                                                                style="background-color: #000000">BLACK</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p6" value="Xám"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Xám)" />
-                                                            <label for="data-color-p6"
-                                                                style="background-color: #cccaca">Xám</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p7" value="WHITE"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains WHITE)" />
-                                                            <label for="data-color-p7"
-                                                                style="background-color: #fffcfc">WHITE</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p8" value="Xanh dương"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Xanh dương)" />
-                                                            <label for="data-color-p8"
-                                                                style="background-color: #1757eb">Xanh dương</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p9" value="Xanh"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Xanh)" />
-                                                            <label for="data-color-p9"
-                                                                style="background-color: #099116">Xanh</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p10" value="Xanh lá"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains Xanh lá)" />
-                                                            <label for="data-color-p10"
-                                                                style="background-color: #52ff52">Xanh lá</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p11"
-                                                                value="Green trendy" name="color-filter"
-                                                                data-color="(variant:product contains Green trendy)" />
-                                                            <label for="data-color-p11"
-                                                                style="background-color: #024d3d">Green trendy</label>
-                                                        </li>
-
-
-
-
-
-
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-color-p12" value="CREAM"
-                                                                name="color-filter"
-                                                                data-color="(variant:product contains CREAM)" />
-                                                            <label for="data-color-p12"
-                                                                style="background-color: #f8efe0">CREAM</label>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ./filter size -->
-                                        <div class="filter_group col-md-3 col-sm-12  col-xs-12" aria-expanded="false">
-                                            <div class="filter_group_block">
-                                                <div class="filter_group-subtitle"><span>Kích thước</span>
-                                                    <span class="icon-control"><i class="fa fa-chevron-down"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                                <div class="filter_group-content filter-size">
-
-                                                    <ul class="checkbox-list">
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-size-p1" value="S"
-                                                                name="size-filter" data-size="(variant:product=S)" />
-                                                            <label for="data-size-p1">S</label>
-                                                        </li>
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-size-p2" value=" M"
-                                                                name="size-filter" data-size="(variant:product= M)" />
-                                                            <label for="data-size-p2"> M</label>
-                                                        </li>
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-size-p3" value=" L"
-                                                                name="size-filter" data-size="(variant:product= L)" />
-                                                            <label for="data-size-p3"> L</label>
-                                                        </li>
-
-                                                        <li>
-                                                            <input type="checkbox" id="data-size-p4" value=" XL "
-                                                                name="size-filter" data-size="(variant:product= XL )" />
-                                                            <label for="data-size-p4"> XL </label>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layered_filter_bottom">
-                                    <button id="clear-btn-filter" class="btn-filter btn-filter-clear">Hủy</button>
-                                    <button id="apply-btn-filter" class="btn-filter btn-filter-apply">Áp dụng</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="layered_filter_tags">
-                            <div class="filter_tags"></div>
-                            <div class="filter_tags">Màu sắc: <b></b>
-                                <span class="filter_tags_remove">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        version="1.1" x="0px" y="0px" viewBox="0 0 50 50" xml:space="preserve">
-                                        <path fill="#333"
-                                            d="M9.016 40.837a1.001 1.001 0 0 0 1.415-.001l14.292-14.309 14.292 14.309a1 1 0 1 0 1.416-1.413L26.153 25.129 40.43 10.836a1 1 0 1 0-1.415-1.413L24.722 23.732 10.43 9.423a1 1 0 1 0-1.415 1.413l14.276 14.293L9.015 39.423a1 1 0 0 0 .001 1.414z" />
-                                    </svg>
-                                </span>
-                            </div>
-
-                            <div class="filter_tags">Kích thước: <b></b>
-                                <span class="filter_tags_remove">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        version="1.1" x="0px" y="0px" viewBox="0 0 50 50" xml:space="preserve">
-                                        <path fill="#333"
-                                            d="M9.016 40.837a1.001 1.001 0 0 0 1.415-.001l14.292-14.309 14.292 14.309a1 1 0 1 0 1.416-1.413L26.153 25.129 40.43 10.836a1 1 0 1 0-1.415-1.413L24.722 23.732 10.43 9.423a1 1 0 1 0-1.415 1.413l14.276 14.293L9.015 39.423a1 1 0 0 0 .001 1.414z" />
-                                    </svg>
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
+              </div>
+
+              <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="collection-filter-boxmb">
+                  <p class="title-count"><b>99</b> sản phẩm</p>
+                  <p class="title-filter">
+                    <span>Bộ lọc </span>
+                    <svg viewBox="0 0 20 20">
+                      <path
+                        fill="none"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                        stroke-miterlimit="10"
+                        d="M12 9v8l-4-4V9L2 3h16z"
+                      ></path>
+                    </svg>
+                  </p>
                 </div>
-            </div>
-
-
-            <div class="collection-listproduct" id="collection-body">
-                <div class="container">
-                    <div class="wraplist-collection ">
-                        <div class="listProduct-row listProduct-resize listProduct-filter">
-
-
-                            <div class="col-md-3 col-sm-6 col-xs-6 product-loop  "
-                                ng-repeat="topSanPham in listTopSanPham" data-id="1114414061">
-                                <div class="product-inner product-resize ">
-                                    <div class="proloop-image ">
-                                        <div class="product--image image-resize">
-                                            <div class="product--image__inner">
-                                                <div class="">
-                                                    <div id="carouselExampleSlidesOnly" class="carousel slide"
-                                                        data-bs-ride="carousel">
-                                                        <div class="carousel-inner">
-                                                            <div class="carousel-item "
-                                                                ng-class="{'active': $index===0}"
-                                                                data-bs-interval="2000"
-                                                                ng-repeat="hinhAnh in topSanPham.duongDan">
-                                                                <a href="#/detail-product/{{topSanPham.idSanPham}}">
-                                                                    <img src="../../../assets/anh-san-pham/{{hinhAnh}}"
-                                                                        class="d-block w-100" alt="...">
-                                                                    <div
-                                                                        class="prod-img second-image hovered-img hidden-xs">
-                                                                        <img class="hover img-loop "
-                                                                            src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg">
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="proloop-detail">
-                                        <h3><a href="#/detail-product/{{topSanPham.idSanPham}}"
-                                                class=" quickview-product ">{{topSanPham.tenSanPham}}
-                                                {{topSanPham.tenPhongCach}} {{topSanPham.tenHoaTiet}}
-                                            </a>
-                                        </h3>
-                                        <p class="proloop--price">
-                                            <span ng-if="topSanPham.giaMax!=topSanPham.giaMin"
-                                                class="price">{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
-                                                number}}₫</span>
-                                            <span ng-if="topSanPham.giaMax==topSanPham.giaMin"
-                                                class="price">{{topSanPham.giaMin | number}}₫</span>
-
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-                            <div class="col-md-3 col-sm-6 col-xs-6 product-loop  " data-id="1102022071">
-                                <div class="product-inner product-resize ">
-                                    <div class="proloop-image ">
-
-
-
-
-                                        <div class="product--image image-resize">
-                                            <div class="product--image__inner">
-
-                                                <div class="prod-img first-image">
-                                                    <picture>
-                                                        <source media="(max-width: 480px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_medium.png"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <source media="(min-width: 481px) and (max-width:767px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <source media="(min-width: 768px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <img class="lazyload img-loop "
-                                                            data-src="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
-                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                            alt=" 8YO CUPID ANGEL TEE " />
-                                                    </picture>
-                                                </div>
-                                                <div class="prod-img second-image hovered-img hidden-xs">
-                                                    <picture>
-                                                        <source media="(max-width: 480px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_thumb.jpg"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <source media="(min-width: 481px) and (max-width:767px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_small.jpg"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <source media="(min-width:768px)"
-                                                            data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_large.jpg"
-                                                            srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                        <img class="lazyload img-loop "
-                                                            data-src="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_large.jpg"
-                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                            alt=" 8YO CUPID ANGEL TEE " />
-                                                    </picture>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <a href="../products/8yo-cupid-angle-tee.html"
-                                            class="proloop-link  quickview-product "
-                                            data-handle="/products/8yo-cupid-angle-tee" title="8YO CUPID ANGEL TEE"></a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-
-                        </div>
-
-                        <div class="collection-loadmore text-center">
-                            <a href="javascript:void(0);" class="button dark btn-loadmore" data-collectionid="0"
-                                data-page="2" data-collectionhd="/collections/all">Xem thêm sản phẩm
-                                <b>Tất cả sản phẩm</b>
-                            </a>
-                        </div>
-
-                    </div>
+                <div class="collection-sortby">
+                  <div class="collection-sortby--title">
+                    <span class="icon-filter"
+                      ><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i
+                    ></span>
+                    Sắp xếp
+                  </div>
+                  <div class="collection-sortby--option">
+                    <ul class="sort-by sort-by-content">
+                      <li>
+                        <span
+                          data-value="price-ascending"
+                          data-filter="(price:product=asc)"
+                          >Giá: Tăng dần</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="price-descending"
+                          data-filter="(price:product=desc)"
+                          >Giá: Giảm dần</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="title-ascending"
+                          data-filter="(title:product=asc)"
+                          >Tên: A-Z</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="title-descending"
+                          data-filter="(title:product=desc)"
+                          >Tên: Z-A</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="created-ascending"
+                          data-filter="(updated_at:product=asc)"
+                          >Cũ nhất</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="created-descending"
+                          data-filter="(updated_at:product=desc)"
+                          >Mới nhất</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="best-selling"
+                          data-filter="(sold_quantity:product=desc)"
+                          >Bán chạy nhất</span
+                        >
+                      </li>
+                      <li>
+                        <span
+                          data-value="quantity-descending"
+                          data-filter="(quantity:product=desc)"
+                          >Tồn kho giảm dần</span
+                        >
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        <input type="text" class="hidden" id="coll-handle" value="(collectionid:product>0)" />
+      </div>
+
+      <div class="collection-filter">
+        <div class="container">
+          <div class="wrapper_layered_filter">
+            <div class="layered_filter_parent">
+              <div class="layered_filter_container">
+                <div class="layered_filter_title">
+                  <p class="title_filter">
+                    <span class="icon-filter"
+                      ><svg viewBox="0 0 20 20">
+                        <path
+                          fill="none"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          d="M12 9v8l-4-4V9L2 3h16z"
+                        ></path></svg
+                    ></span>
+
+                    Bộ lọc
+                  </p>
+                  <button class="close_filter">
+                    <svg viewBox="0 0 19 19" role="presentation">
+                      <path
+                        d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="layered_filter_group">
+                  <div class="row">
+                    <!-- ./filter sortby -->
+                    <div
+                      class="filter_group filter_sortby col-md-3 col-sm-12 col-xs-12"
+                      aria-expanded="false"
+                    >
+                      <div class="filter_group_block">
+                        <div class="filter_group-subtitle">
+                          <span>Sắp xếp</span>
+                          <span class="icon-control"
+                            ><i
+                              class="fa fa-chevron-down"
+                              aria-hidden="true"
+                            ></i
+                          ></span>
+                        </div>
+                        <div class="filter_group-content">
+                          <ul class="checkbox-sortby sort-by-content">
+                            <li>
+                              <span
+                                data-value="price-ascending"
+                                data-filter="(price:product=asc)"
+                                >Giá: Tăng dần</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="price-descending"
+                                data-filter="(price:product=desc)"
+                                >Giá: Giảm dần</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="title-ascending"
+                                data-filter="(title:product=asc)"
+                                >Tên: A-Z</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="title-descending"
+                                data-filter="(title:product=desc)"
+                                >Tên: Z-A</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="created-ascending"
+                                data-filter="(updated_at:product=asc)"
+                                >Cũ nhất</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="created-descending"
+                                data-filter="(updated_at:product=desc)"
+                                >Mới nhất</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="best-selling"
+                                data-filter="(sold_quantity:product=desc)"
+                                >Bán chạy nhất</span
+                              >
+                            </li>
+                            <li>
+                              <span
+                                data-value="quantity-descending"
+                                data-filter="(quantity:product=desc)"
+                                >Tồn kho giảm dần</span
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ./filter brand -->
+                    <!-- ./filter price -->
+
+                    <!-- ./filter color -->
+                    <div
+                      class="filter_group col-md-3 col-sm-12 col-xs-12"
+                      aria-expanded="false"
+                    >
+                      <div class="filter_group_block">
+                        <div class="filter_group-subtitle">
+                          <span>Màu sắc</span>
+                          <span class="icon-control"
+                            ><i
+                              class="fa fa-chevron-down"
+                              aria-hidden="true"
+                            ></i
+                          ></span>
+                        </div>
+                        <div class="filter_group-content filter-color">
+                          <ul class="checkbox-list clearfix">
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p1"
+                                value="Tím"
+                                name="color-filter"
+                                data-color="(variant:product contains Tím)"
+                              />
+                              <label
+                                for="data-color-p1"
+                                style="background-color: #eb11eb"
+                                >Tím</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p2"
+                                value="Vàng"
+                                name="color-filter"
+                                data-color="(variant:product contains Vàng)"
+                              />
+                              <label
+                                for="data-color-p2"
+                                style="background-color: #ffff05"
+                                >Vàng</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p3"
+                                value="Cam"
+                                name="color-filter"
+                                data-color="(variant:product contains Cam)"
+                              />
+                              <label
+                                for="data-color-p3"
+                                style="background-color: #f54105"
+                                >Cam</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p4"
+                                value="Hồng"
+                                name="color-filter"
+                                data-color="(variant:product contains Hồng)"
+                              />
+                              <label
+                                for="data-color-p4"
+                                style="background-color: #f23895"
+                                >Hồng</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p5"
+                                value="BLACK"
+                                name="color-filter"
+                                data-color="(variant:product contains BLACK)"
+                              />
+                              <label
+                                for="data-color-p5"
+                                style="background-color: #000000"
+                                >BLACK</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p6"
+                                value="Xám"
+                                name="color-filter"
+                                data-color="(variant:product contains Xám)"
+                              />
+                              <label
+                                for="data-color-p6"
+                                style="background-color: #cccaca"
+                                >Xám</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p7"
+                                value="WHITE"
+                                name="color-filter"
+                                data-color="(variant:product contains WHITE)"
+                              />
+                              <label
+                                for="data-color-p7"
+                                style="background-color: #fffcfc"
+                                >WHITE</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p8"
+                                value="Xanh dương"
+                                name="color-filter"
+                                data-color="(variant:product contains Xanh dương)"
+                              />
+                              <label
+                                for="data-color-p8"
+                                style="background-color: #1757eb"
+                                >Xanh dương</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p9"
+                                value="Xanh"
+                                name="color-filter"
+                                data-color="(variant:product contains Xanh)"
+                              />
+                              <label
+                                for="data-color-p9"
+                                style="background-color: #099116"
+                                >Xanh</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p10"
+                                value="Xanh lá"
+                                name="color-filter"
+                                data-color="(variant:product contains Xanh lá)"
+                              />
+                              <label
+                                for="data-color-p10"
+                                style="background-color: #52ff52"
+                                >Xanh lá</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p11"
+                                value="Green trendy"
+                                name="color-filter"
+                                data-color="(variant:product contains Green trendy)"
+                              />
+                              <label
+                                for="data-color-p11"
+                                style="background-color: #024d3d"
+                                >Green trendy</label
+                              >
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-color-p12"
+                                value="CREAM"
+                                name="color-filter"
+                                data-color="(variant:product contains CREAM)"
+                              />
+                              <label
+                                for="data-color-p12"
+                                style="background-color: #f8efe0"
+                                >CREAM</label
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ./filter size -->
+                    <div
+                      class="filter_group col-md-3 col-sm-12 col-xs-12"
+                      aria-expanded="false"
+                    >
+                      <div class="filter_group_block">
+                        <div class="filter_group-subtitle">
+                          <span>Kích thước</span>
+                          <span class="icon-control"
+                            ><i
+                              class="fa fa-chevron-down"
+                              aria-hidden="true"
+                            ></i
+                          ></span>
+                        </div>
+                        <div class="filter_group-content filter-size">
+                          <ul class="checkbox-list">
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-size-p1"
+                                value="S"
+                                name="size-filter"
+                                data-size="(variant:product=S)"
+                              />
+                              <label for="data-size-p1">S</label>
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-size-p2"
+                                value=" M"
+                                name="size-filter"
+                                data-size="(variant:product= M)"
+                              />
+                              <label for="data-size-p2"> M</label>
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-size-p3"
+                                value=" L"
+                                name="size-filter"
+                                data-size="(variant:product= L)"
+                              />
+                              <label for="data-size-p3"> L</label>
+                            </li>
+
+                            <li>
+                              <input
+                                type="checkbox"
+                                id="data-size-p4"
+                                value=" XL "
+                                name="size-filter"
+                                data-size="(variant:product= XL )"
+                              />
+                              <label for="data-size-p4"> XL </label>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layered_filter_bottom">
+                  <button
+                    id="clear-btn-filter"
+                    class="btn-filter btn-filter-clear"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    id="apply-btn-filter"
+                    class="btn-filter btn-filter-apply"
+                  >
+                    Áp dụng
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="layered_filter_tags">
+              <div class="filter_tags"></div>
+              <div class="filter_tags">
+                Màu sắc: <b></b>
+                <span class="filter_tags_remove">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 50 50"
+                    xml:space="preserve"
+                  >
+                    <path
+                      fill="#333"
+                      d="M9.016 40.837a1.001 1.001 0 0 0 1.415-.001l14.292-14.309 14.292 14.309a1 1 0 1 0 1.416-1.413L26.153 25.129 40.43 10.836a1 1 0 1 0-1.415-1.413L24.722 23.732 10.43 9.423a1 1 0 1 0-1.415 1.413l14.276 14.293L9.015 39.423a1 1 0 0 0 .001 1.414z"
+                    />
+                  </svg>
+                </span>
+              </div>
+
+              <div class="filter_tags">
+                Kích thước: <b></b>
+                <span class="filter_tags_remove">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 50 50"
+                    xml:space="preserve"
+                  >
+                    <path
+                      fill="#333"
+                      d="M9.016 40.837a1.001 1.001 0 0 0 1.415-.001l14.292-14.309 14.292 14.309a1 1 0 1 0 1.416-1.413L26.153 25.129 40.43 10.836a1 1 0 1 0-1.415-1.413L24.722 23.732 10.43 9.423a1 1 0 1 0-1.415 1.413l14.276 14.293L9.015 39.423a1 1 0 0 0 .001 1.414z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="collection-listproduct" id="collection-body">
+        <div class="container">
+          <div class="wraplist-collection">
+            <div class="listProduct-row listProduct-resize listProduct-filter">
+              <div
+                class="col-md-3 col-sm-6 col-xs-6 product-loop"
+                ng-repeat="topSanPham in listTopSanPham"
+                data-id="1114414061"
+              >
+                <div class="product-inner product-resize">
+                  <div class="proloop-image">
+                    <div class="product--image image-resize">
+                      <div class="product--image__inner">
+                        <div class="">
+                          <div
+                            id="carouselExampleSlidesOnly"
+                            class="carousel slide"
+                            data-bs-ride="carousel"
+                          >
+                            <div class="carousel-inner">
+                              <div
+                                class="carousel-item"
+                                ng-class="{'active': $index===0}"
+                                data-bs-interval="2000"
+                                ng-repeat="hinhAnh in topSanPham.duongDan"
+                              >
+                                <a
+                                  href="#/detail-product/{{topSanPham.idSanPham}}"
+                                >
+                                  <img
+                                    src="../../../assets/anh-san-pham/{{hinhAnh}}"
+                                    class="d-block w-100"
+                                    alt="..."
+                                  />
+                                  <div
+                                    class="prod-img second-image hovered-img hidden-xs"
+                                  >
+                                    <img
+                                      class="hover img-loop"
+                                      src="../../assets/anh-size/z2291209047175_ff86b10a5d64418b92e7357ec31dc4af_f56ec73ea1e54871ad129ba3480e6a98_grande.jpg"
+                                    />
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proloop-detail">
+                    <h3>
+                      <a
+                        href="#/detail-product/{{topSanPham.idSanPham}}"
+                        class="quickview-product"
+                        >{{topSanPham.tenSanPham}} {{topSanPham.tenPhongCach}}
+                        {{topSanPham.tenHoaTiet}}
+                      </a>
+                    </h3>
+                    <p class="proloop--price">
+                      <span
+                        ng-if="topSanPham.giaMax!=topSanPham.giaMin"
+                        class="price"
+                        >{{topSanPham.giaMin | number}}₫ - {{topSanPham.giaMax |
+                        number}}₫</span
+                      >
+                      <span
+                        ng-if="topSanPham.giaMax==topSanPham.giaMin"
+                        class="price"
+                        >{{topSanPham.giaMin | number}}₫</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-md-3 col-sm-6 col-xs-6 product-loop"
+                data-id="1102022071"
+              >
+                <div class="product-inner product-resize">
+                  <div class="proloop-image">
+                    <div class="product--image image-resize">
+                      <div class="product--image__inner">
+                        <div class="prod-img first-image">
+                          <picture>
+                            <source
+                              media="(max-width: 480px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_medium.png"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <source
+                              media="(min-width: 481px) and (max-width:767px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <source
+                              media="(min-width: 768px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <img
+                              class="lazyload img-loop"
+                              data-src="../../product.hstatic.net/200000258387/product/3_6d5151171e6448aaa8101b093277e470_large.png"
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                              alt=" 8YO CUPID ANGEL TEE "
+                            />
+                          </picture>
+                        </div>
+                        <div
+                          class="prod-img second-image hovered-img hidden-xs"
+                        >
+                          <picture>
+                            <source
+                              media="(max-width: 480px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_thumb.jpg"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <source
+                              media="(min-width: 481px) and (max-width:767px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_small.jpg"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <source
+                              media="(min-width:768px)"
+                              data-srcset="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_large.jpg"
+                              srcset="
+                                data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+                              "
+                            />
+                            <img
+                              class="lazyload img-loop"
+                              data-src="../../product.hstatic.net/200000258387/product/15_6676ae18cec3437e9aac6f9cf60fc13b_large.jpg"
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                              alt=" 8YO CUPID ANGEL TEE "
+                            />
+                          </picture>
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href="../products/8yo-cupid-angle-tee.html"
+                      class="proloop-link quickview-product"
+                      data-handle="/products/8yo-cupid-angle-tee"
+                      title="8YO CUPID ANGEL TEE"
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="collection-loadmore text-center">
+              <a
+                href="javascript:void(0);"
+                class="button dark btn-loadmore"
+                data-collectionid="0"
+                data-page="2"
+                data-collectionhd="/collections/all"
+                >Xem thêm sản phẩm
+                <b>Tất cả sản phẩm</b>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <input
+      type="text"
+      class="hidden"
+      id="coll-handle"
+      value="(collectionid:product>0)"
+    />
+  </div>
+</main>

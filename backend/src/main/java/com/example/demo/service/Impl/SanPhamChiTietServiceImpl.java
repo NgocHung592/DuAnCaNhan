@@ -4,6 +4,7 @@ import com.example.demo.entity.*;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
+import com.example.demo.model.response.SanPhamHienThiTrangThaiReponse;
 import com.example.demo.repository.*;
 import com.example.demo.service.SanPhamChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,16 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Override
     public List<SanPhamChiTietResponse> detailSanPham(UUID id) {
         return sanPhamChiTietRepository.detailSanPham(id);
+    }
+
+    @Override
+    public List<SanPhamChiTietResponse> serachh(String key) {
+        return sanPhamChiTietRepository.getSearchSanPhamTrangChu(key);
+    }
+
+    @Override
+    public List<SanPhamHienThiTrangThaiReponse> sanPhamBanChay() {
+        return sanPhamChiTietRepository.getSanPhamBanChay();
     }
 
     @Override

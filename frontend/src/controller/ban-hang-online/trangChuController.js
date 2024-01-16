@@ -17,15 +17,28 @@ window.trangChuController = function ($scope, $http) {
     tenKichThuoc: "",
     daXoa: Boolean,
   };
-  $scope.getTopSanPhamMoi = function () {
-    $http.get(sanPhamChiTietAPI + "/trang-chu").then(function (response) {
-      $scope.listTopSanPham = response?.data;
-      console.log($scope.listTopSanPham);
+
+  $scope.getTopBanChay = function () {
+    $http.get(sanPhamChiTietAPI + "/ban-chay").then(function (response) {
+      $scope.listTopSanPhamBanChay = response?.data;
+      console.log($scope.listTopSanPhamBanChay);
+
       const groupedSanPham = {};
-      $scope.listTopSanPham.forEach((sanPham) => {
+      const listTenSanPham = [];
+      const soLuongSanPhamToiDa = 8;
+      let soLuongDaLay = 0;
+
+      for (let i = 0; i < $scope.listTopSanPhamBanChay.length; i++) {
+        const sanPham = $scope.listTopSanPhamBanChay[i];
         const tenSanPham = sanPham.tenSanPham;
 
-        if (!groupedSanPham[tenSanPham]) {
+        if (
+          !listTenSanPham.includes(tenSanPham) &&
+          soLuongDaLay < soLuongSanPhamToiDa
+        ) {
+          listTenSanPham.push(tenSanPham);
+          soLuongDaLay++;
+
           groupedSanPham[tenSanPham] = {
             ...sanPham,
             duongDan: [sanPham.duongDan],
@@ -33,27 +46,18 @@ window.trangChuController = function ($scope, $http) {
             giaMax: sanPham.donGia,
           };
         } else {
-          groupedSanPham[tenSanPham].giaMin = Math.min(
-            groupedSanPham[tenSanPham].giaMin,
-            sanPham.donGia
-          );
-          groupedSanPham[tenSanPham].giaMax = Math.max(
-            groupedSanPham[tenSanPham].giaMax,
-            sanPham.donGia
-          );
-          if (!groupedSanPham[tenSanPham].duongDan.includes(sanPham.duongDan)) {
-            groupedSanPham[tenSanPham].duongDan.push(sanPham.duongDan);
-          }
+          // Nếu sản phẩm đã có trong danh sách tên hoặc đã lấy đủ số lượng, bỏ qua
+          continue;
         }
-      });
+      }
 
       // Chuyển đổi object thành mảng
-      $scope.listTopSanPham = Object.values(groupedSanPham);
+      $scope.listTopSanPhamBanChay = Object.values(groupedSanPham);
 
-      console.log($scope.listTopSanPham);
+      console.log($scope.listTopSanPhamBanChay);
     });
   };
-  $scope.getTopSanPhamMoi();
+
   $scope.detailSanPham = function (idSanPham) {
     // console.log(idSanPham);
     // $http
@@ -79,4 +83,45 @@ window.trangChuController = function ($scope, $http) {
         $scope.visiblePages = $scope.getVisiblePages();
       });
   };
+  $scope.getTopSanPhamMoi = function () {
+    $http.get(sanPhamChiTietAPI + "/trang-chu").then(function (response) {
+      $scope.listTopSanPham = response?.data;
+      console.log($scope.listTopSanPham);
+
+      const groupedSanPham = {};
+      const listTenSanPham = [];
+      const soLuongSanPhamToiDa = 8;
+      let soLuongDaLay = 0;
+
+      for (let i = 0; i < $scope.listTopSanPham.length; i++) {
+        const sanPham = $scope.listTopSanPham[i];
+        const tenSanPham = sanPham.tenSanPham;
+
+        if (
+          !listTenSanPham.includes(tenSanPham) &&
+          soLuongDaLay < soLuongSanPhamToiDa
+        ) {
+          listTenSanPham.push(tenSanPham);
+          soLuongDaLay++;
+
+          groupedSanPham[tenSanPham] = {
+            ...sanPham,
+            duongDan: [sanPham.duongDan],
+            giaMin: sanPham.donGia,
+            giaMax: sanPham.donGia,
+          };
+        } else {
+          // Nếu sản phẩm đã có trong danh sách tên hoặc đã lấy đủ số lượng, bỏ qua
+          continue;
+        }
+      }
+
+      // Chuyển đổi object thành mảng
+      $scope.listTopSanPham = Object.values(groupedSanPham);
+
+      console.log($scope.listTopSanPham);
+    });
+  };
+  $scope.getTopSanPhamMoi();
+  $scope.getTopBanChay();
 };

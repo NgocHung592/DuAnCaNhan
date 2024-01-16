@@ -4,6 +4,8 @@ import com.example.demo.entity.SanPhamChiTiet;
 import com.example.demo.model.request.SanPhamChiTietRequest;
 import com.example.demo.model.request.UpdateSanPham;
 import com.example.demo.model.response.SanPhamChiTietResponse;
+import com.example.demo.model.response.SanPhamHienThiTrangThaiReponse;
+import com.example.demo.model.response.SanPhamReponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -20,6 +22,10 @@ public interface SanPhamChiTietService {
     List<SanPhamChiTietResponse> getSanPhamTrangChu();
 
     List<SanPhamChiTietResponse> detailSanPham(UUID id);
+
+    List<SanPhamChiTietResponse> serachh(String key);
+
+    List<SanPhamHienThiTrangThaiReponse> sanPhamBanChay();
 
     SanPhamChiTiet getOne(UUID id);
 

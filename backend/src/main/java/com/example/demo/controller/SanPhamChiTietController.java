@@ -33,6 +33,11 @@ public class SanPhamChiTietController {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamBanHang(Integer.valueOf(pageNo)), HttpStatus.OK);
     }
 
+    @GetMapping("searchTen")
+    public ResponseEntity search(@RequestParam(name = "key") String key) {
+        return new ResponseEntity(sanPhamChiTietService.serachh(key), HttpStatus.OK);
+    }
+
     @GetMapping("search")
     public ResponseEntity search(@RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
                                  @RequestParam(name = "key", required = false) String key,
@@ -48,6 +53,11 @@ public class SanPhamChiTietController {
     @GetMapping("trang-chu")
     public ResponseEntity getSanPhamTranChu() {
         return new ResponseEntity(sanPhamChiTietService.getSanPhamTrangChu(), HttpStatus.OK);
+    }
+
+    @GetMapping("ban-chay")
+    public ResponseEntity getSanPhamBanChay() {
+        return new ResponseEntity(sanPhamChiTietService.sanPhamBanChay(), HttpStatus.OK);
     }
 
     @GetMapping("hien-thi/{id}")
