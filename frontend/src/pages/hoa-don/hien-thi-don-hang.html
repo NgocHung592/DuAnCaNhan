@@ -16,20 +16,17 @@
                     <span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 1" class="timeline-content">
-                    <span class="order-label">Chờ giao hàng</span
-                    ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                    <span class="order-label">Chờ giao hàng</span><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 2" class="timeline-content">
-                    <span class="order-label">Đang giao hàng</span
-                    ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                    <span class="order-label">Đang giao hàng</span><span>{{ beautifyDate(lichsua.ngayTao)
+                      }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 3" class="timeline-content">
-                    <span class="order-label">Đã nhận hàng</span
-                    ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                    <span class="order-label">Đã nhận hàng</span><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                   <div ng-if="lichsua.trangThai == 4" class="timeline-content">
-                    <span class="order-label">Đã hủy</span
-                    ><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
+                    <span class="order-label">Đã hủy</span><span>{{ beautifyDate(lichsua.ngayTao) }}</span><br />
                   </div>
                 </li>
               </ul>
@@ -37,63 +34,34 @@
           </div>
         </div>
 
-        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-primary"
-            ng-click="daXacNhan(detailHoaDon)"
-            >Xác nhận đơn hàng</a
-          >
-        </div>
+        <div class="row">
+          <div class="col-md-2 ms-3 " ng-if="detailHoaDon.trangThai ==0 ">
+            <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="daXacNhan(detailHoaDon)">Xác nhận đơn
+              hàng</a>
+          </div>
+          <div class="col-md-2 ms-3" ng-if="detailHoaDon.trangThai ==2 ">
+            <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="daNhanHang(detailHoaDon)">Xác nhận
+            </a>
+          </div>
+          <div class="col-md-2 " ng-if="detailHoaDon.trangThai ==2 ">
+            <a type="button" id="liveToastBtn" class="btn btn-danger" ng-click="khongNhanHang(detailHoaDon)">Khách
+              không
+              nhận</a>
+          </div>
+          <div class="col-md-2" ng-if="detailHoaDon.trangThai ==0 ">
+            <a type="button" id="liveToastBtn" class="btn btn-danger" ng-click="huyDonHang(detailHoaDon)">Hủy Đơn
+              hàng</a>
+          </div>
 
-        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==2 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-primary"
-            ng-click="daNhanHang(detailHoaDon)"
-            >Xác nhận
-          </a>
-        </div>
-        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==2 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-primary"
-            ng-click="khongNhanHang(detailHoaDon)"
-            >Khách không nhận</a
-          >
-        </div>
-        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==0 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-danger"
-            ng-click="huyDonHang(detailHoaDon)"
-            >Hủy Đơn hàng</a
-          >
-        </div>
+          <div class="col-md-2 ms-3" ng-if="detailHoaDon.trangThai ==1 ">
+            <a type="button" id="liveToastBtn" class="btn btn-primary" ng-click="xacNhanDonHang(detailHoaDon)">Xác nhận
+              giao hàng</a>
+          </div>
 
-        <div class="text-end m-3" ng-if="detailHoaDon.trangThai ==1 ">
-          <a
-            type="button"
-            id="liveToastBtn"
-            class="btn btn-primary"
-            ng-click="xacNhanDonHang(detailHoaDon)"
-            >Xác nhận giao hàng</a
-          >
         </div>
-
         <div class="text-end m-3">
-          <a
-            data-bs-toggle="modal"
-            data-bs-target="#updateSanPhamChiTiet"
-            type="button"
-            class="btn btn-primary"
-            ng-click="add($event)"
-            >Chi tiết</a
-          >
+          <a data-bs-toggle="modal" data-bs-target="#updateSanPhamChiTiet" type="button" class="btn btn-primary"
+            ng-click="add($event)">Chi tiết</a>
         </div>
       </div>
       <div class="card flex-fill">
@@ -142,13 +110,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="updateSanPhamChiTiet"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="updateSanPhamChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-body">
@@ -223,12 +186,8 @@
           <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#quetQR">
               Quét Qr Code
           </button> -->
-          <button
-            ng-if="detailHoaDon.trangThai==0"
-            class="btn btn-primary mb-3"
-            data-bs-toggle="modal"
-            data-bs-target="#addSanPham"
-          >
+          <button ng-if="detailHoaDon.trangThai==0" class="btn btn-primary mb-3" data-bs-toggle="modal"
+            data-bs-target="#addSanPham">
             Thêm Sản Phẩm
           </button>
         </div>
@@ -248,46 +207,25 @@
             <tr>
               <th scope="row">{{customIndexHDCT+$index+1}}</th>
               <th>
-                <img
-                  class="table_img"
-                  ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
-                  alt="Không có ảnh"
-                />
+                <img class="table_img" ng-src="../../../assets/anh-san-pham/{{hoaDonChiTiet.duongDan}}"
+                  alt="Không có ảnh" />
               </th>
               <th scope="row">
                 {{hoaDonChiTiet.tenSanPham}} [ {{hoaDonChiTiet.tenMauSac}} -
                 {{hoaDonChiTiet.tenKichThuoc}} ]
               </th>
               <th scope="row">
-                <input
-                  ng-if="detailHoaDon.trangThai==0"
-                  type="number"
-                  ng-model="hoaDonChiTiet.soLuong"
-                  id="liveToastBtn"
-                  ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
-                  class="form-control form-control-sm"
-                  style="width: 100px; height: 30px"
-                />
-                <input
-                  ng-if="detailHoaDon.trangThai!=0"
-                  disabled
-                  type="number"
-                  ng-model="hoaDonChiTiet.soLuong"
-                  id="liveToastBtn"
-                  ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
-                  class="form-control form-control-sm"
-                  style="width: 100px; height: 30px"
-                />
+                <input ng-if="detailHoaDon.trangThai==0" type="number" ng-model="hoaDonChiTiet.soLuong"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
+                  class="form-control form-control-sm" style="width: 100px; height: 30px" />
+                <input ng-if="detailHoaDon.trangThai!=0" disabled type="number" ng-model="hoaDonChiTiet.soLuong"
+                  id="liveToastBtn" ng-change="changeSoLuong(hoaDonChiTiet.idSanPhamChiTiet,$index)"
+                  class="form-control form-control-sm" style="width: 100px; height: 30px" />
               </th>
               <th scope="row">{{hoaDonChiTiet.donGia | number}} VND</th>
               <th scope="row">{{hoaDonChiTiet.thanhTien | number}} VND</th>
 
-              <th
-                ng-if="detailHoaDon.trangThai==0"
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Xóa"
-              >
+              <th ng-if="detailHoaDon.trangThai==0" data-toggle="tooltip" data-placement="top" title="Xóa">
                 <a ng-click="xoaSanPhamGioHang(hoaDonChiTiet.idHoaDonChiTiet)">
                   <i class="fa-solid fa-trash"></i>
                 </a>
@@ -302,23 +240,16 @@
 
           <p class="dataTables_empty_lable">Không có sản phẩm nào</p>
         </div>
-        <nav
-          ng-if="detailHoaDon.trangThai==0"
-          aria-label="Page navigation example mt-3"
-          ng-if="listHoaDonChiTiet.length>0"
-        >
+        <nav ng-if="detailHoaDon.trangThai==0 && listHoaDonChiTiet.length>0" aria-label="Page navigation example mt-3">
           <ul class="pagination justify-content-center">
             <li class="page-item">
               <a class="page-link" ng-click="previousPageHDCT()">
-                <span aria-hidden="true"> << </span>
+                <span aria-hidden="true">
+                  << </span>
               </a>
             </li>
-            <li
-              class="page-item"
-              ng-repeat="page in totalPagesHDCT track by $index"
-              ng-class="{'active': $index === currentPageHDCT} "
-              ng-click="changePageHDCT($index);"
-            >
+            <li class="page-item" ng-repeat="page in totalPagesHDCT track by $index"
+              ng-class="{'active': $index === currentPageHDCT} " ng-click="changePageHDCT($index);">
               <a class="page-link">{{$index+1}}</a>
             </li>
             <li class="page-item">
@@ -328,13 +259,7 @@
           <p>Tổng số trang: {{ totalPagesHDCT.length }}</p>
         </nav>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <div
-            class="modal fade"
-            id="addSanPham"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
+          <div class="modal fade" id="addSanPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl">
               <div class="modal-content">
                 <h4 class="p-3">DANH SÁCH SẢN PHẨM</h4>
@@ -345,71 +270,38 @@
                         <div class="row">
                           <div class="search-container col-md-5 ms-3">
                             <i class="fas fa-search search-icon"></i>
-                            <input
-                              type="text"
-                              ng-model="searchKeyword"
-                              placeholder="Tìm kiếm sản phẩm theo tên"
-                              ng-change="search()"
-                              class="search-input"
-                            />
+                            <input type="text" ng-model="searchKeyword" placeholder="Tìm kiếm sản phẩm theo tên"
+                              ng-change="search()" class="search-input" />
                           </div>
-                          <div
-                            class="filter_group col-md-3 col-sm-12 col-xs-12"
-                            aria-expanded="false"
-                          >
+                          <div class="filter_group col-md-3 col-sm-12 col-xs-12" aria-expanded="false">
                             <div class="filter_group_block">
                               <div class="filter_group-subtitle">
                                 <span>Màu sắc</span>
-                                <span class="icon-control"
-                                  ><i
-                                    class="fa fa-chevron-down"
-                                    aria-hidden="true"
-                                  ></i
-                                ></span>
+                                <span class="icon-control"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                               </div>
                               <div class="filter_group-content filter-color">
                                 <ul class="checkbox-list">
                                   <li ng-repeat="mauSac in listMauSac">
-                                    <input
-                                      type="checkbox"
-                                      id="{{mauSac.ma}}"
-                                      ng-click="locSanPhamTheoMau($index)"
-                                    />
-                                    <label
-                                      for="{{mauSac.ma}}"
-                                      ng-value="mauSac.ten"
-                                      ng-style="{ 'background-color': mauSac.ma }"
-                                    ></label>
+                                    <input type="checkbox" id="{{mauSac.ma}}" ng-click="locSanPhamTheoMau($index)" />
+                                    <label for="{{mauSac.ma}}" ng-value="mauSac.ten"
+                                      ng-style="{ 'background-color': mauSac.ma }"></label>
                                   </li>
                                 </ul>
                               </div>
                             </div>
                           </div>
-                          <div
-                            class="filter_group col-md-3 col-sm-12 col-xs-12"
-                            aria-expanded="false"
-                          >
+                          <div class="filter_group col-md-3 col-sm-12 col-xs-12" aria-expanded="false">
                             <div class="filter_group_block">
                               <div class="filter_group-subtitle">
                                 <span>Kích thước</span>
-                                <span class="icon-control"
-                                  ><i
-                                    class="fa fa-chevron-down"
-                                    aria-hidden="true"
-                                  ></i
-                                ></span>
+                                <span class="icon-control"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                               </div>
                               <div class="filter_group-content filter-size">
                                 <ul class="checkbox-list">
                                   <li ng-repeat="kichThuoc in listKichThuoc">
-                                    <input
-                                      type="checkbox"
-                                      id="{{kichThuoc.ma}}"
-                                      ng-click="locSanPhamTheoKichThuoc($index)"
-                                    />
-                                    <label for="{{kichThuoc.ma}}"
-                                      >{{kichThuoc.ten}}</label
-                                    >
+                                    <input type="checkbox" id="{{kichThuoc.ma}}"
+                                      ng-click="locSanPhamTheoKichThuoc($index)" />
+                                    <label for="{{kichThuoc.ma}}">{{kichThuoc.ten}}</label>
                                   </li>
                                 </ul>
                               </div>
@@ -437,11 +329,8 @@
                       <tr>
                         <th scope="row">{{ customIndex+$index+1}}</th>
                         <th scope="row">
-                          <img
-                            class="table_img"
-                            ng-src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
-                            alt="Không có ảnh"
-                          />
+                          <img class="table_img" ng-src="../../../assets/anh-san-pham/{{sanPhamChiTiet.duongDan}}"
+                            alt="Không có ảnh" />
                         </th>
                         <th scope="row">
                           {{sanPhamChiTiet.tenSanPham}}
@@ -454,42 +343,28 @@
                         </th>
 
                         <th>
-                          <a
-                            type="button"
-                            class="btn btn-warning"
-                            data-bs-dismiss="modal"
-                            ng-click="addSanPhamChiTiet(sanPhamChiTiet.idSanPhamChiTiet,$index)"
-                            >Chọn</a
-                          >
+                          <a type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                            ng-click="addSanPhamChiTiet(sanPhamChiTiet.idSanPhamChiTiet,$index)">Chọn</a>
                         </th>
                       </tr>
                     </tbody>
                   </table>
                   <div ng-if="listSanPhamChiTiet.length===0">
                     <p class="dataTables_empty_icon">
-                      <img
-                        src="../../../assets/anh-san-pham/empty-product.png"
-                        alt=""
-                      />
+                      <img src="../../../assets/anh-san-pham/empty-product.png" alt="" />
                     </p>
                     <p class="dataTables_empty_lable">Không có sản phẩm nào</p>
                   </div>
-                  <nav
-                    aria-label="Page navigation example "
-                    ng-if="listSanPhamChiTiet.length!==0"
-                  >
+                  <nav aria-label="Page navigation example " ng-if="listSanPhamChiTiet.length!==0">
                     <ul class="pagination justify-content-center">
                       <li class="page-item">
                         <a class="page-link" ng-click="previousPage()">
-                          <span aria-hidden="true"> << </span>
+                          <span aria-hidden="true">
+                            << </span>
                         </a>
                       </li>
-                      <li
-                        class="page-item"
-                        ng-repeat="page in totalPages track by $index"
-                        ng-class="{'active': $index === currentPage} "
-                        ng-click="changePage($index);"
-                      >
+                      <li class="page-item" ng-repeat="page in totalPages track by $index"
+                        ng-class="{'active': $index === currentPage} " ng-click="changePage($index);">
                         <a class="page-link">{{$index+1}}</a>
                       </li>
                       <li class="page-item">
@@ -506,14 +381,7 @@
     </div>
   </div>
   <div class="toast-container position-fixed top-0 end-0 p-3">
-    <div
-      id="liveToast"
-      class="toast"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-      data-bs-delay="1100"
-    >
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1100">
       <div class="toast-body">
         <span class="success" ng-show="showError==false">
           <i class="fa-solid fa-check fa-xl"></i>

@@ -77,6 +77,7 @@ window.addHoaDonController = function (
   };
   $scope.hoaDonThanhToan = {
     idKhachHang: "",
+    idNhanVien: "",
     tenKhachHang: "Khách lẻ",
     soDienThoaiKhachHang: "",
     diaChiKhachHang: "",
@@ -494,7 +495,6 @@ window.addHoaDonController = function (
       const api = api_giaoHang + "p/" + selectedCityCode + "?depth=2";
       axios.get(api).then(function (response) {
         $scope.districtOptions = response?.data.districts;
-        console.log($scope.districtOptions);
       });
     }
     $scope.hoaDonThanhToan.quanHuyen = null;
@@ -643,6 +643,10 @@ window.addHoaDonController = function (
     } else {
       if ($scope.hoaDonThanhToan.idKhachHang === "" && $scope.show == false) {
         $scope.hoaDonThanhToan.trangThai = 3;
+        $scope.hoaDonThanhToan.diaChiKhachHang = null;
+        $scope.hoaDonThanhToan.soDienThoaiKhachHang = null;
+
+        console.log($scope.hoaDonThanhToan);
         //update hoa don
         $http
           .put(
@@ -681,17 +685,6 @@ window.addHoaDonController = function (
             }
           });
 
-        //add hinh thuc thanh toan
-        // .then(function () {
-        //   $scope.addHinhThucThanhToan = {
-        //     tenHinhThuc: $scope.searchHinhThucThanhToan,
-        //     hoaDonId: $scope.formHoaDonChiTiet.idHoaDon,
-        //   };
-        //   return $http.post(
-        //     hinhThucThanhToanAPI + "/add",
-        //     $scope.addHinhThucThanhToan
-        //   );
-        // });
         $location.path("/hoa-don/hien-thi");
       } else if (
         $scope.hoaDonThanhToan.idKhachHang === "" &&
@@ -699,8 +692,19 @@ window.addHoaDonController = function (
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
-        //update hóa đơn
         console.log($scope.hoaDonThanhToan);
+        if (
+          $scope.hoaDonThanhToan.diaChiCuThe === "" ||
+          $scope.hoaDonThanhToan.soDienThoaiKhachHang === "" ||
+          $scope.hoaDonThanhToan.tinhThanhPho === "" ||
+          $scope.hoaDonThanhToan.quanHuyen === "" ||
+          $scope.hoaDonThanhToan.phuongXa === ""
+        ) {
+          showError("Hãy nhập địa chỉ khách hàng");
+          $scope.hoaDonThanhToan.diaChiKhachHang = null;
+          return;
+        }
+        //update hóa đơn
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -742,8 +746,9 @@ window.addHoaDonController = function (
         $scope.show == false
       ) {
         $scope.hoaDonThanhToan.diaChiKhachHang = null;
+        $scope.hoaDonThanhToan.soDienThoaiKhachHang = null;
         $scope.hoaDonThanhToan.trangThai = 3;
-
+        console.log($scope.hoaDonThanhToan);
         $http
           .put(
             hoaDonAPI + "/update/" + $scope.formHoaDonChiTiet.idHoaDon,
@@ -780,7 +785,7 @@ window.addHoaDonController = function (
               );
             }
           });
-        $location.path("/hoa-don/hien-thi");
+        // $location.path("/hoa-don/hien-thi");
       } else {
         $scope.hoaDonThanhToan.diaChiKhachHang = diaChiKhachHang;
         $scope.hoaDonThanhToan.phiVanChuyen = $scope.phiVanChuyen;
@@ -1010,7 +1015,32 @@ window.addHoaDonController = function (
     }
     callSearchAPI();
   };
-
+  $scope.thayDoiDiaChi = function (event, id) {
+    detailDiaChi($scope.hoaDonThanhToan.idKhachHang).then(function (
+      detailDiaChi
+    ) {
+      if (detailDiaChi) {
+        diaChiMacDinh = detailDiaChi.find((diaChi) => {
+          return diaChi.id === id;
+        });
+        $scope.hoaDonThanhToan.tenKhachHang = diaChiMacDinh.tenKhachHang;
+        $scope.hoaDonThanhToan.soDienThoaiKhachHang = diaChiMacDinh.soDienThoai;
+        $scope.listDiaChi = detailDiaChi;
+      }
+      $scope.hoaDonThanhToan.diaChiCuThe = diaChiMacDinh.diaChiCuThe;
+      $scope.hoaDonThanhToan.tinhThanhPho = diaChiMacDinh.tinhThanhPho;
+      $scope.hoaDonThanhToan.quanHuyen = diaChiMacDinh.quanHuyen;
+      $scope.hoaDonThanhToan.phuongXa = diaChiMacDinh.phuongXa;
+      $scope.hoaDonThanhToan.diaChiKhachHang =
+        $scope.hoaDonThanhToan.diaChiCuThe +
+        ", " +
+        $scope.hoaDonThanhToan.phuongXa +
+        ", " +
+        $scope.hoaDonThanhToan.quanHuyen +
+        ", " +
+        $scope.hoaDonThanhToan.tinhThanhPho;
+    });
+  };
   // function paginateList(list, maxItemsPerPage, currentPage) {
   //   const startIdx = (currentPage - 1) * maxItemsPerPage;
   //   const endIdx = startIdx + maxItemsPerPage;

@@ -35,7 +35,8 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
                     trang_thai
             from hoa_don hd
             GROUP BY hd.id, ma, ten_khach_hang, so_dien_thoai_khach_hang, ngay_tao, loai_hoa_don, tong_tien, trang_thai
-            ORDER BY ngay_tao DESC;            """, nativeQuery = true)
+            ORDER BY IIF(MAX(ngay_thanh_toan) IS NULL, MAX(ngay_tao), IIF(MAX(ngay_tao) > MAX(ngay_thanh_toan), MAX(ngay_tao), MAX(ngay_thanh_toan))) DESC          
+             """, nativeQuery = true)
     Page<HoaDonResponse> getPage(Pageable pageable);
 
     @Query(value = """  
@@ -154,7 +155,7 @@ public interface HoaDonReponsitory extends JpaRepository<HoaDon, UUID> {
     Optional<HoaDon> findByKhachHangIdAndId(UUID idKhachHang, UUID idDonHang);
 
     @Query(value = """
-             select * from hoa_don where hoa_don.trang_thai=0
+             select * from hoa_don where hoa_don.trang_thai=0 order by ngay_tao desc
             """, nativeQuery = true)
     List<HoaDon> listthongbao();
 }

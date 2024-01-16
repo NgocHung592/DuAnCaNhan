@@ -330,7 +330,6 @@
                                                     Chọn
                                                 </button>
 
-                                                <!-- <button ng-click="toggleSelection()">Chọn/Bỏ chọn</button> -->
                                             </th>
                                         </tr>
                                     </tbody>
@@ -347,14 +346,7 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <h4>Danh sách địa chỉ</h4>
-                                <div class="row p-3">
-                                    <div class="search-container col-md-5">
-                                        <i class="fas fa-search search-icon"></i>
-                                        <input type="text" ng-model="searchKeyword"
-                                            placeholder="Tìm kiếm sản phẩm theo mã, tên" ng-change="search()"
-                                            class="search-input" />
-                                    </div>
-                                </div>
+
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -381,7 +373,7 @@
                                             <th scope="row">{{diaChi.phuongXa}}</th>
                                             <th>
                                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                    ng-click="addKhachHang($event,khachHang.id)">Chọn</button>
+                                                    ng-click="thayDoiDiaChi($event,diaChi.id)">Chọn</button>
                                             </th>
                                         </tr>
                                     </tbody>
@@ -480,9 +472,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="dropdown-container col-md-11 mb-4">
-                                            <input type="text" ng-model="searchVoucher"
-                                                placeholder="Tìm kiếm theo mã, tên" ng-click="toggleVoucher($event)"
-                                                class="form-control" />
+                                            <input type="text" ng-model="searchVoucher" placeholder="Chọn mã giảm giá"
+                                                ng-click="toggleVoucher($event)" class="form-control" />
                                             <ul ng-show="showDropDownVoucher" id="dropDownVoucher">
                                                 <li ng-repeat="maGiamGia in listMaGiamGia"
                                                     ng-if="maGiamGia.giaTriDonToiThieu <= tienHang && maGiamGia.soLuong>0"

@@ -131,9 +131,9 @@ public class HoaDonServiceImpl implements HoaDonService {
                 hoaDon.setPhiShip(BigDecimal.valueOf(hoaDonRequest.getPhiVanChuyen()));
                 HoaDon hoaDonNew= hoaDonReponsitory.save(hoaDon);
                 LichSuHoaDon lichSuHoaDon= LichSuHoaDon.builder()
-                        .ngayTao(hoaDonRequest.getNgayThanhToan())
-                        .nguoiTao(hoaDon.getNguoiTao())
-                        .trangThai(hoaDon.getTrangThai())
+                        .ngayTao(hoaDonNew.getNgayThanhToan())
+                        .nguoiTao(hoaDonNew.getNguoiTao())
+                        .trangThai(hoaDonNew.getTrangThai())
                         .hoaDon(hoaDonNew)
                         .build();
                 lichSuHoaDonRepository.save(lichSuHoaDon);

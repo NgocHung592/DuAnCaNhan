@@ -3889,6 +3889,7 @@ fieldset:disabled .btn {
     z-index: 1000;
     display: none;
     min-width: 10rem;
+    width: 200px;
     padding: 0.5rem 0;
     margin: 0;
     font-size: 0.875rem;
@@ -3899,6 +3900,9 @@ fieldset:disabled .btn {
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.2rem;
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
 }
 
 .dropdown-menu[data-bs-popper] {
@@ -24490,7 +24494,7 @@ div.dt-button-collection {
 div.dt-button-collection div.dropdown-menu {
     display: block;
     z-index: 2002;
-    min-width: 100%;
+    min-width: 200px;
 }
 
 div.dt-button-collection div.dt-button-collection-title {

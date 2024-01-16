@@ -3,11 +3,13 @@ window.addChatLieuController = function ($http, $scope, $location, $rootScope) {
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   $scope.randoom = "CL" + Math.floor(Math.random() * 10000) + 1;
   var storedUserName = localStorage.getItem("loggedInUser");
-  console.log(storedUserName);
+  $scope.storedUser = JSON.parse(storedUserData);
+
   $scope.formChatLieu = {
     ma: $scope.randoom,
     ten: "",
     ngayTao: new Date(),
+    nguoiTao: $scope.storedUser.hoTen,
     daXoa: false,
   };
 

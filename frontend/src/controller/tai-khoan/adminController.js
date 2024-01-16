@@ -18,7 +18,7 @@ angular.module("myApp").controller("admin", [
     $scope.thongBao = function () {
       $http.get(hoaDonAPI + "/thong-bao").then(function (response) {
         $scope.listHoaDon = response.data;
-        console.log(response.data);
+        // console.log(response.data);
         // $window.location.reload();
       });
     };

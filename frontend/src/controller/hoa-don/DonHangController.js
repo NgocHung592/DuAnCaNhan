@@ -473,10 +473,14 @@ window.DonHangController = function (
 
             $scope.updateTongTien =
               $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-            $http.put(
-              hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
-              $scope.updateTongTien
-            );
+            $http
+              .put(
+                hoaDonAPI + "/update-tong-tien/" + $routeParams.id,
+                $scope.updateTongTien
+              )
+              .then(function () {
+                $scope.detailHD();
+              });
           });
       });
   };
