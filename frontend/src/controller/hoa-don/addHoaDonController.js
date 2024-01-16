@@ -458,7 +458,12 @@ window.addHoaDonController = function (
     if ($scope.show === true) {
       $scope.tongTien = $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
     } else {
-      $scope.tongTien = $scope.tienHang;
+      console.log($scope.giamGia);
+      if ($scope.giamGia) {
+        $scope.tongTien = $scope.tienHang - $scope.giamGia;
+      } else {
+        $scope.tongTien = $scope.tienHang;
+      }
     }
   };
   $scope.getCity = function () {
@@ -599,14 +604,17 @@ window.addHoaDonController = function (
       showError("Chưa đủ giá trị đơn tối thiểu");
     } else {
       $scope.searchVoucher = option.ma;
-      if (option.hinhThucGiam === 1) {
+      if (option.hinhThucGiam === 1 && $scope.show == true) {
         $scope.giamGia = $scope.tienHang * (option.giaTriGiam / 100);
         $scope.tongTien =
           $scope.tienHang + $scope.phiVanChuyen - $scope.giamGia;
-      } else {
+      } else if (option.hinhThucGiam === 0 && $scope.show == true) {
         $scope.giamGia = option.giaTriGiam;
         $scope.tongTien =
           $scope.tienHang + $scope.phiVanChuyen - option.giaTriGiam;
+      } else {
+        $scope.giamGia = option.giaTriGiam;
+        $scope.tongTien = $scope.tienHang - option.giaTriGiam;
       }
     }
 

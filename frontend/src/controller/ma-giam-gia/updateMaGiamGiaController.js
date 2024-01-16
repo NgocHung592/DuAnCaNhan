@@ -53,32 +53,32 @@ window.updateMaGiamGiaController = function (
         response.data.ngayKetThuc = new Date(
           response.data.ngayKetThuc.split("+")[0].split(".")[0]
         );
-        // if (
-        //   response.data.ngayBatDau.getHours() < 5 ||
-        //   (response.data.ngayBatDau.getHours() > 12 &&
-        //     response.data.ngayBatDau.getHours() < 17)
-        // ) {
-        //   response.data.ngayBatDau.setHours(
-        //     response.data.ngayBatDau.getHours() + 12 - 5
-        //   );
-        // } else {
-        //   response.data.ngayBatDau.setHours(
-        //     response.data.ngayBatDau.getHours() - 5
-        //   );
-        // }
-        // if (
-        //   response.data.ngayKetThuc.getHours() < 5 ||
-        //   (response.data.ngayKetThuc.getHours() > 12 &&
-        //     response.data.ngayKetThuc.getHours() < 17)
-        // ) {
-        //   response.data.ngayKetThuc.setHours(
-        //     response.data.ngayKetThuc.getHours() + 12 - 5
-        //   );
-        // } else {
-        //   response.data.ngayKetThuc.setHours(
-        //     response.data.ngayKetThuc.getHours() - 5
-        //   );
-        // }
+        if (
+          response.data.ngayBatDau.getHours() < 5 ||
+          (response.data.ngayBatDau.getHours() > 12 &&
+            response.data.ngayBatDau.getHours() < 17)
+        ) {
+          response.data.ngayBatDau.setHours(
+            response.data.ngayBatDau.getHours() + 12 - 5
+          );
+        } else {
+          response.data.ngayBatDau.setHours(
+            response.data.ngayBatDau.getHours() - 5
+          );
+        }
+        if (
+          response.data.ngayKetThuc.getHours() < 5 ||
+          (response.data.ngayKetThuc.getHours() > 12 &&
+            response.data.ngayKetThuc.getHours() < 17)
+        ) {
+          response.data.ngayKetThuc.setHours(
+            response.data.ngayKetThuc.getHours() + 12 - 5
+          );
+        } else {
+          response.data.ngayKetThuc.setHours(
+            response.data.ngayKetThuc.getHours() - 5
+          );
+        }
         $scope.detailMaGiamGia = response.data;
       }
     });

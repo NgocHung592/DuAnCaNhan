@@ -140,8 +140,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                         .trangThai(hoaDonNew.getTrangThai())
                         .hoaDon(hoaDonNew)
                         .build();
-                lichSuHoaDonRepository.save(lichSuHoaDon);
-                return null;
+                return lichSuHoaDonRepository.save(lichSuHoaDon);
             }).orElse(null);
         } else {
             optional.map(hoaDon -> {
@@ -162,8 +161,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                         .trangThai(hoaDon.getTrangThai())
                         .hoaDon(hoaDonNew)
                         .build();
-                lichSuHoaDonRepository.save(lichSuHoaDon);
-                return null;
+                return  lichSuHoaDonRepository.save(lichSuHoaDon);
             }).orElse(null);
         }
         return null;
